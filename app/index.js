@@ -4,18 +4,21 @@ import path from 'path';
 import express from 'express';
 import exphbs from 'express-handlebars';
 import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+
 import webpackConfig from '../webpack.config';
 
 const compiler = webpack(webpackConfig);
 const app = express()
 
-app.use(require('webpack-dev-middleware')(compiler, {
+app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
     publicPath: webpackConfig.output.publicPath
 }));
-app.use(require('webpack-hot-middleware')(compiler));
+app.use(webpackHotMiddleware(compiler));
 
-app.use('/', express.static(path.join(__dirname, '..', 'static', 'dist')));
+app.use('/static', express.static(path.join(__dirname, '..', 'static', 'dist')));
 app.engine('.hbs', exphbs({
 	defaultLayout: 'main',
 	extname: '.hbs'

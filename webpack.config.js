@@ -1,24 +1,22 @@
-const node_externals = require('webpack-node-externals');
 const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
   target: 'node',
-  // externals: [node_externals()],
   entry: [
-  	'webpack-hot-middleware/client',
-  	'./static/src/js/app.js',
+  	'./static/src/app.js',
+    'webpack-hot-middleware/client',
 	],
   output: {
     filename: 'app.bundle.js',
     path: path.resolve(__dirname, 'static', 'dist'),
-    publicPath: '/js'
+    publicPath: '/static'
   },
   devtool: 'inline-source-map',
   devServer: {
     hot: true,
     contentBase: path.resolve(__dirname, 'static', 'dist'),
-    publicPath: '/js'
+    publicPath: '/static'
   },
   module: {
 	  rules: [
@@ -41,4 +39,5 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
   ],
+  target: 'node'
 };
