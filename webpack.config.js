@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const Visualizer = require('webpack-visualizer-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     target: 'web',
@@ -25,26 +26,49 @@ module.exports = {
             exclude: /node_modules/,
             loader: 'babel-loader',
             query: {
-              presets: [
-                [ 'env', { modules: false } ],
-                'react'
-              ]
+                presets: [
+                    ['env', { modules: false }],
+                    'react'
+                ]
             }
         }, {
-            test: /\.css$/,
-            exclude: /node_modules/,
-            loader: [
-                'style-loader',
-                'css-loader?modules&importLoaders=1',
-                'postcss-loader',
+          test: /\.css$/,
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: true,
+                },
+              },
+              {
+                loader: 'postcss-loader',
+                options: { config: 'postcss.config.js' },
+              },
             ],
+          }),
+          include: [path.join(__dirname, 'app'), path.join(__dirname, 'static') ],
+          exclude: [path.join(__dirname, 'node_modules')],
+        },
+        {
+          test: /\.css$/,
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader'],
+          }),
+          include: [path.join(__dirname, 'node_modules')],
+          exclude: [path.join(__dirname, 'app'), path.join(__dirname, 'static') ],
         }]
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
         new Visualizer({
-          filename: '../../webpack_stats.html'
+            filename: '../../webpack_stats.html'
+        }),
+        new webpack.DefinePlugin({
+            'process.env.BROWSER': JSON.stringify(true),
         })
     ],
 };
