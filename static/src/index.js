@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import '../../node_modules/purecss/build/pure.css';
+import '../../node_modules/semantic-ui/dist/semantic.css';
 import App from './App';
 import './index.css';
 

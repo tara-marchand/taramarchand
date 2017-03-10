@@ -10,7 +10,7 @@ module.exports = {
         'webpack-hot-middleware/client',
     ],
     output: {
-        filename: 'app.bundle.js',
+        filename: 'main.bundle.js',
         path: path.resolve(__dirname, 'static', 'dist'),
         publicPath: '/static'
     },
@@ -32,33 +32,34 @@ module.exports = {
                 ]
             }
         }, {
-          test: /\.css$/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  modules: true,
-                },
-              },
-              {
-                loader: 'postcss-loader',
-                options: { config: 'postcss.config.js' },
-              },
-            ],
-          }),
-          include: [path.join(__dirname, 'app'), path.join(__dirname, 'static') ],
-          exclude: [path.join(__dirname, 'node_modules')],
+            test: /\.css$/,
+            use: ExtractTextPlugin.extract({
+                fallback: 'style-loader',
+                use: [
+                    'css-loader',
+                    'postcss-loader',
+                ],
+            }),
+            include: [path.join(__dirname, 'app'), path.join(__dirname, 'static')],
+            exclude: [path.join(__dirname, 'node_modules')],
+        }, {
+            test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+            loader: 'file-loader?name=fonts/[name].[ext]'
+        }, {
+            test: /\.css$/,
+            use: ExtractTextPlugin.extract({
+                fallback: 'style-loader',
+                use: ['css-loader'],
+            }),
+            include: [path.join(__dirname, 'node_modules')],
+            exclude: [path.join(__dirname, 'app'), path.join(__dirname, 'static')],
         },
         {
-          test: /\.css$/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: ['css-loader'],
-          }),
-          include: [path.join(__dirname, 'node_modules')],
-          exclude: [path.join(__dirname, 'app'), path.join(__dirname, 'static') ],
+          test: /\.(gif|png|jpe?g|svg)$/i,
+          loaders: [
+            'file-loader',
+            'image-webpack-loader'
+          ]
         }]
     },
     plugins: [
@@ -69,6 +70,7 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             'process.env.BROWSER': JSON.stringify(true),
-        })
+        }),
+        new ExtractTextPlugin('main.css'),
     ],
 };
