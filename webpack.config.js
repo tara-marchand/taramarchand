@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const Visualizer = require('webpack-visualizer-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
@@ -35,16 +34,10 @@ module.exports = {
             test: /\.css$/,
             use: ExtractTextPlugin.extract({
                 fallback: 'style-loader',
-                use: [
-                    'css-loader',
-                    'postcss-loader',
-                ],
+                use: ['css-loader', 'postcss-loader']
             }),
             include: [path.join(__dirname, 'app'), path.join(__dirname, 'static')],
             exclude: [path.join(__dirname, 'node_modules')],
-        }, {
-            test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-            loader: 'file-loader?name=fonts/[name].[ext]'
         }, {
             test: /\.css$/,
             use: ExtractTextPlugin.extract({
@@ -53,8 +46,10 @@ module.exports = {
             }),
             include: [path.join(__dirname, 'node_modules')],
             exclude: [path.join(__dirname, 'app'), path.join(__dirname, 'static')],
-        },
-        {
+        }, {
+            test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+            loader: 'file-loader?name=fonts/[name].[ext]'
+        }, {
           test: /\.(gif|png|jpe?g|svg)$/i,
           loaders: [
             'file-loader',
@@ -64,10 +59,6 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NamedModulesPlugin(),
-        new Visualizer({
-            filename: '../../webpack_stats.html'
-        }),
         new webpack.DefinePlugin({
             'process.env.BROWSER': JSON.stringify(true),
         }),

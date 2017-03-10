@@ -8,16 +8,17 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import webpackConfig from '../webpack.config';
+import resumeJson from '../data/resume.json';
 
 const compiler = webpack(webpackConfig);
 const app = express()
 
+// middleware
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
     publicPath: webpackConfig.output.publicPath
 }));
 app.use(webpackHotMiddleware(compiler));
-
 app.use('/static', express.static(path.join(__dirname, '..', 'static', 'dist')));
 app.use('/modules', express.static(path.join(__dirname, '..', 'node_modules', 'dist')));
 app.engine('.hbs', exphbs({
@@ -26,10 +27,13 @@ app.engine('.hbs', exphbs({
 }));
 app.set('view engine', '.hbs');
 
-app.get('/', function (req, res) {
-  res.render('index')
-})
+// routes
+const renderIndex = function(req, res) {
+  res.render('index');
+}
+app.get('/', renderIndex)
+app.get('/resume', renderIndex)
 
 app.listen(3000, function () {
-  console.log('App listening on port 3000.')
+  console.log('App listening on port 3000.');
 })

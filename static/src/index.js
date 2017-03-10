@@ -1,11 +1,15 @@
+import '../../node_modules/semantic-ui/dist/semantic.css';
+
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import '../../node_modules/semantic-ui/dist/semantic.css';
 import App from './App';
-import './index.css';
+import Resume from './Resume';
 
 ReactDOM.render(
-  <App />,
+  <Router history={browserHistory}>
+    <Route path="/" component={App} />
+    <Route path="/resume" component={Resume} />
+  </Router>,
   document.getElementById('root')
 );
