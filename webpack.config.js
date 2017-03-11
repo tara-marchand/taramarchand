@@ -5,8 +5,9 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     target: 'web',
     entry: [
-        './static/src/index.js',
+        'react-hot-loader/patch',
         'webpack-hot-middleware/client',
+        './static/src/index.js',
     ],
     output: {
         filename: 'main.bundle.js',

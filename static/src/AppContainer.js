@@ -12,15 +12,10 @@ import Contact from './Contact';
 class App extends React.Component {
   render() {
     return (
-      <Router history={browserHistory}>
-        <Route path="/" component={App}>
-          <IndexRoute component={Home} />
-          <Route path="/resume" component={Resume} />
-          <Route path="/code" component={Code} />
-          <Route path="/contact" component={Contact} />
-        </Route>
-      </Router>
-    )
+      <AppContainer>
+        <App />
+      </AppContainer>
+    );
   }
 }
 

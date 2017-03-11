@@ -19,8 +19,10 @@ app.use(webpackDevMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath
 }));
 app.use(webpackHotMiddleware(compiler));
+
 app.use('/static', express.static(path.join(__dirname, '..', 'static', 'dist')));
 app.use('/modules', express.static(path.join(__dirname, '..', 'node_modules', 'dist')));
+
 app.engine('.hbs', exphbs({
 	defaultLayout: 'main',
 	extname: '.hbs'
@@ -32,7 +34,6 @@ const renderIndex = function(req, res) {
   res.render('index');
 }
 app.get('/', renderIndex)
-app.get('/resume', renderIndex)
 
 app.listen(3000, function () {
   console.log('App listening on port 3000.');

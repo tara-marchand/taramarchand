@@ -36840,5 +36840,15 @@ html.ios {
 
 /*******************************
          Site Overrides
-*******************************/
+*******************************/#skills ul {
+  list-style-type: none;
+  padding: 0;
+}
+#skills ul ul li {
+  display: inline-block;
+  margin-right: 1em;
+}
+#skills ul ul li:first-of-type {
+  margin-left: 1em;
+}
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJtYWluLmNzcyIsInNvdXJjZVJvb3QiOiIifQ==*/
