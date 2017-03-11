@@ -4,11 +4,17 @@ import '../../node_modules/semantic-ui/dist/semantic.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './App';
+import App from './containers/App';
+
+const root = document.getElementById('root');
 
 ReactDOM.render(
   <AppContainer>
      <App />
   </AppContainer>,
-  document.getElementById('root')
+  root
 );
+
+if (module.hot) {
+  module.hot.accept();
+}

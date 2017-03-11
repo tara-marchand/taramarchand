@@ -1,14 +1,22 @@
 import './Resume.css';
+import resumeJson from './resume.json';
 
 import React from 'react';
 // using an ES6 transpiler, like babel
 import { Router, Route, Link, IndexLink } from 'react-router'
 
 class Resume extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      resume: resumeJson
+    }
+  }
+
   render() {
     return (
       <div id="resume">
-        <h1>Tara Marchand</h1>
+        <h1>{this.state.resume.basic.name}</h1>
         <section id="basics">
           <div className="contact">
             <span className="email">

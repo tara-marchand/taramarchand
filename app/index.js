@@ -8,7 +8,6 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import webpackConfig from '../webpack.config';
-import resumeJson from '../data/resume.json';
 
 const compiler = webpack(webpackConfig);
 const app = express()
