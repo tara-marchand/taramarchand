@@ -1,8 +1,13 @@
 @import './foundation_settings.scss';
 @import '~foundation-sites/scss/foundation.scss';
-// @import 'motion-ui';
+
+$global-flexbox: true;
 
 @include foundation-global-styles; // Always include the global-styles
+@include foundation-flex-grid;
+@include foundation-flex-classes;
+@include foundation-menu;
+
 // @include foundation-grid;
 // @include foundation-typography;
 // @include foundation-button;
@@ -22,7 +27,6 @@
 // @include foundation-flex-video;
 // @include foundation-label;
 // @include foundation-media-object;
-// @include foundation-menu;
 // @include foundation-off-canvas;
 // @include foundation-orbit;
 // @include foundation-pagination;
