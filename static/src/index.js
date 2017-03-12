@@ -1,9 +1,9 @@
 import { AppContainer } from 'react-hot-loader';
-import '../../node_modules/semantic-ui/dist/semantic.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import './index.scss';
 import App from './containers/App';
 
 const root = document.getElementById('root');
