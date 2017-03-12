@@ -8,8 +8,14 @@ const Layout = React.createClass({
   render: () => {
     return (
       <div>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/Resume" component={Resume} />
+        <div className="ui pointing menu">
+          <Link to="/" className="item">Home</Link>
+          <Link to="/resume" className="item">Resume</Link>
+        </div>
+        <div className="ui container">
+          <Route exact path="/" component={Home} />
+          <Route exact path="/resume" component={Resume} />
+        </div>
       </div>
     );
   }

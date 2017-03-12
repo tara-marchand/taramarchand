@@ -32,7 +32,7 @@ app.set('view engine', '.hbs');
 const renderIndex = function(req, res) {
   res.render('index');
 }
-app.get('/', renderIndex)
+app.get('/*', renderIndex)
 
 app.listen(3000, function () {
   console.log('App listening on port 3000.');

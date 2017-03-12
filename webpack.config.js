@@ -14,7 +14,7 @@ module.exports = {
         path: path.resolve(__dirname, 'static', 'dist'),
         publicPath: '/static'
     },
-    devtool: 'inline-source-map',
+    devtool: 'eval',
     devServer: {
         hot: true,
         contentBase: path.resolve(__dirname, 'static', 'dist'),
