@@ -1,0 +1,7 @@
+module.exports = {
+    "plugins": ["react"],
+    "ecmaFeatures": {"jsx": true},
+    "extends": "eslint:recommended",
+    "rules": {
+    }
+}
