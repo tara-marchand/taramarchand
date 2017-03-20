@@ -62,7 +62,7 @@ module.exports = {
                 ]
             }, {
                 test: /\.(eot|svg|ttf|woff|woff2)$/,
-                use: 'file-loader?outputPath=./static/dist&name=[name].[ext]',
+                use: 'file-loader?outputPath=static/dist&name=[name].[ext]&publicPath=/static/',
             }
         ],
     },

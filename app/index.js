@@ -19,8 +19,8 @@ app.use(webpackDevMiddleware(compiler, {
 }));
 app.use(webpackHotMiddleware(compiler));
 
-app.use('/static', express.static(path.join(__dirname, '..', 'static', 'dist')));
-app.use('/modules', express.static(path.join(__dirname, '..', 'node_modules', 'dist')));
+app.use('/static/', express.static(path.join(__dirname, '..', 'static', 'dist')));
+app.use('/modules/', express.static(path.join(__dirname, '..', 'node_modules', 'dist')));
 
 app.engine('.hbs', exphbs({
 	defaultLayout: 'main',

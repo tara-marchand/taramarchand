@@ -3,5 +3,6 @@ module.exports = {
     "ecmaFeatures": {"jsx": true},
     "extends": "eslint:recommended",
     "rules": {
+        "indent": ["warn", 2],
     }
 }
