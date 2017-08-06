@@ -6,30 +6,29 @@ import React from 'react';
 import { Router, Route, Link, IndexLink } from 'react-router'
 
 class Resume extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      resume: resumeJson
-    }
+  static defaultProps = {
+    resume: resumeJson
   }
 
   render() {
+    const {basics, skills, work, education} = this.props.resume;
+
     return (
       <div id="resume">
-        <h1>{this.state.resume.basics.name}</h1>
+        <h1>{basics.name}</h1>
         <section id="basics">
           <div className="contact">
             <span className="email">
-              <a href="mailto:tara@mac.com">{this.state.resume.basics.email}</a>
+              <a href="mailto:tara@mac.com">{basics.email} </a>
             </span>
             <span className="website">
-              <span className="dot">·</span> <a href="{this.state.resume.basics.website}">{this.state.resume.basics.website}</a>
+              <span className="dot">·</span> <a href="{basics.website}">{basics.website}</a>
             </span>
           </div>
           <section id="profiles">
-            {this.state.resume.basics.profiles.map((profile, index) =>
+            {basics.profiles.map((profile, index) =>
               <span className="item" key={index}>
-                <a href="{profile.url}" className="network">{profile.network}</a>
+                <a href="{profile.url}" className="network">{profile.network} </a>
               </span>
             )}
             </section>
@@ -37,11 +36,11 @@ class Resume extends React.Component {
         <hr />
         <section id="skills">
           <h2>Skills</h2>
-          {this.state.resume.skills.map((skill, index) =>
+          {skills.map((skill, index) =>
             <ul className="item" key={index}>
               <li>
                 <ul className="keywords">
-                  <strong>{skill.name}:</strong> 
+                  <strong>{skill.name}:</strong>
                   {skill.keywords.map((keyword, index2) =>
                     <li key={index2}>{keyword}</li>
                   )}
@@ -53,16 +52,16 @@ class Resume extends React.Component {
         <hr />
         <section id="work">
           <h2>Experience</h2>
-          {this.state.resume.work.map((workplace, index) =>
+          {work.map((workplace, index) =>
             <div className="item" key={index}>
               <h3 className="position">
                 {workplace.position}
               </h3>
               <div className="name-date">
-                <a href="{workplace.website}">{workplace.company}</a>
-                ·
+                <a href="{workplace.website}">{workplace.company} </a>
+                ·&nbsp;
                 <span className="startDate">
-                  {workplace.startDate}
+                  {workplace.startDate}-
                 </span>
                 <span className="endDate">
                   {workplace.endDate}
@@ -80,7 +79,7 @@ class Resume extends React.Component {
         <section id="education">
           <h2>Education</h2>
           <ul className="education">
-            {this.state.resume.education.map((ed, index) =>
+            {education.map((ed, index) =>
               <li className="item" key={index}>
                 {ed.institution} · {ed.studyType}, {ed.area}
               </li>

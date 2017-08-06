@@ -27,14 +27,26 @@
     },
     "work": [
         {
+            "company": "New Relic",
+            "position": "Senior Software Engineer",
+            "website": "http://www.newrelic.com/",
+            "startDate": "2017",
+            "endDate": "present",
+            "summary": "",
+            "highlights": [
+                "Develop user interface for New Relic's Infrastructure monitoring product",
+                "Collaborate with other engineers, a product mananger, and a designer on features and functionality"
+            ]
+        },
+        {
             "company": "R/GA",
             "position": "Technology Lead",
             "website": "http://www.rga.com/",
             "startDate": "2009",
-            "endDate": "present",
+            "endDate": "2017",
             "summary": "",
             "highlights": [
-                "<strong>Google:</strong> As part of embedded agency team, lead server-side and database development of new internal application with many complex integrations",
+                "<strong>Google:</strong> As part of embedded agency team, led server-side and database development of new internal application with many complex integrations",
                 "<strong>Dignity Health:</strong> Led technology discipline agency-side for this large healthcare client. Analyzed, recommended, and maintained digital solutions",
                 "<strong>Nike Events Tool:</strong> Led front-end development for this platform's localized, mobile-friendly web experiences used by tens of thousands of customers globally. Manage 2 front-end engineers. Integrate with custom APIs. Example calendar: <a href=\"https://www.nike.com/events-registration/series?id=1607&days=7\" target=\"_blanks\">Nike+ San Francisco</a>",
                 "<strong>Microsoft Surface:</strong> Architected and wrote presentation layer code for this fully responsive website developed for the launch of this tablet device. Integrated with custom CMS and API.",

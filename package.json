@@ -8,8 +8,7 @@
     "build:dist": "webpack --env=prod --progress --profile --colors",
     "dev": "npm run build:dev; babel-node --presets env,react app/index.js",
     "start": "npm run build:dist; babel-node --presets env,react app/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "node semantic-fix.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
@@ -27,6 +26,7 @@
     "babel-cli": "^6.23.0",
     "babel-core": "^6.23.1",
     "babel-loader": "^6.4.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.2.1",
     "babel-preset-react": "^6.23.0",
     "css-loader": "^0.26.4",
