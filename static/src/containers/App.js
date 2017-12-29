@@ -1,9 +1,9 @@
-import React from 'react';
-import BrowserRouter from 'react-router-dom/BrowserRouter'
+import React, {PureComponent} from 'react';
+import {BrowserRouter} from 'react-router-dom'
 
 import Layout from './Layout'
 
-class App extends React.Component {
+export default class App extends PureComponent {
   render() {
     return (
       <BrowserRouter>
@@ -12,5 +12,3 @@ class App extends React.Component {
     )
   }
 }
-
-export default App;

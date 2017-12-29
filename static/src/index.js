@@ -1,22 +1,22 @@
-import { AppContainer } from 'react-hot-loader';
+import {AppContainer} from 'react-hot-loader'
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-import './index.scss';
-import App from './containers/App';
+import './index.scss'
+import App from './containers/App'
 
-const root = document.getElementById('root');
+const root = document.getElementById('root')
 
 ReactDOM.render(
   <AppContainer>
-     <App />
+    <App />
   </AppContainer>,
   root
-);
+)
 
 if (module.hot) {
   module.hot.accept('./containers/App', () => {
-    ReactDOM.render(<App />, root);
-  });
+    ReactDOM.render(<App />, root)
+  })
 }

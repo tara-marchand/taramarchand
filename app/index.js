@@ -11,6 +11,7 @@ import webpackConfig from '../webpack.config';
 
 const compiler = webpack(webpackConfig);
 const app = express()
+const port = process.env.PORT || 3000
 
 // middleware
 app.use(webpackDevMiddleware(compiler, {
@@ -29,11 +30,8 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs');
 
 // routes
-const renderIndex = function(req, res) {
-  res.render('index');
-}
-app.get('/*', renderIndex)
+app.get('/*', (req, res) => res.render('index'))
 
-app.listen(process.env.PORT || 3000, function () {
-  console.log('App listening on port 3000.');
+app.listen(port, function () {
+  console.log(`App listening on port ${port}.`);
 })

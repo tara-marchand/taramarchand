@@ -4,13 +4,14 @@
   "description": "",
   "main": "app/index.js",
   "engines": {
-    "node": "6.11.3"
+    "node": "6.11.4",
+    "yarn": "1.2.1"
   },
   "scripts": {
-    "build:dev": "webpack --env=dev --progress --profile --colors",
-    "build:dist": "webpack --env=prod --progress --profile --colors",
-    "dev": "npm run build:dev; babel-node --presets env,react app/index.js",
-    "start": "npm run build:dist; babel-node --presets env,react app/index.js",
+    "build:dev": "webpack --env=development --profile --colors",
+    "build:dist": "webpack --env=production --profile --colors",
+    "dev": "yarn run build:dev; babel-node --presets env,react app/index.js",
+    "start": "yarn run build:dist; babel-node --presets env,react app/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -19,37 +20,39 @@
     "autoprefixer": "^6.7.6",
     "babel-cli": "^6.23.0",
     "babel-core": "^6.23.1",
-    "babel-loader": "^6.4.0",
+    "babel-loader": "^7.1.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.2.1",
     "babel-preset-react": "^6.23.0",
     "css-loader": "^0.26.4",
     "express": "^4.15.2",
     "express-handlebars": "^3.0.0",
-    "extract-text-webpack-plugin": "^2.1.0",
+    "extract-text-webpack-plugin": "^3.0.1",
     "file-loader": "^0.10.1",
     "foundation-icon-fonts": "^0.1.1",
-    "foundation-sites": "^6.3.1",
+    "foundation-sites": "^6.4.4-rc1",
+    "global": "^4.3.2",
     "image-webpack-loader": "^3.2.0",
     "node-sass": "^4.5.0",
     "postcss-loader": "^1.3.3",
     "precss": "^1.4.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "react-hot-loader": "^3.0.0-beta.6",
-    "react-router": "^4.0.0-beta.8",
-    "react-router-dom": "^4.0.0-beta.8",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
     "resolve-url-loader": "^2.1.0",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.13.2",
+    "styled-components": "^2.2.1",
     "url-loader": "^0.5.8",
-    "webpack": "^2.2.1",
-    "webpack-dev-middleware": "^1.10.1",
-    "webpack-hot-middleware": "^2.17.1",
-    "webpack-node-externals": "^1.5.4"
+    "webpack": "^3.7.1",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.19.1",
+    "webpack-node-externals": "^1.6.0"
   },
   "devDependencies": {
-    "eslint": "^3.18.0",
-    "eslint-plugin-react": "^6.10.0"
+    "eslint": "^4.9.0",
+    "eslint-plugin-react": "^7.4.0"
   }
 }

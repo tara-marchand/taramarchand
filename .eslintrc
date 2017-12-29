@@ -1,8 +1,0 @@
-module.exports = {
-    "plugins": ["react"],
-    "ecmaFeatures": {"jsx": true},
-    "extends": "eslint:recommended",
-    "rules": {
-        "indent": ["warn", 2],
-    }
-}

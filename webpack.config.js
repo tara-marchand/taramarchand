@@ -32,7 +32,7 @@ module.exports = {
             ['env', {modules: false}],
             'react'
           ],
-          plugins: ["transform-class-properties"]
+          plugins: ['transform-class-properties']
         }
       }, {
         test: /\.css$/,
