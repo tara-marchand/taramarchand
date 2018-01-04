@@ -4,8 +4,7 @@ import path from 'path'
 import express from 'express'
 import exphbs from 'express-handlebars'
 import webpack from 'webpack'
-import webpackDevMiddleware from 'webpack-dev-middleware'
-import webpackHotMiddleware from 'webpack-hot-middleware'
+import System from 'systemjs'
 
 import webpackConfig from '../webpack.config'
 
@@ -13,15 +12,18 @@ const compiler = webpack(webpackConfig)
 const app = express()
 const port = process.env.PORT || 3000
 
-// middleware
 if (process.env.NODE_ENV === 'dev') {
-  app.use(
-    webpackDevMiddleware(compiler, {
-      noInfo: true,
-      publicPath: webpackConfig.output.publicPath
-    })
-  )
-  app.use(webpackHotMiddleware(compiler))
+  System.import('webpack-dev-middleware').then(webpackDevMiddleware => {
+    app.use(
+      webpackDevMiddleware(compiler, {
+        noInfo: true,
+        publicPath: webpackConfig.output.publicPath
+      })
+    )
+  })
+  System.import('webpack-hot-middleware').then(webpackHotMiddleware => {
+    app.use(webpackHotMiddleware(compiler))
+  })
 }
 
 app.use(

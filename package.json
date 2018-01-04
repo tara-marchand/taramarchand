@@ -46,6 +46,7 @@
     "sass-loader": "^6.0.3",
     "style-loader": "^0.13.2",
     "styled-components": "^2.2.1",
+    "systemjs": "^0.20.19",
     "url-loader": "^0.5.8",
     "webpack": "^3.7.1",
     "webpack-node-externals": "^1.6.0"
