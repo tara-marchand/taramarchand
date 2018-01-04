@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const isProduction = process.env.production === true
+const isProduction = process.env.NODE_ENV === 'prod'
 
 module.exports = {
   context: path.resolve(__dirname),

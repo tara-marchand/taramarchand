@@ -1,8 +1,6 @@
-import React from 'react';
-// using an ES6 transpiler, like babel
-import { Router, Route, Link, IndexLink } from 'react-router'
+import React, {PureComponent} from 'react';
 
-class Code extends React.Component {
+class Code extends PureComponent {
   render() {
     return (
       <div>Code</div>

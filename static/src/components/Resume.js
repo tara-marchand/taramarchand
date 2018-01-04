@@ -1,15 +1,10 @@
 import './Resume.css';
 import resumeJson from './resume.json';
 
-import React from 'react';
-// using an ES6 transpiler, like babel
-import { Router, Route, Link, IndexLink } from 'react-router'
+import PropTypes from 'prop-types'
+import React, {PureComponent} from 'react';
 
-class Resume extends React.Component {
-  static defaultProps = {
-    resume: resumeJson
-  }
-
+class Resume extends PureComponent {
   render() {
     const {basics, skills, work, education} = this.props.resume;
 
@@ -88,6 +83,14 @@ class Resume extends React.Component {
       </div>
     );
   }
+}
+
+Resume.defaultProps = {
+  resume: resumeJson
+}
+
+Resume.propTypes = {
+  resume: PropTypes.object.isRequired
 }
 
 export default Resume;
