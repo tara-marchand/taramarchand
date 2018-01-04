@@ -10,8 +10,8 @@
   "scripts": {
     "build:dev": "webpack --env=dev --profile --colors",
     "build:dist": "webpack --env=prod --profile --colors",
-    "dev": "yarn run build:dev; NODE_ENV=dev babel-node --presets env,react app/index.js",
-    "start": "yarn run build:dist; NODE_ENV=prod babel-node --presets env,react app/index.js",
+    "dev": "NODE_ENV=dev yarn run build:dev; babel-node --presets env,react app/index.js",
+    "start": "NODE_ENV=prod yarn run build:dist; babel-node --presets env,react app/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

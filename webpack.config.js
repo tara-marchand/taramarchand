@@ -1,15 +1,30 @@
-const path = require('path');
-const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+const isDev = process.env.NODE_ENV === 'dev'
 const isProduction = process.env.NODE_ENV === 'prod'
+
+const entry = isProduction
+  ? './static/src/index.js'
+  : [
+    'react-hot-loader/patch',
+    'webpack-hot-middleware/client',
+    './static/src/index.js'
+  ]
+const plugins = [
+  new webpack.DefinePlugin({'process.env.BROWSER': JSON.stringify(true)}),
+  new ExtractTextPlugin('main.css')
+]
+
+if (isDev) {
+  plugins.push(new webpack.HotModuleReplacementPlugin())
+}
 
 module.exports = {
   context: path.resolve(__dirname),
   target: 'web',
-  entry: [
-    'react-hot-loader/patch', 'webpack-hot-middleware/client', './static/src/index.js'
-  ],
+  entry,
   output: {
     filename: 'main.bundle.js',
     path: path.resolve(__dirname, 'static', 'dist'),
@@ -28,13 +43,11 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: [
-            ['env', {modules: false}],
-            'react'
-          ],
+          presets: [['env', {modules: false}], 'react'],
           plugins: ['transform-class-properties']
         }
-      }, {
+      },
+      {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
@@ -42,25 +55,29 @@ module.exports = {
         }),
         include: [path.join(__dirname, 'static', 'src')],
         exclude: [path.join(__dirname, 'node_modules')]
-      }, {
+      },
+      {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader', 'postcss-loader', 'resolve-url-loader', 'sass-loader?sourceMap']
+          use: [
+            'css-loader',
+            'postcss-loader',
+            'resolve-url-loader',
+            'sass-loader?sourceMap'
+          ]
         }),
         include: [
           path.join(__dirname, 'static', 'src'),
           path.join(__dirname, 'node_modules')
         ]
-      }, {
+      },
+      {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
-        use: 'file-loader?outputPath=static/dist&name=[name].[ext]&publicPath=/static/'
+        use:
+          'file-loader?outputPath=static/dist&name=[name].[ext]&publicPath=/static/'
       }
     ]
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.DefinePlugin({'process.env.BROWSER': JSON.stringify(true)}),
-    new ExtractTextPlugin('main.css')
-  ]
-};
+  plugins
+}
