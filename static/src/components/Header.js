@@ -1,25 +1,32 @@
-import React, {PureComponent} from 'react'
-import {Link} from 'react-router-dom'
+import React, { PureComponent } from 'react'
+import { NavLink } from 'react-router-dom'
+import { Menu } from 'semantic-ui-react'
+import styled from 'styled-components'
+
+const MenuLink = styled(Menu.Item)`
+  &.active {
+    cursor: default;
+  }
+`
 
 class Header extends PureComponent {
   render() {
     return (
-      <div className="top-bar">
-        <div className="top-bar-left">
-          <ul className="menu">
-            <li className="menu-text">Tara Marchand</li>
-            <li>
-              <Link to="/">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/resume">Resume</Link>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <Menu>
+        <MenuLink as={NavLink} to="/" exact>
+          Tara Marchand
+        </MenuLink>
+        <MenuLink as={NavLink} to="/resume" exact>
+          Resume
+        </MenuLink>
+      </Menu>
     )
+  }
+
+  handleItemClick(e, itemProps) {
+    if (itemProps.index === activeIndex) {
+      e.preventDefault()
+    }
   }
 }
 

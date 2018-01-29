@@ -1,11 +1,9 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react'
 
 class Home extends PureComponent {
   render() {
-    return (
-      <h1>Home!</h1>
-    );
+    return <h1>We are home. Are we? Yes.</h1>
   }
 }
 
-export default Home;
+export default Home

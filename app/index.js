@@ -1,29 +1,37 @@
 'use strict'
 
-import path from 'path'
-import express from 'express'
+import dotenv from 'dotenv'
 import exphbs from 'express-handlebars'
+import express from 'express'
+import path from 'path'
 import webpack from 'webpack'
-import System from 'systemjs'
+import common from '../webpack.common'
 
-import webpackConfig from '../webpack.config'
+dotenv.config()
+
+let webpackConfig
+switch (process.env.NODE_ENV) {
+case 'production':
+  webpackConfig = require('../webpack.prod')(process.env)
+  break
+
+case 'development':
+default:
+  webpackConfig = require('../webpack.dev')(process.env)
+  break
+}
 
 const compiler = webpack(webpackConfig)
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT
 
-if (process.env.NODE_ENV === 'dev') {
-  System.import('webpack-dev-middleware').then(webpackDevMiddleware => {
-    app.use(
-      webpackDevMiddleware(compiler, {
-        noInfo: true,
-        publicPath: webpackConfig.output.publicPath
-      })
-    )
-  })
-  System.import('webpack-hot-middleware').then(webpackHotMiddleware => {
-    app.use(webpackHotMiddleware(compiler))
-  })
+if (process.env.NODE_ENV === 'development') {
+  app.use(
+    require('webpack-dev-middleware')(compiler, {
+      publicPath: webpackConfig.output.publicPath
+    })
+  )
+  app.use(require('webpack-hot-middleware')(compiler))
 }
 
 app.use(
@@ -45,7 +53,7 @@ app.engine(
 app.set('view engine', '.hbs')
 
 // routes
-app.get('/*', (req, res) => res.render('index'))
+app.get('/', (req, res) => res.render('index'))
 
 app.listen(port, function() {
   console.log(`App listening on port ${port}.`)

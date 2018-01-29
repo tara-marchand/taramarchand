@@ -8,14 +8,20 @@
     "yarn": "1.3.2"
   },
   "scripts": {
-    "build:dev": "webpack --env=dev --profile --colors",
-    "build:dist": "webpack --env=prod --profile --colors",
-    "dev": "NODE_ENV=dev yarn run build:dev; babel-node --presets env,react app/index.js",
-    "start": "NODE_ENV=prod yarn run build:dist; babel-node --presets env,react app/index.js",
+    "build:dev":
+      "webpack --config=webpack.dev.js --env.NODE_ENV=development --env.PORT=3000 --display=minimal --profile --colors",
+    "build:dist":
+      "webpack --config=webpack.prod.js --env.NODE_ENV=production --display=minimal --profile --colors",
+    "dev":
+      "yarn run build:dev; babel-node --presets=env,react --plugins=react-hot-loader/babel app/index.js",
+    "start": "yarn run build:dist; babel-node --presets=env,react app/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
+  "babel": {
+    "plugins": ["react-hot-loader/babel"]
+  },
   "dependencies": {
     "autoprefixer": "^6.7.6",
     "babel-cli": "^6.23.0",
@@ -24,13 +30,14 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.2.1",
     "babel-preset-react": "^6.23.0",
+    "clean-webpack-plugin": "^0.1.18",
     "css-loader": "^0.26.4",
+    "dotenv": "^4.0.0",
+    "dotenv-webpack": "^1.5.4",
     "express": "^4.15.2",
     "express-handlebars": "^3.0.0",
     "extract-text-webpack-plugin": "^3.0.1",
     "file-loader": "^0.10.1",
-    "foundation-icon-fonts": "^0.1.1",
-    "foundation-sites": "^6.4.4-rc1",
     "global": "^4.3.2",
     "image-webpack-loader": "^3.2.0",
     "node-sass": "^4.5.0",
@@ -39,22 +46,24 @@
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-hot-loader": "^3.0.0-beta.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "resolve-url-loader": "^2.1.0",
     "sass-loader": "^6.0.3",
+    "semantic-ui-css": "^2.2.12",
+    "semantic-ui-react": "^0.77.2",
     "style-loader": "^0.13.2",
-    "styled-components": "^2.2.1",
-    "systemjs": "^0.20.19",
+    "styled-components": "^3.0.2",
     "url-loader": "^0.5.8",
     "webpack": "^3.7.1",
+    "webpack-merge": "^4.1.1",
     "webpack-node-externals": "^1.6.0"
   },
   "devDependencies": {
     "eslint": "^4.9.0",
     "eslint-plugin-react": "^7.4.0",
-    "webpack-dev-middleware": "^1.12.0",
-    "webpack-hot-middleware": "^2.19.1"
+    "react-hot-loader": "^3.1.3",
+    "webpack-dev-middleware": "^2.0.4",
+    "webpack-hot-middleware": "^2.21.0"
   }
 }
