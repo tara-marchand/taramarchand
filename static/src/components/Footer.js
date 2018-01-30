@@ -1,30 +1,38 @@
 import React from 'react'
+import { Menu } from 'semantic-ui-react'
 
 class Footer extends React.Component {
   render() {
     return (
-      <div className="top-bar">
-        <div className="top-bar-left" />
-        <div className="top-bar-right">
-          <ul className="menu">
-            <li>
-              <a href="https://www.linkedin.com/in/trmarch/" target="_blank">
-                <i className="fi-social-linkedin" />LinkedIn
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/tara-marchand" target="_blank">
-                <i className="fi-social-github" />GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://twitter.com/trmarchand" target="_blank">
-                <i className="fi-social-twitter" />Twitter
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <Menu borderless>
+        <Menu.Item>
+          <a
+            href="https://www.linkedin.com/in/trmarch/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            LinkedIn
+          </a>
+        </Menu.Item>
+        <Menu.Item>
+          <a
+            href="https://github.com/tara-marchand"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            GitHub
+          </a>
+        </Menu.Item>
+        <Menu.Item>
+          <a
+            href="https://twitter.com/trmarchand"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Twitter
+          </a>
+        </Menu.Item>
+      </Menu>
     )
   }
 }

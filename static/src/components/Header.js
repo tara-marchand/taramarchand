@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react'
-import { NavLink } from 'react-router-dom'
 import { Menu } from 'semantic-ui-react'
+import { NavLink } from 'react-router-dom'
+import React, { PureComponent } from 'react'
 import styled from 'styled-components'
 
 const MenuLink = styled(Menu.Item)`
@@ -13,20 +13,14 @@ class Header extends PureComponent {
   render() {
     return (
       <Menu>
-        <MenuLink as={NavLink} to="/" exact>
+        <MenuLink as={NavLink} isActive={() => false} to="/">
           Tara Marchand
         </MenuLink>
-        <MenuLink as={NavLink} to="/resume" exact>
+        <MenuLink as={NavLink} exact to="/resume">
           Resume
         </MenuLink>
       </Menu>
     )
-  }
-
-  handleItemClick(e, itemProps) {
-    if (itemProps.index === activeIndex) {
-      e.preventDefault()
-    }
   }
 }
 
