@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 
 class Home extends PureComponent {
   render() {
-    return <h1>We are home. Are we? Yes.</h1>
+    return <h1>Listening to Angel Olsen.</h1>
   }
 }
 

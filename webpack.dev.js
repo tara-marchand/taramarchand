@@ -6,6 +6,9 @@ module.exports = env => {
   return merge.strategy({
     entry: 'prepend'
   })(common(env), {
+    devServer: {
+      hot: true
+    },
     devtool: 'eval',
     entry: ['react-hot-loader/patch', 'webpack-hot-middleware/client'],
     module: {
