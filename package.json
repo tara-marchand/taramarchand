@@ -20,13 +20,22 @@
   "author": "",
   "license": "ISC",
   "babel": {
-    "plugins": ["react-hot-loader/babel"]
+    "plugins": [
+      "react-hot-loader/babel",
+      [
+        "lodash",
+        {
+          "id": ["lodash", "semantic-ui-react"]
+        }
+      ]
+    ]
   },
   "dependencies": {
     "autoprefixer": "^6.7.6",
     "babel-cli": "^6.23.0",
     "babel-core": "^6.23.1",
     "babel-loader": "^7.1.2",
+    "babel-plugin-lodash": "^3.3.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.2.1",
     "babel-preset-react": "^6.23.0",
