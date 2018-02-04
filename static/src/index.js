@@ -4,20 +4,28 @@ import { AppContainer } from 'react-hot-loader'
 
 import './index.scss'
 import App from './App'
+import { isDev } from './utils'
 
-const render = Component => {
+const _isDev = isDev()
+
+const renderApp = () => {
+  ReactDOM.render(<App />, document.getElementById('root'))
+}
+
+const renderHotApp = () => {
   ReactDOM.render(
     <AppContainer>
-      <Component />
+      <App />
     </AppContainer>,
     document.getElementById('root')
   )
 }
 
-render(App)
-
-if (module.hot) {
+if (_isDev && module.hot) {
+  renderHotApp()
   module.hot.accept('./App', () => {
-    render(App)
+    renderHotApp()
   })
+} else {
+  renderApp()
 }
