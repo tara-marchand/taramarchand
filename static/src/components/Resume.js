@@ -1,87 +1,118 @@
-import './Resume.css';
-import resumeJson from './resume.json';
-
 import PropTypes from 'prop-types'
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react'
+import { List } from 'semantic-ui-react'
+
+import resumeJson from './resume.json'
 
 class Resume extends PureComponent {
   render() {
-    const {basics, skills, work, education} = this.props.resume;
+    const { name } = this.props.resume.basics
 
     return (
       <div id="resume">
-        <h1>{basics.name}</h1>
-        <section id="basics">
-          <div className="contact">
-            <span className="email">
-              <a href="mailto:tara@mac.com">{basics.email} </a>
-            </span>
-            <span className="website">
-              <span className="dot">·</span> <a href="{basics.website}">{basics.website}</a>
-            </span>
-          </div>
-          <section id="profiles">
-            {basics.profiles.map((profile, index) =>
-              <span className="item" key={index}>
-                <a href="{profile.url}" className="network">{profile.network} </a>
-              </span>
-            )}
-            </section>
-        </section>
+        <h1>{name}</h1>
+        {this.renderBasics()}
         <hr />
-        <section id="skills">
-          <h2>Skills</h2>
-          {skills.map((skill, index) =>
-            <ul className="item" key={index}>
-              <li>
-                <ul className="keywords">
-                  <strong>{skill.name}:</strong>
-                  {skill.keywords.map((keyword, index2) =>
-                    <li key={index2}>{keyword}</li>
-                  )}
-                </ul>
-              </li>
-            </ul>
-          )}
-        </section>
+        {this.renderSkills()}
         <hr />
-        <section id="work">
-          <h2>Experience</h2>
-          {work.map((workplace, index) =>
-            <div className="item" key={index}>
-              <h3 className="position">
-                {workplace.position}
-              </h3>
-              <div className="name-date">
-                <a href="{workplace.website}">{workplace.company} </a>
-                ·&nbsp;
-                <span className="startDate">
-                  {workplace.startDate}-
-                </span>
-                <span className="endDate">
-                  {workplace.endDate}
-                </span>
-              </div>
-              <ul className="highlights">
-                {workplace.highlights.map((highlight, index2) =>
-                  <li key={index2} dangerouslySetInnerHTML={{ __html: highlight }} />
-                )}
-              </ul>
-            </div>
-          )}
-        </section>
+        {this.renderWork()}
         <hr />
-        <section id="education">
-          <h2>Education</h2>
-          <ul className="education">
-            {education.map((ed, index) =>
-              <li className="item" key={index}>
-                {ed.institution} · {ed.studyType}, {ed.area}
-              </li>
-            )}
-          </ul></section>
+        {this.renderEducation()}
       </div>
-    );
+    )
+  }
+
+  renderBasics() {
+    const { basics } = this.props.resume
+
+    return (
+      <section id="basics">
+        <div>
+          <span>
+            <a href="mailto:tara@mac.com">{basics.email} </a>
+          </span>
+          <span>
+            <span>·</span> <a href="{basics.website}">{basics.website}</a>
+          </span>
+        </div>
+        <section id="profiles">
+          {basics.profiles.map((profile, index) => (
+            <span key={index}>
+              <a href="{profile.url}">{profile.network} </a>
+            </span>
+          ))}
+        </section>
+      </section>
+    )
+  }
+
+  renderSkills() {
+    const { skills } = this.props.resume
+
+    return (
+      <section id="skills">
+        <h2>Skills</h2>
+        {skills.map((skill, index) => (
+          <div key={index}>
+            <div>
+              <strong>{skill.name}: </strong>
+              {skill.keywords.map((keyword, index) => {
+                let value =
+                  index === skill.keywords.length - 1 ? keyword : keyword + ', '
+
+                return <span key={index}>{value}</span>
+              })}
+            </div>
+          </div>
+        ))}
+      </section>
+    )
+  }
+
+  renderWork() {
+    const { work } = this.props.resume
+
+    return (
+      <section id="work">
+        <h2>Experience</h2>
+        {work.map((workplace, index) => (
+          <div key={index}>
+            <h3>{workplace.position}</h3>
+            <div>
+              <a href="{workplace.website}">{workplace.company} </a>
+              ·&nbsp;
+              <span>{workplace.startDate}-</span>
+              <span>{workplace.endDate}</span>
+            </div>
+            <List>
+              {workplace.highlights.map((highlight, index2) => (
+                <li
+                  key={index2}
+                  dangerouslySetInnerHTML={{ __html: highlight }}
+                />
+              ))}
+            </List>
+          </div>
+        ))}
+      </section>
+    )
+  }
+
+  renderEducation() {
+    const { education } = this.props.resume
+
+    return (
+      <section id="education">
+        <h2>Education</h2>
+        <List>
+          {education.map((ed, index) => (
+            <List.Item key={index}>
+              {ed.institution} · {ed.studyType}, {ed.area}
+            </List.Item>
+          ))}
+        </List>
+      </section>
+    )
   }
 }
 
@@ -93,4 +124,4 @@ Resume.propTypes = {
   resume: PropTypes.object.isRequired
 }
 
-export default Resume;
+export default Resume

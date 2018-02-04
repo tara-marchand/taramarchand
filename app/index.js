@@ -23,11 +23,12 @@ default:
 
 const compiler = webpack(webpackConfig)
 const app = express()
-const port = process.env.PORT
+const port = process.env.PORT ? process.env.PORT : 3000
 
 if (process.env.NODE_ENV === 'development') {
   app.use(
     require('webpack-dev-middleware')(compiler, {
+      logLevel: 'warn',
       publicPath: webpackConfig.output.publicPath
     })
   )
@@ -53,7 +54,8 @@ app.engine(
 app.set('view engine', '.hbs')
 
 // routes
-app.get('/', (req, res) => res.render('index'))
+app.get('*', (req, res) => res.render('index'))
+// app.get('*', (req, res) => res.redirect('/'))
 
 app.listen(port, function() {
   console.log(`App listening on port ${port}.`)

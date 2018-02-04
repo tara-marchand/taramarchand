@@ -1,27 +1,20 @@
 import { Menu } from 'semantic-ui-react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import React, { PureComponent } from 'react'
-import styled from 'styled-components'
-
-const MenuLink = styled(Menu.Item)`
-  &.active {
-    cursor: default;
-  }
-`
 
 class Header extends PureComponent {
   render() {
     return (
-      <Menu>
-        <MenuLink as={NavLink} isActive={() => false} to="/">
+      <Menu borderless color="black" inverted>
+        <Menu.Item as={NavLink} isActive={() => false} exact to="/">
           Tara Marchand
-        </MenuLink>
-        <MenuLink as={NavLink} exact to="/resume">
+        </Menu.Item>
+        <Menu.Item as={NavLink} to="/resume">
           Resume
-        </MenuLink>
+        </Menu.Item>
       </Menu>
     )
   }
 }
 
-export default Header
+export default withRouter(Header)

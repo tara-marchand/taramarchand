@@ -1,163 +1,156 @@
 {
-    "basics": {
-        "name": "Tara Marchand",
-        "label": "",
-        "picture": "",
-        "email": "tara@mac.com",
-        "phone": "",
-        "website": "http://www.tmarchand.com/",
-        "summary": "Experienced technology lead and front-end engineer.",
-        "profiles": [
-            {
-                "network": "GitHub",
-                "username": "tara-marchand",
-                "url": "https://github.com/tara-marchand"
-            },
-            {
-                "network": "LinkedIn",
-                "username": "trmarch",
-                "url": "http://www.linkedin.com/in/trmarch/"
-            },
-            {
-                "network": "Twitter",
-                "username": "trmarchand",
-                "url": "https://twitter.com/trmarchand"
-            }
-        ]
-    },
-    "work": [
-        {
-            "company": "New Relic",
-            "position": "Senior Software Engineer",
-            "website": "http://www.newrelic.com/",
-            "startDate": "2017",
-            "endDate": "present",
-            "summary": "",
-            "highlights": [
-                "Develop user interface for New Relic's Infrastructure monitoring product",
-                "Collaborate with other engineers, a product mananger, and a designer on features and functionality"
-            ]
-        },
-        {
-            "company": "R/GA",
-            "position": "Technology Lead",
-            "website": "http://www.rga.com/",
-            "startDate": "2009",
-            "endDate": "2017",
-            "summary": "",
-            "highlights": [
-                "<strong>Google:</strong> As part of embedded agency team, led server-side and database development of new internal application with many complex integrations",
-                "<strong>Dignity Health:</strong> Led technology discipline agency-side for this large healthcare client. Analyzed, recommended, and maintained digital solutions",
-                "<strong>Nike Events Tool:</strong> Led front-end development for this platform's localized, mobile-friendly web experiences used by tens of thousands of customers globally. Manage 2 front-end engineers. Integrate with custom APIs. Example calendar: <a href=\"https://www.nike.com/events-registration/series?id=1607&days=7\" target=\"_blanks\">Nike+ San Francisco</a>",
-                "<strong>Microsoft Surface:</strong> Architected and wrote presentation layer code for this fully responsive website developed for the launch of this tablet device. Integrated with custom CMS and API.",
-                "<strong>Nike+ FuelBand:</strong> Helped build the web application front end for the debut of this pioneering activity tracker. Created complex visualizations from user data in JavaScript.",
-                "Promoted from Front End Solutions Architect and previously from Senior Presentation Code Developer."
-            ]
-        },
-        {
-            "company": "DHAP Digital",
-            "position": "User Interface Developer",
-            "website": "http://www.dhapdigital.com/",
-            "startDate": "2007",
-            "endDate": "2009",
-            "summary": "",
-            "highlights": [
-                "<strong>Adobe Marketplace:</strong> Helped develop the user interface for this new web application offering publishing and downloading of extensions and other add-ons for the company's Air and Photoshop software.",
-                "<strong>Lexus.com:</strong> Worked on the front ends of Lexus.com and other websites for related brands Toyota and Scion, managing code in the TeamSite content management system."
-            ]
-        },
-        {
-            "company": "Publicis Modem",
-            "position": "Senior User Interface Developer",
-            "website": "",
-            "startDate": "2005",
-            "endDate": "2007",
-            "summary": "",
-            "highlights": [
-                "<strong>Amgen and Wyeth:</strong> Created the UIs for patient education websites (Enbrel.com, InsideRA.com, PsoriasisConnections.com) for Amgen's top-selling drug Enbrel.",
-                "<strong>Amgen; Sprint:</strong> Built emails and launched large campaigns using a complex email marketing platform, then analyzed resulting data.",
-                "Promoted from User Interface Developer."
-            ]
-        },
-        {
-            "company": "Office of Educational Technology, UC San Francisco School of Medicine",
-            "position": "Educational Technology Developer",
-            "website": "http://meded.ucsf.edu/tel",
-            "startDate": "2003",
-            "endDate": "2004",
-            "summary": "",
-            "highlights": [
-                "Created content for educational microsites and administered calendars and online courses for students, faculty, and staff in the UCSF medical community.",
-                "Provided hands-on technology support for medical school classroom instructors' hardware and software needs."
-            ]
-        },
-        {
-            "company": "Principal Web Designer",
-            "position": "UC Berkeley Extension Online",
-            "website": "",
-            "startDate": "2000",
-            "endDate": "2003",
-            "summary": "",
-            "highlights": [
-                "Developed the user interface for online courses on a myriad of subjects offered by UC Berkeley's prestigious Extension program.",
-                "Organized, edited, and illustrated online course content.",
-                "Promoted from <strong>Senior Web Designer</strong>."
-            ]
-        }
-    ],
-    "education": [
-        {
-            "institution": "University of California, Santa Barbara",
-            "area": "Biopsychology",
-            "studyType": "MA",
-            "startDate": "1994",
-            "endDate": "1996",
-            "gpa": ""
-        },
-        {
-            "institution": "University of California, Davis",
-            "area": "Psychology (Biology Emphasis)",
-            "studyType": "BS",
-            "startDate": "1990",
-            "endDate": "1994",
-            "gpa": ""
-        }
-    ],
-    "skills": [
-        {
-            "name": "Languages",
-            "keywords": [
-                "JavaScript",
-                "CSS",
-                "HTML",
-                "PHP",
-                "Python",
-                "C#",
-                "SQL"
-            ]
-        },
-        {
-            "name": "Tools",
-            "keywords": [
-                "client-side JavaScript libraries and frameworks (jQuery, Angular, Backbone, React)",
-                "CSS preprocessors (SASS, LESS)",
-                "version control systems (git, Subversion)",
-                "build & deployment tools (grunt, gulp, browserify, webpack)",
-                "package managers (bower, npm)",
-                "content management systems & frameworks (WordPress, Sitecore [certified], Django)"
-            ]
-        },
-        {
-            "name": "Interests",
-            "keywords": [
-                "software design & architecture",
-                "API integration",
-                "mobile-first & responsive design",
-                "user experience & interaction design",
-                "agile methodologies",
-                "continuous integration",
-                "performance"
-            ]
-        }
+  "basics": {
+    "name": "Tara Marchand",
+    "label": "",
+    "picture": "",
+    "email": "tara@mac.com",
+    "phone": "",
+    "website": "http://www.tmarchand.com/",
+    "summary": "Experienced technology lead and front-end engineer.",
+    "profiles": [
+      {
+        "network": "GitHub",
+        "username": "tara-marchand",
+        "url": "https://github.com/tara-marchand"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "trmarch",
+        "url": "http://www.linkedin.com/in/trmarch/"
+      },
+      {
+        "network": "Twitter",
+        "username": "trmarchand",
+        "url": "https://twitter.com/trmarchand"
+      }
     ]
+  },
+  "work": [
+    {
+      "company": "New Relic",
+      "position": "Senior Software Engineer",
+      "website": "http://www.newrelic.com/",
+      "startDate": "2017",
+      "endDate": "present",
+      "summary": "",
+      "highlights": [
+        "Develop user interface for New Relic's Infrastructure monitoring product",
+        "Collaborate with other engineers, product manangers, and designers on features and functionality",
+        "Join company-wide UI engineering endeavors, lead project to consolidate discipline guidance and best practices"
+      ]
+    },
+    {
+      "company": "R/GA",
+      "position": "Technology Lead",
+      "website": "http://www.rga.com/",
+      "startDate": "2009",
+      "endDate": "2017",
+      "summary": "",
+      "highlights": [
+        "<strong>Google:</strong> As part of embedded agency team, led server-side and database development of new internal application with many complex integrations",
+        "<strong>Dignity Health:</strong> Led technology discipline agency-side for this large healthcare client. Analyzed, recommended, and maintained digital solutions",
+        "<strong>Nike Events Tool:</strong> Led front-end development for this platform's localized, mobile-friendly web experiences used by tens of thousands of customers globally. Manage 2 front-end engineers. Integrate with custom APIs. Example calendar: <a href=\"https://www.nike.com/events-registration/series?id=1607&days=7\" target=\"_blanks\">Nike+ San Francisco</a>",
+        "<strong>Microsoft Surface:</strong> Architected and wrote presentation layer code for this fully responsive website developed for the launch of this tablet device. Integrated with custom CMS and API.",
+        "<strong>Nike+ FuelBand:</strong> Helped build the web application front end for the debut of this pioneering activity tracker. Created complex visualizations from user data in JavaScript.",
+        "Promoted from Front End Solutions Architect and previously from Senior Presentation Code Developer."
+      ]
+    },
+    {
+      "company": "DHAP Digital",
+      "position": "User Interface Developer",
+      "website": "http://www.dhapdigital.com/",
+      "startDate": "2007",
+      "endDate": "2009",
+      "summary": "",
+      "highlights": [
+        "<strong>Adobe Marketplace:</strong> Helped develop the user interface for this new web application offering publishing and downloading of extensions and other add-ons for the company's Air and Photoshop software.",
+        "<strong>Lexus.com:</strong> Worked on the front ends of Lexus.com and other websites for related brands Toyota and Scion, managing code in the TeamSite content management system."
+      ]
+    },
+    {
+      "company": "Publicis Modem",
+      "position": "Senior User Interface Developer",
+      "website": "",
+      "startDate": "2005",
+      "endDate": "2007",
+      "summary": "",
+      "highlights": [
+        "<strong>Amgen and Wyeth:</strong> Created the UIs for patient education websites (Enbrel.com, InsideRA.com, PsoriasisConnections.com) for Amgen's top-selling drug Enbrel.",
+        "<strong>Amgen; Sprint:</strong> Built emails and launched large campaigns using a complex email marketing platform, then analyzed resulting data.",
+        "Promoted from User Interface Developer."
+      ]
+    },
+    {
+      "company":
+        "Office of Educational Technology, UC San Francisco School of Medicine",
+      "position": "Educational Technology Developer",
+      "website": "http://meded.ucsf.edu/tel",
+      "startDate": "2003",
+      "endDate": "2004",
+      "summary": "",
+      "highlights": [
+        "Created content for educational microsites and administered calendars and online courses for students, faculty, and staff in the UCSF medical community.",
+        "Provided hands-on technology support for medical school classroom instructors' hardware and software needs."
+      ]
+    },
+    {
+      "company": "Principal Web Designer",
+      "position": "UC Berkeley Extension Online",
+      "website": "",
+      "startDate": "2000",
+      "endDate": "2003",
+      "summary": "",
+      "highlights": [
+        "Developed the user interface for online courses on a myriad of subjects offered by UC Berkeley's prestigious Extension program.",
+        "Organized, edited, and illustrated online course content.",
+        "Promoted from <strong>Senior Web Designer</strong>."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of California, Santa Barbara",
+      "area": "Biopsychology",
+      "studyType": "MA",
+      "startDate": "1994",
+      "endDate": "1996",
+      "gpa": ""
+    },
+    {
+      "institution": "University of California, Davis",
+      "area": "Psychology (Biology Emphasis)",
+      "studyType": "BS",
+      "startDate": "1990",
+      "endDate": "1994",
+      "gpa": ""
+    }
+  ],
+  "skills": [
+    {
+      "name": "Languages",
+      "keywords": ["JavaScript", "CSS", "HTML", "PHP", "Python"]
+    },
+    {
+      "name": "Tools",
+      "keywords": [
+        "client-side JavaScript libraries and frameworks (React, Angular)",
+        "CSS preprocessors (SASS)",
+        "version control systems (git)",
+        "build & deployment tools (babel, webpack)",
+        "package managers (npm, yarn)",
+        "content management systems & frameworks"
+      ]
+    },
+    {
+      "name": "Interests",
+      "keywords": [
+        "software design & architecture",
+        "API integration",
+        "user experience & interaction design",
+        "agile methodologies",
+        "continuous integration",
+        "performance"
+      ]
+    }
+  ]
 }

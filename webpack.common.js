@@ -1,7 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = env => {
   return {
@@ -14,7 +13,6 @@ module.exports = env => {
       publicPath: '/static'
     },
     plugins: [
-      new CleanWebpackPlugin(['dist']),
       new webpack.DefinePlugin({
         'process.env': {
           BROWSER: JSON.stringify(true),
@@ -61,8 +59,10 @@ module.exports = env => {
         },
         {
           test: /\.(eot|svg|ttf|woff|woff2)$/,
-          use:
-            'file-loader?outputPath=static/dist&name=[name].[ext]&publicPath=/static/'
+          use: {
+            loader: 'file-loader',
+            options: {}
+          }
         },
         {
           test: /\.(jpg|png|svg)$/,
