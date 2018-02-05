@@ -36,7 +36,15 @@ module.exports = env => {
           test: /\.css$/,
           use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
-            use: ['css-loader', 'postcss-loader']
+            use: [
+              {
+                loader: 'css-loader',
+                options: { minimize: env.NODE_ENV === 'production' }
+              },
+              {
+                loader: 'postcss-loader'
+              }
+            ]
           }),
           include: [path.join(__dirname, 'static', 'src')],
           exclude: [path.join(__dirname, 'node_modules')]
@@ -46,10 +54,13 @@ module.exports = env => {
           use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: [
-              'css-loader',
-              'postcss-loader',
-              'resolve-url-loader',
-              'sass-loader?sourceMap'
+              {
+                loader: 'css-loader',
+                options: { minimize: env.NODE_ENV === 'production' }
+              },
+              { loader: 'postcss-loader' },
+              { loader: 'resolve-url-loader' },
+              { loader: 'sass-loader?sourceMap' }
             ]
           }),
           include: [
