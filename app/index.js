@@ -4,7 +4,6 @@ import dotenv from 'dotenv'
 import exphbs from 'express-handlebars'
 import express from 'express'
 import morgan from 'morgan'
-import mime from 'mime-types'
 import path from 'path'
 import webpack from 'webpack'
 import common from '../webpack.common'
@@ -46,6 +45,7 @@ app.use(
   express.static(path.join(__dirname, '..', 'node_modules', 'dist'))
 )
 
+// logging
 app.use(
   morgan(
     '[:date[clf]] ":method :url HTTP/:http-version" :status :response-time ms - :res[content-length]'
@@ -63,11 +63,8 @@ app.set('view engine', '.hbs')
 
 // routes
 app.get('*', (req, res) => {
-  // const type = mime.lookup(req.path)
-
   return res.render('index')
 })
-// app.get('*', (req, res) => res.redirect('/'))
 
 app.listen(port, function() {
   console.log(`App listening on port ${port}.`)
