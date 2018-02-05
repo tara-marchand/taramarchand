@@ -1827,8 +1827,8 @@ template {
 
 @font-face {
   font-family: Icons;
-  src: url(/static674f50d287a8c48dc19ba404d20fe713.eot);
-  src: url(/static674f50d287a8c48dc19ba404d20fe713.eot) format("embedded-opentype"), url(/staticaf7ae505a9eed503f8b8e6982036873e.woff2) format("woff2"), url(/staticfee66e712a8a08eef5805a46892932ad.woff) format("woff"), url(/staticb06871f281fee6b241d60582ae9369b9.ttf) format("truetype"), url(/static2a18dc4e07bcc9c870bf5e825ad290bd.svg) format("svg");
+  src: url(/static/674f50d287a8c48dc19ba404d20fe713.eot);
+  src: url(/static/674f50d287a8c48dc19ba404d20fe713.eot) format("embedded-opentype"), url(/static/af7ae505a9eed503f8b8e6982036873e.woff2) format("woff2"), url(/static/fee66e712a8a08eef5805a46892932ad.woff) format("woff"), url(/static/b06871f281fee6b241d60582ae9369b9.ttf) format("truetype"), url(/static/2a18dc4e07bcc9c870bf5e825ad290bd.svg) format("svg");
   font-style: normal;
   font-weight: 400;
   font-variant: normal;

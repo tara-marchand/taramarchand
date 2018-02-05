@@ -68,17 +68,12 @@ app.set('view engine', '.hbs')
 // routes
 app.get('*', (req, res) => {
   let type = mime.lookup(req.path)
-
-  console.log(req.path)
-  console.log(type)
-
   if (!type) {
     type = 'text/html'
   }
 
   return res.type(type).render('index')
 })
-// app.get('*', (req, res) => res.redirect('/'))
 
 app.listen(port, function() {
   console.log(`App listening on port ${port}.`)

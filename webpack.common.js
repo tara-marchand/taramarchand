@@ -10,7 +10,7 @@ module.exports = env => {
     output: {
       filename: 'main.bundle.js',
       path: path.resolve(__dirname, 'static', 'dist'),
-      publicPath: '/static'
+      publicPath: '/static/'
     },
     plugins: [
       new webpack.DefinePlugin({
