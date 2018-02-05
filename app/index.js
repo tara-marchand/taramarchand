@@ -1,9 +1,11 @@
 'use strict'
 
+import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 import exphbs from 'express-handlebars'
 import express from 'express'
 import morgan from 'morgan'
+import mime from 'mime-types'
 import path from 'path'
 import webpack from 'webpack'
 import common from '../webpack.common'
@@ -36,6 +38,8 @@ if (process.env.NODE_ENV === 'development') {
   app.use(require('webpack-hot-middleware')(compiler))
 }
 
+app.use(bodyParser.raw())
+
 app.use(
   '/static/',
   express.static(path.join(__dirname, '..', 'static', 'dist'))
@@ -63,8 +67,18 @@ app.set('view engine', '.hbs')
 
 // routes
 app.get('*', (req, res) => {
-  return res.render('index')
+  let type = mime.lookup(req.path)
+
+  console.log(req.path)
+  console.log(type)
+
+  if (!type) {
+    type = 'text/html'
+  }
+
+  return res.type(type).render('index')
 })
+// app.get('*', (req, res) => res.redirect('/'))
 
 app.listen(port, function() {
   console.log(`App listening on port ${port}.`)
