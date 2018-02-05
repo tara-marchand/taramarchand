@@ -1,6 +1,7 @@
 'use strict'
 
 import bodyParser from 'body-parser'
+import compression from 'compression'
 import dotenv from 'dotenv'
 import exphbs from 'express-handlebars'
 import express from 'express'
@@ -36,6 +37,8 @@ if (process.env.NODE_ENV === 'development') {
     })
   )
   app.use(require('webpack-hot-middleware')(compiler))
+} else if (process.env.NODE_ENV === 'production') {
+  app.use(compression())
 }
 
 app.use(bodyParser.raw())
