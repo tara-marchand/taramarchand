@@ -5,7 +5,7 @@
     "picture": "",
     "email": "tara@mac.com",
     "phone": "",
-    "website": "http://www.tmarchand.com/",
+    "website": "http://www.taramarchand.com/",
     "summary": "Experienced technology lead and front-end engineer.",
     "profiles": [
       {
@@ -36,7 +36,8 @@
       "highlights": [
         "Develop user interface for New Relic's Infrastructure monitoring product",
         "Collaborate with other engineers, product manangers, and designers on features and functionality",
-        "Join company-wide UI engineering endeavors, lead project to consolidate discipline guidance and best practices"
+        "Work with support team to troubleshoot and fix issues reported by customers",
+        "Join company-wide UI engineering endeavors, co-lead project to consolidate discipline guidance and best practices"
       ]
     },
     {
@@ -112,23 +113,23 @@
       "institution": "University of California, Santa Barbara",
       "area": "Biopsychology",
       "studyType": "MA",
-      "startDate": "1994",
-      "endDate": "1996",
+      "startDate": "",
+      "endDate": "",
       "gpa": ""
     },
     {
       "institution": "University of California, Davis",
       "area": "Psychology (Biology Emphasis)",
       "studyType": "BS",
-      "startDate": "1990",
-      "endDate": "1994",
+      "startDate": "",
+      "endDate": "",
       "gpa": ""
     }
   ],
   "skills": [
     {
       "name": "Languages",
-      "keywords": ["JavaScript", "CSS", "HTML", "PHP", "Python"]
+      "keywords": ["JavaScript", "CSS", "HTML", "Python", "PHP"]
     },
     {
       "name": "Tools",
