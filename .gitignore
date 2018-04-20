@@ -4,3 +4,4 @@ dist
 node_modules
 npm-debug.log
 webpack_stats.html
+newrelic_agent.log

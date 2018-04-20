@@ -1,5 +1,6 @@
 'use strict'
 
+import newrelic from 'newrelic'
 import bodyParser from 'body-parser'
 import compression from 'compression'
 import dotenv from 'dotenv'
