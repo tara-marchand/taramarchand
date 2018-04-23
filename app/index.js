@@ -1,34 +1,39 @@
-'use strict'
+'use strict';
 
-import newrelic from 'newrelic'
-import bodyParser from 'body-parser'
-import compression from 'compression'
-import dotenv from 'dotenv'
-import exphbs from 'express-handlebars'
-import express from 'express'
-import morgan from 'morgan'
-import mime from 'mime-types'
-import path from 'path'
-import webpack from 'webpack'
-import common from '../webpack.common'
+// import newrelic from 'newrelic';
+import bodyParser from 'body-parser';
+import compression from 'compression';
+import dotenv from 'dotenv';
+import exphbs from 'express-handlebars';
+import express from 'express';
+import morgan from 'morgan';
+import mime from 'mime-types';
+import path from 'path';
+import webpack from 'webpack';
 
-dotenv.config()
+import Photos from './photos';
+import common from '../webpack.common';
 
-let webpackConfig
+dotenv.config();
+
+let webpackConfig;
 switch (process.env.NODE_ENV) {
-case 'production':
-  webpackConfig = require('../webpack.prod')(process.env)
-  break
+  case 'production':
+    webpackConfig = require('../webpack.prod')(process.env);
+    break;
 
-case 'development':
-default:
-  webpackConfig = require('../webpack.dev')(process.env)
-  break
+  case 'development':
+  default:
+    webpackConfig = require('../webpack.dev')(process.env);
+    break;
 }
 
-const compiler = webpack(webpackConfig)
-const app = express()
-const port = process.env.PORT ? process.env.PORT : 3000
+const compiler = webpack(webpackConfig);
+const app = express();
+const port = process.env.PORT ? process.env.PORT : 3000;
+
+// controllers
+const photos = new Photos();
 
 if (process.env.NODE_ENV === 'development') {
   app.use(
@@ -36,29 +41,29 @@ if (process.env.NODE_ENV === 'development') {
       logLevel: 'warn',
       publicPath: webpackConfig.output.publicPath
     })
-  )
-  app.use(require('webpack-hot-middleware')(compiler))
+  );
+  app.use(require('webpack-hot-middleware')(compiler));
 } else if (process.env.NODE_ENV === 'production') {
-  app.use(compression())
+  app.use(compression());
 }
 
-app.use(bodyParser.raw())
+app.use(bodyParser.raw());
 
 app.use(
   '/static/',
-  express.static(path.join(__dirname, '..', 'static', 'dist'))
-)
+  express.static(path.join(__dirname, '..', 'static', 'dist'), { index: false })
+);
 app.use(
   '/modules/',
   express.static(path.join(__dirname, '..', 'node_modules', 'dist'))
-)
+);
 
 // logging
 app.use(
   morgan(
     '[:date[clf]] ":method :url HTTP/:http-version" :status :response-time ms - :res[content-length]'
   )
-)
+);
 
 app.engine(
   '.hbs',
@@ -66,19 +71,21 @@ app.engine(
     defaultLayout: 'main',
     extname: '.hbs'
   })
-)
-app.set('view engine', '.hbs')
+);
+app.set('view engine', '.hbs');
 
 // routes
+app.get('/api/photos', photos.index);
+
 app.get('*', (req, res) => {
-  let type = mime.lookup(req.path)
+  let type = mime.lookup(req.path);
   if (!type) {
-    type = 'text/html'
+    type = 'text/html';
   }
 
-  return res.type(type).render('index')
-})
+  return res.type(type).render('index');
+});
 
 app.listen(port, function() {
-  console.log(`App listening on port ${port}.`)
-})
+  console.log(`App listening on port ${port}.`);
+});

@@ -1,7 +1,8 @@
 module.exports = {
   env: {
     es6: true,
-    browser: true
+    browser: false,
+    node: true
   },
   parser: 'babel-eslint',
   plugins: ['prettier', 'react'],
@@ -13,11 +14,14 @@ module.exports = {
   //   },
   //   sourceType: 'module'
   // },
-  extends: ['eslint:recommended', 'prettier', 'plugin:react/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:prettier/recommended'
+  ],
   rules: {
     indent: ['warn', 2],
     'prettier/prettier': 'error',
-    quotes: ['error', 'single'],
     strict: 0
   }
 };

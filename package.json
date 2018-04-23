@@ -12,8 +12,8 @@
     "build:prod": "yarn run clean; webpack --config=webpack.prod.js --env.NODE_ENV=production --display=errors-only --colors",
     "build:dev:stats": "webpack --config=webpack.dev.js --env.NODE_ENV=development --json > stats-dev.json",
     "build:prod:stats": "webpack --config=webpack.prod.js --env.NODE_ENV=production --json > stats-prod.json",
-    "clean": "rimraf ./static/dist",
-    "dev": "yarn run build:dev; babel-node --presets=env,react --plugins=react-hot-loader/babel app/index.js",
+    "clean": "rimraf static/dist",
+    "dev": "yarn run build:dev; DEBUG=express:* babel-node --presets=env,react --plugins=react-hot-loader/babel app/index.js",
     "start": "yarn run build:prod; babel-node --presets=env,react app/index.js",
     "stats": "yarn run build:dev:stats; yarn run build:prod:stats",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -54,9 +54,11 @@
     "file-loader": "^0.10.1",
     "global": "^4.3.2",
     "image-webpack-loader": "^3.2.0",
+    "jsdom": "^11.8.0",
     "mime-types": "^2.1.17",
     "morgan": "^1.9.0",
     "newrelic": "^4.0.0",
+    "node-fetch": "^2.1.2",
     "node-sass": "^4.5.0",
     "postcss-loader": "^1.3.3",
     "precss": "^1.4.0",
@@ -75,12 +77,16 @@
     "url-loader": "^0.5.8",
     "webpack": "^3.7.1",
     "webpack-merge": "^4.1.1",
-    "webpack-node-externals": "^1.6.0"
+    "webpack-node-externals": "^1.6.0",
+    "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
     "eslint": "^4.9.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.4.0",
+    "prettier": "^1.12.1",
     "webpack-dev-middleware": "^2.0.4",
     "webpack-hot-middleware": "^2.21.0"
   }

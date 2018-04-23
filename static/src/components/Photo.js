@@ -1,15 +1,17 @@
-import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
 
 class Photo extends PureComponent {
   render() {
-    const { alt, src } = this.props
+    const { alt, src } = this.props;
 
-    return (
-      <div>
-        <img alt={alt} src={src} />
-      </div>
-    )
+    return <img alt={alt} src={src} />;
   }
 }
 
-export default Photo
+Photo.propTypes = {
+  alt: PropTypes.string,
+  src: PropTypes.string.isRequired
+};
+
+export default Photo;
