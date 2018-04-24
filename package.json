@@ -44,6 +44,7 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.2.1",
     "babel-preset-react": "^6.23.0",
+    "cloudinary": "^1.11.0",
     "compression": "^1.7.1",
     "css-loader": "^0.26.4",
     "dotenv": "^4.0.0",
