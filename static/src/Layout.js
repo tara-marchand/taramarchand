@@ -8,14 +8,12 @@ import Footer from './components/Footer';
 
 import Home from './components/Home';
 import Resume from './components/Resume';
-import Photos from './components/Photos';
 
 class Layout extends PureComponent {
   constructor(props) {
     super(props);
 
     this.views = {
-      photos: Photos,
       resume: Resume
     };
   }

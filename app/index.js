@@ -11,7 +11,6 @@ import mime from 'mime-types';
 import path from 'path';
 import webpack from 'webpack';
 
-import Photos from './photos';
 import common from '../webpack.common';
 
 dotenv.config();
@@ -33,7 +32,6 @@ const app = express();
 const port = process.env.PORT ? process.env.PORT : 3000;
 
 // controllers
-const photos = new Photos();
 
 if (process.env.NODE_ENV === 'development') {
   app.use(
@@ -75,8 +73,6 @@ app.engine(
 app.set('view engine', '.hbs');
 
 // routes
-app.get('/api/photos', photos.index);
-
 app.get('*', (req, res) => {
   let type = mime.lookup(req.path);
   if (!type) {
