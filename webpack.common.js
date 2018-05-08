@@ -1,13 +1,18 @@
 /* eslint-env node */
-const path = require('path')
-const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const babelOptions = {
+  presets: [['env', { modules: false }], 'react'],
+  plugins: ['transform-class-properties']
+};
 
 module.exports = env => {
   return {
     context: path.resolve(__dirname),
     target: 'web',
-    entry: ['./static/src/index.js'],
+    entry: ['./static/src/index.ts'],
     output: {
       filename: 'main.bundle.js',
       path: path.resolve(__dirname, 'static', 'dist'),
@@ -22,16 +27,32 @@ module.exports = env => {
       }),
       new ExtractTextPlugin('main.css')
     ],
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', 'jsx']
+    },
     module: {
       rules: [
         {
           test: /\.js$/,
           exclude: /node_modules/,
           loader: 'babel-loader',
-          query: {
-            presets: [['env', { modules: false }], 'react'],
-            plugins: ['transform-class-properties']
-          }
+          options: babelOptions
+        },
+        {
+          test: /\.ts$/,
+          exclude: /node_modules/,
+          use: [
+            {
+              loader: 'babel-loader',
+              options: babelOptions
+            },
+            {
+              loader: 'ts-loader',
+              options: {
+                configFile: 'tsconfig.json'
+              }
+            }
+          ]
         },
         {
           test: /\.css$/,
@@ -84,5 +105,5 @@ module.exports = env => {
         }
       ]
     }
-  }
-}
+  };
+};

@@ -1,25 +1,25 @@
 import { gujuon, getKanaByRomaji } from 'japanese-kana';
 import React, { PureComponent } from 'react';
 
-import FlashCard from './FlashCard'
+import FlashCard from './FlashCard';
 
 class Japanese extends PureComponent {
   state = {
     showCard: false
-  }
+  };
 
   render() {
-    const { showCard } = this.state
+    const { showCard } = this.state;
 
     return (
-      <button onClick={this.showRandomCard()}>Random card!</button>
-      <FlashCard {...props} />
-    )
+      <div>
+        <button onClick={this.showRandomCard()}>Random card!</button>
+        <FlashCard {...props} />
+      </div>
+    );
   }
 
-  showRandomCard() {
-
-  }
+  showRandomCard() {}
 
   get randomCard() {
     const keys = Object.keys(gujuon);

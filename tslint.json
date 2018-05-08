@@ -1,0 +1,38 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "rules": {
+    "interface-name": [true, "never-prefix"],
+    // 'no-unused-variable' lint rule does not need to be set if 'noUnusedLocals'
+    // & 'noUnusedParameters' compiler options enabled in tsconfig.json.
+    "no-unused-variable": [false]
+  },
+  "linterOptions": { "exclude": ["*.js"] }
+  // {
+  //   "defaultSeverity": "error",
+  //   "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
+  //   "rules": {
+  //     "await-promise": [false],
+  //     "jsx-boolean-value": ["never"],
+  //     "interface-name": [false],
+  //     "no-console": [true, "log"],
+  //     "no-empty": [false],
+  //     "no-namespace": [false],
+  //     "no-floating-promises": [false],
+  //     "no-shadowed-variable": [false],
+  //     "no-submodule-imports": [false],
+  //     "no-this-assignment": [true, { "allow-destructuring": true }],
+  //     "no-unused-expression": [
+  //       true,
+  //       "allow-fast-null-checks",
+  //       "allow-tagged-template"
+  //     ],
+  //     // 'no-unused-variable' lint rule does not need to be set if the
+  //     // 'no-unused-locals' and 'no-unused-parameters' compiler options are enabled.
+  //     "no-unused-variable": [false],
+  //     "only-arrow-functions": [false],
+  //     "prettier": [true]
+  //   },
+  //   "rulesDirectory": ["tslint-plugin-prettier"]
+  // }
+}

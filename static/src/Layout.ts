@@ -1,17 +1,21 @@
-import PropTypes from 'prop-types';
+import * as H from 'history';
 import React, { PureComponent } from 'react';
 import { Route, withRouter } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 
-import Header from './components/Header';
 import Footer from './components/Footer';
+import Header from './components/Header';
 
+import {History} from 'history';
+import {match} from 'react-router';
 import Home from './components/Home';
 import Japanese from './components/Japanese';
 import Resume from './components/Resume';
 
-class Layout extends PureComponent {
-  constructor(props) {
+class Layout extends PureComponent<Props> {
+  private views: object
+  
+  constructor(props: Props) {
     super(props);
 
     this.views = {
@@ -20,7 +24,7 @@ class Layout extends PureComponent {
     };
   }
 
-  render() {
+  public render() {
     return (
       <div>
         <Header />
@@ -33,7 +37,7 @@ class Layout extends PureComponent {
     );
   }
 
-  renderView = props => {
+  private renderView = props => {
     const View = this.views[props.match.params.view];
 
     if (View) {
@@ -43,9 +47,9 @@ class Layout extends PureComponent {
   };
 }
 
-Layout.propTypes = {
-  location: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired
+interface Props {
+  location: H.Location
+  match: match<object>
 };
 
 export default withRouter(Layout);

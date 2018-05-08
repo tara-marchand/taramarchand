@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "src",
+    "jsx": "react",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es2015.collection",
+      "es2015.promise",
+      "es5",
+      "es6"
+    ],
+    "module": "es6",
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "built",
+    "strict": true,
+    "target": "es5"
+  },
+  "include": ["static/src/**/*.ts*"],
+  "exclude": ["node_modules"]
+}
