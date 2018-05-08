@@ -3886,6 +3886,10 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
+japanese-kana@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/japanese-kana/-/japanese-kana-0.1.2.tgz#79089050545de734d8a8223ca3aff2cff813799c"
+
 jest-docblock@^21.0.0:
   version "21.2.0"
   resolved "https://registry.yarnpkg.com/jest-docblock/-/jest-docblock-21.2.0.tgz#51529c3b30d5fd159da60c27ceedc195faf8d414"

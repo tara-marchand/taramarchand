@@ -7,6 +7,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 import Home from './components/Home';
+import Japanese from './components/Japanese';
 import Resume from './components/Resume';
 
 class Layout extends PureComponent {
@@ -14,6 +15,7 @@ class Layout extends PureComponent {
     super(props);
 
     this.views = {
+      japanese: Japanese,
       resume: Resume
     };
   }
