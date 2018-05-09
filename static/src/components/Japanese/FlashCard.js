@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 
 class FlashCard extends PureComponent {
-  propTypes = {
+  static propTypes = {
     hiragana: PropTypes.string.isRequired,
     katakana: PropTypes.string.isRequired,
     romaji: PropTypes.string.isRequired

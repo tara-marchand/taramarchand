@@ -1,27 +1,37 @@
 import { gujuon, getKanaByRomaji } from 'japanese-kana';
 import React, { PureComponent } from 'react';
 
-import FlashCard from './FlashCard'
+import FlashCard from './FlashCard';
 
 class Japanese extends PureComponent {
   state = {
+    romaji: '',
     showCard: false
-  }
+  };
 
   render() {
-    const { showCard } = this.state
+    const { hiragana, katakana, romaji, showCard } = this.state;
 
     return (
-      <button onClick={this.showRandomCard()}>Random card!</button>
-      <FlashCard {...props} />
-    )
+      <div>
+        <button onClick={this.showRandomCard}>Random card!</button>
+        {showCard && (
+          <FlashCard hiragana={hiragana} katakana={katakana} romaji={romaji} />
+        )}
+      </div>
+    );
   }
 
-  showRandomCard() {
+  showRandomCard = () => {
+    const romaji = this.randomRomaji;
+    const kana = getKanaByRomaji(romaji);
 
-  }
+    const hiragana = kana[0];
+    const katakana = kana[1];
+    this.setState({ hiragana, katakana, romaji, showCard: true });
+  };
 
-  get randomCard() {
+  get randomRomaji() {
     const keys = Object.keys(gujuon);
 
     // https://jsperf.com/random-object-property-selection
