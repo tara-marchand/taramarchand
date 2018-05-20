@@ -25,17 +25,16 @@ class Japanese extends PureComponent {
   showRandomCard = () => {
     const romaji = this.randomRomaji;
     const kana = getKanaByRomaji(romaji);
-
     const hiragana = kana[0];
     const katakana = kana[1];
+
     this.setState({ hiragana, katakana, romaji, showCard: true });
   };
 
   get randomRomaji() {
     const keys = Object.keys(gujuon);
 
-    // https://jsperf.com/random-object-property-selection
-    return gujuon[keys[(keys.length * Math.random()) << 0]];
+    return keys[Math.floor(Math.random() * keys.length)];
   }
 }
 
