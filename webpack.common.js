@@ -1,7 +1,7 @@
 /* eslint-env node */
-const path = require('path')
-const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = env => {
   return {
@@ -12,6 +12,9 @@ module.exports = env => {
       filename: 'main.bundle.js',
       path: path.resolve(__dirname, 'static', 'dist'),
       publicPath: '/static/'
+    },
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js']
     },
     plugins: [
       new webpack.DefinePlugin({
@@ -33,6 +36,7 @@ module.exports = env => {
             plugins: ['transform-class-properties']
           }
         },
+        { test: /\.tsx?$/, loader: 'ts-loader' },
         {
           test: /\.css$/,
           use: ExtractTextPlugin.extract({
@@ -84,5 +88,5 @@ module.exports = env => {
         }
       ]
     }
-  }
-}
+  };
+};

@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "alwaysStrict": true,
+    "jsx": "preserve",
+    "strict": true
+  }
+}

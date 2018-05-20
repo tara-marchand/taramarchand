@@ -11,19 +11,17 @@ import mime from 'mime-types';
 import path from 'path';
 import webpack from 'webpack';
 
-import common from '../webpack.common';
-
 dotenv.config();
 
 let webpackConfig;
 switch (process.env.NODE_ENV) {
   case 'production':
-    webpackConfig = require('../webpack.prod')(process.env);
+    webpackConfig = require('../webpack.prod');
     break;
 
   case 'development':
   default:
-    webpackConfig = require('../webpack.dev')(process.env);
+    webpackConfig = require('../webpack.dev');
     break;
 }
 

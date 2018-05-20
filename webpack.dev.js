@@ -1,29 +1,86 @@
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const common = require('./webpack.common.js')
+/* eslint-env node */
+const path = require('path');
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = env => {
-  return merge.strategy({
-    entry: 'prepend'
-  })(common(env), {
-    devServer: {
-      hot: true
-    },
-    devtool: 'eval',
-    entry: ['react-hot-loader/patch', 'webpack-hot-middleware/client'],
-    module: {
-      rules: [
-        {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          loader: 'babel-loader',
-          query: {
-            presets: [['env', { modules: false }], 'react'],
-            plugins: ['transform-class-properties']
+module.exports = {
+  context: path.resolve(__dirname),
+  devServer: {
+    hot: true
+  },
+  devtool: 'inline-source-map',
+  entry: [
+    'react-hot-loader/patch',
+    'webpack-hot-middleware/client',
+    './static/src/index.js'
+  ],
+  module: {
+    rules: [
+      {
+        test: /(\.js$|\.ts(x?)$)/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            query: {
+              presets: [['env', { modules: false }], 'react'],
+              plugins: ['transform-class-properties']
+            }
+          },
+          {
+            loader: 'ts-loader'
           }
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: { minimize: false }
+          },
+          { loader: 'postcss-loader' },
+          { loader: 'resolve-url-loader' },
+          { loader: 'sass-loader?sourceMap' }
+        ],
+        include: [
+          path.join(__dirname, 'static', 'src'),
+          path.join(__dirname, 'node_modules')
+        ]
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        use: {
+          loader: 'file-loader',
+          options: {}
         }
-      ]
-    },
-    plugins: [new webpack.HotModuleReplacementPlugin()]
-  })
-}
+      },
+      {
+        test: /\.(jpg|png|svg)$/,
+        use: {
+          loader: 'url-loader'
+        }
+      }
+    ]
+  },
+  output: {
+    filename: 'main.bundle.js',
+    path: path.resolve(__dirname, 'static', 'dist'),
+    publicPath: '/static/'
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        BROWSER: JSON.stringify(true),
+        NODE_ENV: JSON.stringify('development')
+      }
+    }),
+    new MiniCssExtractPlugin({ filename: 'main.css' }),
+    new webpack.HotModuleReplacementPlugin()
+  ],
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js']
+  },
+  target: 'web'
+};

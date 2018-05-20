@@ -1,16 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { AppContainer } from 'react-hot-loader'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
 
-import './index.scss'
-import App from './App'
-import { isDev } from './utils'
+import './index.scss';
+import App from './App';
+import { isDev } from './utils';
 
-const _isDev = isDev()
+const _isDev = isDev();
 
 const renderApp = () => {
-  ReactDOM.render(<App />, document.getElementById('root'))
-}
+  ReactDOM.render(<App />, document.getElementById('root'));
+};
 
 const renderHotApp = () => {
   ReactDOM.render(
@@ -18,14 +18,14 @@ const renderHotApp = () => {
       <App />
     </AppContainer>,
     document.getElementById('root')
-  )
-}
+  );
+};
 
 if (_isDev && module.hot) {
-  renderHotApp()
+  renderHotApp();
   module.hot.accept('./App', () => {
-    renderHotApp()
-  })
+    renderHotApp();
+  });
 } else {
-  renderApp()
+  renderApp();
 }

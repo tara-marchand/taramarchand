@@ -1,13 +1,6 @@
-import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 
-class FlashCard extends PureComponent {
-  static propTypes = {
-    hiragana: PropTypes.string.isRequired,
-    katakana: PropTypes.string.isRequired,
-    romaji: PropTypes.string.isRequired
-  };
-
+export class FlashCard extends PureComponent<Props> {
   render() {
     const { hiragana, katakana, romaji } = this.props;
 
@@ -19,6 +12,12 @@ class FlashCard extends PureComponent {
       </div>
     );
   }
+}
+
+export interface Props {
+  hiragana: string;
+  katakana: string;
+  romaji: string;
 }
 
 export default FlashCard;
