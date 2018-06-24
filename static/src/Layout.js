@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter } from 'react-router';
 import { Container } from 'semantic-ui-react';
 
 import Header from './components/Header';
@@ -42,10 +41,5 @@ class Layout extends PureComponent {
     return <Home />;
   };
 }
-
-Layout.propTypes = {
-  location: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired
-};
 
 export default withRouter(Layout);

@@ -1,8 +1,8 @@
-import React from 'react'
-import { withRouter } from 'react-router-dom'
-import { Icon, Menu } from 'semantic-ui-react'
+import React, { PureComponent } from 'react';
+import { withRouter } from 'react-router';
+import { Icon, Menu } from 'semantic-ui-react';
 
-class Footer extends React.Component {
+class Footer extends PureComponent {
   render() {
     return (
       <Menu borderless color="grey" inverted>
@@ -20,8 +20,8 @@ class Footer extends React.Component {
           <Icon name="twitter square" />Twitter
         </Menu.Item>
       </Menu>
-    )
+    );
   }
 }
 
-export default withRouter(Footer)
+export default withRouter(Footer);

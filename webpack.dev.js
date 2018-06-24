@@ -14,10 +14,24 @@ module.exports = {
     'webpack-hot-middleware/client',
     './static/src/index.js'
   ],
+  mode: 'development',
   module: {
     rules: [
       {
-        test: /(\.js$|\.ts(x?)$)/,
+        test: /\.js(x?)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            query: {
+              presets: [['env', { modules: false }], 'react'],
+              plugins: ['transform-class-properties']
+            }
+          }
+        ]
+      },
+      {
+        test: /\.ts(x?)$/,
         exclude: /node_modules/,
         use: [
           {
@@ -28,7 +42,10 @@ module.exports = {
             }
           },
           {
-            loader: 'ts-loader'
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true //HMR doesn't work without this
+            }
           }
         ]
       },
@@ -80,7 +97,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
   },
   target: 'web'
 };

@@ -38,7 +38,11 @@ if (process.env.NODE_ENV === 'development') {
       publicPath: webpackConfig.output.publicPath
     })
   );
-  app.use(require('webpack-hot-middleware')(compiler));
+  app.use(
+    require('webpack-hot-middleware')(compiler, {
+      reload: true
+    })
+  );
 } else if (process.env.NODE_ENV === 'production') {
   app.use(compression());
 }

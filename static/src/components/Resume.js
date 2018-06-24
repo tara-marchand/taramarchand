@@ -1,12 +1,11 @@
-import PropTypes from 'prop-types'
-import React, { PureComponent } from 'react'
-import { List } from 'semantic-ui-react'
+import React, { PureComponent } from 'react';
+import { List } from 'semantic-ui-react';
 
-import resumeJson from './resume.json'
+import resumeJson from './resume.json';
 
 class Resume extends PureComponent {
   render() {
-    const { name } = this.props.resume.basics
+    const { name } = resumeJson.basics;
 
     return (
       <div id="resume">
@@ -19,11 +18,11 @@ class Resume extends PureComponent {
         <hr />
         {this.renderEducation()}
       </div>
-    )
+    );
   }
 
   renderBasics() {
-    const { basics } = this.props.resume
+    const { basics } = resumeJson;
 
     return (
       <section id="basics">
@@ -43,11 +42,11 @@ class Resume extends PureComponent {
           ))}
         </section>
       </section>
-    )
+    );
   }
 
   renderSkills() {
-    const { skills } = this.props.resume
+    const { skills } = resumeJson;
 
     return (
       <section id="skills">
@@ -58,19 +57,21 @@ class Resume extends PureComponent {
               <strong>{skill.name}: </strong>
               {skill.keywords.map((keyword, index) => {
                 let value =
-                  index === skill.keywords.length - 1 ? keyword : keyword + ', '
+                  index === skill.keywords.length - 1
+                    ? keyword
+                    : keyword + ', ';
 
-                return <span key={index}>{value}</span>
+                return <span key={index}>{value}</span>;
               })}
             </div>
           </div>
         ))}
       </section>
-    )
+    );
   }
 
   renderWork() {
-    const { work } = this.props.resume
+    const { work } = resumeJson;
 
     return (
       <section id="work">
@@ -95,11 +96,11 @@ class Resume extends PureComponent {
           </div>
         ))}
       </section>
-    )
+    );
   }
 
   renderEducation() {
-    const { education } = this.props.resume
+    const { education } = resumeJson;
 
     return (
       <section id="education">
@@ -112,16 +113,8 @@ class Resume extends PureComponent {
           ))}
         </List>
       </section>
-    )
+    );
   }
 }
 
-Resume.defaultProps = {
-  resume: resumeJson
-}
-
-Resume.propTypes = {
-  resume: PropTypes.object.isRequired
-}
-
-export default Resume
+export default Resume;

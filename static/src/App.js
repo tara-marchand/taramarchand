@@ -1,14 +1,20 @@
-import React, { PureComponent } from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import React, { PureComponent } from 'react';
+import { hot } from 'react-hot-loader';
+import { BrowserRouter } from 'react-router-dom';
 
-import Layout from './Layout'
+import { isDev } from './utils';
+import Layout from './Layout';
 
-export default class App extends PureComponent {
+class App extends PureComponent {
   render() {
     return (
       <BrowserRouter>
         <Layout />
       </BrowserRouter>
-    )
+    );
   }
 }
+
+const appExport = isDev() && module.hot ? hot(module)(App) : App;
+
+export default appExport;

@@ -1,6 +1,7 @@
-import { Menu } from 'semantic-ui-react'
-import { NavLink, withRouter } from 'react-router-dom'
-import React, { PureComponent } from 'react'
+import { Menu } from 'semantic-ui-react';
+import { withRouter } from 'react-router';
+import { NavLink } from 'react-router-dom';
+import React, { PureComponent } from 'react';
 
 class Header extends PureComponent {
   render() {
@@ -13,8 +14,8 @@ class Header extends PureComponent {
           Resume
         </Menu.Item>
       </Menu>
-    )
+    );
   }
 }
 
-export default withRouter(Header)
+export default withRouter(Header);
