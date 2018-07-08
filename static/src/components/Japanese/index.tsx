@@ -3,8 +3,19 @@ import React, { PureComponent } from 'react';
 
 import FlashCard from './FlashCard';
 
-class Japanese extends PureComponent {
+export namespace Japanese {
+  export interface State {
+    hiragana: string;
+    katakana: string;
+    romaji: string;
+    showCard: boolean;
+  }
+}
+
+class Japanese extends PureComponent<object, Japanese.State> {
   state = {
+    hiragana: '',
+    katakana: '',
     romaji: '',
     showCard: false
   };

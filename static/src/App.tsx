@@ -15,6 +15,7 @@ class App extends PureComponent {
   }
 }
 
-const appExport = isDev() && module.hot ? hot(module)(App) : App;
+const appExport =
+  isDev() && (module as any).hot ? hot(module as any)(App) : App;
 
 export default appExport;
