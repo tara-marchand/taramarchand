@@ -2,25 +2,28 @@
   "name": "tmarchand",
   "version": "1.0.0",
   "description": "",
-  "main": "app/index.js",
+  "main": "src/app/index.tsx",
   "engines": {
-    "node": "^8",
+    "node": "^9",
     "yarn": "^1"
   },
   "scripts": {
+    "build:app":
+      "babel ./app/src/index.js --out-file=./app/dist/index.js --presets es2015 --ignore=./node_modules",
     "build:dev":
-      "yarn run clean; webpack --mode=development --config=webpack.dev.js --env.NODE_ENV=development --env.PORT=3000 --display=errors-only --colors --verbose",
+      "yarn run clean; yarn run build:app; webpack --mode=development --config=webpack.dev.js --env.NODE_ENV=development --env.PORT=3000 --display=errors-only --colors --verbose",
     "build:prod":
-      "yarn run clean; webpack --mode=production --config=webpack.prod.js --env.NODE_ENV=production --display=errors-only --colors",
+      "yarn run clean; yarn run build:app; webpack --mode=production --config=webpack.prod.js --env.NODE_ENV=production --display=errors-only --colors",
     "build:dev:stats":
       "webpack --mode=development --config=webpack.dev.js --env.NODE_ENV=development --json > stats-dev.json",
     "build:prod:stats":
       "webpack --mode=production --config=webpack.prod.js --env.NODE_ENV=production --json > stats-prod.json",
     "clean": "rm -rf static/dist",
-    "dev":
-      "yarn run build:dev; BABEL_ENV=development NODE_ENV=development DEBUG=express:* babel-node --presets=env,react app/index.js",
-    "start":
-      "yarn run build:prod; BABEL_ENV=production NODE_ENV=production babel-node --presets=env,react app/index.js",
+    "start:prod":
+      "yarn run build:prod; BABEL_ENV=production NODE_ENV=production node-esml ./app/dist/index.js",
+    "start:dev":
+      "yarn run build:dev; BABEL_ENV=development NODE_ENV=development DEBUG=express:* node-esml ./app/dist/index.js",
+    "start": "yarn run start:dev",
     "stats": "yarn run build:dev:stats; yarn run build:prod:stats",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -69,8 +72,9 @@
     "mini-css-extract-plugin": "^0.4.0",
     "morgan": "^1.9.0",
     "newrelic": "^4.0.0",
+    "node-es-module-loader": "^0.3.8",
     "node-fetch": "^2.1.2",
-    "node-sass": "^4.5.0",
+    "node-sass": "^4.9.2",
     "postcss-loader": "^2.1.5",
     "precss": "^1.4.0",
     "prop-types": "^15.6.2",
@@ -92,6 +96,8 @@
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
+    "@types/react-router": "^4.0.28",
+    "@types/react-router-dom": "^4.2.7",
     "babel-eslint": "^8.2.2",
     "eslint": "^4.9.0",
     "eslint-config-prettier": "^2.9.0",

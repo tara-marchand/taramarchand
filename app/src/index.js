@@ -16,12 +16,12 @@ dotenv.config();
 let webpackConfig;
 switch (process.env.NODE_ENV) {
   case 'production':
-    webpackConfig = require('../webpack.prod');
+    webpackConfig = require('../../webpack.prod');
     break;
 
   case 'development':
   default:
-    webpackConfig = require('../webpack.dev');
+    webpackConfig = require('../../webpack.dev');
     break;
 }
 

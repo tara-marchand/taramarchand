@@ -12,7 +12,7 @@ module.exports = {
   entry: [
     'react-hot-loader/patch',
     'webpack-hot-middleware/client',
-    './static/src/index.js'
+    './static/src/index.tsx'
   ],
   mode: 'development',
   module: {
