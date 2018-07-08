@@ -1,6 +1,7 @@
 .DS_Store
 .env
-dist
+app/dist
+static/dist
 node_modules
 npm-debug.log
 webpack_stats.html
