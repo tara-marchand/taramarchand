@@ -1,6 +1,7 @@
 /* eslint-env node */
 const path = require('path');
 const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
@@ -73,6 +74,17 @@ module.exports = {
         ]
       },
       {
+        use: ExtractTextPlugin.extract({
+          use: [
+            {
+              loader: 'css-loader'
+            },
+            'less-loader'
+          ]
+        }),
+        test: /\.less$/
+      },
+      {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         use: {
           loader: 'file-loader',
@@ -98,6 +110,9 @@ module.exports = {
         BROWSER: JSON.stringify(true),
         NODE_ENV: JSON.stringify('development')
       }
+    }),
+    new ExtractTextPlugin({
+      filename: 'semantic-ui.css'
     }),
     new MiniCssExtractPlugin({ filename: 'main.css' })
   ],

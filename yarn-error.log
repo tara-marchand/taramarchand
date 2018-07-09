@@ -1,49 +1,51 @@
 Arguments: 
-  /Users/tara/.nvm/versions/node/v8.9.3/bin/node /usr/local/Cellar/yarn/1.7.0/libexec/bin/yarn.js add -D @types/japanese-kana
+  /Users/tara/.nvm/versions/node/v9.11.2/bin/node /usr/local/Cellar/yarn/1.7.0/libexec/bin/yarn.js add extract-text-plugin
 
 PATH: 
-  /Users/tara/.nvm/versions/node/v8.9.3/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/tara/bin;/Users/tara/.node/bin:/Users/tara/Library/Python/2.7/bin:/usr/local/opt/sqlite/bin
+  /Users/tara/.nvm/versions/node/v9.11.2/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/tara/bin;/Users/tara/.node/bin:/Users/tara/Library/Python/2.7/bin:/usr/local/opt/sqlite/bin
 
 Yarn version: 
   1.7.0
 
 Node version: 
-  8.9.3
+  9.11.2
 
 Platform: 
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fjapanese-kana: Not found
+  Error: https://registry.yarnpkg.com/extract-text-plugin: Not found
       at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.7.0/libexec/lib/cli.js:65656:18)
       at Request.self.callback (/usr/local/Cellar/yarn/1.7.0/libexec/lib/cli.js:134675:22)
-      at emitTwo (events.js:126:13)
-      at Request.emit (events.js:214:7)
+      at Request.emit (events.js:180:13)
       at Request.<anonymous> (/usr/local/Cellar/yarn/1.7.0/libexec/lib/cli.js:135658:10)
-      at emitOne (events.js:116:13)
-      at Request.emit (events.js:211:7)
+      at Request.emit (events.js:180:13)
       at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.7.0/libexec/lib/cli.js:135578:12)
-      at Object.onceWrapper (events.js:313:30)
-      at emitNone (events.js:111:20)
+      at Object.onceWrapper (events.js:272:13)
+      at IncomingMessage.emit (events.js:185:15)
+      at endReadableNT (_stream_readable.js:1106:12)
+      at process._tickCallback (internal/process/next_tick.js:178:19)
 
 npm manifest: 
   {
     "name": "tmarchand",
     "version": "1.0.0",
     "description": "",
-    "main": "app/index.js",
+    "main": "src/app/index.tsx",
     "engines": {
-      "node": "^8",
+      "node": "^9",
       "yarn": "^1"
     },
     "scripts": {
-      "build:dev": "yarn run clean; webpack --mode=development --config=webpack.dev.js --env.NODE_ENV=development --env.PORT=3000 --display=errors-only --colors --verbose",
-      "build:prod": "yarn run clean; webpack --mode=production --config=webpack.prod.js --env.NODE_ENV=production --display=errors-only --colors",
+      "build:app": "babel ./app/src/index.js --out-file=./app/dist/index.js --presets es2015 --ignore=./node_modules",
+      "build:dev": "yarn run clean; yarn run build:app; webpack --mode=development --config=webpack.dev.js --env.NODE_ENV=development --env.PORT=3000 --display=errors-only --colors",
+      "build:prod": "yarn run clean; yarn run build:app; webpack --mode=production --config=webpack.prod.js --env.NODE_ENV=production --display=errors-only --colors",
       "build:dev:stats": "webpack --mode=development --config=webpack.dev.js --env.NODE_ENV=development --json > stats-dev.json",
       "build:prod:stats": "webpack --mode=production --config=webpack.prod.js --env.NODE_ENV=production --json > stats-prod.json",
       "clean": "rm -rf static/dist",
-      "start:prod": "yarn run build:prod; BABEL_ENV=production NODE_ENV=production babel-node --presets=env,react app/index.js",
-      "start": "yarn run build:dev; BABEL_ENV=development NODE_ENV=development DEBUG=express:* babel-node --presets=env,react app/index.js",
+      "start:prod": "yarn run build:prod; BABEL_ENV=production NODE_ENV=production node-esml ./app/dist/index.js",
+      "start:dev": "yarn run build:dev; BABEL_ENV=development NODE_ENV=development DEBUG=express:* node-esml ./app/dist/index.js",
+      "start": "yarn run start:dev",
       "stats": "yarn run build:dev:stats; yarn run build:prod:stats",
       "test": "echo \"Error: no test specified\" && exit 1"
     },
@@ -97,8 +99,9 @@ npm manifest:
       "mini-css-extract-plugin": "^0.4.0",
       "morgan": "^1.9.0",
       "newrelic": "^4.0.0",
+      "node-es-module-loader": "^0.3.8",
       "node-fetch": "^2.1.2",
-      "node-sass": "^4.5.0",
+      "node-sass": "^4.9.2",
       "postcss-loader": "^2.1.5",
       "precss": "^1.4.0",
       "prop-types": "^15.6.2",
@@ -109,7 +112,7 @@ npm manifest:
       "resolve-url-loader": "^2.3.0",
       "sass-loader": "^6.0.3",
       "semantic-ui-css": "^2.3.2",
-      "semantic-ui-react": "^0.81.1",
+      "semantic-ui-react": "^0.82.0",
       "style-loader": "^0.13.2",
       "ts-loader": "^4.3.0",
       "typescript": "^2.8.3",
@@ -121,6 +124,7 @@ npm manifest:
     },
     "devDependencies": {
       "@types/react-router": "^4.0.28",
+      "@types/react-router-dom": "^4.2.7",
       "babel-eslint": "^8.2.2",
       "eslint": "^4.9.0",
       "eslint-config-prettier": "^2.9.0",
@@ -259,7 +263,15 @@ Lockfile:
       "@types/node" "*"
       "@types/react" "*"
   
-  "@types/react-router@^4.0.28":
+  "@types/react-router-dom@^4.2.7":
+    version "4.2.7"
+    resolved "https://registry.yarnpkg.com/@types/react-router-dom/-/react-router-dom-4.2.7.tgz#9d36bfe175f916dd8d7b6b0237feed6cce376b4c"
+    dependencies:
+      "@types/history" "*"
+      "@types/react" "*"
+      "@types/react-router" "*"
+  
+  "@types/react-router@*", "@types/react-router@^4.0.28":
     version "4.0.28"
     resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-4.0.28.tgz#b0445fc38613c81e92ca9ec0e08ab36697d51003"
     dependencies:
@@ -786,6 +798,30 @@ Lockfile:
       esutils "^2.0.2"
       js-tokens "^3.0.2"
   
+  babel-core@^6.20.0:
+    version "6.26.3"
+    resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.26.3.tgz#b2e2f09e342d0f0c88e2f02e067794125e75c207"
+    dependencies:
+      babel-code-frame "^6.26.0"
+      babel-generator "^6.26.0"
+      babel-helpers "^6.24.1"
+      babel-messages "^6.23.0"
+      babel-register "^6.26.0"
+      babel-runtime "^6.26.0"
+      babel-template "^6.26.0"
+      babel-traverse "^6.26.0"
+      babel-types "^6.26.0"
+      babylon "^6.18.0"
+      convert-source-map "^1.5.1"
+      debug "^2.6.9"
+      json5 "^0.5.1"
+      lodash "^4.17.4"
+      minimatch "^3.0.4"
+      path-is-absolute "^1.0.1"
+      private "^0.1.8"
+      slash "^1.0.0"
+      source-map "^0.5.7"
+  
   babel-core@^6.23.1, babel-core@^6.26.0:
     version "6.26.0"
     resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.26.0.tgz#af32f78b31a6fcef119c87b0fd8d9753f03a0bb8"
@@ -1282,7 +1318,7 @@ Lockfile:
       babel-template "^6.26.0"
       babel-types "^6.26.0"
   
-  babel-plugin-transform-es2015-modules-systemjs@^6.23.0, babel-plugin-transform-es2015-modules-systemjs@^6.24.1:
+  babel-plugin-transform-es2015-modules-systemjs@^6.19.0, babel-plugin-transform-es2015-modules-systemjs@^6.23.0, babel-plugin-transform-es2015-modules-systemjs@^6.24.1:
     version "6.24.1"
     resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-modules-systemjs/-/babel-plugin-transform-es2015-modules-systemjs-6.24.1.tgz#ff89a142b9119a906195f5f106ecf305d9407d23"
     dependencies:
@@ -2822,7 +2858,7 @@ Lockfile:
     version "3.0.3"
     resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
   
-  debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.8:
+  debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.8, debug@^2.6.9:
     version "2.6.9"
     resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
     dependencies:
@@ -6066,13 +6102,13 @@ Lockfile:
     version "0.0.7"
     resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
   
-  nan@^2.3.0, nan@^2.3.2:
-    version "2.7.0"
-    resolved "https://registry.yarnpkg.com/nan/-/nan-2.7.0.tgz#d95bf721ec877e08db276ed3fc6eb78f9083ad46"
-  
-  nan@^2.8.0, nan@^2.9.2:
+  nan@^2.10.0, nan@^2.8.0, nan@^2.9.2:
     version "2.10.0"
     resolved "https://registry.yarnpkg.com/nan/-/nan-2.10.0.tgz#96d0cd610ebd58d4b4de9cc0c6828cda99c7548f"
+  
+  nan@^2.3.0:
+    version "2.7.0"
+    resolved "https://registry.yarnpkg.com/nan/-/nan-2.7.0.tgz#d95bf721ec877e08db276ed3fc6eb78f9083ad46"
   
   nanomatch@^1.2.9:
     version "1.2.9"
@@ -6132,6 +6168,14 @@ Lockfile:
   node-dir@0.1.8:
     version "0.1.8"
     resolved "https://registry.yarnpkg.com/node-dir/-/node-dir-0.1.8.tgz#55fb8deb699070707fb67f91a460f0448294c77d"
+  
+  node-es-module-loader@^0.3.8:
+    version "0.3.8"
+    resolved "https://registry.yarnpkg.com/node-es-module-loader/-/node-es-module-loader-0.3.8.tgz#d23f1252afbb4fd5ce7021c43b13cf1fcfcd12f6"
+    dependencies:
+      babel-core "^6.20.0"
+      babel-plugin-syntax-dynamic-import "^6.18.0"
+      babel-plugin-transform-es2015-modules-systemjs "^6.19.0"
   
   node-fetch@^1.0.1:
     version "1.7.3"
@@ -6220,9 +6264,9 @@ Lockfile:
       tar "^2.2.1"
       tar-pack "^3.4.0"
   
-  node-sass@^4.5.0:
-    version "4.5.3"
-    resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.5.3.tgz#d09c9d1179641239d1b97ffc6231fdcec53e1568"
+  node-sass@^4.9.2:
+    version "4.9.2"
+    resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.9.2.tgz#5e63fe6bd0f2ae3ac9d6c14ede8620e2b8bdb437"
     dependencies:
       async-foreach "^0.1.3"
       chalk "^1.1.1"
@@ -6236,12 +6280,13 @@ Lockfile:
       lodash.mergewith "^4.6.0"
       meow "^3.7.0"
       mkdirp "^0.5.1"
-      nan "^2.3.2"
+      nan "^2.10.0"
       node-gyp "^3.3.1"
       npmlog "^4.0.0"
-      request "^2.79.0"
-      sass-graph "^2.1.1"
+      request "2.87.0"
+      sass-graph "^2.2.4"
       stdout-stream "^1.4.0"
+      "true-case-path" "^1.0.2"
   
   node-status-codes@^1.0.0:
     version "1.0.0"
@@ -7210,7 +7255,7 @@ Lockfile:
     version "4.0.2"
     resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-4.0.2.tgz#b2bf82e7350d65c6c33aa95aaa5a4f6327f61cd9"
   
-  private@^0.1.6, private@^0.1.7, private@~0.1.5:
+  private@^0.1.6, private@^0.1.7, private@^0.1.8, private@~0.1.5:
     version "0.1.8"
     resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
   
@@ -7685,7 +7730,7 @@ Lockfile:
       stealthy-require "^1.1.0"
       tough-cookie ">=2.3.3"
   
-  request@2, request@^2.79.0:
+  request@2:
     version "2.83.0"
     resolved "https://registry.yarnpkg.com/request/-/request-2.83.0.tgz#ca0b65da02ed62935887808e6f510381034e3356"
     dependencies:
@@ -7738,6 +7783,31 @@ Lockfile:
       tough-cookie "~2.3.0"
       tunnel-agent "^0.6.0"
       uuid "^3.0.0"
+  
+  request@2.87.0:
+    version "2.87.0"
+    resolved "https://registry.yarnpkg.com/request/-/request-2.87.0.tgz#32f00235cd08d482b4d0d68db93a829c0ed5756e"
+    dependencies:
+      aws-sign2 "~0.7.0"
+      aws4 "^1.6.0"
+      caseless "~0.12.0"
+      combined-stream "~1.0.5"
+      extend "~3.0.1"
+      forever-agent "~0.6.1"
+      form-data "~2.3.1"
+      har-validator "~5.0.3"
+      http-signature "~1.2.0"
+      is-typedarray "~1.0.0"
+      isstream "~0.1.2"
+      json-stringify-safe "~5.0.1"
+      mime-types "~2.1.17"
+      oauth-sign "~0.8.2"
+      performance-now "^2.1.0"
+      qs "~6.5.1"
+      safe-buffer "^5.1.1"
+      tough-cookie "~2.3.3"
+      tunnel-agent "^0.6.0"
+      uuid "^3.1.0"
   
   request@^2.83.0:
     version "2.85.0"
@@ -7946,7 +8016,7 @@ Lockfile:
     version "2.1.2"
     resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   
-  sass-graph@^2.1.1:
+  sass-graph@^2.2.4:
     version "2.2.4"
     resolved "https://registry.yarnpkg.com/sass-graph/-/sass-graph-2.2.4.tgz#13fbd63cd1caf0908b9fd93476ad43a51d1e0b49"
     dependencies:
@@ -7999,16 +8069,16 @@ Lockfile:
     dependencies:
       jquery x.*
   
-  semantic-ui-react@^0.81.1:
-    version "0.81.1"
-    resolved "https://registry.yarnpkg.com/semantic-ui-react/-/semantic-ui-react-0.81.1.tgz#9bf8e1949aac8584173f0acb11c6ce05008bcbfc"
+  semantic-ui-react@^0.82.0:
+    version "0.82.0"
+    resolved "https://registry.yarnpkg.com/semantic-ui-react/-/semantic-ui-react-0.82.0.tgz#e7145308348520bf2baf0c63a6bfe6bbd830ccdf"
     dependencies:
       "@babel/runtime" "^7.0.0-beta.49"
       classnames "^2.2.5"
-      fbjs "^0.8.16"
       keyboard-key "^1.0.1"
       lodash "^4.17.10"
       prop-types "^15.6.1"
+      shallowequal "^1.0.2"
   
   semver-regex@^1.0.0:
     version "1.0.0"
@@ -8789,6 +8859,12 @@ Lockfile:
   trim-right@^1.0.1:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
+  
+  "true-case-path@^1.0.2":
+    version "1.0.2"
+    resolved "https://registry.yarnpkg.com/true-case-path/-/true-case-path-1.0.2.tgz#7ec91130924766c7f573be3020c34f8fdfd00d62"
+    dependencies:
+      glob "^6.0.4"
   
   tryit@^1.0.1:
     version "1.0.3"

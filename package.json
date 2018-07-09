@@ -11,7 +11,7 @@
     "build:app":
       "babel ./app/src/index.js --out-file=./app/dist/index.js --presets es2015 --ignore=./node_modules",
     "build:dev":
-      "yarn run clean; yarn run build:app; webpack --mode=development --config=webpack.dev.js --env.NODE_ENV=development --env.PORT=3000 --display=errors-only --colors --verbose",
+      "yarn run clean; yarn run build:app; webpack --mode=development --config=webpack.dev.js --env.NODE_ENV=development --env.PORT=3000 --display=errors-only --colors",
     "build:prod":
       "yarn run clean; yarn run build:app; webpack --mode=production --config=webpack.prod.js --env.NODE_ENV=production --display=errors-only --colors",
     "build:dev:stats":
@@ -58,7 +58,7 @@
     "babel-preset-react": "^6.24.1",
     "cloudinary": "^1.11.0",
     "compression": "^1.7.1",
-    "css-loader": "^0.26.4",
+    "css-loader": "^1.0.0",
     "dotenv": "^4.0.0",
     "dotenv-webpack": "^1.5.5",
     "express": "^4.15.2",
@@ -68,6 +68,8 @@
     "image-webpack-loader": "^3.2.0",
     "japanese-kana": "^0.1.2",
     "jsdom": "^11.8.0",
+    "less": "^3.5.3",
+    "less-loader": "^4.1.0",
     "mime-types": "^2.1.17",
     "mini-css-extract-plugin": "^0.4.0",
     "morgan": "^1.9.0",
@@ -85,7 +87,8 @@
     "resolve-url-loader": "^2.3.0",
     "sass-loader": "^6.0.3",
     "semantic-ui-css": "^2.3.2",
-    "semantic-ui-react": "^0.81.1",
+    "semantic-ui-less": "^2.3.3",
+    "semantic-ui-react": "^0.82.0",
     "style-loader": "^0.13.2",
     "ts-loader": "^4.3.0",
     "typescript": "^2.8.3",

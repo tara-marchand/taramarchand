@@ -1,25 +1,29 @@
 import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router';
-import { Icon, Menu } from 'semantic-ui-react';
+import { List } from 'semantic-ui-react';
 
 class Footer extends PureComponent {
   render() {
     return (
-      <Menu borderless color="grey" inverted>
-        <Menu.Item
-          link
+      <List horizontal inverted>
+        <List.Item
+          as="a"
           target="_blank"
           href="https://www.linkedin.com/in/trmarch/"
         >
-          <Icon name="linkedin square" />LinkedIn
-        </Menu.Item>
-        <Menu.Item link target="_blank" href="https://github.com/tara-marchand">
-          <Icon name="github square" />GitHub
-        </Menu.Item>
-        <Menu.Item link target="_blank" href="https://twitter.com/trmarchand">
-          <Icon name="twitter square" />Twitter
-        </Menu.Item>
-      </Menu>
+          <List.Content>LinkedIn</List.Content>
+        </List.Item>
+        <List.Item
+          as="a"
+          target="_blank"
+          href="https://github.com/tara-marchand"
+        >
+          <List.Content>GitHub</List.Content>
+        </List.Item>
+        <List.Item as="a" target="_blank" href="https://twitter.com/trmarchand">
+          <List.Content>Twitter</List.Content>
+        </List.Item>
+      </List>
     );
   }
 }

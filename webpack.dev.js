@@ -1,7 +1,6 @@
 /* eslint-env node */
 const path = require('path');
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   context: path.resolve(__dirname),
@@ -57,13 +56,25 @@ module.exports = {
             loader: 'css-loader',
             options: { minimize: false }
           },
-          { loader: 'postcss-loader' },
+          // { loader: 'postcss-loader' },
           { loader: 'resolve-url-loader' },
           { loader: 'sass-loader?sourceMap' }
         ],
         include: [
           path.join(__dirname, 'static', 'src'),
           path.join(__dirname, 'node_modules')
+        ]
+      },
+      {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: { minimize: false }
+          },
+          { loader: 'resolve-url-loader' },
+          'less-loader'
         ]
       },
       {
@@ -84,7 +95,7 @@ module.exports = {
   output: {
     filename: 'main.bundle.js',
     path: path.resolve(__dirname, 'static', 'dist'),
-    publicPath: '/static/'
+    publicPath: '/'
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -93,7 +104,6 @@ module.exports = {
         NODE_ENV: JSON.stringify('development')
       }
     }),
-    new MiniCssExtractPlugin({ filename: 'main.css' }),
     new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {

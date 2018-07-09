@@ -50,12 +50,14 @@ if (process.env.NODE_ENV === 'development') {
 app.use(bodyParser.raw());
 
 app.use(
-  '/static/',
-  express.static(path.join(__dirname, '..', 'static', 'dist'), { index: false })
+  '/static',
+  express.static(path.join(__dirname, '..', '..', 'static', 'dist'), {
+    index: false
+  })
 );
 app.use(
-  '/modules/',
-  express.static(path.join(__dirname, '..', 'node_modules', 'dist'))
+  '/node_modules',
+  express.static(path.join(__dirname, '..', '..', 'node_modules'))
 );
 
 // logging
@@ -85,5 +87,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(port, function() {
-  console.log(`App listening on port ${port}.`);
+  console.info(`App listening on port ${port}.`);
 });
