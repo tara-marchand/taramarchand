@@ -74,17 +74,6 @@ module.exports = {
         ]
       },
       {
-        use: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader'
-            },
-            'less-loader'
-          ]
-        }),
-        test: /\.less$/
-      },
-      {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         use: {
           loader: 'file-loader',

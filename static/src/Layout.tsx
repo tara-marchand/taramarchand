@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { Route, withRouter } from 'react-router';
-import { Container } from 'semantic-ui-react';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -23,10 +22,10 @@ class Layout extends PureComponent {
     return (
       <div>
         <Header />
-        <Container text>
+        <div>
           <Route exact path="/" component={Home} />
           <Route path="/:view" render={this.renderView} />
-        </Container>
+        </div>
         <Footer />
       </div>
     );

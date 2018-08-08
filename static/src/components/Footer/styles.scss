@@ -1,0 +1,13 @@
+.Footer {
+  background-color: $black;
+  color: $white;
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  margin: 0;
+  padding: 8px 10px;
+
+  a {
+    color: $white;
+  }
+}
