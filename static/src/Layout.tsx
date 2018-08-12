@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Route, withRouter } from 'react-router';
+import { Route, withRouter, RouteComponentProps } from 'react-router';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -8,8 +8,12 @@ import Home from './components/Home';
 import Japanese from './components/Japanese';
 import Resume from './components/Resume';
 
-class Layout extends PureComponent {
-  constructor(props) {
+type Props = RouteComponentProps<any>;
+
+class Layout extends PureComponent<Props> {
+  views: { [key: string]: React.ComponentType<any> };
+
+  constructor(props: Props) {
     super(props);
 
     this.views = {
@@ -19,19 +23,21 @@ class Layout extends PureComponent {
   }
 
   render() {
+    const containerStyle = { margin: '0 15%' };
+
     return (
-      <div>
+      <React.Fragment>
         <Header />
-        <div>
+        <div style={containerStyle}>
           <Route exact path="/" component={Home} />
           <Route path="/:view" render={this.renderView} />
         </div>
         <Footer />
-      </div>
+      </React.Fragment>
     );
   }
 
-  renderView = props => {
+  renderView = (props: Props) => {
     const View = this.views[props.match.params.view];
 
     if (View) {

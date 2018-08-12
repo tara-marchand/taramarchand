@@ -59,7 +59,10 @@ module.exports = {
           },
           { loader: 'postcss-loader' },
           { loader: 'resolve-url-loader' },
-          { loader: 'sass-loader?sourceMap' }
+          {
+            loader: 'sass-loader?sourceMap',
+            options: { includePaths: ['node_modules/foundation-sites/scss'] }
+          }
         ],
         include: [
           path.join(__dirname, 'static', 'src'),

@@ -1,10 +1,3 @@
-import {
-  Alignment,
-  Button,
-  Classes,
-  Navbar,
-  NavbarGroup
-} from '@blueprintjs/core';
 import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
 
@@ -12,10 +5,11 @@ type Props = RouteComponentProps<any>;
 
 class Footer extends React.PureComponent<Props> {
   render() {
+    const offsetStyle = { paddingLeft: '15%' };
+
     return (
-      <Navbar>
-        <NavbarGroup align={Alignment.LEFT}>
-          <Button className={Classes.MINIMAL}>
+        <ul className="Footer menu" style={offsetStyle}>
+          <li>
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -23,8 +17,8 @@ class Footer extends React.PureComponent<Props> {
             >
               LinkedIn
             </a>
-          </Button>
-          <Button className={Classes.MINIMAL}>
+          </li>
+          <li>
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -32,8 +26,8 @@ class Footer extends React.PureComponent<Props> {
             >
               GitHub
             </a>
-          </Button>
-          <Button className={Classes.MINIMAL}>
+          </li>
+          <li>
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -41,9 +35,8 @@ class Footer extends React.PureComponent<Props> {
             >
               Twitter
             </a>
-          </Button>
-        </NavbarGroup>
-      </Navbar>
+          </li>
+        </ul>
     );
   }
 }

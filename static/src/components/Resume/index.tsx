@@ -1,4 +1,3 @@
-import { UL } from '@blueprintjs/core';
 import * as React from 'react';
 
 import { Resume } from './util';
@@ -106,14 +105,14 @@ class Resume extends React.PureComponent<{}> {
                     <span>{workplace.startDate}-</span>
                     <span>{workplace.endDate}</span>
                   </div>
-                  <UL>
+                  <ul>
                     {workplace.highlights.map((highlight, index2: number) => (
                       <li
                         key={index2}
                         dangerouslySetInnerHTML={{ __html: highlight }}
                       />
                     ))}
-                  </UL>
+                  </ul>
                 </div>
               );
             })}
@@ -131,13 +130,13 @@ class Resume extends React.PureComponent<{}> {
         {education && (
           <section id="education">
             <h2>Education</h2>
-            <UL>
+            <ul>
               {education.map((ed: Resume.Education, index: number) => (
                 <li key={index}>
                   {ed.institution} · {ed.studyType}, {ed.area}
                 </li>
               ))}
-            </UL>
+            </ul>
           </section>
         )}
       </React.Fragment>

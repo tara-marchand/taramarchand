@@ -1,7 +1,6 @@
 /* eslint-env node */
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
@@ -66,7 +65,10 @@ module.exports = {
           },
           { loader: 'postcss-loader' },
           { loader: 'resolve-url-loader' },
-          { loader: 'sass-loader?sourceMap' }
+          {
+            loader: 'sass-loader?sourceMap',
+            options: { includePaths: ['node_modules/foundation-sites/scss'] }
+          }
         ],
         include: [
           path.join(__dirname, 'static', 'src'),
@@ -97,11 +99,8 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         BROWSER: JSON.stringify(true),
-        NODE_ENV: JSON.stringify('development')
+        NODE_ENV: JSON.stringify('production')
       }
-    }),
-    new ExtractTextPlugin({
-      filename: 'semantic-ui.css'
     }),
     new MiniCssExtractPlugin({ filename: 'main.css' })
   ],
