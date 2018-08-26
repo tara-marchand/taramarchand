@@ -15,12 +15,20 @@ type Props = RouteComponentProps<any>;
 
 class Header extends React.PureComponent<Props> {
   render() {
-    const offsetStyle = { paddingLeft: '15%' };
-
     return (
-      <div className="top-bar" style={offsetStyle}>
-        <div className="top-bar-left">
-          <ul className="menu">{this.allNavLinks}</ul>
+      <div className="Header">
+        <div className="grid-container">
+          <div className="grid-x grid-margin-x">
+            <div className="cell small-12">
+              <ul
+                className="vertical medium-horizontal menu"
+                data-responsive-menu="drilldown medium-dropdown"
+              >
+                {this.allNavLinks}
+              </ul>
+              {/* <ul className="menu">{this.allNavLinks}</ul> */}
+            </div>
+          </div>
         </div>
       </div>
     );

@@ -7,7 +7,7 @@
 @include foundation-typography;
 
 // Grids (choose one)
-// @include foundation-xy-grid-classes;
+@include foundation-xy-grid-classes;
 // @include foundation-grid;
 // @include foundation-flex-grid;
 
@@ -52,12 +52,12 @@
 
 // Helpers
 // @include foundation-float-classes;
-// @include foundation-flex-classes;
+@include foundation-flex-classes;
 // @include foundation-visibility-classes;
 // @include foundation-prototype-classes;
 
 // --- My Stuff
-@import './variables';
+@import './components/Header/styles';
 @import './components/Footer/styles';
 
 body {

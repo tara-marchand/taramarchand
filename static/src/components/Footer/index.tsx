@@ -5,10 +5,8 @@ type Props = RouteComponentProps<any>;
 
 class Footer extends React.PureComponent<Props> {
   render() {
-    const offsetStyle = { paddingLeft: '15%' };
-
     return (
-        <ul className="Footer menu" style={offsetStyle}>
+        <ul className="Footer menu align-center">
           <li>
             <a
               target="_blank"

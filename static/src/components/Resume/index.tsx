@@ -9,13 +9,12 @@ class Resume extends React.PureComponent<{}> {
 
   constructor(props: {}) {
     super(props);
-    this.data = resumeJson;
+    this.data = resumeJson.default;
   }
 
   render() {
     return (
       <div id="resume">
-        <h1>{name}</h1>
         {this.renderBasics()}
         <hr />
         {this.renderSkills()}
@@ -32,6 +31,7 @@ class Resume extends React.PureComponent<{}> {
 
     return (
       <React.Fragment>
+        <h1>{basics && basics.name}</h1>
         {basics && (
           <section id="basics">
             <div>

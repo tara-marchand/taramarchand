@@ -23,14 +23,16 @@ class Layout extends PureComponent<Props> {
   }
 
   render() {
-    const containerStyle = { margin: '0 15%' };
-
     return (
       <React.Fragment>
         <Header />
-        <div style={containerStyle}>
-          <Route exact path="/" component={Home} />
-          <Route path="/:view" render={this.renderView} />
+        <div className="grid-container">
+          <div className="grid-x grid-margin-x">
+            <div className="cell small-12">
+                <Route exact path="/" component={Home} />
+                <Route path="/:view" render={this.renderView} />
+            </div>
+          </div>
         </div>
         <Footer />
       </React.Fragment>
