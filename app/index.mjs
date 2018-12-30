@@ -1,5 +1,7 @@
 'use strict';
 
+import dirname from './dirname';
+
 // import newrelic from 'newrelic';
 import bodyParser from 'body-parser';
 import compression from 'compression';
@@ -7,39 +9,39 @@ import dotenv from 'dotenv';
 import exphbs from 'express-handlebars';
 import express from 'express';
 import morgan from 'morgan';
-import mime from 'mime-types';
+// import mime from 'mime-types';
 import path from 'path';
 import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+
+import { default as webpackDevConfig } from '../webpack.dev';
+import { default as webpackProdConfig } from '../webpack.prod';
 
 dotenv.config();
 
-let webpackConfig;
-switch (process.env.NODE_ENV) {
-  case 'production':
-    webpackConfig = require('../../webpack.prod');
-    break;
+const app = express();
 
-  case 'development':
-  default:
-    webpackConfig = require('../../webpack.dev');
-    break;
+let webpackConfig;
+
+if (process.env.NODE_ENV === 'development') {
+  webpackConfig = webpackDevConfig;
+} else if (process.env.NODE_ENV === 'production') {
+  webpackConfig = webpackProdConfig;
 }
 
 const compiler = webpack(webpackConfig);
-const app = express();
-const port = process.env.PORT ? process.env.PORT : 3000;
-
-// controllers
 
 if (process.env.NODE_ENV === 'development') {
   app.use(
-    require('webpack-dev-middleware')(compiler, {
-      logLevel: 'warn',
+    webpackDevMiddleware(compiler, {
       publicPath: webpackConfig.output.publicPath
     })
   );
+
   app.use(
-    require('webpack-hot-middleware')(compiler, {
+    webpackHotMiddleware(compiler, {
+      // publicPath: webpackConfig.output.publicPath,
       reload: true
     })
   );
@@ -47,20 +49,23 @@ if (process.env.NODE_ENV === 'development') {
   app.use(compression());
 }
 
+// controllers
+
 app.use(bodyParser.raw());
 
 app.use(
   '/static',
-  express.static(path.join(__dirname, '..', '..', 'static', 'dist'), {
+  express.static(path.resolve(dirname, '..', '..', 'static', 'dist'), {
     index: false
   })
 );
 app.use(
   '/node_modules',
-  express.static(path.join(__dirname, '..', '..', 'node_modules'))
+  express.static(path.resolve(dirname, '..', '..', 'node_modules'))
 );
 
 // logging
+
 app.use(
   morgan(
     '[:date[clf]] ":method :url HTTP/:http-version" :status :response-time ms - :res[content-length]'
@@ -77,14 +82,22 @@ app.engine(
 app.set('view engine', '.hbs');
 
 // routes
-app.get('*', (req, res) => {
-  let type = mime.lookup(req.path);
-  if (!type) {
-    type = 'text/html';
-  }
+// app.get('*', (req, res) => {
+//   let type = mime.lookup(req.path);
+//   if (!type) {
+//     type = 'text/html';
+//   }
 
-  return res.type(type).render('index');
+//   return res.type(type).render('index');
+// });
+
+app.get('*', (req, res) => {
+  res.render('index', {
+    isProd: process.env.NODE_ENV === 'production'
+  });
 });
+
+const port = process.env.PORT || 3000;
 
 app.listen(port, function() {
   console.info(`App listening on port ${port}.`);

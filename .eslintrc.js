@@ -15,6 +15,7 @@ module.exports = {
   // },
   extends: ['eslint:recommended', 'prettier', 'plugin:react/recommended'],
   rules: {
+    'no-console': false,
     indent: ['warn', 2],
     'prettier/prettier': 'error',
     quotes: ['error', 'single'],

@@ -4,10 +4,11 @@
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
     "jsx": "react",
+    "module": "esnext",
     "moduleResolution": "node",
     "outDir": "./build/",
     "strict": true,
-    "target": "es6",
-    "typeRoots": [ "./node_modules/@types", "./static/src/types" ]
+    "target": "esnext",
+    "typeRoots": ["./node_modules/@types", "./static/src/types"]
   }
 }

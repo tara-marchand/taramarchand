@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   context: path.resolve(__dirname),
   entry: ['./static/src/index.tsx'],
+  externals: ['foundation-sites'],
   mode: 'production',
   module: {
     rules: [
@@ -15,9 +16,12 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
-            query: {
-              presets: [['env', { modules: false }], 'react'],
-              plugins: ['transform-class-properties']
+            options: {
+              presets: ['env', 'react'],
+              plugins: [
+                'transform-class-properties',
+                'transform-object-rest-spread'
+              ]
             }
           }
         ]
@@ -28,9 +32,12 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
-            query: {
-              presets: [['env', { modules: false }], 'react'],
-              plugins: ['transform-class-properties']
+            options: {
+              presets: ['env', 'react'],
+              plugins: [
+                'transform-class-properties',
+                'transform-object-rest-spread'
+              ]
             }
           },
           {
@@ -39,40 +46,22 @@ module.exports = {
         ]
       },
       {
-        test: /\.css$/,
+        test: /\.(sa|sc|c)ss$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader
-          },
-          {
-            loader: 'css-loader',
-            options: { minimize: true }
-          },
-          {
-            loader: 'postcss-loader'
-          }
-        ],
-        include: [path.join(__dirname, 'static', 'src')],
-        exclude: [path.join(__dirname, 'node_modules')]
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: { minimize: true }
-          },
-          { loader: 'postcss-loader' },
-          { loader: 'resolve-url-loader' },
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'resolve-url-loader',
           {
             loader: 'sass-loader?sourceMap',
-            options: { includePaths: ['node_modules/foundation-sites/scss'] }
+            options: {
+              include: [
+                path.join(__dirname, 'static', 'src'),
+                path.join(__dirname, 'node_modules/foundation-sites/scss')
+              ],
+              exclude: [path.join(__dirname, 'node_modules')]
+            }
           }
-        ],
-        include: [
-          path.join(__dirname, 'static', 'src'),
-          path.join(__dirname, 'node_modules')
         ]
       },
       {
@@ -102,7 +91,7 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new MiniCssExtractPlugin({ filename: 'main.css' })
+    new MiniCssExtractPlugin({ filename: 'static/main.css' })
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
