@@ -109,6 +109,7 @@
     "prettier": "^1.14.2",
     "react-hot-loader": "^4.3.5",
     "webpack-dev-middleware": "^2.0.4",
-    "webpack-hot-middleware": "^2.22.3"
+    "webpack-hot-middleware": "^2.22.3",
+    "yarn": "^1.12.3"
   }
 }

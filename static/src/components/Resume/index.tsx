@@ -5,12 +5,7 @@ import { Resume } from './util';
 import * as resumeJson from './resume.json';
 
 class Resume extends React.PureComponent<{}> {
-  data: Resume.Data = {};
-
-  constructor(props: {}) {
-    super(props);
-    this.data = resumeJson.default;
-  }
+  data: Resume.Data = resumeJson.default;
 
   render() {
     return (

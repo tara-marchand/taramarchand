@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Home from './components/Home';
 import Japanese from './components/Japanese';
 import Resume from './components/Resume';
+import WomensSoccer from './components/WomensSoccer';
 
 type Props = RouteComponentProps<any>;
 
@@ -18,7 +19,8 @@ class Layout extends PureComponent<Props> {
 
     this.views = {
       japanese: Japanese,
-      resume: Resume
+      resume: Resume,
+      'womens-soccer': WomensSoccer
     };
   }
 
