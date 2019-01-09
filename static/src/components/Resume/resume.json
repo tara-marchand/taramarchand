@@ -6,7 +6,7 @@
     "email": "tara@mac.com",
     "phone": "",
     "website": "http://www.taramarchand.com/",
-    "summary": "Experienced technology lead and front-end engineer.",
+    "summary": "Experienced technology lead and software engineer.",
     "profiles": [
       {
         "network": "GitHub",
@@ -34,10 +34,11 @@
       "endDate": "present",
       "summary": "",
       "highlights": [
-        "Develop user interface for New Relic's Infrastructure monitoring product",
-        "Collaborate with other engineers, product manangers, and designers on features and functionality",
-        "Work with support team to troubleshoot and fix issues reported by customers",
-        "Join company-wide UI engineering endeavors, co-lead project to consolidate discipline guidance and best practices"
+        "Develop user interface for internal app to aid salespeople in growing customer base",
+        "Collaborate with engineers, data professionals, product managers, and designers on features and functionality",
+        "Join company-wide UI engineering endeavors, co-lead project to consolidate discipline guidance and best practices",
+        "Developed user interface for New Relic's Infrastructure monitoring product",
+        "Worked with support team to troubleshoot and fix issues reported by customers"
       ]
     },
     {
