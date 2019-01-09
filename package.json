@@ -73,6 +73,7 @@
     "node-es-module-loader": "^0.3.8",
     "node-fetch": "^2.2.0",
     "node-sass": "^4.11.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
     "precss": "^4.0.0",
     "prop-types": "^15.6.2",
@@ -86,10 +87,14 @@
     "style-loader": "^0.23.1",
     "ts-loader": "^5.3.2",
     "typescript": "^2.8.3",
+    "uglifyjs-webpack-plugin": "^2.1.1",
     "url-loader": "^1.1.2",
     "uuid": "^3.3.2",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.1.2",
+    "webpack-dev-middleware": "^3.4.0",
+    "webpack-hot-middleware": "^2.22.3",
+    "webpack-merge": "^4.1.5",
     "webpack-node-externals": "^1.7.2",
     "whatwg-fetch": "^3.0.0"
   },
@@ -106,9 +111,6 @@
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.11.1",
-    "prettier": "^1.14.2",
-    "webpack-dev-middleware": "^3.4.0",
-    "webpack-hot-middleware": "^2.22.3",
-    "webpack-merge": "^4.1.5"
+    "prettier": "^1.14.2"
   }
 }

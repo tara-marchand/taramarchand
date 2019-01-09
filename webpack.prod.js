@@ -1,44 +1,25 @@
 /* eslint-env node */
-const path = require('path');
-const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const path = require('path');
+const merge = require('webpack-merge');
+const webpack = require('webpack');
 
-module.exports = {
-  context: path.resolve(__dirname),
+const baseConfig = require(path.resolve(__dirname, 'webpack.base.js'));
+
+const prodConfig = {
   entry: ['./static/src/index.tsx'],
-  externals: ['foundation-sites'],
   mode: 'production',
   module: {
     rules: [
       {
-        test: /\.js(x?)$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: ['env', 'react'],
-              plugins: [
-                'transform-class-properties',
-                'transform-object-rest-spread'
-              ]
-            }
-          }
-        ]
-      },
-      {
         test: /\.ts(x?)$/,
-        exclude: /node_modules/,
+        include: [path.resolve(__dirname, 'static/src')],
         use: [
           {
             loader: 'babel-loader',
-            options: {
-              presets: ['env', 'react'],
-              plugins: [
-                'transform-class-properties',
-                'transform-object-rest-spread'
-              ]
-            }
+            options: baseConfig.babelOptions
           },
           {
             loader: 'ts-loader'
@@ -46,43 +27,31 @@ module.exports = {
         ]
       },
       {
-        test: /\.(sa|sc|c)ss$/,
+        test: /\.(css|scss|sass)/,
+        include: [
+          path.resolve(__dirname, 'static/src'),
+          path.resolve(__dirname, 'node_modules'),
+          path.resolve(__dirname, 'node_modules/foundation-sites/scss')
+        ],
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
           'resolve-url-loader',
-          {
-            loader: 'sass-loader?sourceMap',
-            options: {
-              include: [
-                path.join(__dirname, 'static', 'src'),
-                path.join(__dirname, 'node_modules/foundation-sites/scss')
-              ],
-              exclude: [path.join(__dirname, 'node_modules')]
-            }
-          }
+          'sass-loader'
         ]
-      },
-      {
-        test: /\.(eot|svg|ttf|woff|woff2)$/,
-        use: {
-          loader: 'file-loader',
-          options: {}
-        }
-      },
-      {
-        test: /\.(jpg|png|svg)$/,
-        use: {
-          loader: 'url-loader'
-        }
       }
     ]
   },
-  output: {
-    filename: 'main.bundle.js',
-    path: path.resolve(__dirname, 'static', 'dist'),
-    publicPath: '/static/'
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true // set to true if you want JS source maps
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ]
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -91,10 +60,10 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new MiniCssExtractPlugin({ filename: 'static/main.css' })
-  ],
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
-  },
-  target: 'web'
+    new MiniCssExtractPlugin({
+      filename: 'main.css'
+    })
+  ]
 };
+
+module.exports = merge(baseConfig.config, prodConfig);

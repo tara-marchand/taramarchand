@@ -8,61 +8,23 @@ const babelOptions = {
 };
 
 module.exports = {
+  babelOptions,
   config: {
     context: path.resolve(__dirname),
     devtool: 'inline-source-map',
-    entry: [
-      'webpack-hot-middleware/client',
-      'react-hot-loader/patch',
-      './static/src/index.tsx'
-    ],
     externals: ['foundation-sites'],
     mode: 'development',
     module: {
+      // Rules for TS(X) and CSS|SCSS|SASS individually set in dev & prod configs.
       rules: [
         {
           test: /\.js(x?)$/,
           exclude: path.resolve(__dirname),
-          // include: [path.resolve(__dirname, 'static/src')],
           use: [
             {
               loader: 'babel-loader',
               options: babelOptions
             }
-          ]
-        },
-        {
-          test: /\.ts(x?)$/,
-          include: [path.resolve(__dirname, 'static/src')],
-          use: [
-            {
-              loader: 'babel-loader',
-              options: babelOptions
-            },
-            {
-              loader: 'ts-loader',
-              options: {
-                transpileOnly: true // HMR doesn't work without this
-              }
-            }
-          ]
-        },
-        {
-          test: /\.(css|scss|sass)/,
-          include: [
-            path.resolve(__dirname, 'static/src'),
-            path.resolve(__dirname, 'node_modules'),
-            path.resolve(__dirname, 'node_modules/foundation-sites/scss')
-          ],
-          use: [
-            {
-              loader: 'style-loader',
-              options: {
-                hmr: true
-              }
-            },
-            'css-loader',
-            'sass-loader'
           ]
         },
         {
@@ -84,15 +46,6 @@ module.exports = {
       path: path.resolve(__dirname, 'static', 'dist'),
       publicPath: '/static/'
     },
-    plugins: [
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.DefinePlugin({
-        'process.env': {
-          BROWSER: JSON.stringify(true),
-          NODE_ENV: JSON.stringify('development')
-        }
-      })
-    ],
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
       modules: ['node_modules', path.resolve(__dirname, 'static/src')]
