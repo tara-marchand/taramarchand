@@ -12,7 +12,7 @@
     "build:dev:stats": "webpack --config=webpack.dev.js --env.NODE_ENV=development --json > stats-dev.json",
     "build:prod:stats": "webpack --config=webpack.prod.js --env.NODE_ENV=production --json > stats-prod.json",
     "clean": "rm -rf ./static/dist",
-    "postinstall": "if [[ $NODE_ENV = 'production' ]]; then npm run build:prod; fi",
+    "postinstall": "./postinstall.sh",
     "start:prod": "DEBUG=express:* node --experimental-modules ./app/index.mjs",
     "start:dev": "npm run build:dev; DEBUG=express:* node --experimental-modules ./app/index.mjs",
     "start": "npm run start:dev",
