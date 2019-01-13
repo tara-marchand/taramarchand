@@ -55,13 +55,13 @@ app.use(bodyParser.raw());
 
 app.use(
   '/static',
-  express.static(path.resolve(dirname, '..', '..', 'static', 'dist'), {
+  express.static(path.resolve(dirname, '..', 'static', 'dist'), {
     index: false
   })
 );
 app.use(
   '/node_modules',
-  express.static(path.resolve(dirname, '..', '..', 'node_modules'))
+  express.static(path.resolve(dirname, '..', 'node_modules'))
 );
 
 // logging
