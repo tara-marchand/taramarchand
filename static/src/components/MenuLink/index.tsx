@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, withRouter, Route } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 
 class MenuLink extends React.Component<any, {}> {
   render() {

@@ -4,10 +4,10 @@ import { Route, withRouter, RouteComponentProps } from 'react-router';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
-import Home from './components/Home';
-import Japanese from './components/Japanese';
-import Resume from './components/Resume';
-import WomensSoccer from './components/WomensSoccer';
+import Home from './components/views/Home';
+import Japanese from './components/views/Japanese';
+import Resume from './components/views/Resume';
+import WomensSoccer from './components/views/WomensSoccer';
 
 type Props = RouteComponentProps<any>;
 

@@ -1,7 +1,5 @@
-import cx from 'classnames';
 import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
-import { Link, matchPath } from 'react-router-dom';
 import uuid4 from 'uuid/v4';
 
 import MenuLink from '../MenuLink';
@@ -26,7 +24,6 @@ class Header extends React.PureComponent<Props> {
               >
                 {this.allNavLinks}
               </ul>
-              {/* <ul className="menu">{this.allNavLinks}</ul> */}
             </div>
           </div>
         </div>
