@@ -2,7 +2,7 @@
 
 import dirname from './dirname';
 
-// import newrelic from 'newrelic';
+import newrelic from 'newrelic';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import dotenv from 'dotenv';
@@ -11,6 +11,7 @@ import express from 'express';
 import morgan from 'morgan';
 // import mime from 'mime-types';
 import path from 'path';
+import { default as pg } from 'pg';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
@@ -41,7 +42,6 @@ if (process.env.NODE_ENV === 'development') {
 
   app.use(
     webpackHotMiddleware(compiler, {
-      // publicPath: webpackConfig.output.publicPath,
       reload: true
     })
   );
@@ -82,14 +82,20 @@ app.engine(
 app.set('view engine', '.hbs');
 
 // routes
-// app.get('*', (req, res) => {
-//   let type = mime.lookup(req.path);
-//   if (!type) {
-//     type = 'text/html';
-//   }
 
-//   return res.type(type).render('index');
-// });
+app.get('/api/books', (req, res) => {
+  const pool = new pg.Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+  });
+
+  pool.query('SELECT * FROM books ORDER BY id ASC', (error, results) => {
+    if (error) {
+      throw error;
+    }
+    res.status(200).json(results.rows);
+  });
+});
 
 app.get('*', (req, res) => {
   res.render('index', {
