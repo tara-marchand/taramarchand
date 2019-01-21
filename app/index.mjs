@@ -83,6 +83,10 @@ app.set('view engine', '.hbs');
 
 // routes
 
+app.get('/.well-known/acme-challenge/:content', function(req, res) {
+  res.send('xTtkiSRYJIP2uFACne0LszQH0MFe72cuStSx1c4lcZ8')
+}
+
 app.get('/api/books', (req, res) => {
   const pool = new pg.Pool({
     connectionString: process.env.DATABASE_URL,
