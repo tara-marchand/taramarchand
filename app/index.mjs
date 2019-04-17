@@ -8,6 +8,8 @@ import compression from 'compression';
 import dotenv from 'dotenv';
 import exphbs from 'express-handlebars';
 import express from 'express';
+import graphqlHTTP from 'express-graphql';
+import { buildSchema } from 'graphql';
 import morgan from 'morgan';
 // import mime from 'mime-types';
 import path from 'path';
@@ -22,6 +24,35 @@ import { default as webpackProdConfig } from '../webpack.prod';
 dotenv.config();
 
 const app = express();
+
+const gqlSchema = buildSchema(`
+  type Query {
+    books(): [Book]
+  },
+  type Book {
+    authors: String!
+    title: String!
+  }
+`);
+
+function getBooks() {
+  const pool = new pg.Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+  });
+
+  pool.query('SELECT * FROM books ORDER BY id ASC', (error, results) => {
+    if (error) {
+      throw error;
+    }
+
+    return JSON.parse(results.rows);
+  });
+}
+
+const gqlRoot = {
+  books: getBooks
+};
 
 let webpackConfig;
 
@@ -80,6 +111,15 @@ app.engine(
   })
 );
 app.set('view engine', '.hbs');
+
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema: gqlSchema,
+    rootValue: gqlRoot,
+    graphiql: true
+  })
+);
 
 // routes
 
