@@ -1,18 +1,18 @@
 import * as React from 'react';
 
-export interface Props {
+export interface BookData {
+  authors: string;
+  id?: number;
   title: string;
-  authorFirst: string;
-  authorLast: string;
 }
 
-export default class Book extends React.PureComponent<Props> {
+export default class Book extends React.PureComponent<BookData> {
   public render() {
-    const { title, authorFirst, authorLast } = this.props;
-    
+    const { title, authors } = this.props;
+
     return (
       <div>
-        <cite>{title}</cite> by ${authorFirst} ${authorLast}
+        <cite>{title}</cite> by {authors}
       </div>
     );
   }
