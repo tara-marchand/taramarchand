@@ -69,7 +69,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const compiler = webpack(webpackConfig);
 
-const server = new Apollo.ApolloServer({
+const apolloServer = new Apollo.ApolloServer({
   schema
 });
 
@@ -121,13 +121,13 @@ app.engine(
 
 app.set('view engine', '.hbs');
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.render('index', {
     isProd: process.env.NODE_ENV === 'production'
   });
 });
 
-server.applyMiddleware({ app });
+apolloServer.applyMiddleware({ app });
 
 const port = process.env.PORT || 3000;
 
