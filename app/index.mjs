@@ -8,8 +8,7 @@ import compression from 'compression';
 import dotenv from 'dotenv';
 import exphbs from 'express-handlebars';
 import express from 'express';
-import graphqlHTTP from 'express-graphql';
-import { buildSchema } from 'graphql';
+import Apollo from 'apollo-server-express';
 import morgan from 'morgan';
 // import mime from 'mime-types';
 import path from 'path';
@@ -23,7 +22,42 @@ import { default as webpackProdConfig } from '../webpack.prod';
 
 dotenv.config();
 
-const app = express();
+const typeDefs = Apollo.gql(`
+  type Book {
+    authors: String!
+    title: String!
+  }
+
+  type Query {
+    books: [Book]
+  }
+`);
+
+function getBooks() {
+  const pool = new pg.Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+  });
+
+  pool.query('SELECT * FROM books ORDER BY id ASC', (error, results) => {
+    if (error) {
+      throw error;
+    }
+
+    return JSON.parse(results.rows);
+  });
+}
+
+const resolvers = {
+  Query: {
+    books: getBooks
+  }
+};
+
+const schema = Apollo.makeExecutableSchema({
+  typeDefs,
+  resolvers
+});
 
 const gqlSchema = buildSchema(`
   type Query {
@@ -64,6 +98,12 @@ if (process.env.NODE_ENV === 'development') {
 
 const compiler = webpack(webpackConfig);
 
+const apolloServer = new Apollo.ApolloServer({
+  schema
+});
+
+const app = express();
+
 if (process.env.NODE_ENV === 'development') {
   app.use(
     webpackDevMiddleware(compiler, {
@@ -80,8 +120,6 @@ if (process.env.NODE_ENV === 'development') {
   app.use(compression());
 }
 
-// controllers
-
 app.use(bodyParser.raw());
 
 app.use(
@@ -90,12 +128,11 @@ app.use(
     index: false
   })
 );
+
 app.use(
   '/node_modules',
   express.static(path.resolve(dirname, '..', 'node_modules'))
 );
-
-// logging
 
 app.use(
   morgan(
@@ -110,42 +147,16 @@ app.engine(
     extname: '.hbs'
   })
 );
+
 app.set('view engine', '.hbs');
-
-app.use(
-  '/graphql',
-  graphqlHTTP({
-    schema: gqlSchema,
-    rootValue: gqlRoot,
-    graphiql: true
-  })
-);
-
-// routes
-
-app.get('/.well-known/acme-challenge/:content', function(req, res) {
-  res.send('xTtkiSRYJIP2uFACne0LszQH0MFe72cuStSx1c4lcZ8');
-});
-
-app.get('/api/books', (req, res) => {
-  const pool = new pg.Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: true
-  });
-
-  pool.query('SELECT * FROM books ORDER BY id ASC', (error, results) => {
-    if (error) {
-      throw error;
-    }
-    res.status(200).json(results.rows);
-  });
-});
 
 app.get('*', (req, res) => {
   res.render('index', {
     isProd: process.env.NODE_ENV === 'production'
   });
 });
+
+apolloServer.applyMiddleware({ app });
 
 const port = process.env.PORT || 3000;
 
