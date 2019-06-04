@@ -24,7 +24,7 @@ dotenv.config();
 
 const typeDefs = Apollo.gql(`
   type Book {
-    authors: String!
+    authors: String!,
     title: String!
   }
 
@@ -33,19 +33,18 @@ const typeDefs = Apollo.gql(`
   }
 `);
 
-function getBooks() {
+async function getBooks() {
   const pool = new pg.Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: true
   });
 
-  pool.query('SELECT * FROM books ORDER BY id ASC', (error, results) => {
-    if (error) {
-      throw error;
-    }
-
-    return JSON.parse(results.rows);
-  });
+  try {
+    const { rows } = await pool.query('SELECT * FROM books ORDER BY id ASC');
+    return rows;
+  } catch (error) {
+    console.warn(error);
+  }
 }
 
 const resolvers = {

@@ -40,8 +40,8 @@ export default class Books extends React.PureComponent {
         const books = get(data, 'books');
 
         if (books) {
-          return data.books.map(book => (
-            <Book title={book.title} authors={book.authors} />
+          return data.books.map((book: BookData, index: number) => (
+            <Book key={index} title={book.title} authors={book.authors} />
           ));
         }
 
