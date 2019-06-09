@@ -1,24 +1,39 @@
-import ApolloClient, { gql } from 'apollo-boost';
+import { gql } from 'apollo-boost';
 import * as React from 'react';
 import get from 'lodash.get';
+import set from 'lodash.set';
 
 import Book, { BookData } from './Book';
-import { Query } from 'react-apollo';
+import { Query, Mutation, MutationFn } from 'react-apollo';
 
 export interface State {
   books: BookData[];
 }
 
-export default class Books extends React.PureComponent {
+export default class Books extends React.PureComponent<any, State> {
   public state: State = {
     books: []
   };
 
-  public render() {
-    return this.booksQuery();
+  public titleInputRef: React.RefObject<HTMLInputElement>;
+  public authorsInputRef: React.RefObject<HTMLInputElement>;
+
+  public constructor(props: any) {
+    super(props);
+
+    this.titleInputRef = React.createRef();
+    this.authorsInputRef = React.createRef();
   }
 
-  public booksQuery = () => (
+  public render() {
+    return (
+      <div>
+        {this.addBookMutation()} {this.getBooksQuery()}
+      </div>
+    );
+  }
+
+  public getBooksQuery = () => (
     <Query
       query={gql`
         {
@@ -40,7 +55,7 @@ export default class Books extends React.PureComponent {
         const books = get(data, 'books');
 
         if (books) {
-          return data.books.map(book => (
+          return data.books.map((book: BookData) => (
             <Book title={book.title} authors={book.authors} />
           ));
         }
@@ -49,4 +64,47 @@ export default class Books extends React.PureComponent {
       }}
     </Query>
   );
+
+  public addBookMutation = () => {
+    const ADD_BOOK = gql`
+      mutation AddBook($title: String!, $authors: String!) {
+        addBook(title: $title, authors: $authors)
+      }
+    `;
+
+    return (
+      <Mutation mutation={ADD_BOOK}>
+        {(addBook, { loading, error }) => {
+          return (
+            <form onSubmit={e => this.handleFormSubmit(e, addBook)}>
+              <label>
+                Title <input ref={this.titleInputRef} />
+              </label>
+              <label>
+                Authors <input ref={this.authorsInputRef} />
+              </label>
+              <button type="submit">Add Book</button>
+            </form>
+          );
+        }}
+      </Mutation>
+    );
+  };
+
+  public handleFormSubmit = (
+    e: React.FormEvent<HTMLFormElement>,
+    addBook: MutationFn
+  ) => {
+    e.preventDefault();
+
+    addBook({
+      variables: {
+        title: get(this, 'titleInputRef.current.value', ''),
+        authors: get(this, 'authorsInputRef.current.value', '')
+      }
+    });
+
+    set(this, 'titleInputRef.current.value', '');
+    set(this, 'authorsInputRef.current.value', '');
+  };
 }
