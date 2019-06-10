@@ -1,8 +1,9 @@
-'use strict';
-
 import dirname from './dirname';
+import Models from './models';
+import schema from './schema';
+import resolvers from './resolvers';
 
-import newrelic from 'newrelic';
+// import newrelic from 'newrelic';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import dotenv from 'dotenv';
@@ -22,54 +23,21 @@ import { default as webpackProdConfig } from '../webpack.prod';
 
 dotenv.config();
 
-const typeDefs = Apollo.gql(`
-  type Book {
-    authors: String!,
-    title: String!
-  }
-
-  type Query {
-    books: [Book]
-  }
-`);
-
-async function getBooks() {
-  const pool = new pg.Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: true
-  });
-
-  try {
-    const { rows } = await pool.query('SELECT * FROM books ORDER BY id ASC');
-    return rows;
-  } catch (error) {
-    console.warn(error);
-  }
-}
-
-const resolvers = {
-  Query: {
-    books: getBooks
-  }
-};
-
-const schema = Apollo.makeExecutableSchema({
-  typeDefs,
-  resolvers
-});
-
 let webpackConfig;
-
 if (process.env.NODE_ENV === 'development') {
   webpackConfig = webpackDevConfig;
 } else if (process.env.NODE_ENV === 'production') {
   webpackConfig = webpackProdConfig;
 }
-
 const compiler = webpack(webpackConfig);
 
+const typeDefs = Apollo.gql(schema);
+const executableSchema = Apollo.makeExecutableSchema({
+  typeDefs,
+  resolvers
+});
 const apolloServer = new Apollo.ApolloServer({
-  schema
+  schema: executableSchema
 });
 
 const app = express();
@@ -120,7 +88,7 @@ app.engine(
 
 app.set('view engine', '.hbs');
 
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   res.render('index', {
     isProd: process.env.NODE_ENV === 'production'
   });
@@ -130,6 +98,8 @@ apolloServer.applyMiddleware({ app });
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, function() {
-  console.info(`App listening on port ${port}.`);
+Models.sequelize.sync().then(() => {
+  app.listen(port, function() {
+    console.info(`App listening on port ${port}.`);
+  });
 });

@@ -11,5 +11,6 @@
   ],
   "tslint.autoFixOnSave": false,
   "typescript.format.enable": false,
-  "typescript.reportStyleChecksAsWarnings": false
+  "typescript.reportStyleChecksAsWarnings": false,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
