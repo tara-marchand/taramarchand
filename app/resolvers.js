@@ -7,11 +7,12 @@ module.exports = {
   },
 
   Mutation: {
-    addBook: (root, args) => {
-      const newChannel = {id: nextId++, name: args.name};
-      channels.push(newChannel);
+    addBook: (root, variables) => {
+      const newBook = { authors: variables.authors, title: variables.title };
 
-      return newChannel;
+      books.push(newBook);
+
+      return newBook;
     }
   }
 };

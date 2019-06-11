@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql, OperationVariables } from 'apollo-boost';
 import * as React from 'react';
 import get from 'lodash.get';
 import set from 'lodash.set';
@@ -6,17 +6,27 @@ import set from 'lodash.set';
 import Book, { BookData } from './Book';
 import { Query, Mutation, MutationFn } from 'react-apollo';
 
-export interface State {
-  books: BookData[];
-}
-
-export default class Books extends React.PureComponent<any, State> {
-  public state: State = {
-    books: []
-  };
-
+export default class Books extends React.PureComponent<any> {
   public titleInputRef: React.RefObject<HTMLInputElement>;
   public authorsInputRef: React.RefObject<HTMLInputElement>;
+
+  public GET_BOOKS_GQL: string = gql`
+    query Books {
+      books {
+        authors
+        title
+      }
+    }
+  `;
+
+  public ADD_BOOK_GQL: string = gql`
+    mutation AddBookMutation($authors: String!, $title: String!) {
+      addBook(authors: $authors, title: $title) {
+        authors
+        title
+      }
+    }
+  `;
 
   public constructor(props: any) {
     super(props);
@@ -28,22 +38,13 @@ export default class Books extends React.PureComponent<any, State> {
   public render() {
     return (
       <div>
-        {this.addBookMutation()} {this.getBooksQuery()}
+        {this.addBook()} {this.getBooksQuery()}
       </div>
     );
   }
 
   public getBooksQuery = () => (
-    <Query
-      query={gql`
-        {
-          books {
-            authors
-            title
-          }
-        }
-      `}
-    >
+    <Query<{ books: BookData[] }> query={this.GET_BOOKS_GQL}>
       {({ loading, error, data }) => {
         if (loading) {
           return <p>Loading...</p>;
@@ -52,9 +53,7 @@ export default class Books extends React.PureComponent<any, State> {
           return <p>Error :(</p>;
         }
 
-        const books = get(data, 'books');
-
-        if (books) {
+        if (data && get(data, 'books')) {
           return data.books.map((book: BookData) => (
             <Book title={book.title} authors={book.authors} />
           ));
@@ -65,18 +64,12 @@ export default class Books extends React.PureComponent<any, State> {
     </Query>
   );
 
-  public addBookMutation = () => {
-    const ADD_BOOK = gql`
-      mutation AddBook($title: String!, $authors: String!) {
-        addBook(title: $title, authors: $authors)
-      }
-    `;
-
+  public addBook = () => {
     return (
-      <Mutation mutation={ADD_BOOK}>
-        {(addBook, { loading, error }) => {
+      <Mutation mutation={this.ADD_BOOK_GQL}>
+        {(addBookMutation: MutationFn, { loading, error }) => {
           return (
-            <form onSubmit={e => this.handleFormSubmit(e, addBook)}>
+            <form onSubmit={e => this.handleFormSubmit(e, addBookMutation)}>
               <label>
                 Title <input ref={this.titleInputRef} />
               </label>
@@ -93,11 +86,11 @@ export default class Books extends React.PureComponent<any, State> {
 
   public handleFormSubmit = (
     e: React.FormEvent<HTMLFormElement>,
-    addBook: MutationFn
+    addBookMutation: MutationFn
   ) => {
     e.preventDefault();
 
-    addBook({
+    addBookMutation({
       variables: {
         title: get(this, 'titleInputRef.current.value', ''),
         authors: get(this, 'authorsInputRef.current.value', '')
