@@ -68,7 +68,10 @@ export default class Books extends React.PureComponent<any, State> {
   public addBookMutation = () => {
     const ADD_BOOK = gql`
       mutation AddBook($title: String!, $authors: String!) {
-        addBook(title: $title, authors: $authors)
+        addBook(title: $title, authors: $authors) {
+          authors
+          title
+        }
       }
     `;
 

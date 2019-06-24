@@ -8,10 +8,19 @@ module.exports = {
 
   Mutation: {
     addBook: (root, args) => {
-      const newChannel = {id: nextId++, name: args.name};
-      channels.push(newChannel);
-
-      return newChannel;
+      console.log(args);
+      Models.Book.findOrCreate({
+        where: {
+          authors: args.authors,
+          title: args.title
+        }
+      })
+        .spread(function (book, created) {
+          console.log(book.get({
+            plain: true
+          }))
+          console.log(created)
+        });
     }
   }
-};
+}

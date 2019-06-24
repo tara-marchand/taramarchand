@@ -88,7 +88,11 @@ app.engine(
 
 app.set('view engine', '.hbs');
 
-app.get('/*', (req, res) => {
+app.all('*', (req, res, next) => {
+  if (req.url === '/graphql') {
+    return next();
+  }
+
   res.render('index', {
     isProd: process.env.NODE_ENV === 'production'
   });
