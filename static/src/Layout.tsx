@@ -29,7 +29,7 @@ class Layout extends PureComponent<Props> {
   render() {
     return (
       <React.Fragment>
-        <Header />
+        {/* <Header /> */}
         <div className="grid-container">
           <div className="grid-x grid-margin-x">
             <div className="cell small-12">
@@ -38,7 +38,7 @@ class Layout extends PureComponent<Props> {
             </div>
           </div>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </React.Fragment>
     );
   }
