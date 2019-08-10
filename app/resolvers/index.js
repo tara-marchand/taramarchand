@@ -1,4 +1,4 @@
-const Models = require('./models');
+const Models = require('../models');
 
 // Maps a GraphQL query to a Sequelize query.
 module.exports = {
@@ -7,20 +7,23 @@ module.exports = {
   },
 
   Mutation: {
-    addBook: (root, args) => {
-      console.log(args);
+    addBookToCache: (root, args) => {
       Models.Book.findOrCreate({
         where: {
           authors: args.authors,
           title: args.title
         }
-      })
-        .spread(function (book, created) {
-          console.log(book.get({
+      }).then(results => {
+        if (results && results.length) {
+          const addedBook = results[0].get({
             plain: true
-          }))
-          console.log(created)
-        });
+          });
+
+          console.log(`Added book: ${addedBook}`);
+        }
+
+      });
+
     }
   }
 };

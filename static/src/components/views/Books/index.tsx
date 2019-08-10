@@ -5,16 +5,9 @@ import set from 'lodash.set';
 
 import Book, { BookData } from './Book';
 import { Query, Mutation, MutationFn } from 'react-apollo';
-
-export interface State {
-  books: BookData[];
-}
+import ErrorBoundary from '../../ErrorBoundary';
 
 export default class Books extends React.PureComponent<any, State> {
-  public state: State = {
-    books: []
-  };
-
   public titleInputRef: React.RefObject<HTMLInputElement>;
   public authorsInputRef: React.RefObject<HTMLInputElement>;
 
@@ -27,9 +20,11 @@ export default class Books extends React.PureComponent<any, State> {
 
   public render() {
     return (
+      <ErrorBoundary>
       <div>
         {this.addBookMutation()} {this.getBooksQuery()}
       </div>
+      </ErrorBoundary>
     );
   }
 
@@ -55,8 +50,8 @@ export default class Books extends React.PureComponent<any, State> {
         const books = get(data, 'books');
 
         if (books) {
-          return data.books.map((book: BookData) => (
-            <Book title={book.title} authors={book.authors} />
+          return data.books.map((book: BookData, index: number) => (
+            <Book title={book.title} authors={book.authors} key={index} />
           ));
         }
 
@@ -105,9 +100,9 @@ export default class Books extends React.PureComponent<any, State> {
         title: get(this, 'titleInputRef.current.value', ''),
         authors: get(this, 'authorsInputRef.current.value', '')
       }
+    }).then(() => {
+      set(this, 'titleInputRef.current.value', '');
+      set(this, 'authorsInputRef.current.value', '');  
     });
-
-    set(this, 'titleInputRef.current.value', '');
-    set(this, 'authorsInputRef.current.value', '');
   };
 }

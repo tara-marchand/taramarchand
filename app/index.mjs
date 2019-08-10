@@ -13,7 +13,6 @@ import Apollo from 'apollo-server-express';
 import morgan from 'morgan';
 // import mime from 'mime-types';
 import path from 'path';
-import { default as pg } from 'pg';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
