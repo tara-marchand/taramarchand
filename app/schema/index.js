@@ -12,6 +12,6 @@ module.exports = `
   }
 
   type Mutation {
-    addBook(title: String!, authors: String!): Book
+    addBookToCache(title: String!, authors: String!): Book
   }
 `;
