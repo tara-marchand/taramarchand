@@ -1,7 +1,4 @@
 import dirname from './dirname';
-import Models from './models';
-import schema from './schema';
-import resolvers from './resolvers';
 
 // import newrelic from 'newrelic';
 import bodyParser from 'body-parser';
@@ -9,7 +6,7 @@ import compression from 'compression';
 import dotenv from 'dotenv';
 import exphbs from 'express-handlebars';
 import express from 'express';
-import Apollo from 'apollo-server-express';
+import postgraphile from 'postgraphile';
 import morgan from 'morgan';
 // import mime from 'mime-types';
 import path from 'path';
@@ -30,15 +27,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 const compiler = webpack(webpackConfig);
 
-const typeDefs = Apollo.gql(schema);
-const executableSchema = Apollo.makeExecutableSchema({
-  typeDefs,
-  resolvers
-});
-const apolloServer = new Apollo.ApolloServer({
-  schema: executableSchema
-});
-
 const app = express();
 
 if (process.env.NODE_ENV === 'development') {
@@ -56,6 +44,18 @@ if (process.env.NODE_ENV === 'development') {
 } else if (process.env.NODE_ENV === 'production') {
   app.use(compression());
 }
+
+const { postgraphile: initPostgraphile } = postgraphile;
+const pgr = initPostgraphile(process.env.POSTGRAPHILE, 'public', {
+  // watchPg: true,
+  externalUrlBase: '/gql',
+  graphiql: true,
+  enhanceGraphiql: true,
+  ownerConnectionString: true,
+  graphqlRoute: '/graphql',
+  graphiqlRoute: '/graphiql'
+});
+app.use('/gql', pgr);
 
 app.use(bodyParser.raw());
 
@@ -88,21 +88,13 @@ app.engine(
 app.set('view engine', '.hbs');
 
 app.all('*', (req, res, next) => {
-  if (req.url === '/graphql') {
-    return next();
-  }
-
   res.render('index', {
     isProd: process.env.NODE_ENV === 'production'
   });
 });
 
-apolloServer.applyMiddleware({ app });
-
 const port = process.env.PORT || 3000;
 
-Models.sequelize.sync().then(() => {
-  app.listen(port, function() {
-    console.info(`App listening on port ${port}.`);
-  });
+app.listen(port, function() {
+  console.info(`App listening on port ${port}.`);
 });

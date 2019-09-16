@@ -1,67 +1,13 @@
-import { gql } from 'apollo-boost';
 import * as React from 'react';
 import get from 'lodash.get';
 import set from 'lodash.set';
+import { useQuery } from 'graphql-hooks'
 
 import Book, { BookData } from './Book';
-import { Query, Mutation, MutationFn } from 'react-apollo';
 import ErrorBoundary from '../../ErrorBoundary';
 
-export default class Books extends React.PureComponent<any, State> {
-  public titleInputRef: React.RefObject<HTMLInputElement>;
-  public authorsInputRef: React.RefObject<HTMLInputElement>;
-
-  public constructor(props: any) {
-    super(props);
-
-    this.titleInputRef = React.createRef();
-    this.authorsInputRef = React.createRef();
-  }
-
-  public render() {
-    return (
-      <ErrorBoundary>
-      <div>
-        {this.addBookMutation()} {this.getBooksQuery()}
-      </div>
-      </ErrorBoundary>
-    );
-  }
-
-  public getBooksQuery = () => (
-    <Query
-      query={gql`
-        {
-          books {
-            authors
-            title
-          }
-        }
-      `}
-    >
-      {({ loading, error, data }) => {
-        if (loading) {
-          return <p>Loading...</p>;
-        }
-        if (error) {
-          return <p>Error :(</p>;
-        }
-
-        const books = get(data, 'books');
-
-        if (books) {
-          return data.books.map((book: BookData, index: number) => (
-            <Book title={book.title} authors={book.authors} key={index} />
-          ));
-        }
-
-        return null;
-      }}
-    </Query>
-  );
-
-  public addBookMutation = () => {
-    const ADD_BOOK = gql`
+export default function Books(props: any) {
+    const addBookMutation = `
       mutation AddBook($title: String!, $authors: String!) {
         addBookToCache(title: $title, authors: $authors) {
           authors
@@ -69,40 +15,101 @@ export default class Books extends React.PureComponent<any, State> {
         }
       }
     `;
+    const allBooksQuery = `
+        {
+          allBooks {
+            authors
+            title
+          }
+        }
+      `
+    const titleInputRef = React.createRef();
+    const authorsInputRef = React.createRef();
+
+    const { loading, error, data } = useQuery(allBooksQuery)
+ 
+  if (loading) {
+    return 'Loading...';
+  }
+  if (error) {
+    return 'Something bad happened!';
+  }
+  if (data) {
+    const books = get(data, 'books');
+    let booksList;
+
+    if (books) {
+      booksList = data.books.map((book: BookData, index: number) => (
+        <Book title={book.title} authors={book.authors} key={index} />
+      ));
 
     return (
-      <Mutation mutation={ADD_BOOK}>
-        {(addBook, { loading, error }) => {
-          return (
-            <form onSubmit={e => this.handleFormSubmit(e, addBook)}>
-              <label>
-                Title <input ref={this.titleInputRef} />
-              </label>
-              <label>
-                Authors <input ref={this.authorsInputRef} />
-              </label>
-              <button type="submit">Add Book</button>
-            </form>
-          );
-        }}
-      </Mutation>
+      <ErrorBoundary>
+        <div>
+          {/* {this.addBookMutation()} */}
+          {booksList}
+        </div>
+      </ErrorBoundary>
     );
-  };
 
-  public handleFormSubmit = (
-    e: React.FormEvent<HTMLFormElement>,
-    addBook: MutationFn
-  ) => {
-    e.preventDefault();
+    return null;
+  }
+};
 
-    addBook({
-      variables: {
-        title: get(this, 'titleInputRef.current.value', ''),
-        authors: get(this, 'authorsInputRef.current.value', '')
-      }
-    }).then(() => {
-      set(this, 'titleInputRef.current.value', '');
-      set(this, 'authorsInputRef.current.value', '');  
-    });
-  };
+  // public addBookMutationOld = () => {
+  //   return (
+      // <Mutation mutation={ADD_BOOK}>
+      //   {(addBook, { loading, error }) => {
+      //     return (
+      //       <form onSubmit={e => this.handleFormSubmit(e, addBook)}>
+      //         <label>
+      //           Title <input ref={this.titleInputRef} />
+      //         </label>
+      //         <label>
+      //           Authors <input ref={this.authorsInputRef} />
+      //         </label>
+      //         <button type="submit">Add Book</button>
+      //       </form>
+      //     );
+      //   }}
+      // </Mutation>
+  //   );
+  // };
+
+  // public handleFormSubmit = (
+  //   e: React.FormEvent<HTMLFormElement>,
+  //   addBook: MutationFn
+  // ) => {
+  //   e.preventDefault();
+
+  //   addBook({
+  //     variables: {
+  //       title: get(this, 'titleInputRef.current.value', ''),
+  //       authors: get(this, 'authorsInputRef.current.value', '')
+  //     }
+  //   }).then(() => {
+  //     set(this, 'titleInputRef.current.value', '');
+  //     set(this, 'authorsInputRef.current.value', '');  
+  //   });
+  // };
 }
+
+// import { gql, Resolvers } from 'apollo-boost';
+
+// function addBook(root: any, variables: {[key: string]: any}, context: any) {
+//   const id = context.getCacheKey({ __typename: 'Book', id: variables.id });
+//   const fragment = gql`
+//     fragment addedBook on Book {}
+//   `;
+//   const book = context.cache.readFragment({ fragment, id });
+//   const data = { ...book };
+
+//   context.cache.writeData({ id, data });
+//   return null;
+// }
+
+// export default {
+//   Mutation: {
+//     addBook
+//   }
+// } as Resolvers;

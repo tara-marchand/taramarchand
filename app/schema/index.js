@@ -1,4 +1,4 @@
-// Sequelize types.
+// GraphQL types.
 module.exports = `
   type Book {
     id: ID!
