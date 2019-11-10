@@ -59,7 +59,10 @@ const devConfig = {
         NODE_ENV: JSON.stringify('development')
       }
     })
-  ]
+  ],
+  watchOptions: {
+    ignored: ['./*.js', './app/**/*.js']
+  }
 };
 
 const finalConfig = merge(baseConfig.config, devConfig);
