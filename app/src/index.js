@@ -1,21 +1,20 @@
-import dirname from './dirname';
-
 // import newrelic from 'newrelic';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import dotenv from 'dotenv';
 import exphbs from 'express-handlebars';
 import express from 'express';
-import postgraphile from 'postgraphile';
 import morgan from 'morgan';
-// import mime from 'mime-types';
 import path from 'path';
+
+import models from './models';
+
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
-import { default as webpackDevConfig } from '../webpack.dev';
-import { default as webpackProdConfig } from '../webpack.prod';
+import { default as webpackDevConfig } from '../../webpack.dev';
+import { default as webpackProdConfig } from '../../webpack.prod';
 
 dotenv.config();
 
@@ -45,31 +44,25 @@ if (process.env.NODE_ENV === 'development') {
   app.use(compression());
 }
 
-const { postgraphile: initPostgraphile } = postgraphile;
-const pgr = initPostgraphile(process.env.POSTGRAPHILE, 'public', {
-  // watchPg: true,
-  externalUrlBase: '/gql',
-  graphiql: true,
-  enhanceGraphiql: true,
-  ownerConnectionString: true,
-  graphqlRoute: '/graphql',
-  graphiqlRoute: '/graphiql'
-});
-app.use('/gql', pgr);
-
 app.use(bodyParser.raw());
 
 app.use(
   '/static',
-  express.static(path.resolve(dirname, '..', 'static', 'dist'), {
+  express.static(path.resolve(process.cwd(), 'static', 'dist'), {
     index: false
   })
 );
 
 app.use(
   '/node_modules',
-  express.static(path.resolve(dirname, '..', 'node_modules'))
+  express.static(path.resolve(process.cwd(), 'node_modules'))
 );
+
+app.get('/api/books', (req, res) => {
+  models.Book.findAll().then(books => {
+    res.status(200).json(books).end();
+  })
+});
 
 app.use(
   morgan(
@@ -95,6 +88,6 @@ app.all('*', (req, res, next) => {
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, function() {
+app.listen(port, function () {
   console.info(`App listening on port ${port}.`);
 });

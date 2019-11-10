@@ -1,21 +1,19 @@
-const fs = require('fs');
-const Path = require('path');
-const Sequelize = require('Sequelize');
-
-const dirname = require('../dirname');
+import fs from 'fs';
+import Path from 'path';
+import Sequelize from 'Sequelize';
 
 const sequelize = new Sequelize.Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
-  dialectOptions: {ssl: true}
+  dialectOptions: { ssl: true }
 });
 
 const models = {};
 
 // Read all the files in this directory and import them as models.
-fs.readdirSync(Path.join(dirname, 'models'))
+fs.readdirSync(Path.join(__dirname))
   .filter(file => file.indexOf('.') !== 0 && file !== 'index.js')
   .forEach(file => {
-    const model = sequelize.import(Path.join(dirname, 'models', file));
+    const model = sequelize.import(Path.join(__dirname, file));
 
     models[model.name] = model;
   });
@@ -23,4 +21,4 @@ fs.readdirSync(Path.join(dirname, 'models'))
 models.sequelize = sequelize;
 models.Sequelize = Sequelize;
 
-module.exports = models;
+export default models;
