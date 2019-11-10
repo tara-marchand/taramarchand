@@ -1,16 +1,21 @@
 import React, { PureComponent } from 'react';
 import { hot } from 'react-hot-loader';
 import { BrowserRouter } from 'react-router-dom';
-
-import { isDev } from './utils';
+ 
 import Layout from './Layout';
+import { isDev } from './utils';
+import ErrorBoundary from './components/ErrorBoundary';
 
-class App extends PureComponent {
+interface Props {};
+
+class App extends PureComponent<Props> {
   render() {
     return (
-      <BrowserRouter>
-        <Layout />
-      </BrowserRouter>
+      <ErrorBoundary>
+        <BrowserRouter>
+          <Layout />
+        </BrowserRouter>
+      </ErrorBoundary>
     );
   }
 }

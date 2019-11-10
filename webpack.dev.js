@@ -62,4 +62,6 @@ const devConfig = {
   ]
 };
 
-module.exports = merge(baseConfig.config, devConfig);
+const finalConfig = merge(baseConfig.config, devConfig);
+
+module.exports = finalConfig;

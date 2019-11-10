@@ -4,12 +4,6 @@
     "*.js": "javascriptreact",
     "*.ts": "typescriptreact"
   },
-  "tslint.configFile": "tslint.json",
-  "tslint.exclude": [
-    "*.js",
-    "*.jsx"
-  ],
-  "tslint.autoFixOnSave": false,
   "typescript.format.enable": false,
   "typescript.reportStyleChecksAsWarnings": false,
   "typescript.tsdk": "node_modules/typescript/lib"

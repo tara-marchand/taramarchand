@@ -1,10 +1,9 @@
 /* eslint-env node */
 const path = require('path');
-const webpack = require('webpack');
 
 const babelOptions = {
-  presets: ['env', 'react'],
-  plugins: ['transform-class-properties', 'transform-object-rest-spread']
+  presets: ['@babel/preset-env', '@babel/preset-react'],
+  plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-proposal-object-rest-spread']
 };
 
 module.exports = {
