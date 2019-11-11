@@ -29,7 +29,7 @@ export default class Books extends React.PureComponent<Props> {
     return (
       <div>
         {books.length > 0 &&
-          books.map(book => <Book title={book.title} authors={book.authors} />)}
+          books.map(book => <Book title={book.title} authors={book.authors} key={book.id} />)}
       </div>
     );
   }

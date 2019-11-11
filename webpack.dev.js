@@ -19,6 +19,9 @@ const devConfig = {
         include: [path.resolve(__dirname, 'static/src')],
         use: [
           {
+            loader: 'react-hot-loader/webpack'
+          },
+          {
             loader: 'babel-loader',
             options: baseConfig.babelOptions
           },
@@ -39,10 +42,7 @@ const devConfig = {
         ],
         use: [
           {
-            loader: 'style-loader',
-            options: {
-              hmr: true
-            }
+            loader: 'style-loader'
           },
           'css-loader',
           'postcss-loader',
@@ -60,6 +60,9 @@ const devConfig = {
       }
     })
   ],
+  resolve: {
+    alias: { 'react-dom': '@hot-loader/react-dom' }
+  },
   watchOptions: {
     ignored: ['./*.js', './app/**/*.js']
   }
