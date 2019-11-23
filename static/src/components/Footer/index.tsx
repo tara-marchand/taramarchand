@@ -6,8 +6,9 @@ type Props = RouteComponentProps<any>;
 class Footer extends React.PureComponent<Props> {
   render() {
     return (
-        <ul className="Footer menu align-center">
-          <li>
+      <div className="Footer bg-gray-300 flex items-center h-12 w-full">
+        <ul className="container flex items-center mx-auto pl-4 pr-4 sm:p-0">
+          <li className="mr-2 pr-2">
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -16,7 +17,7 @@ class Footer extends React.PureComponent<Props> {
               LinkedIn
             </a>
           </li>
-          <li>
+          <li className="mr-2 pl-2 pr-2">
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -25,7 +26,7 @@ class Footer extends React.PureComponent<Props> {
               GitHub
             </a>
           </li>
-          <li>
+          <li className="mr-2 pl-2">
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -35,6 +36,7 @@ class Footer extends React.PureComponent<Props> {
             </a>
           </li>
         </ul>
+      </div>
     );
   }
 }

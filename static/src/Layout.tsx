@@ -30,11 +30,11 @@ class Layout extends PureComponent<Props> {
     return (
       <React.Fragment>
         <Header />
-        <div className="grid-container">
-          <div className="grid-x grid-margin-x">
-            <div className="cell small-12">
-                <Route exact path="/" component={Home} />
-                <Route path="/:view" render={this.renderView} />
+        <div className="container mt-4 mb-4 mx-auto pl-4 pr-4 sm:p-0">
+          <div className="">
+            <div className="">
+              <Route exact path="/" component={Home} />
+              <Route path="/:view" render={this.renderView} />
             </div>
           </div>
         </div>

@@ -26,7 +26,7 @@ class Resume extends React.PureComponent<{}> {
 
     return (
       <React.Fragment>
-        <h1>{basics && basics.name}</h1>
+        <h1 className="c-h1">{basics && basics.name}</h1>
         {basics && (
           <section id="basics">
             <div>

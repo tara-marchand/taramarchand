@@ -3,7 +3,10 @@ const path = require('path');
 
 const babelOptions = {
   presets: ['@babel/preset-env', '@babel/preset-react'],
-  plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-proposal-object-rest-spread']
+  plugins: [
+    '@babel/plugin-proposal-class-properties',
+    '@babel/plugin-proposal-object-rest-spread'
+  ]
 };
 
 module.exports = {
@@ -11,7 +14,6 @@ module.exports = {
   config: {
     context: path.resolve(__dirname),
     devtool: 'inline-source-map',
-    externals: ['foundation-sites'],
     mode: 'development',
     module: {
       // Rules for TS(X) and CSS|SCSS|SASS individually set in dev & prod configs.

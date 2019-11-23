@@ -37,16 +37,25 @@ const devConfig = {
         test: /\.(css|scss|sass)/,
         include: [
           path.resolve(__dirname, 'static/src'),
-          path.resolve(__dirname, 'node_modules'),
-          path.resolve(__dirname, 'node_modules/foundation-sites/scss')
+          path.resolve(__dirname, 'node_modules')
         ],
         use: [
           {
             loader: 'style-loader'
           },
           'css-loader',
-          'postcss-loader',
-          'sass-loader'
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: loader => [
+                require('precss'),
+                require('postcss-import'),
+                require('tailwindcss'),
+                require('autoprefixer')
+              ]
+            }
+          }
         ]
       }
     ]

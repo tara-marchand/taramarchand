@@ -30,15 +30,24 @@ const prodConfig = {
         test: /\.(css|scss|sass)/,
         include: [
           path.resolve(__dirname, 'static/src'),
-          path.resolve(__dirname, 'node_modules'),
-          path.resolve(__dirname, 'node_modules/foundation-sites/scss')
+          path.resolve(__dirname, 'node_modules')
         ],
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
-          'postcss-loader',
-          'resolve-url-loader',
-          'sass-loader'
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: loader => [
+                require('precss'),
+                require('postcss-import'),
+                require('tailwindcss-typography'),
+                require('autoprefixer')
+              ]
+            }
+          },
+          'resolve-url-loader'
         ]
       }
     ]

@@ -1,3 +1,5 @@
 .Header {
-    background-color: $light-gray;
+  .is-active {
+    @apply bg-blue-500 text-white;
+  }
 }

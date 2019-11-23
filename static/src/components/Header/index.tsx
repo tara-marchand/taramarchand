@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
 import uuid4 from 'uuid/v4';
@@ -14,19 +15,10 @@ type Props = RouteComponentProps<any>;
 class Header extends React.PureComponent<Props> {
   render() {
     return (
-      <div className="Header">
-        <div className="grid-container">
-          <div className="grid-x grid-margin-x">
-            <div className="cell small-12">
-              <ul
-                className="vertical medium-horizontal menu"
-                data-responsive-menu="drilldown medium-dropdown"
-              >
-                {this.allNavLinks}
-              </ul>
-            </div>
-          </div>
-        </div>
+      <div className="Header bg-gray-300 h-12 w-full pl-4 pr-4 sm:p-0">
+        <ul className="container flex items-center h-full mx-auto">
+          {this.allNavLinks}
+        </ul>
       </div>
     );
   }
@@ -43,19 +35,29 @@ class Header extends React.PureComponent<Props> {
       }
     ];
 
-    return links.map(link => this.getOneNavLink(link));
+    return links.map((link, index) => this.getOneNavLink(link, index));
   }
 
-  getOneNavLink(link: LinkData) {
+  getOneNavLink(link: LinkData, index: number) {
+    const classes = clsx(
+      'flex',
+      'h-full',
+      'items-center',
+      'mr-2',
+      'pl-2',
+      'pr-2'
+    );
+
     return (
       <MenuLink
         activeClassName="is-active"
+        className={classes}
         exact={true}
         key={uuid4()}
         strict
         to={link.to}
       >
-        <span>{link.label}</span>
+        {link.label}
       </MenuLink>
     );
   }

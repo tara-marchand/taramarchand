@@ -5,20 +5,22 @@ export interface Book {
 }
 
 interface State {
-  books: Book[]
+  books: Book[];
 }
 
 const initialState: State = {
   books: []
-}
+};
 
-export default function books(state = initialState, { type, payload }) {
+export default function books(
+  state = initialState,
+  { type, payload }: { type: string; payload: any }
+) {
   switch (type) {
+    // case typeName:
+    //   return { ...state, ...payload }
 
-  // case typeName:
-  //   return { ...state, ...payload }
-
-  default:
-    return state
+    default:
+      return state;
   }
 }
