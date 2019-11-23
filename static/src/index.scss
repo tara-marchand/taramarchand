@@ -3,12 +3,37 @@
  */
 @import './components/Header/styles';
 @import './components/Footer/styles';
+@import './components/views/Resume/styles';
 
 /**
  * This injects Tailwind's base styles and any base styles registered by
  * plugins.
  */
 @tailwind base;
+
+h1 {
+  @apply text-4xl;
+}
+
+h2 {
+  @apply text-3xl;
+}
+
+h3 {
+  @apply text-2xl;
+}
+
+h4 {
+  @apply text-xl;
+}
+
+a {
+  @apply text-blue-800;
+
+  &:hover {
+    @apply: text-red-500;
+  }
+}
 
 /**
   * This injects Tailwind's component classes and any component classes

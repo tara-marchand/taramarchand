@@ -31,17 +31,17 @@ class Resume extends React.PureComponent<{}> {
           <section id="basics">
             <div>
               <span>
-                <a href="mailto:tara@mac.com">{basics.email} </a>
+                <a href={`mailto:${basics.email}`}>{basics.email} </a>
               </span>
               <span>
-                <span>·</span> <a href="{basics.website}">{basics.website}</a>
+                <span>·</span> <a href={basics.website}>{basics.website}</a>
               </span>
             </div>
             {basics.profiles && (
               <section id="profiles">
                 {basics.profiles.map((profile, index) => (
                   <span key={index}>
-                    <a href="{profile.url}">{profile.network} </a>
+                    <a href={profile.url}>{profile.network} </a>
                   </span>
                 ))}
               </section>
@@ -95,7 +95,7 @@ class Resume extends React.PureComponent<{}> {
                 <div key={index}>
                   <h3>{workplace.position}</h3>
                   <div>
-                    <a href="{workplace.website}">{workplace.company} </a>
+                    <a href={workplace.website}>{workplace.company} </a>
                     ·&nbsp;
                     <span>{workplace.startDate}-</span>
                     <span>{workplace.endDate}</span>

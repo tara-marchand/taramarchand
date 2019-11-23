@@ -1,5 +1,9 @@
 .Header {
   .is-active {
     @apply bg-blue-500 text-white;
+
+    a {
+      @apply cursor-default;
+    }
   }
 }

@@ -374,62 +374,6 @@ module.exports = {
       current: 'currentColor'
     },
     textColor: theme => theme('colors'),
-    textIndent: {
-      // defaults to {}
-      '1': '0.25rem',
-      '2': '0.5rem'
-    },
-    textShadow: {
-      // defaults to {}
-      default: '0 2px 5px rgba(0, 0, 0, 0.5)',
-      lg: '0 2px 10px rgba(0, 0, 0, 0.5)'
-    },
-    textStyles: theme => ({
-      // defaults to {}
-      heading: {
-        output: false, // this means there won't be a "heading" component in the CSS, but it can be extended
-        fontWeight: theme('fontWeight.bold'),
-        lineHeight: theme('lineHeight.tight')
-      },
-      h1: {
-        extends: 'heading', // this means all the styles in "heading" will be copied here; "extends" can also be an array to extend multiple text styles
-        fontSize: theme('fontSize.5xl'),
-        '@screen sm': {
-          fontSize: theme('fontSize.6xl')
-        }
-      },
-      h2: {
-        extends: 'heading',
-        fontSize: theme('fontSize.4xl'),
-        '@screen sm': {
-          fontSize: theme('fontSize.5xl')
-        }
-      },
-      h3: {
-        extends: 'heading',
-        fontSize: theme('fontSize.4xl')
-      },
-      h4: {
-        extends: 'heading',
-        fontSize: theme('fontSize.3xl')
-      },
-      h5: {
-        extends: 'heading',
-        fontSize: theme('fontSize.2xl')
-      },
-      h6: {
-        extends: 'heading',
-        fontSize: theme('fontSize.xl')
-      },
-      link: {
-        fontWeight: theme('fontWeight.bold'),
-        color: theme('colors.blue.400'),
-        '&:hover': {
-          color: theme('colors.blue.600'),
-          textDecoration: 'underline'
-        }
-      }
-    }),
     width: theme => ({
       auto: 'auto',
       ...theme('spacing'),

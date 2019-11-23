@@ -42,7 +42,7 @@ const prodConfig = {
               plugins: loader => [
                 require('precss'),
                 require('postcss-import'),
-                require('tailwindcss-typography'),
+                require('tailwindcss'),
                 require('autoprefixer')
               ]
             }

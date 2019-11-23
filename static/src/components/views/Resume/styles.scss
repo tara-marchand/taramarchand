@@ -1,0 +1,13 @@
+#resume {
+  h3 {
+    @apply mt-4 mb-2;
+  }
+
+  hr {
+    @apply mt-4;
+
+    & + section {
+      @apply mt-2;
+    }
+  }
+}

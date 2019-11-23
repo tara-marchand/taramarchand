@@ -28,17 +28,18 @@
   "work": [
     {
       "company": "New Relic",
-      "position": "Senior Software Engineer",
+      "position": "Lead Growth (Software) Engineer",
       "website": "http://www.newrelic.com/",
       "startDate": "2017",
       "endDate": "present",
       "summary": "",
       "highlights": [
-        "Develop user interface for internal app to aid salespeople in growing customer base",
+        "Lead development of user interface for internal app to aid salespeople in growing customer base",
         "Collaborate with engineers, data professionals, product managers, and designers on features and functionality",
         "Join company-wide UI engineering endeavors, co-lead project to consolidate discipline guidance and best practices",
         "Developed user interface for New Relic's Infrastructure monitoring product",
-        "Worked with support team to troubleshoot and fix issues reported by customers"
+        "Worked with support team to troubleshoot and fix issues reported by customers",
+        "Promoted from Senior Software Engineer."
       ]
     },
     {
@@ -83,8 +84,7 @@
       ]
     },
     {
-      "company":
-        "Office of Educational Technology, UC San Francisco School of Medicine",
+      "company": "Office of Educational Technology, UC San Francisco School of Medicine",
       "position": "Educational Technology Developer",
       "website": "http://meded.ucsf.edu/tel",
       "startDate": "2003",
