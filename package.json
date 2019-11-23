@@ -19,29 +19,14 @@
     "start:dev": "npm run build:dev; npm run build:app && DEBUG=express:* node ./app/dist/index.js",
     "start": "npm run start:dev",
     "stats": "npm run build:dev:stats; npm run build:prod:stats",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier:checkJs": "prettier --parser \"babel\" --list-different \"static/src/**/*.{js,jsx}\"",
+    "prettier:writeJs": "prettier --parser \"babel\" --write \"static/src/**/*.{js,jsx}\"",
+    "prettier:checkTs": "prettier --parser \"typescript\" --list-different \"static/src/**/*.{ts,tsx}\"",
+    "prettier:writeTs": "prettier --parser \"typescript\" --write \"static/src/**/*.{ts,tsx}\""
   },
   "author": "",
   "license": "ISC",
-  "babel": {
-    "plugins": [
-      [
-        "lodash",
-        {
-          "id": [
-            "lodash"
-          ]
-        }
-      ]
-    ],
-    "env": {
-      "development": {
-        "plugins": [
-          "react-hot-loader/babel"
-        ]
-      }
-    }
-  },
   "dependencies": {
     "@babel/cli": "^7.7.0",
     "@babel/plugin-proposal-class-properties": "^7.7.0",
@@ -130,5 +115,27 @@
     "eslint-plugin-react": "^7.16.0",
     "precss": "^4.0.0",
     "prettier": "^1.19.1"
+  },
+  "babel": {
+    "plugins": [
+      [
+        "lodash",
+        {
+          "id": [
+            "lodash"
+          ]
+        }
+      ]
+    ],
+    "env": {
+      "development": {
+        "plugins": [
+          "react-hot-loader/babel"
+        ]
+      }
+    }
+  },
+  "prettier": {
+    "singleQuote": true
   }
 }

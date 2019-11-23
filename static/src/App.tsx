@@ -8,17 +8,17 @@ import { isDev } from './utils';
 import ErrorBoundary from './components/ErrorBoundary';
 import store from './store';
 
-interface Props {};
+interface Props {}
 
 class App extends PureComponent<Props> {
   render() {
     return (
       <Provider store={store}>
-          <ErrorBoundary>
-            <BrowserRouter>
-              <Layout />
-            </BrowserRouter>
-          </ErrorBoundary>
+        <ErrorBoundary>
+          <BrowserRouter>
+            <Layout />
+          </BrowserRouter>
+        </ErrorBoundary>
       </Provider>
     );
   }
