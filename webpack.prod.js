@@ -35,19 +35,8 @@ const prodConfig = {
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugins: loader => [
-                require('precss'),
-                require('postcss-import'),
-                require('tailwindcss'),
-                require('autoprefixer')
-              ]
-            }
-          },
-          'resolve-url-loader'
+          'resolve-url-loader',
+          'postcss-loader'
         ]
       }
     ]

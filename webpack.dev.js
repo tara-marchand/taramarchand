@@ -40,22 +40,10 @@ const devConfig = {
           path.resolve(__dirname, 'node_modules')
         ],
         use: [
-          {
-            loader: 'style-loader'
-          },
+          'style-loader',
           'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugins: loader => [
-                require('precss'),
-                require('postcss-import'),
-                require('tailwindcss'),
-                require('autoprefixer')
-              ]
-            }
-          }
+          'resolve-url-loader',
+          'postcss-loader'
         ]
       }
     ]
@@ -73,7 +61,7 @@ const devConfig = {
     alias: { 'react-dom': '@hot-loader/react-dom' }
   },
   watchOptions: {
-    ignored: ['./*.js', './app/**/*.js']
+    ignored: ['./*.js', 'app', 'node_modules']
   }
 };
 

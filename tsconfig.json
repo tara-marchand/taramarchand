@@ -10,6 +10,8 @@
     "strict": true,
     "suppressImplicitAnyIndexErrors": true,
     "target": "esnext",
-    "typeRoots": ["./node_modules/@types", "./static/src/types"]
-  }
+    "typeRoots": ["node_modules/@types", "static/src"]
+  },
+  "include": ["static/src/**/*"],
+  "exclude": ["node_modules"]
 }

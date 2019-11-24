@@ -1,24 +1,16 @@
-export interface Book {
-  authors: string;
-  id?: number;
-  title: string;
-}
+import { BooksState, SET_BOOKS } from './types';
 
-interface State {
-  books: Book[];
-}
-
-const initialState: State = {
+const initialState: BooksState = {
   books: []
 };
 
 export default function books(
   state = initialState,
   { type, payload }: { type: string; payload: any }
-) {
+): BooksState {
   switch (type) {
-    // case typeName:
-    //   return { ...state, ...payload }
+    case SET_BOOKS:
+      return { ...state, ...payload };
 
     default:
       return state;

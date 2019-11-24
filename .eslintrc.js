@@ -4,27 +4,23 @@ module.exports = {
     browser: true,
     node: false
   },
-  extends: [
-    "eslint:recommended",
-    'plugin:react/recommended',
-    "prettier"
-  ],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier'],
   overrides: [
     {
       files: ['**/*.ts', '**/*.tsx'],
       extends: [
-        "plugin:@typescript-eslint/eslint-recommended",
+        'plugin:@typescript-eslint/eslint-recommended',
         'plugin:react/recommended',
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "prettier",
-        "prettier/@typescript-eslint"
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+        'prettier',
+        'prettier/@typescript-eslint'
       ],
       parser: '@typescript-eslint/parser',
       parserOptions: {
-        project: './tsconfig.json'
+        project: 'tsconfig.json'
       },
-      plugins: ['@typescript-eslint', 'react'],
+      plugins: ['@typescript-eslint', 'react']
     },
     {
       env: {

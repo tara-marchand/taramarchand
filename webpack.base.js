@@ -19,7 +19,7 @@ module.exports = {
       // Rules for TS(X) and CSS|SCSS|SASS individually set in dev & prod configs.
       rules: [
         {
-          test: /\.js(x?)$/,
+          test: /\.(js|jsx|json)$/,
           exclude: path.resolve(__dirname),
           use: [
             {
