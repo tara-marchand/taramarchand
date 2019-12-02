@@ -2,6 +2,9 @@ import fetch from 'isomorphic-fetch';
 import * as React from 'react';
 
 import Book from './Book';
+import { AppState } from '../../../reducer';
+import { connect } from 'react-redux';
+import { setBooks } from './actions';
 
 interface BusinessData {
   business_zip: string;
@@ -30,26 +33,31 @@ interface BusinessData {
   };
 }
 
-interface Props {}
+interface OwnProps {}
+
+interface StateProps {}
+
+type Props = OwnProps & StateProps;
 
 export interface State {
   books: Book[];
   businesses: BusinessData[];
 }
 
-export default class Books extends React.PureComponent<Props, State> {
+export class Books extends React.PureComponent<Props, State> {
   public state: State = {
     books: [],
     businesses: []
   };
 
-  public componentDidMount() {
+  public componentDidMount(): void {
     fetch('/api/books')
       .then(response => {
         return response.json();
       })
       .then(books => {
-        this.setState({ books });
+        // this.setState({ books });
+        setBooks(books);
       })
       .catch(error => console.error(error));
   }
@@ -61,13 +69,17 @@ export default class Books extends React.PureComponent<Props, State> {
       <div>
         {books.length > 0 &&
           books.map(book => (
-            <Book
-              title={book.props.title}
-              authors={book.props.authors}
-              key={book.props.id}
-            />
+            <Book title={book.title} authors={book.authors} key={book.id} />
           ))}
       </div>
     );
   }
 }
+
+const mapStateToProps = (state: AppState) => ({
+  books: state.books.books
+});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Books);

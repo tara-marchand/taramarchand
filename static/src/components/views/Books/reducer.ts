@@ -10,7 +10,7 @@ export default function books(
 ): BooksState {
   switch (type) {
     case SET_BOOKS:
-      return { ...state, ...payload };
+      return { ...state, books: payload };
 
     default:
       return state;

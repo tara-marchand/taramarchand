@@ -19,8 +19,8 @@ module.exports = {
       // Rules for TS(X) and CSS|SCSS|SASS individually set in dev & prod configs.
       rules: [
         {
-          test: /\.(js|jsx|json)$/,
-          exclude: path.resolve(__dirname),
+          test: /\.(js|jsx)$/,
+          include: ['/app/src', '/static/src'],
           use: [
             {
               loader: 'babel-loader',
@@ -44,12 +44,12 @@ module.exports = {
     },
     output: {
       filename: 'main.bundle.js',
-      path: path.resolve(__dirname, 'static', 'dist'),
-      publicPath: '/static/'
+      path: path.resolve(process.cwd(), 'static/dist'),
+      publicPath: '/static'
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
-      modules: ['node_modules', path.resolve(__dirname, 'static/src')]
+      modules: ['node_modules', 'static/src']
     },
     target: 'web'
   }

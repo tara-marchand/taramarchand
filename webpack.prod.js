@@ -6,16 +6,16 @@ const path = require('path');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 
-const baseConfig = require(path.resolve(__dirname, 'webpack.base.js'));
+const baseConfig = require('./webpack.base.js');
 
 const prodConfig = {
-  entry: ['./static/src/index.tsx'],
+  entry: { app: './static/src/index.tsx' },
   mode: 'production',
   module: {
     rules: [
       {
         test: /\.ts(x?)$/,
-        include: [path.resolve(__dirname, 'static/src')],
+        include: [path.resolve(process.cwd(), 'static/src')],
         use: [
           {
             loader: 'babel-loader',
@@ -29,14 +29,25 @@ const prodConfig = {
       {
         test: /\.(css|scss|sass)/,
         include: [
-          path.resolve(__dirname, 'static/src'),
-          path.resolve(__dirname, 'node_modules')
+          path.resolve(process.cwd(), 'static/src'),
+          path.resolve(process.cwd(), 'node_modules')
         ],
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
           'resolve-url-loader',
-          'postcss-loader'
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: [
+                require('autoprefixer')(),
+                require('tailwindcss')(),
+                require('precss')(),
+                require('postcss-import')()
+              ]
+            }
+          }
         ]
       }
     ]
@@ -55,7 +66,7 @@ const prodConfig = {
     new webpack.DefinePlugin({
       'process.env': {
         BROWSER: JSON.stringify(true),
-        NODE_ENV: JSON.stringify('production')
+        NODE_ENV: 'production'
       }
     }),
     new MiniCssExtractPlugin({

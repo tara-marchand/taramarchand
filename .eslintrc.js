@@ -9,18 +9,21 @@ module.exports = {
     {
       files: ['**/*.ts', '**/*.tsx'],
       extends: [
-        'plugin:@typescript-eslint/eslint-recommended',
-        'plugin:react/recommended',
-        'eslint:recommended',
+        'standard',
         'plugin:@typescript-eslint/recommended',
+        'plugin:react/recommended',
+
         'prettier',
-        'prettier/@typescript-eslint'
+        'prettier/@typescript-eslint',
+        'prettier/babel',
+        'prettier/react',
+        'prettier/standard'
       ],
       parser: '@typescript-eslint/parser',
       parserOptions: {
         project: 'tsconfig.json'
       },
-      plugins: ['@typescript-eslint', 'react']
+      plugins: ['@typescript-eslint', 'babel', 'prettier', 'react', 'standard']
     },
     {
       env: {
@@ -34,8 +37,7 @@ module.exports = {
   parser: 'babel-eslint',
   plugins: ['react'],
   rules: {
-    indent: ['warn', 2],
-    strict: 0
+    'prettier/prettier': 'error'
   },
   settings: {
     react: {

@@ -60,8 +60,11 @@ app.use(
 
 app.get('/api/books', (req, res) => {
   models.Book.findAll().then(books => {
-    res.status(200).json(books).end();
-  })
+    res
+      .status(200)
+      .json(books)
+      .end();
+  });
 });
 
 app.use(
@@ -80,7 +83,7 @@ app.engine(
 
 app.set('view engine', '.hbs');
 
-app.all('*', (req, res, next) => {
+app.all('*', (req, res) => {
   res.render('index', {
     isProd: process.env.NODE_ENV === 'production'
   });
@@ -88,6 +91,6 @@ app.all('*', (req, res, next) => {
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, function () {
+app.listen(port, function() {
   console.info(`App listening on port ${port}.`);
 });

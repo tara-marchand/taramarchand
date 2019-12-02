@@ -3,20 +3,21 @@ const path = require('path');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 
-const baseConfig = require(path.resolve(__dirname, 'webpack.base.js'));
+const baseConfig = require('./webpack.base.js');
+
+const WebpackWatchRunPlugin = require('./WebpackWatchRunPlugin');
 
 const devConfig = {
-  entry: [
-    'webpack-hot-middleware/client',
-    'react-hot-loader/patch',
-    './static/src/index.tsx'
-  ],
+  entry: {
+    vendor: ['webpack-hot-middleware/client', 'react-hot-loader/patch'],
+    app: './static/src/index.tsx'
+  },
   mode: 'development',
   module: {
     rules: [
       {
         test: /\.ts(x?)$/,
-        include: [path.resolve(__dirname, 'static/src')],
+        include: [path.resolve(process.cwd(), 'static/src')],
         use: [
           {
             loader: 'react-hot-loader/webpack'
@@ -36,24 +37,39 @@ const devConfig = {
       {
         test: /\.(css|scss|sass)/,
         include: [
-          path.resolve(__dirname, 'static/src'),
-          path.resolve(__dirname, 'node_modules')
+          path.resolve(process.cwd(), 'static/src'),
+          path.resolve(process.cwd(), 'node_modules')
         ],
         use: [
           'style-loader',
-          'css-loader',
-          'resolve-url-loader',
-          'postcss-loader'
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: [
+                require('tailwindcss')(),
+                require('precss')(),
+                require('autoprefixer')(),
+                require('postcss-import')()
+              ]
+            }
+          },
+          'resolve-url-loader'
         ]
       }
     ]
   },
+  optimization: {
+    removeAvailableModules: true
+  },
   plugins: [
+    new WebpackWatchRunPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         BROWSER: JSON.stringify(true),
-        NODE_ENV: JSON.stringify('development')
+        NODE_ENV: 'development'
       }
     })
   ],
@@ -61,7 +77,11 @@ const devConfig = {
     alias: { 'react-dom': '@hot-loader/react-dom' }
   },
   watchOptions: {
-    ignored: ['./*.js', 'app', 'node_modules']
+    ignored: [
+      path.resolve(process.cwd(), 'node_modules'),
+      path.resolve(process.cwd(), 'app/dist'),
+      path.resolve(process.cwd(), 'static/dist')
+    ]
   }
 };
 
