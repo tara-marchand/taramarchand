@@ -12,7 +12,7 @@ const babelOptions = {
 module.exports = {
   babelOptions,
   config: {
-    context: path.resolve(__dirname),
+    context: path.resolve(process.cwd()),
     devtool: 'inline-source-map',
     mode: 'development',
     module: {

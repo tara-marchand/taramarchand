@@ -1,48 +1,22 @@
 /**
- * My Stuff
- */
-@import './components/Header/styles';
-@import './components/Footer/styles';
-@import './components/views/Resume/styles';
-
-/**
  * This injects Tailwind's base styles and any base styles registered by
  * plugins.
  */
-@tailwind base;
-
-h1 {
-  @apply text-4xl;
-}
-
-h2 {
-  @apply text-3xl;
-}
-
-h3 {
-  @apply text-2xl;
-}
-
-h4 {
-  @apply text-xl;
-}
-
-a {
-  @apply text-blue-800;
-
-  &:hover {
-    @apply: text-red-500;
-  }
-}
+@import 'tailwindcss/base';
+@import './base.scss';
 
 /**
   * This injects Tailwind's component classes and any component classes
   * registered by plugins.
   */
-@tailwind components;
+@import 'tailwindcss/components';
 
 /**
   * This injects Tailwind's utility classes and any utility classes registered
   * by plugins.
   */
-@tailwind utilities;
+@import 'tailwindcss/utilities';
+
+@import 'components/Header/styles.scss';
+@import 'components/Footer/styles.scss';
+@import 'components/views/Resume/styles.scss';

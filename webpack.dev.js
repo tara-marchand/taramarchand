@@ -48,14 +48,15 @@ const devConfig = {
             options: {
               ident: 'postcss',
               plugins: [
+                require('postcss-import')(),
                 require('tailwindcss')(),
-                require('precss')(),
-                require('autoprefixer')(),
-                require('postcss-import')()
-              ]
+                // require('precss')(),
+                require('autoprefixer')()
+              ],
+              syntax: 'postcss-scss'
             }
-          },
-          'resolve-url-loader'
+          }
+          // 'resolve-url-loader'
         ]
       }
     ]
@@ -69,7 +70,7 @@ const devConfig = {
     new webpack.DefinePlugin({
       'process.env': {
         BROWSER: JSON.stringify(true),
-        NODE_ENV: 'development'
+        NODE_ENV: "'development'"
       }
     })
   ],
