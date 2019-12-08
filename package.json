@@ -49,6 +49,7 @@
     "file-loader": "^4.2.0",
     "global": "^4.4.0",
     "image-webpack-loader": "^6.0.0",
+    "immer": "^5.0.0",
     "isomorphic-fetch": "^2.2.1",
     "japanese-kana": "^0.1.2",
     "jsdom": "^15.2.1",

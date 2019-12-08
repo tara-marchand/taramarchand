@@ -1,15 +1,18 @@
-import { SET_BOOKS } from './types';
-import { BookProps } from './Book';
+import produce from 'immer';
+import { AnyAction } from 'redux';
 
-const initialState: BookProps[] = [];
+import { BookProps } from './Book';
+import { SET_BOOKS } from './types';
+
+export const initialState: BookProps[] = [];
 
 export default function books(
   state = initialState,
-  { type, payload }: { type: string; payload: any }
+  action: AnyAction
 ): BookProps[] {
-  switch (type) {
+  switch (action.type) {
     case SET_BOOKS:
-      return payload;
+      return produce(initialState, draftState => action.payload);
 
     default:
       return state;

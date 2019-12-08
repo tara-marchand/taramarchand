@@ -2,7 +2,6 @@ import fetch from 'isomorphic-fetch';
 import * as React from 'react';
 
 import Book, { BookProps } from './Book';
-import { AppState } from '../../../reducer';
 import { connect } from 'react-redux';
 import { setBooksAction } from './actions';
 import { Dispatch } from 'redux';
@@ -81,7 +80,7 @@ export class Books extends React.PureComponent<Props, State> {
   }
 }
 
-const mapStateToProps = (state: AppState) => ({
+const mapStateToProps = (state: { books: BookProps[] }) => ({
   books: state.books
 });
 
