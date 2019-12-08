@@ -1,8 +1,12 @@
 import * as React from 'react';
 
-import { Book as BookData } from './reducer';
+export interface BookProps {
+  authors: string;
+  id?: number;
+  title: string;
+}
 
-export default class Book extends React.PureComponent<BookData> {
+export default class Book extends React.PureComponent<BookProps> {
   public render() {
     const { title, authors } = this.props;
 

@@ -1,10 +1,12 @@
 import fetch from 'isomorphic-fetch';
 import * as React from 'react';
 
-import Book from './Book';
+import Book, { BookProps } from './Book';
 import { AppState } from '../../../reducer';
 import { connect } from 'react-redux';
-import { setBooks } from './actions';
+import { setBooksAction } from './actions';
+import { Dispatch } from 'redux';
+import { SetBooksActionType } from './types';
 
 interface BusinessData {
   business_zip: string;
@@ -35,18 +37,22 @@ interface BusinessData {
 
 interface OwnProps {}
 
-interface StateProps {}
+interface StateProps {
+  books: BookProps[];
+}
 
-type Props = OwnProps & StateProps;
+interface DispatchProps {
+  setBooks: (books: BookProps[]) => SetBooksActionType;
+}
+
+type Props = OwnProps & StateProps & DispatchProps;
 
 export interface State {
-  books: Book[];
   businesses: BusinessData[];
 }
 
 export class Books extends React.PureComponent<Props, State> {
   public state: State = {
-    books: [],
     businesses: []
   };
 
@@ -56,14 +62,13 @@ export class Books extends React.PureComponent<Props, State> {
         return response.json();
       })
       .then(books => {
-        // this.setState({ books });
-        setBooks(books);
+        this.props.setBooks(books);
       })
       .catch(error => console.error(error));
   }
 
   public render() {
-    const { books } = this.state;
+    const { books } = this.props;
 
     return (
       <div>
@@ -77,9 +82,11 @@ export class Books extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  books: state.books.books
+  books: state.books
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setBooks: (books: BookProps[]) => dispatch(setBooksAction(books))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Books);

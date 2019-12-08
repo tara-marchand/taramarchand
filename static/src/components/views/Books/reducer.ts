@@ -1,16 +1,15 @@
-import { BooksState, SET_BOOKS } from './types';
+import { SET_BOOKS } from './types';
+import { BookProps } from './Book';
 
-const initialState: BooksState = {
-  books: []
-};
+const initialState: BookProps[] = [];
 
 export default function books(
   state = initialState,
   { type, payload }: { type: string; payload: any }
-): BooksState {
+): BookProps[] {
   switch (type) {
     case SET_BOOKS:
-      return { ...state, books: payload };
+      return payload;
 
     default:
       return state;

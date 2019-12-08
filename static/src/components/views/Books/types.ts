@@ -1,18 +1,10 @@
-export interface BooksState {
-  books: Book[];
-}
-
-export interface Book {
-  authors: string;
-  id?: number;
-  title: string;
-}
+import { BookProps } from './Book';
 
 export const SET_BOOKS = 'SET_BOOKS';
 
-interface SetBooksAction {
+export interface SetBooksActionType {
   type: typeof SET_BOOKS;
-  payload: Book[];
+  payload: BookProps[];
 }
 
-export type BooksActionTypes = SetBooksAction;
+export type BooksActionTypes = SetBooksActionType;

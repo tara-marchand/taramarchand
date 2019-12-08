@@ -1,6 +1,7 @@
-import { Book, SET_BOOKS, BooksActionTypes } from './types';
+import { SET_BOOKS, SetBooksActionType } from './types';
+import { BookProps } from './Book';
 
-export function setBooks(newBooks: Book[]): BooksActionTypes {
+export function setBooksAction(newBooks: BookProps[]): SetBooksActionType {
   return {
     type: SET_BOOKS,
     payload: newBooks
