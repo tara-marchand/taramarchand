@@ -48,9 +48,14 @@ app.use(bodyParser.raw());
 
 app.use(
   '/static',
-  express.static(path.resolve(process.cwd(), 'static', 'dist'), {
+  express.static(path.resolve(process.cwd(), 'static/dist'), {
     index: false
   })
+);
+
+app.use(
+  '/blog/*',
+  express.static(path.join(process.cwd(), 'static/blog/public'))
 );
 
 app.use(
