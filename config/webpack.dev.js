@@ -29,6 +29,7 @@ const devConfig = {
           {
             loader: 'ts-loader',
             options: {
+              configFile: 'config/tsconfig.json',
               transpileOnly: true // HMR doesn't work without this
             }
           }

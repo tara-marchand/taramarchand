@@ -6,12 +6,12 @@
     "jsx": "react",
     "module": "esnext",
     "moduleResolution": "node",
-    "outDir": "./build/",
+    "outDir": "../build/",
     "strict": true,
     "suppressImplicitAnyIndexErrors": true,
     "target": "esnext",
     "typeRoots": ["node_modules/@types", "static/src"]
   },
-  "include": ["static/src/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["../static/src/**/*"],
+  "exclude": ["../node_modules"]
 }

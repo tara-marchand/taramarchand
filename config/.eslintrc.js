@@ -12,7 +12,6 @@ module.exports = {
         'standard',
         'plugin:@typescript-eslint/recommended',
         'plugin:react/recommended',
-
         'prettier',
         'prettier/@typescript-eslint',
         'prettier/babel',
@@ -21,7 +20,7 @@ module.exports = {
       ],
       parser: '@typescript-eslint/parser',
       parserOptions: {
-        project: 'tsconfig.json'
+        project: './tsconfig.json'
       },
       plugins: ['@typescript-eslint', 'babel', 'prettier', 'react', 'standard']
     },
@@ -31,7 +30,7 @@ module.exports = {
         browser: false,
         node: true
       },
-      files: ['./app/**/*.*']
+      files: [path.resolve(process.cwd(), 'app/**/*.*')]
     }
   ],
   parser: 'babel-eslint',

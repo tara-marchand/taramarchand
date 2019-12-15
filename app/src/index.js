@@ -13,8 +13,8 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
-import { default as webpackDevConfig } from '../../webpack.dev';
-import { default as webpackProdConfig } from '../../webpack.prod';
+import { default as webpackDevConfig } from '../../config/webpack.dev';
+import { default as webpackProdConfig } from '../../config/webpack.prod';
 
 dotenv.config();
 
