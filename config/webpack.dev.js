@@ -80,6 +80,8 @@ const devConfig = {
   },
   watchOptions: {
     ignored: [
+      path.resolve(process.cwd(), './*'),
+      path.resolve(process.cwd(), 'config'),
       path.resolve(process.cwd(), 'node_modules'),
       path.resolve(process.cwd(), 'app/dist'),
       path.resolve(process.cwd(), 'static/dist')

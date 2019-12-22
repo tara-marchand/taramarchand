@@ -1,5 +1,5 @@
 {
-  "name": "taramarchand-blog",
+  "name": "taramarchand-gatsby",
   "private": true,
   "dependencies": {
     "gatsby": "^2.18.4",
