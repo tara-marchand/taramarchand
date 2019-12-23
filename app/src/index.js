@@ -54,7 +54,7 @@ app.use(
 );
 
 app.use(
-  '/gatsby/*',
+  '/gatsby',
   express.static(path.join(process.cwd(), 'static/gatsby/public'))
 );
 
