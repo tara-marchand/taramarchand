@@ -29,12 +29,14 @@ const compiler = webpack(webpackConfig);
 const app = express();
 
 if (process.env.NODE_ENV === 'development') {
+  console.log('dev middleware');
   app.use(
     webpackDevMiddleware(compiler, {
       publicPath: webpackConfig.output.publicPath
     })
   );
 
+  console.log('hot middleware');
   app.use(
     webpackHotMiddleware(compiler, {
       reload: true

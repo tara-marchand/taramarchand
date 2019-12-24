@@ -30,13 +30,9 @@ class Layout extends PureComponent<Props> {
     return (
       <React.Fragment>
         <Header />
-        <div className="container mt-4 mb-4 mx-auto pl-4 pr-4 sm:p-0">
-          <div className="">
-            <div className="">
-              <Route exact path="/" component={Home} />
-              <Route path="/:view" render={this.renderView} />
-            </div>
-          </div>
+        <div className="ml-auto mr-auto w-2/3">
+          <Route exact path="/" component={Home} />
+          <Route path="/:view" render={this.renderView} />
         </div>
         <Footer />
       </React.Fragment>

@@ -9,8 +9,11 @@ const WebpackWatchRunPlugin = require('./WebpackWatchRunPlugin');
 
 const devConfig = {
   entry: {
-    vendor: ['webpack-hot-middleware/client', 'react-hot-loader/patch'],
-    app: './static/src/index.tsx'
+    app: [
+      'webpack-hot-middleware/client',
+      'react-hot-loader/patch',
+      './static/src/index.tsx'
+    ]
   },
   mode: 'development',
   module: {
