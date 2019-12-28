@@ -1,9 +1,5 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 
-class Home extends PureComponent {
-  render() {
-    return <h1>Hi there! How are you doing???</h1>;
-  }
-}
+const Home: React.FC<{}> = () => <h1>Hi there! How are you doing?</h1>;
 
 export default Home;

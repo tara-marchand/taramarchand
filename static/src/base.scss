@@ -1,23 +1,30 @@
-h1 {
-  @apply text-4xl;
+li.is-active a {
+  @apply cursor-default;
 }
 
-h2 {
-  @apply text-3xl;
+.root {
+  display: grid;
+  grid-template-areas:
+    'header header'
+    'nav main'
+    'footer footer';
+  grid-template-columns: 0.25fr 0.75fr;
+  grid-template-rows: auto 1fr;
+  grid-gap: 10px;
 }
 
-h3 {
-  @apply text-2xl;
+header {
+  grid-area: header;
 }
 
-h4 {
-  @apply text-xl;
+nav {
+  grid-area: nav;
 }
 
-a {
-  @apply text-blue-800;
+main {
+  grid-area: main;
+}
 
-  &:hover {
-    @apply: text-red-500;
-  }
+footer {
+  grid-area: footer;
 }

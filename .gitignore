@@ -4,6 +4,7 @@ app/dist
 static/dist
 node_modules
 npm-debug.log
+stats
 webpack_stats.html
 newrelic_agent.log
 yarn-error.log

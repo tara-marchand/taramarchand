@@ -120,7 +120,8 @@
     "eslint-plugin-react": "^7.16.0",
     "lerna": "^3.19.0",
     "precss": "^4.0.0",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "stylelint-config-recommended": "^3.0.0"
   },
   "babel": {
     "plugins": [

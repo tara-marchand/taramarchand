@@ -1,4 +1,5 @@
 import * as React from 'react';
+import clsx from 'clsx';
 
 import { Resume } from './util';
 
@@ -11,11 +12,11 @@ class Resume extends React.PureComponent<{}> {
     return (
       <div id="resume">
         {this.renderBasics()}
-        <hr />
+        <hr className="mt-4 mb-2" />
         {this.renderSkills()}
-        <hr />
+        <hr className="mt-4 mb-2" />
         {this.renderWork()}
-        <hr />
+        <hr className="mt-4 mb-2" />
         {this.renderEducation()}
       </div>
     );
@@ -26,12 +27,16 @@ class Resume extends React.PureComponent<{}> {
 
     return (
       <React.Fragment>
-        <h1 className="c-h1">{basics && basics.name}</h1>
         {basics && (
           <section id="basics">
             <div>
               <span>
-                <a href={`mailto:${basics.email}`}>{basics.email} </a>
+                <a
+                  className="text-gray-500 hover:text-gray-200"
+                  href={`mailto:${basics.email}`}
+                >
+                  {basics.email}{' '}
+                </a>
               </span>
               <span>
                 <span>·</span> <a href={basics.website}>{basics.website}</a>
@@ -59,7 +64,7 @@ class Resume extends React.PureComponent<{}> {
       <React.Fragment>
         {skills && (
           <section id="skills">
-            <h2>Skills</h2>
+            <h3 className="text-3xl">Skills</h3>
             {skills &&
               skills.map((skill, index) => (
                 <div key={index}>
@@ -89,18 +94,26 @@ class Resume extends React.PureComponent<{}> {
       <React.Fragment>
         {work && (
           <section id="work">
-            <h2>Experience</h2>
+            <h3 className="text-3xl">Experience</h3>
             {work.map((workplace: Resume.Work, index: number) => {
               return (
                 <div key={index}>
-                  <h3>{workplace.position}</h3>
+                  <h4
+                    className={clsx(
+                      { 'mt-4': index > 0, 'mt-2': index === 0 },
+                      'mb-2',
+                      'text-2xl'
+                    )}
+                  >
+                    {workplace.position}
+                  </h4>
                   <div>
                     <a href={workplace.website}>{workplace.company} </a>
                     ·&nbsp;
                     <span>{workplace.startDate}-</span>
                     <span>{workplace.endDate}</span>
                   </div>
-                  <ul>
+                  <ul className="list-disc ml-6">
                     {workplace.highlights.map((highlight, index2: number) => (
                       <li
                         key={index2}
@@ -124,7 +137,7 @@ class Resume extends React.PureComponent<{}> {
       <React.Fragment>
         {education && (
           <section id="education">
-            <h2>Education</h2>
+            <h2 className="text-2xl">Education</h2>
             <ul>
               {education.map((ed: Resume.Education, index: number) => (
                 <li key={index}>
