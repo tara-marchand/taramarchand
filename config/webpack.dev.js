@@ -53,8 +53,8 @@ const devConfig = {
               ident: 'postcss',
               plugins: [
                 require('postcss-import')(),
-                require('tailwindcss')(),
-                // require('precss')(),
+                require('precss')(),
+                require('tailwindcss')('./config/tailwind.config.js'),
                 require('autoprefixer')()
               ],
               syntax: 'postcss-scss'

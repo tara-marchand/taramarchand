@@ -31,12 +31,7 @@ class Resume extends React.PureComponent<{}> {
           <section id="basics">
             <div>
               <span>
-                <a
-                  className="text-gray-500 hover:text-gray-200"
-                  href={`mailto:${basics.email}`}
-                >
-                  {basics.email}{' '}
-                </a>
+                <a href={`mailto:${basics.email}`}>{basics.email} </a>
               </span>
               <span>
                 <span>·</span> <a href={basics.website}>{basics.website}</a>

@@ -4,7 +4,6 @@ import { Route, RouteComponentProps, withRouter } from 'react-router';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Nav from './components/Nav';
-import Sidebar from './components/Sidebar';
 import Books from './components/views/Books';
 import Home from './components/views/Home';
 import Japanese from './components/views/Japanese';

@@ -41,10 +41,10 @@ const prodConfig = {
             options: {
               ident: 'postcss',
               plugins: [
-                require('autoprefixer')(),
-                require('tailwindcss')(),
+                require('postcss-import')(),
                 require('precss')(),
-                require('postcss-import')()
+                require('tailwindcss')('./config/tailwind.config.js'),
+                require('autoprefixer')()
               ]
             }
           }

@@ -3,7 +3,7 @@ import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import uuid4 from 'uuid';
 
-import MenuLink from '../MenuLink';
+import MenuLink from './MenuLink';
 
 interface LinkData {
   label: string;

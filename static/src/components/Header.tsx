@@ -1,9 +1,8 @@
-import clsx from 'clsx';
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import uuid4 from 'uuid';
 
-import MenuLink from '../MenuLink';
+import MenuLink from './MenuLink';
 
 interface Props {}
 
@@ -17,10 +16,9 @@ const Header: React.FC<Props> = () => {
           exact={true}
           key={uuid4()}
           strict
+          text="Tara Marchand"
           to="/"
-        >
-          Tara Marchand
-        </MenuLink>
+        />
       </ul>
     </header>
   );

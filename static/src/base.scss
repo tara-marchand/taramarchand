@@ -1,5 +1,15 @@
-li.is-active a {
-  @apply cursor-default;
+li.is-active span {
+  @apply text-primary-800;
+}
+
+nav a,
+main a {
+  @apply text-primary-700;
+}
+
+nav a:hover,
+main a:hover {
+  @apply text-primary-500;
 }
 
 .root {
