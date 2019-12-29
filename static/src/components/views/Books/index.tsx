@@ -1,4 +1,3 @@
-import fetch from 'isomorphic-fetch';
 import * as React from 'react';
 
 import Book, { BookProps } from './Book';
@@ -6,6 +5,7 @@ import { connect } from 'react-redux';
 import { setBooksAction } from './actions';
 import { Dispatch } from 'redux';
 import { SetBooksActionType } from './types';
+import { getData } from '../../../utils';
 
 interface BusinessData {
   business_zip: string;
@@ -51,12 +51,14 @@ export interface State {
 }
 
 export class Books extends React.PureComponent<Props, State> {
+  public fetchController: AbortController = new AbortController();
+
   public state: State = {
     businesses: []
   };
 
   public componentDidMount(): void {
-    fetch('/api/books')
+    getData('/api/books', this.fetchController)
       .then(response => {
         return response.json();
       })
@@ -77,6 +79,10 @@ export class Books extends React.PureComponent<Props, State> {
           ))}
       </div>
     );
+  }
+
+  public componentWillUnmount() {
+    this.fetchController.abort();
   }
 }
 
