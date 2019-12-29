@@ -1,11 +1,11 @@
 import * as React from 'react';
-
-import Book, { BookProps } from './Book';
 import { connect } from 'react-redux';
-import { setBooksAction } from './actions';
 import { Dispatch } from 'redux';
-import { SetBooksActionType } from './types';
+
 import { getData } from '../../../utils';
+import { setBooksAction } from './actions';
+import Book, { BookProps } from './Book';
+import { SetBooksActionType } from './types';
 
 interface BusinessData {
   business_zip: string;

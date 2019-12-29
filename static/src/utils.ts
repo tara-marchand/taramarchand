@@ -9,7 +9,9 @@ export async function getData(contentUrl: string, controller: AbortController) {
 
   try {
     // Fetch the content & use the signal for aborting
-    return await fetch(contentUrl, { signal });
+    return await fetch(contentUrl + `?$limit=100`, {
+      signal
+    });
   } catch (err) {
     // Avoid showing an error message if the fetch was aborted
     if (err.name !== 'AbortError') {

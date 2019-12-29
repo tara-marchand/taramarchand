@@ -1,5 +1,4 @@
 import './index.scss';
-// These 2 imports replace @babel/polyfill https://babeljs.io/docs/en/babel-polyfill
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -17,16 +16,19 @@ import Books from './components/views/Books';
 import Home from './components/views/Home';
 import Japanese from './components/views/Japanese';
 import Resume from './components/views/Resume';
+import SFData from './components/views/SFData';
 import WomensSoccer from './components/views/WomensSoccer';
 import store from './store';
 import { isDev } from './utils';
 
+// These 2 imports replace @babel/polyfill https://babeljs.io/docs/en/babel-polyfill
 type Props = RouteComponentProps<any>;
 
 const views = {
   books: Books,
   japanese: Japanese,
   resume: Resume,
+  'sf-data': SFData,
   'womens-soccer': WomensSoccer
 };
 
