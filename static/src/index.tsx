@@ -20,6 +20,24 @@ import SFData from './components/views/SFData';
 import WomensSoccer from './components/views/WomensSoccer';
 import store from './store';
 import { isDev } from './utils';
+import 'leaflet/dist/leaflet.css';
+
+import L from 'leaflet';
+
+import 'leaflet/dist/leaflet.css';
+
+// stupid hack so that leaflet's images work after going through webpack
+import marker from 'leaflet/dist/images/marker-icon.png';
+import marker2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: marker2x,
+  iconUrl: marker,
+  shadowUrl: markerShadow
+});
 
 // These 2 imports replace @babel/polyfill https://babeljs.io/docs/en/babel-polyfill
 type Props = RouteComponentProps<any>;

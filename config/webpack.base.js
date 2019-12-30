@@ -48,7 +48,7 @@ module.exports = {
       publicPath: '/static'
     },
     resolve: {
-      extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+      extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.scss', '.css'],
       modules: ['node_modules', 'static/src']
     },
     target: 'web'

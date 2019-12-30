@@ -45,7 +45,8 @@ const prodConfig = {
                 require('precss')(),
                 require('tailwindcss')('./config/tailwind.config.js'),
                 require('autoprefixer')()
-              ]
+              ],
+              sourceMap: true
             }
           }
         ]

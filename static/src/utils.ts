@@ -9,7 +9,7 @@ export async function getData(contentUrl: string, controller: AbortController) {
 
   try {
     // Fetch the content & use the signal for aborting
-    return await fetch(contentUrl + `?$limit=100`, {
+    return await fetch(contentUrl, {
       signal
     });
   } catch (err) {
