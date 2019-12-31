@@ -1,7 +1,13 @@
 import './index.scss';
 import 'core-js/stable';
+import 'leaflet/dist/leaflet.css';
+import 'leaflet/dist/leaflet.css';
 import 'regenerator-runtime/runtime';
 
+import L from 'leaflet';
+import marker2x from 'leaflet/dist/images/marker-icon-2x.png';
+import marker from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { hot } from 'react-hot-loader';
@@ -20,17 +26,21 @@ import SFData from './components/views/SFData';
 import WomensSoccer from './components/views/WomensSoccer';
 import store from './store';
 import { isDev } from './utils';
-import 'leaflet/dist/leaflet.css';
 
-import L from 'leaflet';
-
-import 'leaflet/dist/leaflet.css';
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('static/worker.js')
+      .then(registration => {
+        console.log('SW registered: ', registration);
+      })
+      .catch(registrationError => {
+        console.log('SW registration failed: ', registrationError);
+      });
+  });
+}
 
 // stupid hack so that leaflet's images work after going through webpack
-import marker from 'leaflet/dist/images/marker-icon.png';
-import marker2x from 'leaflet/dist/images/marker-icon-2x.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
-
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -39,7 +49,6 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow
 });
 
-// These 2 imports replace @babel/polyfill https://babeljs.io/docs/en/babel-polyfill
 type Props = RouteComponentProps<any>;
 
 const views = {

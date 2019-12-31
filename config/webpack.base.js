@@ -45,7 +45,7 @@ module.exports = {
     output: {
       filename: 'main.bundle.js',
       path: path.resolve(process.cwd(), 'static/dist'),
-      publicPath: '/static'
+      publicPath: '/static/'
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.scss', '.css'],

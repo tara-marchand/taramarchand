@@ -81,6 +81,7 @@
     "redux": "^4.0.4",
     "resolve-url-loader": "^3.1.1",
     "sequelize": "^5.21.2",
+    "serviceworker-webpack-plugin": "^1.0.1",
     "style-loader": "^1.0.0",
     "tailwindcss": "^1.1.4",
     "ts-loader": "^6.2.1",
@@ -93,7 +94,8 @@
     "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^4.2.2",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-node-externals": "^1.7.2",
+    "workbox-webpack-plugin": "^4.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
