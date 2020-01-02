@@ -29,6 +29,8 @@ self.addEventListener('install', event => {
     global.caches
       .open(CACHE_NAME)
       .then(cache => {
+        console.log(assetsToCache);
+
         return cache.addAll(assetsToCache);
       })
       .then(() => {

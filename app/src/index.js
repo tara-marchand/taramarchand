@@ -48,10 +48,15 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(bodyParser.raw());
 
+function setHeaders(response, path) {
+  console.log(response, path);
+}
+
 app.use(
   '/static',
   express.static(path.resolve(process.cwd(), 'static/dist'), {
-    index: false
+    index: false,
+    setHeaders
   })
 );
 

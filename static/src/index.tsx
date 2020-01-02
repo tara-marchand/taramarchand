@@ -30,7 +30,7 @@ import { isDev } from './utils';
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('static/worker.js')
+      .register('/static/worker.js')
       .then(registration => {
         console.log('SW registered: ', registration);
       })
