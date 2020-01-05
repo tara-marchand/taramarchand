@@ -1,10 +1,11 @@
-// import { BookProps } from './Book';
+export interface BizLocation {
+  address: string;
+  id: string;
+  lat: number;
+  long: number;
+}
 
-// export const SET_BOOKS = 'SET_BOOKS';
-
-// export interface SetBooksActionType {
-//   type: typeof SET_BOOKS;
-//   payload: BookProps[];
-// }
-
-// export type BooksActionTypes = SetBooksActionType;
+export interface BizViolationBar {
+  x: number;
+  y: number;
+}

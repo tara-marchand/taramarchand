@@ -22,7 +22,14 @@ module.exports = {
       parserOptions: {
         project: './tsconfig.json'
       },
-      plugins: ['@typescript-eslint', 'babel', 'prettier', 'react', 'standard']
+      plugins: [
+        '@typescript-eslint',
+        'babel',
+        'prettier',
+        'react',
+        'react-hooks',
+        'standard'
+      ]
     },
     {
       env: {
@@ -36,7 +43,9 @@ module.exports = {
   parser: 'babel-eslint',
   plugins: ['react'],
   rules: {
-    'prettier/prettier': 'error'
+    'prettier/prettier': 'error',
+    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+    'react-hooks/exhaustive-deps': 'warn' // Checks effect dependencies
   },
   settings: {
     react: {
