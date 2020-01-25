@@ -13,6 +13,7 @@ import ReactDOM from 'react-dom';
 import { hot } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, RouteComponentProps } from 'react-router-dom';
+import WebFont from 'webfontloader';
 
 import ErrorBoundary from './components/ErrorBoundary';
 import Footer from './components/Footer';
@@ -25,24 +26,23 @@ import Resume from './components/views/Resume';
 import SFData from './components/views/SFData';
 import WomensSoccer from './components/views/WomensSoccer';
 import store from './store';
+import registerServiceWorker from './util/register-service-worker';
 import { isDev } from './utils';
+
+WebFont.load({
+  google: {
+    families: ['EB Garamond', 'sans-serif']
+  }
+});
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('static/worker.js')
-      .then(registration => {
-        console.log('SW registered: ', registration);
-      })
-      .catch(registrationError => {
-        console.log('SW registration failed: ', registrationError);
-      });
+    registerServiceWorker();
   });
 }
 
-// stupid hack so that leaflet's images work after going through webpack
+// Hack so that leaflet's images work after going through webpack
 delete L.Icon.Default.prototype._getIconUrl;
-
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: marker2x,
   iconUrl: marker,

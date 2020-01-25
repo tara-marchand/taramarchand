@@ -1,5 +1,7 @@
 /* eslint-env node */
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const babelOptions = {
   presets: ['@babel/preset-env', '@babel/preset-react'],
@@ -10,7 +12,6 @@ const babelOptions = {
 };
 
 module.exports = {
-  babelOptions,
   config: {
     context: path.resolve(process.cwd()),
     devtool: 'inline-source-map',
@@ -47,6 +48,14 @@ module.exports = {
       path: path.resolve(process.cwd(), 'static/dist'),
       publicPath: '/static/'
     },
+    plugins: [
+      new CopyPlugin([{ from: './static/src/images', to: 'images' }]),
+      new WorkboxPlugin.GenerateSW({
+        clientsClaim: true,
+        skipWaiting: true,
+        swDest: 'worker.js'
+      })
+    ],
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.scss', '.css'],
       modules: ['node_modules', 'static/src']

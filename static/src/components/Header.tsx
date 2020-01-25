@@ -8,7 +8,7 @@ interface Props {}
 
 const Header: React.FC<Props> = () => {
   return (
-    <header className="bg-indigo-200 p-4">
+    <header className="bg-indigo-200 p-4 ">
       <ul>
         <MenuLink
           activeClassName="is-active"

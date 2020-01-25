@@ -1,7 +1,5 @@
-import * as React from 'react';
 import clsx from 'clsx';
-
-import { Resume } from './util';
+import * as React from 'react';
 
 import * as resumeJson from './resume.json';
 
@@ -10,7 +8,7 @@ class Resume extends React.PureComponent<{}> {
 
   render() {
     return (
-      <div id="resume">
+      <div className="mt-4 mb-4">
         {this.renderBasics()}
         <hr className="mt-4 mb-2" />
         {this.renderSkills()}
@@ -83,7 +81,7 @@ class Resume extends React.PureComponent<{}> {
   }
 
   renderWork() {
-    const { work } = resumeJson;
+    const { work } = this.data;
 
     return (
       <React.Fragment>
@@ -126,7 +124,7 @@ class Resume extends React.PureComponent<{}> {
   }
 
   renderEducation() {
-    const { education } = resumeJson;
+    const { education } = this.data;
 
     return (
       <React.Fragment>

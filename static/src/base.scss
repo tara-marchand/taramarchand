@@ -24,9 +24,13 @@ main a:hover {
     'header header'
     'nav main'
     'footer footer';
-  grid-template-columns: 0.25fr 0.75fr;
-  grid-template-rows: auto 1fr;
-  grid-gap: 10px;
+  column-gap: 10px;
+}
+
+header,
+footer,
+nav {
+  font-family: 'EB Garamond';
 }
 
 header {
