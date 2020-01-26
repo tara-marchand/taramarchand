@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Path from 'path';
-import Sequelize from 'Sequelize';
+import Sequelize from 'sequelize';
 
 const sequelize = new Sequelize.Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
