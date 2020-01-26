@@ -1,5 +1,6 @@
 /* eslint-env node */
 const path = require('path');
+const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 
@@ -50,6 +51,9 @@ module.exports = {
     },
     plugins: [
       new CopyPlugin([{ from: './static/src/images', to: 'images' }]),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      }),
       new WorkboxPlugin.GenerateSW({
         clientsClaim: true,
         skipWaiting: true,

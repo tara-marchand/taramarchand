@@ -73,10 +73,7 @@ const devConfig = {
     new WebpackWatchRunPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      'process.env': {
-        BROWSER: JSON.stringify(true),
-        NODE_ENV: "'development'"
-      }
+      'process.env.BROWSER': JSON.stringify(true)
     })
   ],
   resolve: {

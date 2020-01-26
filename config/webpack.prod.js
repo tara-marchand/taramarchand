@@ -68,10 +68,7 @@ const prodConfig = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        BROWSER: JSON.stringify(true),
-        NODE_ENV: "'production'"
-      }
+      'process.env.BROWSER': JSON.stringify(true)
     }),
     new MiniCssExtractPlugin({
       filename: 'main.css'
