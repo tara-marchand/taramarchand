@@ -14,7 +14,7 @@ type Props = RouteComponentProps<any>;
 
 const Nav: React.FC<Props> = () => {
   return (
-    <nav className="ml-4 mr-4 pb-4 pt-4">
+    <nav className="font-display pl-4 pr-4">
       <ul>{getAllNavLinks()}</ul>
     </nav>
   );

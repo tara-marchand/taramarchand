@@ -10,6 +10,10 @@ module.exports = {
     extend: {
       colors: {
         primary: colors.indigo
+      },
+      fontFamily: {
+        display: ['EB Garamond', 'serif'],
+        body: []
       }
     }
   }

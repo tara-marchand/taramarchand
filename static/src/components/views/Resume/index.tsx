@@ -8,7 +8,7 @@ class Resume extends React.PureComponent<{}> {
 
   render() {
     return (
-      <div className="mt-4 mb-4">
+      <div>
         {this.renderBasics()}
         <hr className="mt-4 mb-2" />
         {this.renderSkills()}
@@ -119,6 +119,9 @@ class Resume extends React.PureComponent<{}> {
             })}
           </section>
         )}
+        <p className="mt-4">
+          Information about earlier positions available upon request.
+        </p>
       </React.Fragment>
     );
   }
