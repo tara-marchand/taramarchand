@@ -1,7 +1,6 @@
 import './index.scss';
 import 'core-js/stable';
 import 'leaflet/dist/leaflet.css';
-import 'leaflet/dist/leaflet.css';
 import 'regenerator-runtime/runtime';
 
 import L from 'leaflet';

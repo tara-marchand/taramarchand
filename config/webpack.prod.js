@@ -1,7 +1,7 @@
 /* eslint-env node */
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
@@ -9,7 +9,7 @@ const webpack = require('webpack');
 const baseConfig = require('./webpack.base.js');
 
 const prodConfig = {
-  entry: { app: './static/src/index.tsx' },
+  entry: { app: ['./static/src/index.tsx'] },
   mode: 'production',
   module: {
     rules: [
@@ -22,7 +22,11 @@ const prodConfig = {
             options: baseConfig.babelOptions
           },
           {
-            loader: 'ts-loader'
+            loader: 'ts-loader',
+            options: {
+              configFile: 'config/tsconfig.json',
+              transpileOnly: true
+            }
           }
         ]
       },
@@ -55,10 +59,9 @@ const prodConfig = {
   },
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserPlugin({
         cache: true,
-        parallel: true,
-        sourceMap: true // set to true if you want JS source maps
+        sourceMap: true
       }),
       new OptimizeCSSAssetsPlugin({})
     ]

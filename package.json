@@ -87,7 +87,6 @@
     "tailwindcss": "^1.1.4",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7",
-    "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^2.2.0",
     "uuid": "^3.3.3",
     "victory": "^34.0.0",
@@ -135,7 +134,8 @@
     "lerna": "^3.19.0",
     "precss": "^4.0.0",
     "prettier": "^1.19.1",
-    "stylelint-config-recommended": "^3.0.0"
+    "stylelint-config-recommended": "^3.0.0",
+    "terser-webpack-plugin": "^2.3.2"
   },
   "babel": {
     "plugins": [
