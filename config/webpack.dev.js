@@ -57,10 +57,10 @@ const devConfig = {
                 require('tailwindcss')('./config/tailwind.config.js'),
                 require('autoprefixer')()
               ],
-              sourceMap: true,
-              syntax: 'postcss-scss'
+              sourceMap: true
             }
           },
+          'sass-loader',
           'resolve-url-loader'
         ]
       }

@@ -37,9 +37,13 @@ const prodConfig = {
           path.resolve(process.cwd(), 'node_modules')
         ],
         use: [
-          MiniCssExtractPlugin.loader,
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: process.env.NODE_ENV === 'development'
+            }
+          },
           'css-loader',
-          'resolve-url-loader',
           {
             loader: 'postcss-loader',
             options: {
@@ -52,7 +56,9 @@ const prodConfig = {
               ],
               sourceMap: true
             }
-          }
+          },
+          'sass-loader',
+          'resolve-url-loader'
         ]
       }
     ]
