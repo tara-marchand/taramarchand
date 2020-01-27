@@ -32,15 +32,15 @@ function getAllNavLinks() {
 }
 
 function getOneNavLink(link: LinkData, index: number) {
-  const classes = clsx('text-xl');
+  const classes = clsx('hover:underline', 'text-xl');
 
   return (
     <MenuLink
-      activeClassName="is-active"
       className={classes}
       exact={true}
       key={uuid4()}
       strict
+      style={{ color: '#270F08' }}
       text={link.label}
       to={link.to}
     >

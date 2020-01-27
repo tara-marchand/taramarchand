@@ -1,38 +1,35 @@
-// import newrelic from 'newrelic';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import dotenv from 'dotenv';
-import exphbs from 'express-handlebars';
 import express from 'express';
+import exphbs from 'express-handlebars';
 import morgan from 'morgan';
 import path from 'path';
-
-import models from './models';
-
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
-import { default as webpackDevConfig } from '../../config/webpack.dev';
-import { default as webpackProdConfig } from '../../config/webpack.prod';
+import webpackDevConfig from '../../config/webpack.dev';
+import webpackProdConfig from '../../config/webpack.prod';
+import models from './models';
 
 dotenv.config();
 
-let webpackConfig;
-if (process.env.NODE_ENV === 'development') {
-  webpackConfig = webpackDevConfig;
-} else if (process.env.NODE_ENV === 'production') {
-  webpackConfig = webpackProdConfig;
-}
-const compiler = webpack(webpackConfig);
-
 const app = express();
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'production') {
+  import('newrelic');
+
+  webpack(webpackProdConfig);
+
+  app.use(compression());
+} else if (process.env.NODE_ENV === 'development') {
+  const compiler = webpack(webpackDevConfig);
+
   console.log('dev middleware');
   app.use(
     webpackDevMiddleware(compiler, {
-      publicPath: webpackConfig.output.publicPath
+      publicPath: webpackDevConfig.output.publicPath
     })
   );
 
@@ -42,8 +39,6 @@ if (process.env.NODE_ENV === 'development') {
       reload: true
     })
   );
-} else if (process.env.NODE_ENV === 'production') {
-  app.use(compression());
 }
 
 app.use(bodyParser.raw());

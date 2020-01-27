@@ -1,22 +1,13 @@
+body {
+  background-color: #e9eadc;
+}
+
 .leaflet-container {
   height: 400px;
   width: 80%;
   margin: 0 auto;
 }
-
-li.is-active span {
-  @apply text-primary-800;
-}
-
-nav a,
-main a {
-  @apply text-primary-700;
-}
-
-nav a:hover,
-main a:hover {
-  @apply text-primary-500;
-}
+// Color palette: https://coolors.co/fee6b6-8ca0bb-e9eadc-270f08-d07e42
 
 .root {
   box-sizing: border-box;

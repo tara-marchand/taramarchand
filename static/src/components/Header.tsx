@@ -8,14 +8,14 @@ interface Props {}
 
 const Header: React.FC<Props> = () => {
   return (
-    <header className="bg-indigo-200 font-display p-4">
+    <header className="font-display p-4" style={{ backgroundColor: '#270F08' }}>
       <ul>
         <MenuLink
-          activeClassName="is-active"
-          className="text-4xl text-white"
+          className="text-4xl"
           exact={true}
           key={uuid4()}
           strict
+          style={{ color: '#E9EADC' }}
           text="Tara Marchand"
           to="/"
         />
