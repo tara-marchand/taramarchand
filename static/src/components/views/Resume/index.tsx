@@ -8,7 +8,7 @@ class Resume extends React.PureComponent<{}> {
 
   render() {
     return (
-      <div>
+      <div className="p-4">
         {this.renderBasics()}
         <hr className="mt-4 mb-2" />
         {this.renderSkills()}
@@ -29,17 +29,24 @@ class Resume extends React.PureComponent<{}> {
           <section id="basics">
             <div>
               <span>
-                <a href={`mailto:${basics.email}`}>{basics.email} </a>
+                <a className="hover:underline" href={`mailto:${basics.email}`}>
+                  {basics.email}{' '}
+                </a>
               </span>
               <span>
-                <span>·</span> <a href={basics.website}>{basics.website}</a>
+                <span>·</span>{' '}
+                <a className="hover:underline" href={basics.website}>
+                  {basics.website}
+                </a>
               </span>
             </div>
             {basics.profiles && (
               <section id="profiles">
                 {basics.profiles.map((profile, index) => (
                   <span key={index}>
-                    <a href={profile.url}>{profile.network} </a>
+                    <a className="hover:underline" href={profile.url}>
+                      {profile.network}{' '}
+                    </a>
                   </span>
                 ))}
               </section>
