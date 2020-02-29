@@ -9,7 +9,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['Tara Marchand'],
+  app_name: ['taramarchand.com'],
   /**
    * Your New Relic license key.
    */

@@ -8,3 +8,4 @@ stats
 webpack_stats.html
 newrelic_agent.log
 yarn-error.log
+.vscode

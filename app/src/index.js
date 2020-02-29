@@ -1,3 +1,5 @@
+process.env.NODE_ENV === 'production' && import('newrelic');
+
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import dotenv from 'dotenv';
@@ -18,8 +20,6 @@ dotenv.config();
 const app = express();
 
 if (process.env.NODE_ENV === 'production') {
-  import('newrelic');
-
   webpack(webpackProdConfig);
 
   app.use(compression());
