@@ -1,4 +1,4 @@
-process.env.NODE_ENV === 'production' && import('newrelic');
+process.env.BABEL_ENV === 'production' && import('newrelic');
 
 import bodyParser from 'body-parser';
 import compression from 'compression';

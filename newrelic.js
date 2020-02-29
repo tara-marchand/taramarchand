@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 /**
  * New Relic agent configuration.
  *
@@ -10,6 +10,9 @@ exports.config = {
    * Array of application names.
    */
   app_name: ['taramarchand.com'],
+  distributed_tracing: {
+    enabled: true
+  },
   /**
    * Your New Relic license key.
    */
@@ -50,4 +53,4 @@ exports.config = {
       'response.headers.x*'
     ]
   }
-}
+};
