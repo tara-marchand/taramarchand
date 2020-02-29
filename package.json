@@ -7,7 +7,7 @@
     "node": "^12"
   },
   "scripts": {
-    "build:app:dev": "BABEL_ENV=development babel ./app/src -d ./app/dist --config-file=./app/.babelrc",
+    "build:app:dev": "BABEL_ENV=development babel ./app/src/main.js -d ./app/dist --config-file=./app/.babelrc",
     "build:app:prod": "BABEL_ENV=production babel ./app/src -d ./app/dist --config-file=./app/.babelrc",
     "build:dev": "npm run clean; BABEL_ENV=development NODE_ENV=development PORT=3000 webpack --config=config/webpack.dev.js --env.NODE_ENV=development --colors",
     "build:prod": "npm run clean; BABEL_ENV=production NODE_ENV=production webpack --config=config/webpack.prod.js --env.NODE_ENV=production --display=errors-only --colors",
