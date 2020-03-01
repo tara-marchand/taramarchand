@@ -1,25 +1,59 @@
 /* eslint-env node */
+const CopyPlugin = require('copy-webpack-plugin');
+const dotenv = require('dotenv');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
-const merge = require('webpack-merge');
+const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
-const baseConfig = require('./webpack.base.js');
+dotenv.config();
 
-const prodConfig = {
+const babelOptions = {
+  presets: ['@babel/preset-env', '@babel/preset-react'],
+  plugins: [
+    '@babel/plugin-proposal-class-properties',
+    '@babel/plugin-proposal-object-rest-spread'
+  ]
+};
+
+module.exports = {
+  context: path.resolve(process.cwd()),
+  devtool: 'inline-source-map',
   entry: { app: ['./static/src/index.tsx'] },
   mode: 'production',
   module: {
     rules: [
+      {
+        test: /\.(js|jsx)$/,
+        include: ['/app/src', '/static/src'],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: babelOptions
+          }
+        ]
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        use: {
+          loader: 'file-loader'
+        }
+      },
+      {
+        test: /\.(jpg|png|svg)$/,
+        use: {
+          loader: 'url-loader'
+        }
+      },
       {
         test: /\.ts(x?)$/,
         include: [path.resolve(process.cwd(), 'static/src')],
         use: [
           {
             loader: 'babel-loader',
-            options: baseConfig.babelOptions
+            options: babelOptions
           },
           {
             loader: 'ts-loader',
@@ -38,10 +72,7 @@ const prodConfig = {
         ],
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              hmr: process.env.NODE_ENV === 'development'
-            }
+            loader: MiniCssExtractPlugin.loader
           },
           'css-loader',
           {
@@ -72,14 +103,29 @@ const prodConfig = {
       new OptimizeCSSAssetsPlugin({})
     ]
   },
+  output: {
+    filename: 'main.bundle.js',
+    path: path.resolve(process.cwd(), 'static/dist'),
+    publicPath: '/static/'
+  },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.BROWSER': JSON.stringify(true)
-    }),
+    new CopyPlugin([{ from: './static/src/images', to: 'images' }]),
     new MiniCssExtractPlugin({
       filename: 'main.css'
+    }),
+    new webpack.DefinePlugin({
+      'process.env.BROWSER': JSON.stringify(true),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    }),
+    new WorkboxPlugin.GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true,
+      swDest: 'worker.js'
     })
-  ]
+  ],
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.scss', '.css'],
+    modules: ['node_modules', 'static/src']
+  },
+  target: 'web'
 };
-
-module.exports = merge(baseConfig.config, prodConfig);

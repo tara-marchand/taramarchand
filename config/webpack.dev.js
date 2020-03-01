@@ -1,16 +1,28 @@
 /* eslint-env node */
+const CopyPlugin = require('copy-webpack-plugin');
+const dotenv = require('dotenv');
 const path = require('path');
-const merge = require('webpack-merge');
 const webpack = require('webpack');
-
-const baseConfig = require('./webpack.base.js');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const WebpackWatchRunPlugin = require('./WebpackWatchRunPlugin');
 
-const devConfig = {
+dotenv.config();
+
+const babelOptions = {
+  presets: ['@babel/preset-env', '@babel/preset-react'],
+  plugins: [
+    '@babel/plugin-proposal-class-properties',
+    '@babel/plugin-proposal-object-rest-spread'
+  ]
+};
+
+module.exports = {
+  context: path.resolve(process.cwd()),
+  devtool: 'inline-source-map',
   entry: {
     app: [
-      'webpack-hot-middleware/client',
+      'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
       'react-hot-loader/patch',
       './static/src/index.tsx'
     ]
@@ -18,6 +30,28 @@ const devConfig = {
   mode: 'development',
   module: {
     rules: [
+      {
+        test: /\.(js|jsx)$/,
+        include: ['/app/src', '/static/src'],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: babelOptions
+          }
+        ]
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        use: {
+          loader: 'file-loader'
+        }
+      },
+      {
+        test: /\.(jpg|png|svg)$/,
+        use: {
+          loader: 'url-loader'
+        }
+      },
       {
         test: /\.ts(x?)$/,
         include: [path.resolve(process.cwd(), 'static/src')],
@@ -27,7 +61,7 @@ const devConfig = {
           },
           {
             loader: 'babel-loader',
-            options: baseConfig.babelOptions
+            options: babelOptions
           },
           {
             loader: 'ts-loader',
@@ -69,16 +103,31 @@ const devConfig = {
   optimization: {
     removeAvailableModules: true
   },
+  output: {
+    filename: 'main.bundle.js',
+    path: path.resolve(process.cwd(), 'static/dist'),
+    publicPath: '/static/'
+  },
   plugins: [
-    new WebpackWatchRunPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    new CopyPlugin([{ from: './static/src/images', to: 'images' }]),
     new webpack.DefinePlugin({
-      'process.env.BROWSER': JSON.stringify(true)
+      'process.env.BROWSER': JSON.stringify(true),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new WebpackWatchRunPlugin(),
+    new WorkboxPlugin.GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true,
+      swDest: 'worker.js'
     })
   ],
   resolve: {
-    alias: { 'react-dom': '@hot-loader/react-dom' }
+    alias: { 'react-dom': '@hot-loader/react-dom' },
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.scss', '.css'],
+    modules: ['node_modules', 'static/src']
   },
+  target: 'web',
   watchOptions: {
     ignored: [
       path.resolve(process.cwd(), './*'),
@@ -89,7 +138,3 @@ const devConfig = {
     ]
   }
 };
-
-const finalConfig = merge(baseConfig.config, devConfig);
-
-module.exports = finalConfig;

@@ -6,11 +6,7 @@ import exphbs from 'express-handlebars';
 import morgan from 'morgan';
 import path from 'path';
 import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
 
-import webpackDevConfig from '../../config/webpack.dev';
-import webpackProdConfig from '../../config/webpack.prod';
 import models from './models';
 
 dotenv.config();
@@ -18,25 +14,40 @@ dotenv.config();
 const app = express();
 
 if (process.env.NODE_ENV === 'production') {
-  webpack(webpackProdConfig);
-
+  import(
+    /* webpackChunkName: "webpackConfig" */ '../../config/webpack.prod'
+  ).then(config => {
+    webpack(config.default);
+  });
   app.use(compression());
 } else if (process.env.NODE_ENV === 'development') {
-  const compiler = webpack(webpackDevConfig);
+  import(
+    /* webpackChunkName: "webpackConfig" */ '../../config/webpack.dev'
+  ).then(config => {
+    const compiler = webpack(config.default);
 
-  console.log('dev middleware');
-  app.use(
-    webpackDevMiddleware(compiler, {
-      publicPath: webpackDevConfig.output.publicPath
-    })
-  );
+    import(/* webpackChunkName: "webpackDev" */ 'webpack-dev-middleware').then(
+      webpackDevMiddleware => {
+        console.log('dev middleware');
+        app.use(
+          webpackDevMiddleware.default(compiler, {
+            publicPath: config.default.output.publicPath
+          })
+        );
 
-  console.log('hot middleware');
-  app.use(
-    webpackHotMiddleware(compiler, {
-      reload: true
-    })
-  );
+        import(
+          /* webpackChunkName: "webpackDev" */ 'webpack-hot-middleware'
+        ).then(webpackHotMiddleware => {
+          console.log('hot middleware');
+          app.use(
+            webpackHotMiddleware.default(compiler, {
+              reload: true
+            })
+          );
+        });
+      }
+    );
+  });
 }
 
 app.use(bodyParser.raw());
@@ -48,8 +59,8 @@ function setHeaders(response, path) {
 app.use(
   '/static',
   express.static(path.resolve(process.cwd(), 'static/dist'), {
-    index: false,
-    setHeaders
+    index: false
+    // setHeaders
   })
 );
 

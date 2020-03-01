@@ -1,5 +1,5 @@
 // Sequelize model for a book.
-export default function Book(sequelize, DataTypes) {
+function Book(sequelize, DataTypes) {
   const Book = sequelize.define('Book', {
     id: {
       type: DataTypes.INTEGER,
@@ -18,3 +18,5 @@ export default function Book(sequelize, DataTypes) {
 
   return Book;
 }
+
+export default Book;

@@ -1,2 +1,2 @@
-import('newrelic');
-import('./main');
+import(/* webpackChunkName: "indexProd" */ 'newrelic');
+import(/* webpackChunkName: "indexProd" */ './main');

@@ -9,7 +9,6 @@ import marker from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { hot } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, RouteComponentProps } from 'react-router-dom';
 import WebFont from 'webfontloader';
@@ -26,7 +25,6 @@ import SFData from './components/views/SFData';
 import WomensSoccer from './components/views/WomensSoccer';
 import store from './store';
 import registerServiceWorker from './util/register-service-worker';
-import { isDev } from './utils';
 
 WebFont.load({
   google: {
@@ -80,6 +78,11 @@ const App: React.FC<{}> = () => (
   </Provider>
 );
 
-const FinalApp = isDev() && (module as any).hot ? hot(module as any)(App) : App;
-
-ReactDOM.render(<FinalApp />, document.getElementsByClassName('root')[0]);
+if (process.env.NODE_ENV === 'development' && (module as any).hot) {
+  import('react-hot-loader').then(hotLoader => {
+    const FinalApp = hotLoader.hot(module as any)(App);
+    ReactDOM.render(<FinalApp />, document.getElementsByClassName('root')[0]);
+  });
+} else {
+  ReactDOM.render(<App />, document.getElementsByClassName('root')[0]);
+}
