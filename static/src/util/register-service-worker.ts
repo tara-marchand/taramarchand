@@ -3,6 +3,7 @@ function registerServiceWorker() {
     navigator.serviceWorker
       .register('static/worker.js')
       .then(registration => {
+        console.log(process.env);
         console.log('SW registered: ', registration);
       })
       .catch(registrationError => {

@@ -7,9 +7,9 @@
     "node": "^12"
   },
   "scripts": {
-    "build:app:dev": "npm run clean:app; NODE_ENV=development webpack --config=config/webpack.server.js",
-    "build:app:prod": "npm run clean:app; NODE_ENV=production webpack --config=config/webpack.server.js",
-    "build:dev": "npm run clean; NODE_ENV=development PORT=3000 webpack --config=config/webpack.dev.js --env.NODE_ENV=development --colors",
+    "build:app:dev": "npm run clean:app; NODE_ENV=development PORT=3000 webpack --config=config/webpack.server.js",
+    "build:app:prod": "npm run clean:app; NODE_ENV=production PORt=5000 webpack --config=config/webpack.server.js",
+    "build:dev": "npm run clean; NODE_ENV=development webpack --config=config/webpack.dev.js --env.NODE_ENV=development --colors",
     "build:prod": "npm run clean; NODE_ENV=production webpack --config=config/webpack.prod.js --env.NODE_ENV=production --display=errors-only --colors",
     "build:dev:stats": "webpack --config=config/webpack.dev.js --env.NODE_ENV=development --json > stats/stats-dev.json",
     "build:prod:stats": "webpack --config=config/webpack.prod.js --env.NODE_ENV=production --json > stats/stats-prod.json",
@@ -18,8 +18,8 @@
     "heroku-postbuild": "./postinstall.sh",
     "lerna": "lerna",
     "lerna-bootstrap": "npm run lerna -- bootstrap --hoist",
-    "start:prod": "npm run build:app:prod && NODE_ENV=production node ./app/dist",
-    "start:dev": "npm run build:app:dev; npm run build:dev; DEBUG=express:application,express:router NODE_ENV=development node ./app/dist",
+    "start:prod": "npm run build:app:prod; NODE_ENV=production PORT=5000 node ./app/dist",
+    "start:dev": "npm run build:app:dev; DEBUG=express:application,express:router NODE_ENV=development PORT=3000 node ./app/dist",
     "start:gatsby:dev": "cd static/gatsby && npm install && gatsby develop",
     "start": "npm run start:dev",
     "stats": "concurrently \"build:dev:stats\" \"npm run build:prod:stats\"",
@@ -39,7 +39,6 @@
     "@babel/plugin-transform-modules-commonjs": "^7.8.3",
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-react": "^7.7.0",
-    "@hot-loader/react-dom": "^16.11.0",
     "@newrelic/native-metrics": "^5.0.0",
     "@reduxjs/toolkit": "^1.0.4",
     "acorn": "^7.1.0",
@@ -82,7 +81,6 @@
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-hot-loader": "^4.12.18",
     "react-leaflet": "^2.6.1",
     "react-redux": "^7.1.3",
     "react-router": "^5.1.2",
@@ -103,13 +101,12 @@
     "webfontloader": "^1.6.28",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-middleware": "^3.7.2",
-    "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^4.2.2",
     "webpack-node-externals": "^1.7.2",
     "workbox-webpack-plugin": "^4.3.1"
   },
   "devDependencies": {
+    "@hot-loader/react-dom": "^16.11.0",
     "@types/copy-webpack-plugin": "^5.0.0",
     "@types/isomorphic-fetch": "0.0.35",
     "@types/lodash.get": "^4.4.6",
@@ -135,31 +132,20 @@
     "eslint": "^6.7.0",
     "eslint-config-prettier": "^6.7.0",
     "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^2.3.0",
+    "eslint-plugin-standard": "^4.0.1",
     "lerna": "^3.19.0",
     "prettier": "^1.19.1",
-    "stylelint-config-recommended": "^3.0.0"
-  },
-  "babel": {
-    "plugins": [
-      [
-        "lodash",
-        {
-          "id": [
-            "lodash"
-          ]
-        }
-      ]
-    ],
-    "env": {
-      "development": {
-        "plugins": [
-          "react-hot-loader/babel"
-        ]
-      }
-    }
+    "react-hot-loader": "^4.12.18",
+    "stylelint": "^13.2.0",
+    "stylelint-config-recommended": "^3.0.0",
+    "webpack-dev-middleware": "^3.7.2",
+    "webpack-hot-middleware": "^2.25.0"
   },
   "prettier": {
     "singleQuote": true

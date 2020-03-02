@@ -105,7 +105,7 @@ app.all('*', (req, res) => {
   });
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 app.listen(port, function() {
   console.info(`App listening on port ${port}.`);

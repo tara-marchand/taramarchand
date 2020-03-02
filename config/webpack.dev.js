@@ -13,7 +13,14 @@ const babelOptions = {
   presets: ['@babel/preset-env', '@babel/preset-react'],
   plugins: [
     '@babel/plugin-proposal-class-properties',
-    '@babel/plugin-proposal-object-rest-spread'
+    '@babel/plugin-proposal-object-rest-spread',
+    [
+      'lodash',
+      {
+        id: ['lodash']
+      }
+    ],
+    'react-hot-loader/babel'
   ]
 };
 
@@ -22,7 +29,7 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: {
     app: [
-      'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
+      'webpack-hot-middleware/client',
       'react-hot-loader/patch',
       './static/src/index.tsx'
     ]

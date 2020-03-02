@@ -77,7 +77,7 @@ const App: React.FC<{}> = () => (
     </ErrorBoundary>
   </Provider>
 );
-
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'development' && (module as any).hot) {
   import('react-hot-loader').then(hotLoader => {
     const FinalApp = hotLoader.hot(module as any)(App);
