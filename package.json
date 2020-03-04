@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build:app:dev": "npm run clean:app; NODE_ENV=development PORT=3000 webpack --config=config/webpack.server.js",
-    "build:app:prod": "npm run clean:app; NODE_ENV=production PORT=5000 webpack --config=config/webpack.server.js",
+    "build:app:prod": "npm run clean:app; NODE_ENV=production webpack --config=config/webpack.server.js",
     "build:dev": "npm run clean; NODE_ENV=development webpack --config=config/webpack.dev.js --env.NODE_ENV=development --colors",
     "build:prod": "npm run clean; NODE_ENV=production webpack --config=config/webpack.prod.js --env.NODE_ENV=production --display=errors-only --colors",
     "build:dev:stats": "webpack --config=config/webpack.dev.js --env.NODE_ENV=development --json > stats/stats-dev.json",
@@ -18,7 +18,7 @@
     "heroku-postbuild": "./postinstall.sh",
     "lerna": "lerna",
     "lerna-bootstrap": "npm run lerna -- bootstrap --hoist",
-    "start:prod": "npm run build:app:prod; NODE_ENV=production PORT=5000 node ./app/dist",
+    "start:prod": "npm run build:app:prod; NODE_ENV=production node ./app/dist",
     "start:dev": "npm run build:app:dev; DEBUG=express:application,express:router NODE_ENV=development PORT=3000 node ./app/dist",
     "start:gatsby:dev": "cd static/gatsby && npm install && gatsby develop",
     "start": "npm run start:dev",
