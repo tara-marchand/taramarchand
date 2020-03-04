@@ -6,7 +6,8 @@ const webpack = require('webpack');
 
 dotenv.config();
 
-const fileName = process.env.NODE_ENV === 'production' ? 'index.js' : 'main.js';
+const fileName =
+  process.env.NODE_ENV === 'production' ? 'index-prod.js' : 'index-dev.js';
 const serverPath = './app/src/' + fileName;
 
 module.exports = {
