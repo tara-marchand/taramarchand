@@ -27,7 +27,6 @@ const babelOptions = {
 
 module.exports = {
   context: path.resolve(process.cwd()),
-  devtool: 'inline-source-map',
   entry: { app: ['./static/src/index.tsx'] },
   mode: 'production',
   module: {
@@ -72,7 +71,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(css|scss|sass)/,
+        test: /\.(css|scss|sass)$/,
         include: [
           path.resolve(process.cwd(), 'static/src'),
           path.resolve(process.cwd(), 'node_modules')
@@ -89,8 +88,7 @@ module.exports = {
                 require('precss')(),
                 require('tailwindcss')('./config/tailwind.config.js'),
                 require('autoprefixer')()
-              ],
-              sourceMap: true
+              ]
             }
           },
           'sass-loader',

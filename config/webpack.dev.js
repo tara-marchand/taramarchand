@@ -80,7 +80,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(css|scss|sass)/,
+        test: /\.(css|scss|sass)$/,
         include: [
           path.resolve(process.cwd(), 'static/src'),
           path.resolve(process.cwd(), 'node_modules')
