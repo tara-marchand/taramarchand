@@ -1,97 +1,45 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { getData } from '../../../utils';
-import { setBooksAction } from './actions';
 import Book, { BookProps } from './Book';
-import { SetBooksActionType } from './types';
+import { SET_BOOKS } from './types';
 
-interface BusinessData {
-  business_zip: string;
-  certificate_number: string;
-  city: string;
-  dba_name: string;
-  dba_start_date: string; // timestamp
-  full_business_address: string;
-  location_start_date: string; // timestamp
-  mail_city: string;
-  mail_zipcode: string;
-  mail_state: string;
-  mailing_address_1: string;
-  naic_code_description: string;
-  naic_code: string;
-  neighborhoods_analysis_boundaries: string;
-  ownership_name: string;
-  parking_tax: boolean;
-  state: 'CA';
-  supervisor_district: string;
-  transient_occupancy_tax: boolean;
-  ttxid: string;
-  location: {
-    type: string;
-    coordinates: number[];
-  };
-}
-
-interface OwnProps {}
-
-interface StateProps {
+interface State {
   books: BookProps[];
 }
 
-interface DispatchProps {
-  setBooks: (books: BookProps[]) => SetBooksActionType;
-}
+export default function Books() {
+  const fetchController: AbortController = new AbortController();
+  const dispatch = useDispatch();
+  const books = useSelector((state: State) => state.books);
 
-type Props = OwnProps & StateProps & DispatchProps;
+  useEffect(() => console.log('mounted or updated'), [books]);
 
-export interface State {
-  businesses: BusinessData[];
-}
+  useEffect(() => {
+    return () => {
+      console.log('will unmount');
+      fetchController.abort();
+    };
+  }, []);
 
-export class Books extends React.PureComponent<Props, State> {
-  public fetchController: AbortController = new AbortController();
-
-  public state: State = {
-    businesses: []
-  };
-
-  public componentDidMount(): void {
-    getData('/api/books', this.fetchController)
-      .then(response => {
+  useEffect(() => {
+    getData('/api/books', fetchController)
+      .then((response: Response) => {
         return response.json();
       })
       .then(books => {
-        this.props.setBooks(books);
+        dispatch({ payload: books, type: SET_BOOKS });
       })
       .catch(error => console.error(error));
-  }
+  }, [!books]);
 
-  public render() {
-    const { books } = this.props;
-
-    return (
-      <div>
-        {books.length > 0 &&
-          books.map(book => (
-            <Book title={book.title} authors={book.authors} key={book.id} />
-          ))}
-      </div>
-    );
-  }
-
-  public componentWillUnmount() {
-    this.fetchController.abort();
-  }
+  return (
+    <div>
+      {books.length > 0 &&
+        books.map(book => (
+          <Book title={book.title} authors={book.authors} key={book.id} />
+        ))}
+    </div>
+  );
 }
-
-const mapStateToProps = (state: { books: BookProps[] }) => ({
-  books: state.books
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setBooks: (books: BookProps[]) => dispatch(setBooksAction(books))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Books);

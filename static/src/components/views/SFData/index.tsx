@@ -3,7 +3,6 @@ import React from 'react';
 import { LatLngBounds, Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import uuid4 from 'uuid';
 import { VictoryAxis, VictoryBar, VictoryChart } from 'victory';
-
 import { getData } from '../../../utils';
 import { BizLocation, BizViolationBar } from './types';
 
@@ -29,7 +28,7 @@ const SFData: React.FC<Props> = (props: Props) => {
   const [businesses, setBusinesses] = React.useState([]);
   React.useEffect(() => {
     getData(sunnysideBizesUrl, fetchController)
-      .then(response => {
+      .then((response: Response) => {
         return response.json();
       })
       .then(bizes => {
@@ -54,7 +53,7 @@ const SFData: React.FC<Props> = (props: Props) => {
   );
   React.useEffect(() => {
     getData(zip94112RestHealthUrl, fetchController)
-      .then(response => {
+      .then((response: Response) => {
         return response.json();
       })
       .then(scores => {
@@ -89,7 +88,7 @@ const SFData: React.FC<Props> = (props: Props) => {
 
     bounds.push(position);
     return (
-      <Marker key={position} position={position}>
+      <Marker key={biz.id} position={position}>
         <Popup>{biz.address}</Popup>
       </Marker>
     );

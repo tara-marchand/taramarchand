@@ -1,6 +1,5 @@
-import { gujuon, getKanaByRomaji } from 'japanese-kana';
+import { getKanaByRomaji, gujuon } from 'japanese-kana';
 import React, { PureComponent } from 'react';
-
 import FlashCard from './FlashCard';
 
 export namespace Japanese {

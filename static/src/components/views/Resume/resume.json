@@ -39,7 +39,7 @@
         "Join company-wide UI engineering endeavors, co-lead project to consolidate discipline guidance and best practices",
         "Developed user interface for New Relic's Infrastructure monitoring product",
         "Worked with support team to troubleshoot and fix issues reported by customers",
-        "Promoted from Senior Software Engineer."
+        "Promoted from Senior Software Engineer"
       ]
     },
     {
@@ -53,9 +53,9 @@
         "<strong>Google:</strong> As part of embedded agency team, led server-side and database development of new internal application with many complex integrations",
         "<strong>Dignity Health:</strong> Led technology discipline agency-side for this large healthcare client. Analyzed, recommended, and maintained digital solutions",
         "<strong>Nike Events Tool:</strong> Led front-end development for this platform's localized, mobile-friendly web experiences used by tens of thousands of customers globally. Manage 2 front-end engineers. Integrate with custom APIs. Example calendar: <a href=\"https://www.nike.com/events-registration/series?id=1607&days=7\" target=\"_blanks\">Nike+ San Francisco</a>",
-        "<strong>Microsoft Surface:</strong> Architected and wrote presentation layer code for this fully responsive website developed for the launch of this tablet device. Integrated with custom CMS and API.",
-        "<strong>Nike+ FuelBand:</strong> Helped build the web application front end for the debut of this pioneering activity tracker. Created complex visualizations from user data in JavaScript.",
-        "Promoted from Front End Solutions Architect and previously from Senior Presentation Code Developer."
+        "<strong>Microsoft Surface:</strong> Architected and wrote presentation layer code for this fully responsive website developed for the launch of this tablet device. Integrated with custom CMS and API",
+        "<strong>Nike+ FuelBand:</strong> Helped build the web application front end for the debut of this pioneering activity tracker. Created complex visualizations from user data in JavaScript",
+        "Promoted from Front End Solutions Architect and previously from Senior Presentation Code Developer"
       ]
     },
     {
@@ -66,8 +66,8 @@
       "endDate": "2009",
       "summary": "",
       "highlights": [
-        "<strong>Adobe Marketplace:</strong> Helped develop the user interface for this new web application offering publishing and downloading of extensions and other add-ons for the company's Air and Photoshop software.",
-        "<strong>Lexus.com:</strong> Worked on the front ends of Lexus.com and other websites for related brands Toyota and Scion, managing code in the TeamSite content management system."
+        "<strong>Adobe Marketplace:</strong> Helped develop the user interface for this new web application offering publishing and downloading of extensions and other add-ons for the company's Air and Photoshop software",
+        "<strong>Lexus.com:</strong> Worked on the front ends of Lexus.com and other websites for related brands Toyota and Scion, managing code in the TeamSite content management system"
       ]
     },
     {
@@ -78,9 +78,9 @@
       "endDate": "2007",
       "summary": "",
       "highlights": [
-        "<strong>Amgen and Wyeth:</strong> Created the UIs for patient education websites (Enbrel.com, InsideRA.com, PsoriasisConnections.com) for Amgen's top-selling drug Enbrel.",
-        "<strong>Amgen; Sprint:</strong> Built emails and launched large campaigns using a complex email marketing platform, then analyzed resulting data.",
-        "Promoted from User Interface Developer."
+        "<strong>Amgen and Wyeth:</strong> Created the UIs for patient education websites (Enbrel.com, InsideRA.com, PsoriasisConnections.com) for Amgen's top-selling drug Enbrel",
+        "<strong>Amgen; Sprint:</strong> Built emails and launched large campaigns using a complex email marketing platform, then analyzed resulting data",
+        "Promoted from User Interface Developer"
       ]
     }
   ],
@@ -110,10 +110,11 @@
     {
       "name": "Tools",
       "keywords": [
-        "client-side JavaScript libraries and frameworks (React, Angular)",
+        "JavaScript libraries and frameworks (React)",
         "CSS preprocessors (SASS)",
         "version control systems (git)",
-        "build & deployment tools (babel, webpack)",
+        "transpilation and bundling tools (babel, webpack)",
+        "build & deployment tools",
         "package managers (npm, yarn)",
         "content management systems & frameworks"
       ]

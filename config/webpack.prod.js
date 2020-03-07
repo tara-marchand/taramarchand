@@ -1,4 +1,5 @@
 /* eslint-env node */
+const glob = require('glob');
 const CopyPlugin = require('copy-webpack-plugin');
 const dotenv = require('dotenv');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -55,7 +56,7 @@ module.exports = {
       },
       {
         test: /\.ts(x?)$/,
-        include: [path.resolve(process.cwd(), 'static/src')],
+        include: [glob.sync(path.resolve(process.cwd(), 'static/src'))],
         use: [
           {
             loader: 'babel-loader',
@@ -77,15 +78,16 @@ module.exports = {
           path.resolve(process.cwd(), 'node_modules')
         ],
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader
-          },
+          MiniCssExtractPlugin.loader,
           'css-loader',
           {
             loader: 'postcss-loader',
             options: {
               ident: 'postcss',
               plugins: [
+                require('@fullhuman/postcss-purgecss')({
+                  content: [path.resolve(process.cwd(), 'views') + '/**/*.hbs']
+                }),
                 require('postcss-import')(),
                 require('precss')(),
                 require('tailwindcss')('./config/tailwind.config.js'),

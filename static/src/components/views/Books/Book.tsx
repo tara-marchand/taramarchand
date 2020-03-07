@@ -6,14 +6,12 @@ export interface BookProps {
   title: string;
 }
 
-export default class Book extends React.PureComponent<BookProps> {
-  public render() {
-    const { title, authors } = this.props;
+export default function Book(props: BookProps) {
+  const { title, authors } = props;
 
-    return (
-      <div>
-        <cite>{title}</cite> by {authors}
-      </div>
-    );
-  }
+  return (
+    <div>
+      <cite>{title}</cite> by {authors}
+    </div>
+  );
 }

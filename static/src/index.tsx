@@ -1,7 +1,7 @@
 import './index.scss';
 import 'core-js/stable';
 import 'leaflet/dist/leaflet.css';
-import 'regenerator-runtime/runtime';
+import 'regenerator-runtime';
 
 import L from 'leaflet';
 import marker2x from 'leaflet/dist/images/marker-icon-2x.png';
@@ -24,7 +24,7 @@ import Resume from './components/views/Resume';
 import SFData from './components/views/SFData';
 import WomensSoccer from './components/views/WomensSoccer';
 import store from './store';
-import registerServiceWorker from './util/register-service-worker';
+import { registerServiceWorker } from './utils';
 
 WebFont.load({
   google: {
@@ -77,7 +77,7 @@ const App: React.FC<{}> = () => (
     </ErrorBoundary>
   </Provider>
 );
-console.log(process.env.NODE_ENV);
+
 if (process.env.NODE_ENV === 'development' && (module as any).hot) {
   import('react-hot-loader').then(hotLoader => {
     const FinalApp = hotLoader.hot(module as any)(App);

@@ -1,7 +1,4 @@
 import * as React from 'react';
-// import * as competitions from '../../../../node_modules/open-data/data/competitions';
-
-import Competition from './Competition';
 
 export interface Props {}
 

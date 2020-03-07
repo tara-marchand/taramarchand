@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import * as React from 'react';
-
 import * as resumeJson from './resume.json';
+import { Resume } from './util';
 
 class Resume extends React.PureComponent<{}> {
   data: Resume.Data = resumeJson.default;

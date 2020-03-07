@@ -1,18 +1,4 @@
-import React, { PureComponent } from 'react';
-
-export class FlashCard extends PureComponent<Props> {
-  render() {
-    const { hiragana, katakana, romaji } = this.props;
-
-    return (
-      <div>
-        <div>{hiragana}</div>
-        <div>{katakana}</div>
-        <div>{romaji}</div>
-      </div>
-    );
-  }
-}
+import * as React from 'react';
 
 export interface Props {
   hiragana: string;
@@ -20,4 +6,14 @@ export interface Props {
   romaji: string;
 }
 
-export default FlashCard;
+export default function FlashCard(props: Props) {
+  const { hiragana, katakana, romaji } = props;
+
+  return (
+    <div>
+      <div>{hiragana}</div>
+      <div>{katakana}</div>
+      <div>{romaji}</div>
+    </div>
+  );
+}

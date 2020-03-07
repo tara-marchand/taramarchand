@@ -1,3 +1,3 @@
-class CharacterGroup {}
-
-export default CharacterGroup;
+export default function CharacterGroup() {
+  return {};
+}

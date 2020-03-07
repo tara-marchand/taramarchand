@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { NavLink, Route, NavLinkProps } from 'react-router-dom';
+import { NavLink, NavLinkProps, Route } from 'react-router-dom';
 
 interface Props extends NavLinkProps {
   text: string;
 }
 
-const MenuLink: React.FC<Props> = (props: Props) => {
+export default function MenuLink(props: Props) {
   const {
     activeClassName,
     activeStyle,
@@ -75,5 +75,4 @@ const MenuLink: React.FC<Props> = (props: Props) => {
       }}
     />
   );
-};
-export default MenuLink;
+}
