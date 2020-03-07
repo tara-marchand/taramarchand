@@ -85,9 +85,6 @@ module.exports = {
             options: {
               ident: 'postcss',
               plugins: [
-                require('@fullhuman/postcss-purgecss')({
-                  content: [path.resolve(process.cwd(), 'views') + '/**/*.hbs']
-                }),
                 require('postcss-import')(),
                 require('precss')(),
                 require('tailwindcss')('./config/tailwind.config.js'),
