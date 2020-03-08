@@ -111,6 +111,9 @@ module.exports = {
     path: path.resolve(process.cwd(), 'static/dist'),
     publicPath: '/static/'
   },
+  performance: {
+    hints: false
+  },
   plugins: [
     new CopyPlugin([{ from: './static/src/images', to: 'images' }]),
     new MiniCssExtractPlugin({

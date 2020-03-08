@@ -1,5 +1,4 @@
 /* eslint-env node */
-require('newrelic');
 const dotenv = require('dotenv');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
