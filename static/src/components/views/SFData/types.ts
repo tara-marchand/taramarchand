@@ -1,4 +1,4 @@
-export interface BizLocation {
+export interface CaseLocation {
   address: string;
   id: string;
   lat: number;
