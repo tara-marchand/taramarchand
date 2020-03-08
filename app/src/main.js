@@ -3,20 +3,24 @@ import dotenv from 'dotenv';
 import express from 'express';
 import exphbs from 'express-handlebars';
 import morgan from 'morgan';
-import os from 'os';
 import path from 'path';
 import models from './models';
 
 dotenv.config();
 
-const { NEW_RELIC_ENABLED: newRelicEnabled, NODE_ENV: nodeEnv } = process.env;
+const { NEW_RELIC_ENABLED: isNewRelicEnabled, NODE_ENV: nodeEnv } = process.env;
 const isProd = nodeEnv === 'production';
-const isProdDeployed = isProd && os.hostname() !== 'localhost';
 
-let getBrowserTimingHeader = () => {};
-if (newRelicEnabled) {
-  import('newrelic').then(newrelic => {
-    getBrowserTimingHeader = newrelic.getBrowserTimingHeader;
+function getBrowserTimingHeader() {
+  //  if (isNewRelicEnabled) {
+  new Promise((resolve, reject) => {
+    if (isNewRelicEnabled) {
+      import('newrelic').then(newrelic => {
+        resolve(newrelic.getBrowserTimingHeader);
+      });
+    } else {
+      resolve(undefined);
+    }
   });
 }
 
@@ -63,8 +67,8 @@ export function finishInit(app) {
   app.all('*', (req, res) => {
     res.render('index', {
       getBrowserTimingHeader,
-      isProd,
-      isProdDeployed
+      isNewRelicEnabled,
+      isProd
     });
   });
 
