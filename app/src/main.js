@@ -12,7 +12,7 @@ const { NEW_RELIC_ENABLED: isNewRelicEnabled, NODE_ENV: nodeEnv } = process.env;
 const isProd = nodeEnv === 'production';
 
 function getBrowserTimingHeader() {
-  new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     if (isNewRelicEnabled) {
       import('newrelic').then(newrelic => {
         resolve(newrelic.getBrowserTimingHeader());
@@ -64,12 +64,12 @@ export function finishInit(app) {
   });
 
   app.all('*', (req, res) => {
-    const browserTimingHeader = getBrowserTimingHeader();
-
-    res.render('index', {
-      browserTimingHeader,
-      isNewRelicEnabled,
-      isProd
+    getBrowserTimingHeader().then(browserTimingHeader => {
+      res.render('index', {
+        browserTimingHeader,
+        isNewRelicEnabled,
+        isProd
+      });
     });
   });
 
