@@ -15,10 +15,10 @@ function getBrowserTimingHeader() {
   new Promise((resolve, reject) => {
     if (isNewRelicEnabled) {
       import('newrelic').then(newrelic => {
-        resolve(newrelic.getBrowserTimingHeader);
+        resolve(newrelic.getBrowserTimingHeader());
       });
     } else {
-      resolve(() => {});
+      resolve({});
     }
   });
 }
