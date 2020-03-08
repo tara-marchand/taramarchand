@@ -5,6 +5,7 @@ import exphbs from 'express-handlebars';
 import morgan from 'morgan';
 import path from 'path';
 import models from './models';
+import newrelic from 'newrelic';
 
 dotenv.config();
 
@@ -55,6 +56,7 @@ export function finishInit(app) {
 
   app.all('*', (req, res) => {
     res.render('index', {
+      getBrowserTimingHeader: newrelic.getBrowserTimingHeader(),
       isProd: process.env.NODE_ENV === 'production'
     });
   });
