@@ -1,14 +1,16 @@
 /* eslint-env node */
+require('newrelic');
 const dotenv = require('dotenv');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
+const NewrelicWebpackPlugin = require('@newrelic/webpack-plugin/lib/NewrelicWebpackPlugin');
 
 dotenv.config();
 
 const fileName =
   process.env.NODE_ENV === 'production' ? 'index-prod.js' : 'index-dev.js';
-const serverPath = './app/src/' + fileName;
+const serverPath = `./app/src/${fileName}`;
 
 module.exports = {
   entry: {
@@ -45,6 +47,7 @@ module.exports = {
     publicPath: '/'
   },
   plugins: [
+    new NewrelicWebpackPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })
