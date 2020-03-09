@@ -5,6 +5,8 @@ import exphbs from 'express-handlebars';
 import morgan from 'morgan';
 import path from 'path';
 import models from './models';
+import fetch from 'isomorphic-fetch';
+import parse from 'csv-parse/lib/sync';
 
 dotenv.config();
 
@@ -61,6 +63,27 @@ export function finishInit(app) {
         .json(books)
         .end();
     });
+  });
+
+  app.get('/api/covid19', (req, res) => {
+    const covid19Url =
+      'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv';
+
+    return fetch(covid19Url)
+      .then(function(response) {
+        return response.ok ? response.text() : Promise.reject(response.status);
+      })
+      .then(function(text) {
+        return res
+          .status(200)
+          .json(
+            parse(text, {
+              columns: true,
+              skip_empty_lines: true
+            })
+          )
+          .end();
+      });
   });
 
   app.all('*', (req, res) => {

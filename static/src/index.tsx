@@ -18,6 +18,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import Nav from './components/Nav';
 import Books from './components/views/Books';
+import Covid19 from './components/views/Covid19';
 import Home from './components/views/Home';
 import Japanese from './components/views/Japanese';
 import Resume from './components/views/Resume';
@@ -50,6 +51,7 @@ type Props = RouteComponentProps<any>;
 
 const views = {
   books: Books,
+  covid19: Covid19,
   japanese: Japanese,
   resume: Resume,
   'sf-data': SFData,
