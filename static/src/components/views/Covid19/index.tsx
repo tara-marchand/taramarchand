@@ -31,23 +31,28 @@ export default function Covid19() {
   return (
     <div>
       {geoAreas.length > 0 &&
-        geoAreas.map((area, index) => {
-          // Only show 10 at a time for now
-          if (index < 10) {
-            return (
-              <div key={uuidv4()}>
-                {area['Province/State']}, {area['Country/Region']}
-                <VictoryChart>
-                  <VictoryAxis dependentAxis={true} orientation="left" />
-                  <VictoryLine data={getDays(area)} />
-                  <VictoryAxis fixLabelOverlap={true} />
-                </VictoryChart>
-                {}
-              </div>
-            );
+        geoAreas.map((areaData, index) => {
+          // Only show United States states
+          {
+            if (areaData['Country/Region'].toLowerCase().match(/\bus\b/)) {
+              return Area(areaData);
+            }
           }
         })}
-      {geoAreas.map(area => {})}
+    </div>
+  );
+}
+
+function Area(areaData) {
+  return (
+    <div key={uuidv4()}>
+      {areaData['Province/State']}, {areaData['Country/Region']}
+      <VictoryChart>
+        <VictoryAxis dependentAxis={true} orientation="left" />
+        <VictoryLine data={getDays(areaData)} />
+        <VictoryAxis fixLabelOverlap={true} />
+      </VictoryChart>
+      {}
     </div>
   );
 }

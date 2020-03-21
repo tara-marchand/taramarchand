@@ -5,6 +5,7 @@ import fetch from 'isomorphic-fetch';
 const confirmedCacheKey = 'confirmed';
 const confirmedUrl =
   'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv';
+const cacheTtl = 21600; // 6 hours, in seconds
 
 export function getConfirmed(req, res) {
   let covid19Confirmed = myCache.get(confirmedCacheKey);
@@ -28,7 +29,7 @@ export function getConfirmed(req, res) {
               columns: true,
               skip_empty_lines: true
             });
-            myCache.set(confirmedCacheKey, covid19Confirmed);
+            myCache.set(confirmedCacheKey, covid19Confirmed, cacheTtl);
 
             return res
               .status(200)
