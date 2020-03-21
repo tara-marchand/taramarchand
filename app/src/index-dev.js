@@ -3,7 +3,7 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from '../../config/webpack.dev';
-import { finishInit } from './main';
+import { main } from './main';
 
 const app = express();
 
@@ -21,4 +21,4 @@ app.use(
   })
 );
 
-finishInit(app);
+main(app);

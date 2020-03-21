@@ -1,9 +1,4 @@
-import dotenv from 'dotenv';
-import fs from 'fs';
-import path from 'path';
 import Sequelize from 'sequelize';
-
-dotenv.config();
 
 const sequelize = new Sequelize.Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',

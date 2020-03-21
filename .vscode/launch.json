@@ -7,8 +7,15 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
-      "program": "${workspaceFolder}/src/app/index.tsx"
+      "name": "Heroku Local Dev",
+      "runtimeExecutable": "/usr/local/bin/heroku",
+      "runtimeArgs": ["local", "-f=Procfile_dev"],
+      "port": 3000,
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "timeout": 50000,
+      "cwd": "${workspaceRoot}",
+      "console": "integratedTerminal"
     }
   ]
 }
