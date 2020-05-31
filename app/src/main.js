@@ -1,24 +1,18 @@
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import express from 'express';
 import exphbs from 'express-handlebars';
-import morgan from 'morgan';
 import NodeCache from 'node-cache';
-import path from 'path';
 import router from './router';
+import debug from 'debug';
 
 export const myCache = new NodeCache();
 
 dotenv.config();
 
 export function main(app) {
-  app.use(bodyParser.raw());
+  debug('app');
 
-  app.use(
-    morgan(
-      '[:date[clf]] ":method :url HTTP/:http-version" :status :response-time ms - :res[content-length]'
-    )
-  );
+  app.use(bodyParser.raw());
 
   app.engine(
     '.hbs',
@@ -29,18 +23,6 @@ export function main(app) {
   );
 
   app.set('view engine', '.hbs');
-
-  app.use(
-    '/static',
-    express.static(path.resolve(process.cwd(), 'static/dist'), {
-      index: false
-    })
-  );
-
-  app.use(
-    '/node_modules',
-    express.static(path.resolve(process.cwd(), 'node_modules'))
-  );
 
   app.use('/', router);
 

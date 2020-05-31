@@ -1,47 +1,68 @@
-import { myCache } from '../main';
 import parse from 'csv-parse/lib/sync';
+import debug from 'debug';
 import fetch from 'isomorphic-fetch';
+import { myCache } from '../main';
 
-const confirmedCacheKey = 'confirmed';
-const confirmedUrl =
-  'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv';
+const usCasesCacheKey = 'usCases';
+const usCasesUrl =
+  'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv';
+
+const worldCasesCacheKey = 'worldCases';
+const worldCasesUrl =
+  'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv';
+
 const cacheTtl = 21600; // 6 hours, in seconds
 
-export function getConfirmed(req, res) {
-  let covid19Confirmed = myCache.get(confirmedCacheKey);
+function getData(req, res, cacheKey, url) {
+  let data = myCache.get(cacheKey);
 
-  if (covid19Confirmed) {
-    console.info('retrieved from cache');
+  if (data) {
+    console.log('retrieved from cache');
     return res
       .status(200)
-      .json(covid19Confirmed)
+      .json(data)
       .end();
   }
 
-  fetch(confirmedUrl)
+  fetch(url)
     .then(function(response) {
       if (response.ok) {
-        console.info('fetched');
+        console.log('fetched');
         response
           .text()
           .then(responseText => {
-            covid19Confirmed = parse(responseText, {
+            data = parse(responseText, {
               columns: true,
               skip_empty_lines: true
             });
-            myCache.set(confirmedCacheKey, covid19Confirmed, cacheTtl);
+            myCache.set(cacheKey, data, cacheTtl);
 
             return res
               .status(200)
-              .json(covid19Confirmed)
+              .json(data)
               .end();
           })
           .catch(error => {
-            console.error(error);
+            console.log(error);
           });
       } else {
         return Promise.reject(response.status);
       }
     })
-    .catch(error => console.error(error));
+    .catch(error =>
+      console.log(`Unable to fetch data from URL ${url}: error code ${error}`)
+    );
 }
+
+function getWorldCases(req, res) {
+  return getData(req, res, worldCasesCacheKey, worldCasesUrl);
+}
+
+function getUsCases(req, res) {
+  return getData(req, res, usCasesCacheKey, usCasesUrl);
+}
+
+export default {
+  getUsCases,
+  getWorldCases
+};

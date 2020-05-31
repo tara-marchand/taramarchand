@@ -1,3 +1,4 @@
+import debug from 'debug';
 import React from 'react';
 import { getData } from '../../../utils';
 import RestHealthScoresChart, {
@@ -31,7 +32,7 @@ const SFData: React.FunctionComponent<Props> = props => {
       .then(casesData => {
         setCases(transformCasesData(casesData));
       })
-      .catch(error => console.error(error));
+      .catch(error => console.log(error));
   }, [!cases]);
 
   // 94112 restaurant health violations chart
@@ -43,7 +44,7 @@ const SFData: React.FunctionComponent<Props> = props => {
       .then(scores => {
         setHealthScores(transformHealthScoresData(scores, maxNumInspections));
       })
-      .catch(error => console.error(error));
+      .catch(error => console.log(error));
   }, []);
 
   return (

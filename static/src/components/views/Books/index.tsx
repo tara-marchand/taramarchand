@@ -14,7 +14,9 @@ export default function Books() {
   const dispatch = useDispatch();
   const books = useSelector((state: State) => state.books);
 
-  useEffect(() => console.log('mounted or updated'), [books]);
+  useEffect(() => {
+    console.log('mounted or updated');
+  }, [books]);
 
   useEffect(() => {
     return () => {
@@ -31,7 +33,7 @@ export default function Books() {
       .then(books => {
         dispatch({ payload: books, type: SET_BOOKS });
       })
-      .catch(error => console.error(error));
+      .catch(error => console.log(error));
   }, [!books]);
 
   return (

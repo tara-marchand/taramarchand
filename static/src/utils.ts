@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import debug from 'debug';
 
 export function isDev() {
   return process.env.NODE_ENV === 'development';
@@ -19,7 +20,7 @@ export function getData(contentUrl: string, controller: AbortController) {
   } catch (err) {
     // Avoid showing an error message if the fetch was aborted
     if (err.name !== 'AbortError') {
-      console.warn('Oh no! Fetching failed.');
+      console.log('Oh no! Fetching failed.');
     }
   }
 }
