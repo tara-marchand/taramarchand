@@ -1,4 +1,4 @@
-import parse from 'csv-parse/lib/sync';
+import csv from 'csv';
 import debug from 'debug';
 import fetch from 'isomorphic-fetch';
 import { myCache } from '../main';
@@ -14,40 +14,62 @@ const worldCasesUrl =
 const cacheTtl = 21600; // 6 hours, in seconds
 
 function getData(req, res, cacheKey, url) {
-  let data = myCache.get(cacheKey);
+  // let data = myCache.get(cacheKey);
 
-  if (data) {
-    console.log('retrieved from cache');
+  // if (data) {
+  //   console.log('retrieved from cache');
+  //   return res
+  //     .status(200)
+  //     .json(data)
+  //     .end();
+  // }
+
+  const output = [];
+  const parser = csv.parse({
+    skip_empty_lines: false,
+    to: 100
+  });
+
+  // Use the readable stream API
+  parser.on('readable', function() {
+    let record;
+    while ((record = parser.read())) {
+      console.log(record);
+      output.push(record);
+    }
+  });
+
+  parser.on('error', function(err) {
+    console.error(err.message);
+  });
+
+  parser.on('end', function() {
+    myCache.set(cacheKey, output, cacheTtl);
+
     return res
       .status(200)
-      .json(data)
+      .json(output)
       .end();
-  }
+  });
 
   fetch(url)
-    .then(function(response) {
-      if (response.ok) {
-        console.log('fetched');
-        response
-          .text()
-          .then(responseText => {
-            data = parse(responseText, {
-              columns: true,
-              skip_empty_lines: true
-            });
-            myCache.set(cacheKey, data, cacheTtl);
+    .then(response => response.body)
+    .then(body => {
+      // https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream
+      body.on('readable', () => {
+        let chunk;
+        let chunkString;
 
-            return res
-              .status(200)
-              .json(data)
-              .end();
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      } else {
-        return Promise.reject(response.status);
-      }
+        while (null !== (chunk = body.read())) {
+          chunkString = chunk.toString();
+          console.log(chunkString);
+          parser.write(chunkString);
+        }
+      });
+
+      body.on('end', () => {
+        parser.end();
+      });
     })
     .catch(error =>
       console.log(`Unable to fetch data from URL ${url}: error code ${error}`)
