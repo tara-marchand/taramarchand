@@ -1,7 +1,7 @@
 import { format, parse } from 'date-fns';
 import * as React from 'react';
 import { useEffect } from 'react';
-import uuidv4 from 'uuid';
+import { v4 as uuid4 } from 'uuid';
 import { VictoryChart, VictoryLine, VictoryAxis } from 'victory';
 import { getData } from '../../../utils';
 
@@ -45,7 +45,7 @@ export default function Covid19() {
 
 function Area(areaData) {
   return (
-    <div key={uuidv4()}>
+    <div key={uuid4()}>
       {areaData['Province/State']}, {areaData['Country/Region']}
       <VictoryChart>
         <VictoryAxis dependentAxis={true} orientation="left" />

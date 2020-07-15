@@ -115,7 +115,9 @@ module.exports = {
     hints: false
   },
   plugins: [
-    new CopyPlugin([{ from: './static/src/images', to: 'images' }]),
+    new CopyPlugin({
+      patterns: [{ from: './static/src/images', to: 'images' }]
+    }),
     new MiniCssExtractPlugin({
       filename: 'main.css'
     }),
@@ -123,11 +125,12 @@ module.exports = {
       'process.env.BROWSER': JSON.stringify(true),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
-    new WorkboxPlugin.GenerateSW({
-      clientsClaim: true,
-      skipWaiting: true,
-      swDest: 'worker.js'
-    })
+    // Disabling service worker for now
+    // new WorkboxPlugin.GenerateSW({
+    //   clientsClaim: true,
+    //   skipWaiting: true,
+    //   swDest: 'worker.js'
+    // })
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.scss', '.css'],

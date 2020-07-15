@@ -33,11 +33,12 @@ WebFont.load({
   }
 });
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    registerServiceWorker();
-  });
-}
+// Disabling service worker until I actually need it for something
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', () => {
+//     registerServiceWorker();
+//   });
+// }
 
 // Hack so that leaflet's images work after going through webpack
 delete L.Icon.Default.prototype._getIconUrl;

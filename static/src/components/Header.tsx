@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
-import uuid4 from 'uuid';
+import { v4 as uuid4 } from 'uuid';
 
 import MenuLink from './MenuLink';
 

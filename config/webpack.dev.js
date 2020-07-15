@@ -116,18 +116,21 @@ module.exports = {
     publicPath: '/static/'
   },
   plugins: [
-    new CopyPlugin([{ from: './static/src/images', to: 'images' }]),
+    new CopyPlugin({
+      patterns: [{ from: './static/src/images', to: 'images' }]
+    }),
     new webpack.DefinePlugin({
       'process.env.BROWSER': JSON.stringify(true),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new WebpackWatchRunPlugin(),
-    new WorkboxPlugin.GenerateSW({
-      clientsClaim: true,
-      skipWaiting: true,
-      swDest: 'worker.js'
-    })
+    new WebpackWatchRunPlugin()
+    // Disabling service worker for now
+    // new WorkboxPlugin.GenerateSW({
+    //   clientsClaim: true,
+    //   skipWaiting: true,
+    //   swDest: 'worker.js'
+    // })
   ],
   resolve: {
     alias: { 'react-dom': '@hot-loader/react-dom' },

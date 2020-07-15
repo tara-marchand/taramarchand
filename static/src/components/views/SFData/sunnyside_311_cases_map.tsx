@@ -1,7 +1,7 @@
 import { LatLngTuple } from 'leaflet';
 import React from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
-import uuid4 from 'uuid';
+import { v4 as uuid4 } from 'uuid';
 import { CaseLocation } from './types';
 
 interface Props {
