@@ -28,17 +28,15 @@
   "work": [
     {
       "company": "New Relic",
-      "position": "Lead Growth (Software) Engineer",
+      "position": "Lead Software Engineer",
       "website": "http://www.newrelic.com/",
       "startDate": "2017",
       "endDate": "present",
       "summary": "",
       "highlights": [
-        "Lead development of user interface for internal app to aid salespeople in growing customer base",
+        "Lead development of UI for internal apps for salespeople and company JavaScript analytics library",
         "Collaborate with engineers, data professionals, product managers, and designers on features and functionality",
-        "Join company-wide UI engineering endeavors, co-lead project to consolidate discipline guidance and best practices",
-        "Developed user interface for New Relic's Infrastructure monitoring product",
-        "Worked with support team to troubleshoot and fix issues reported by customers",
+        "Developed user interface for New Relic's Infrastructure product",
         "Promoted from Senior Software Engineer."
       ]
     },
