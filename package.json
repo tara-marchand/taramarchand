@@ -14,8 +14,6 @@
     "build:prod:stats": "webpack --config=config/webpack.prod.js --env.NODE_ENV=production --json > stats/stats-prod.json",
     "clean": "rm -rf ./static/dist",
     "heroku-postbuild": "./postinstall.sh",
-    "lerna": "lerna",
-    "lerna-bootstrap": "npm run lerna -- bootstrap --hoist",
     "start:prod": "npm run build:app && node ./app/dist/index.js",
     "start:dev": "npm run build:app; npm run build:dev; DEBUG=express:application,express:router node ./app/dist/index.js",
     "start:gatsby:dev": "cd static/gatsby && npm install && gatsby develop",
@@ -134,7 +132,6 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^2.3.0",
-    "lerna": "^3.19.0",
     "prettier": "^1.19.1",
     "stylelint-config-recommended": "^3.0.0"
   },
