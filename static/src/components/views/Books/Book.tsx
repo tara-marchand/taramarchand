@@ -1,19 +1,19 @@
 import * as React from 'react';
 
-export interface BookProps {
+export interface Props {
   authors: string;
   id?: number;
   title: string;
 }
 
-export default class Book extends React.PureComponent<BookProps> {
-  public render() {
-    const { title, authors } = this.props;
+export default function Book(
+  props: Props
+): React.FunctionComponentElement<Props> {
+  const { title, authors } = props;
 
-    return (
-      <div>
-        <cite>{title}</cite> by {authors}
-      </div>
-    );
-  }
+  return (
+    <div>
+      <cite>{title}</cite> by {authors}
+    </div>
+  );
 }

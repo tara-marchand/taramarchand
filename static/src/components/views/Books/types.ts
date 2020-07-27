@@ -1,4 +1,4 @@
-import { BookProps } from './Book';
+import { Props as BookProps } from './Book';
 
 export const SET_BOOKS = 'SET_BOOKS';
 
