@@ -25,7 +25,6 @@ import Resume from './components/views/Resume';
 import SFData from './components/views/SFData';
 import WomensSoccer from './components/views/WomensSoccer';
 import store from './store';
-import registerServiceWorker from './util/register-service-worker';
 import { isDev } from './utils';
 
 WebFont.load({
@@ -33,12 +32,6 @@ WebFont.load({
     families: ['EB Garamond', 'sans-serif']
   }
 });
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    registerServiceWorker();
-  });
-}
 
 // Hack so that leaflet's images work after going through webpack
 delete L.Icon.Default.prototype._getIconUrl;

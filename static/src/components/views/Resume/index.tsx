@@ -1,27 +1,12 @@
 import clsx from 'clsx';
 import * as React from 'react';
+import resumeJson from './resume.json';
 
-import * as resumeJson from './resume.json';
+function Resume(): React.FunctionComponentElement<{}> {
+  const data = resumeJson;
 
-class Resume extends React.PureComponent<{}> {
-  data: Resume.Data = resumeJson.default;
-
-  render() {
-    return (
-      <div className="p-4">
-        {this.renderBasics()}
-        <hr className="mt-4 mb-2" />
-        {this.renderSkills()}
-        <hr className="mt-4 mb-2" />
-        {this.renderWork()}
-        <hr className="mt-4 mb-2" />
-        {this.renderEducation()}
-      </div>
-    );
-  }
-
-  renderBasics() {
-    const { basics } = this.data;
+  function renderBasics() {
+    const { basics } = data;
 
     return (
       <React.Fragment>
@@ -57,8 +42,8 @@ class Resume extends React.PureComponent<{}> {
     );
   }
 
-  renderSkills() {
-    const { skills } = this.data;
+  function renderSkills() {
+    const { skills } = data;
 
     return (
       <React.Fragment>
@@ -87,8 +72,8 @@ class Resume extends React.PureComponent<{}> {
     );
   }
 
-  renderWork() {
-    const { work } = this.data;
+  function renderWork() {
+    const { work } = data;
 
     return (
       <React.Fragment>
@@ -133,8 +118,8 @@ class Resume extends React.PureComponent<{}> {
     );
   }
 
-  renderEducation() {
-    const { education } = this.data;
+  function renderEducation() {
+    const { education } = data;
 
     return (
       <React.Fragment>
@@ -142,7 +127,7 @@ class Resume extends React.PureComponent<{}> {
           <section id="education">
             <h2 className="text-2xl">Education</h2>
             <ul>
-              {education.map((ed: Resume.Education, index: number) => (
+              {education.map((ed, index: number) => (
                 <li key={index}>
                   {ed.institution} · {ed.studyType}, {ed.area}
                 </li>
@@ -153,6 +138,18 @@ class Resume extends React.PureComponent<{}> {
       </React.Fragment>
     );
   }
+
+  return (
+    <div className="p-4">
+      {renderBasics()}
+      <hr className="mt-4 mb-2" />
+      {renderSkills()}
+      <hr className="mt-4 mb-2" />
+      {renderWork()}
+      <hr className="mt-4 mb-2" />
+      {renderEducation()}
+    </div>
+  );
 }
 
 export default Resume;
