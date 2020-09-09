@@ -1,4 +1,5 @@
-import { VictoryAxis, VictoryBar, VictoryChart } from 'victory';
+// TODO: Use Highcharts instead
+// import { VictoryAxis, VictoryBar, VictoryChart } from 'victory';
 import { BizViolationBar } from './types';
 import React from 'react';
 
@@ -13,13 +14,14 @@ export const zip94112RestHealthUrl =
   encodeURIComponent("business_postal_code = '94112'") +
   '&$group=business_name&$order=business_name&$limit=25';
 
-const RestHealthScoresChart: React.FunctionComponent<Props> = props => {
-  return (
-    <VictoryChart>
-      <VictoryBar data={props.scores} />
-      <VictoryAxis dependentAxis label="Number of Violations" minDomain={0} />
-    </VictoryChart>
-  );
+const RestHealthScoresChart: React.FunctionComponent<Props> = (props) => {
+  return null;
+  // (
+  //   <VictoryChart>
+  //     <VictoryBar data={props.scores} />
+  //     <VictoryAxis dependentAxis label="Number of Violations" minDomain={0} />
+  //   </VictoryChart>
+  // );
 };
 
 export function transformHealthScoresData(healthScoresData, maxNumInspections) {
@@ -31,7 +33,7 @@ export function transformHealthScoresData(healthScoresData, maxNumInspections) {
     return {
       x: index,
       y,
-      isYMax
+      isYMax,
     };
   });
 }

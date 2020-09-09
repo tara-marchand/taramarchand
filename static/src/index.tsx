@@ -29,8 +29,8 @@ import { registerServiceWorker } from './utils';
 
 WebFont.load({
   google: {
-    families: ['EB Garamond', 'sans-serif']
-  }
+    families: ['EB Garamond', 'sans-serif'],
+  },
 });
 
 // Disabling service worker until I actually need it for something
@@ -45,7 +45,7 @@ delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: marker2x,
   iconUrl: marker,
-  shadowUrl: markerShadow
+  shadowUrl: markerShadow,
 });
 
 type Props = RouteComponentProps<any>;
@@ -56,7 +56,7 @@ const views = {
   japanese: Japanese,
   resume: Resume,
   'sf-data': SFData,
-  'womens-soccer': WomensSoccer
+  'womens-soccer': WomensSoccer,
 };
 
 const renderView = (props: Props) => {
@@ -82,7 +82,7 @@ const App: React.FC<{}> = () => (
 );
 
 if (process.env.NODE_ENV === 'development' && (module as any).hot) {
-  import('react-hot-loader').then(hotLoader => {
+  import('react-hot-loader').then((hotLoader) => {
     const FinalApp = hotLoader.hot(module as any)(App);
     ReactDOM.render(<FinalApp />, document.getElementsByClassName('root')[0]);
   });

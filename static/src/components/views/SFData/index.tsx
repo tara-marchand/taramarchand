@@ -2,11 +2,11 @@ import React from 'react';
 import { getData } from '../../../utils';
 import RestHealthScoresChart, {
   transformHealthScoresData,
-  zip94112RestHealthUrl
+  zip94112RestHealthUrl,
 } from './rest_health_scores_chart';
 import Sunnyside311CasesMap, {
   sunnyside311CasesUrl,
-  transformCasesData
+  transformCasesData,
 } from './sunnyside_311_cases_map';
 import { BizViolationBar, CaseLocation } from './types';
 
@@ -14,7 +14,7 @@ interface Props {}
 
 const fetchController: AbortController = new AbortController();
 
-const SFData: React.FunctionComponent<Props> = props => {
+const SFData: React.FunctionComponent<Props> = (props) => {
   const [cases, setCases] = React.useState<CaseLocation[]>([]);
   const [bizHealthScores, setHealthScores] = React.useState(
     [] as BizViolationBar[]
@@ -28,10 +28,10 @@ const SFData: React.FunctionComponent<Props> = props => {
       .then((response: Response) => {
         return response.json();
       })
-      .then(casesData => {
+      .then((casesData) => {
         setCases(transformCasesData(casesData));
       })
-      .catch(error => console.error(error));
+      .catch((error) => console.error(error));
   }, [!cases]);
 
   // 94112 restaurant health violations chart
@@ -40,15 +40,16 @@ const SFData: React.FunctionComponent<Props> = props => {
       .then((response: Response) => {
         return response.json();
       })
-      .then(scores => {
+      .then((scores) => {
         setHealthScores(transformHealthScoresData(scores, maxNumInspections));
       })
-      .catch(error => console.error(error));
+      .catch((error) => console.error(error));
   }, []);
 
   return (
     <div>
-      <RestHealthScoresChart scores={bizHealthScores} />
+      {/* TODO: redo chart in Highcharts */}
+      {/* <RestHealthScoresChart scores={bizHealthScores} /> */}
       <Sunnyside311CasesMap cases={cases} />
     </div>
   );

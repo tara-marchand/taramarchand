@@ -1,73 +1,87 @@
-import { format, parse } from 'date-fns';
+import * as Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import sortBy from 'lodash.sortby';
+import takeRight from 'lodash.takeright';
 import * as React from 'react';
-import { useEffect } from 'react';
-import { v4 as uuid4 } from 'uuid';
-import { VictoryChart, VictoryLine, VictoryAxis } from 'victory';
 import { getData } from '../../../utils';
+import { parse } from 'date-fns';
 
 export default function Covid19() {
   const fetchController: AbortController = new AbortController();
-  const [geoAreas, setGeoAreas] = React.useState<{ [key: string]: string }[]>(
-    []
-  );
+  const [caDataForAllDays, setCaDataForAllDays] = React.useState<object[]>([]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     return () => {
       fetchController.abort();
     };
   }, []);
 
-  useEffect(() => {
-    getData('/api/covid19', fetchController)
+  React.useEffect(() => {
+    getData(
+      'https://api.covidtracking.com/v1/states/ca/daily.json',
+      fetchController
+    )
       .then((response: Response) => {
         return response.json();
       })
-      .then(geoAreas => {
-        setGeoAreas(geoAreas);
+      .then((historicalValuesCaJson) => {
+        // get deaths by day by state
+        const caData = getDataForCaByDay(historicalValuesCaJson);
+
+        setCaDataForAllDays(caData);
       })
-      .catch(error => console.error(error));
-  }, [!geoAreas]);
+      .catch((error) => console.error(error));
+  }, [!caDataForAllDays]);
 
-  return (
-    <div>
-      {geoAreas.length > 0 &&
-        geoAreas.map((areaData, index) => {
-          // Only show United States states
-          {
-            if (areaData['Country/Region'].toLowerCase().match(/\bus\b/)) {
-              return Area(areaData);
-            }
-          }
-        })}
-    </div>
-  );
+  const last30DaysOfData = takeRight(caDataForAllDays, 30);
+
+  const chartOptions: Highcharts.Options = {
+    legend: {
+      enabled: false,
+    },
+    series: [
+      {
+        data: last30DaysOfData,
+        type: 'line',
+      },
+    ],
+    title: {
+      text: 'Cum. COVID-19 Deaths in CA for Past 30 Days',
+    },
+    tooltip: {
+      pointFormat: '<b style="color:{point.color}">{point.y}</b><br/>',
+    },
+    xAxis: {
+      type: 'datetime',
+      title: {
+        text: 'Date',
+      },
+    },
+    yAxis: {
+      title: {
+        text: 'Cum. # Deaths',
+      },
+    },
+  };
+
+  return <HighchartsReact highcharts={Highcharts} options={chartOptions} />;
 }
 
-function Area(areaData) {
-  return (
-    <div key={uuid4()}>
-      {areaData['Province/State']}, {areaData['Country/Region']}
-      <VictoryChart>
-        <VictoryAxis dependentAxis={true} orientation="left" />
-        <VictoryLine data={getDays(areaData)} />
-        <VictoryAxis fixLabelOverlap={true} />
-      </VictoryChart>
-      {}
-    </div>
+function getDataForCaByDay(historicalValuesCaJson) {
+  return sortBy(
+    historicalValuesCaJson.map((day) => {
+      const parsedDate = parse(day.date, 'yyyyMMdd', new Date());
+      const parsedDateUtcMilliseconds = Date.UTC(
+        parsedDate.getFullYear(),
+        parsedDate.getMonth(),
+        parsedDate.getDate(),
+        parsedDate.getHours(),
+        parsedDate.getMinutes(),
+        parsedDate.getSeconds()
+      );
+
+      return [parsedDateUtcMilliseconds, day.death];
+    }),
+    (day) => day[0]
   );
-}
-
-function getDays(area) {
-  const days = [];
-
-  for (const day in area) {
-    try {
-      // Only include parseable values (that is, dates)
-      days.push({
-        x: format(parse(day, 'M/d/yy', new Date()), 'M/d'),
-        y: parseInt(area[day], 10)
-      });
-    } catch (e) {}
-  }
-  return days;
 }

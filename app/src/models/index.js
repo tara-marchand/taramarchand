@@ -2,7 +2,12 @@ import Sequelize from 'sequelize';
 
 const sequelize = new Sequelize.Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
-  dialectOptions: { ssl: true }
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  }
 });
 
 // https://github.com/sequelize/express-example/issues/74#issuecomment-478133128
