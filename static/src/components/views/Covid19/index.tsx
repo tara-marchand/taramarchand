@@ -1,10 +1,10 @@
+import { parse } from 'date-fns';
 import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import sortBy from 'lodash.sortby';
 import takeRight from 'lodash.takeright';
 import * as React from 'react';
 import { getData } from '../../../utils';
-import { parse } from 'date-fns';
 
 export default function Covid19() {
   const fetchController: AbortController = new AbortController();
@@ -35,13 +35,22 @@ export default function Covid19() {
 
   const last30DaysOfData = takeRight(caDataForAllDays, 30);
 
-  const chartOptions: Highcharts.Options = {
+  return (
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={getChartOptions(last30DaysOfData)}
+    />
+  );
+}
+
+function getChartOptions(data) {
+  return {
     legend: {
       enabled: false,
     },
     series: [
       {
-        data: last30DaysOfData,
+        data: data,
         type: 'line',
       },
     ],
@@ -49,9 +58,14 @@ export default function Covid19() {
       text: 'Cum. COVID-19 Deaths in CA for Past 30 Days',
     },
     tooltip: {
-      pointFormat: '<b style="color:{point.color}">{point.y}</b><br/>',
+      headerFormat: '<span>{point.key}</span><br/>',
+      pointFormat: '<b>{point.y}</b><br/>',
     },
     xAxis: {
+      labels: {
+        format: '{value:%b %e}',
+      },
+      minorTicks: true,
       type: 'datetime',
       title: {
         text: 'Date',
@@ -63,8 +77,6 @@ export default function Covid19() {
       },
     },
   };
-
-  return <HighchartsReact highcharts={Highcharts} options={chartOptions} />;
 }
 
 function getDataForCaByDay(historicalValuesCaJson) {
