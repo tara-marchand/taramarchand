@@ -25,7 +25,14 @@ import Resume from './components/views/Resume';
 import SFData from './components/views/SFData';
 import WomensSoccer from './components/views/WomensSoccer';
 import store from './store';
-import { registerServiceWorker } from './utils';
+import Highcharts from 'highcharts';
+
+Highcharts.setOptions({
+  lang: {
+    decimalPoint: '.',
+    thousandsSep: ',',
+  },
+});
 
 WebFont.load({
   google: {

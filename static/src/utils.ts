@@ -9,9 +9,9 @@ export function getData(contentUrl: string, controller: AbortController) {
 
   try {
     // Fetch the content & use the signal for aborting
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       fetch(contentUrl, {
-        signal
+        signal,
       }).then((response: any) => {
         resolve(response);
       });
@@ -21,18 +21,5 @@ export function getData(contentUrl: string, controller: AbortController) {
     if (err.name !== 'AbortError') {
       console.warn('Oh no! Fetching failed.');
     }
-  }
-}
-
-export function registerServiceWorker() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-      .register('static/worker.js')
-      .then(registration => {
-        console.log('SW registered: ', registration);
-      })
-      .catch(registrationError => {
-        console.log('SW registration failed: ', registrationError);
-      });
   }
 }
