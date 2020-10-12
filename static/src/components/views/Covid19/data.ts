@@ -1,9 +1,9 @@
-import d3Array from 'd3-array';
+import * as d3Array from 'd3-array';
 import { parse } from 'date-fns';
 import { Daily } from './types';
 
 export function transformDataForCaByDay(statesCaDailyRaw: Daily[]) {
-  return d3Array.group(statesCaDailyRaw, (day) => {
+  return d3Array.group(statesCaDailyRaw, day => {
     const parsedDate = parse(day.date + '', 'yyyyMMdd', new Date());
     const parsedDateUtcMilliseconds = Date.UTC(
       parsedDate.getFullYear(),

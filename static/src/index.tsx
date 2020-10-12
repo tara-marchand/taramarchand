@@ -16,6 +16,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Nav from './components/Nav';
+import { Ballot } from './components/views/Ballot';
 import Books from './components/views/Books';
 import Covid19 from './components/views/Covid19';
 import Home from './components/views/Home';
@@ -30,14 +31,14 @@ import store from './store';
 Highcharts.setOptions({
   lang: {
     decimalPoint: '.',
-    thousandsSep: ',',
-  },
+    thousandsSep: ','
+  }
 });
 
 WebFont.load({
   google: {
-    families: ['EB Garamond', 'sans-serif'],
-  },
+    families: ['EB Garamond', 'sans-serif']
+  }
 });
 
 // Hack so that leaflet's images work after going through webpack
@@ -45,24 +46,25 @@ delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: marker2x,
   iconUrl: marker,
-  shadowUrl: markerShadow,
+  shadowUrl: markerShadow
 });
 
 const client = new ApolloClient({
   uri: 'http://localhost:3000/admin/api',
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache()
 });
 
 type Props = RouteComponentProps<any>;
 
 const views = {
+  ballot: Ballot,
   books: Books,
   covid19: Covid19,
   japanese: Japanese,
   movies: Movies,
   resume: Resume,
   'sf-data': SFData,
-  'womens-soccer': WomensSoccer,
+  'womens-soccer': WomensSoccer
 };
 
 const renderView = (props: Props) => {
@@ -90,7 +92,7 @@ const App: React.FC<{}> = () => (
 );
 
 if (process.env.NODE_ENV === 'development' && (module as any).hot) {
-  import('react-hot-loader').then((hotLoader) => {
+  import('react-hot-loader').then(hotLoader => {
     const FinalApp = hotLoader.hot(module as any)(App);
     ReactDOM.render(<FinalApp />, document.getElementsByClassName('root')[0]);
   });
