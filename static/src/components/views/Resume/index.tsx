@@ -11,9 +11,9 @@ class Resume extends React.PureComponent<{}> {
       <div className="p-4">
         {this.renderBasics()}
         <hr className="mt-4 mb-2" />
-        {this.renderSkills()}
-        <hr className="mt-4 mb-2" />
         {this.renderWork()}
+        <hr className="mt-4 mb-2" />
+        {this.renderSkills()}
         <hr className="mt-4 mb-2" />
         {this.renderEducation()}
       </div>
