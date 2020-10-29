@@ -2,6 +2,7 @@ import * as React from 'react';
 import { NavLink, NavLinkProps, Route } from 'react-router-dom';
 
 interface Props extends NavLinkProps {
+  linkClassName?: string;
   text: string;
 }
 
@@ -11,6 +12,7 @@ export default function MenuLink(props: Props) {
     activeStyle,
     className,
     exact,
+    linkClassName,
     isActive: getIsActive,
     location,
     strict,
@@ -55,22 +57,20 @@ export default function MenuLink(props: Props) {
         }
 
         return (
-          <li
+          <div
             className={
-              isActive
-                ? [activeClassName, className, 'text-primary'].join(' ')
-                : className
+              isActive ? [activeClassName, className].join(' ') : className
             }
             style={isActive ? { ...style, ...activeStyle } : style}
           >
             {!isActive ? (
-              <NavLink to={to} {...rest}>
+              <NavLink to={to} {...rest} className={linkClassName}>
                 {text}
               </NavLink>
             ) : (
-              <span>{text}</span>
+              <>{text}</>
             )}
-          </li>
+          </div>
         );
       }}
     />

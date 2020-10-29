@@ -1,38 +1,8 @@
-body {
-  background-color: #e9eadc;
-}
-
 .leaflet-container {
   height: 400px;
   width: 80%;
   margin: 0 auto;
 }
 
-// Color palette: https://coolors.co/fee6b6-8ca0bb-e9eadc-270f08-d07e42
-
 .root {
-  box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 200px repeat(3, 1fr);
-  grid-gap: 0 1em;
-}
-
-header,
-footer {
-  grid-column: 1 / span 4;
-}
-
-nav {
-  grid-column: 1 / span 1;
-}
-
-main {
-  grid-column: 2 / span 3;
-}
-
-@media (max-width: 700px) {
-  main,
-  nav {
-    grid-column: 1 / span 4;
-  }
 }

@@ -29,13 +29,13 @@ class Resume extends React.PureComponent<{}> {
           <section id="basics">
             <div>
               <span>
-                <a className="hover:underline" href={`mailto:${basics.email}`}>
+                <a className="underline" href={`mailto:${basics.email}`}>
                   {basics.email}{' '}
                 </a>
               </span>
               <span>
                 <span>·</span>{' '}
-                <a className="hover:underline" href={basics.website}>
+                <a className="underline" href={basics.website}>
                   {basics.website}
                 </a>
               </span>
@@ -44,7 +44,7 @@ class Resume extends React.PureComponent<{}> {
               <section id="profiles">
                 {basics.profiles.map((profile, index) => (
                   <span key={index}>
-                    <a className="hover:underline" href={profile.url}>
+                    <a className="underline" href={profile.url}>
                       {profile.network}{' '}
                     </a>
                   </span>
@@ -64,7 +64,7 @@ class Resume extends React.PureComponent<{}> {
       <React.Fragment>
         {skills && (
           <section id="skills">
-            <h3 className="text-3xl">Skills</h3>
+            <h3 className="text-2xl">Skills</h3>
             {skills &&
               skills.map((skill, index) => (
                 <div key={index}>
@@ -94,7 +94,7 @@ class Resume extends React.PureComponent<{}> {
       <React.Fragment>
         {work && (
           <section id="work">
-            <h3 className="text-3xl">Experience</h3>
+            <h3 className="text-2xl">Experience</h3>
             {work.map((workplace: Resume.Work, index: number) => {
               return (
                 <div key={index}>
@@ -102,7 +102,7 @@ class Resume extends React.PureComponent<{}> {
                     className={clsx(
                       { 'mt-4': index > 0, 'mt-2': index === 0 },
                       'mb-2',
-                      'text-2xl'
+                      'text-xl'
                     )}
                   >
                     {workplace.position}

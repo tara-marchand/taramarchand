@@ -31,14 +31,14 @@ import store from './store';
 Highcharts.setOptions({
   lang: {
     decimalPoint: '.',
-    thousandsSep: ','
-  }
+    thousandsSep: ',',
+  },
 });
 
 WebFont.load({
   google: {
-    families: ['EB Garamond', 'sans-serif']
-  }
+    families: ['EB Garamond', 'sans-serif'],
+  },
 });
 
 // Hack so that leaflet's images work after going through webpack
@@ -46,12 +46,12 @@ delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: marker2x,
   iconUrl: marker,
-  shadowUrl: markerShadow
+  shadowUrl: markerShadow,
 });
 
 const client = new ApolloClient({
   uri: 'http://localhost:3000/admin/api',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
 type Props = RouteComponentProps<any>;
@@ -64,7 +64,7 @@ const views = {
   movies: Movies,
   resume: Resume,
   'sf-data': SFData,
-  'womens-soccer': WomensSoccer
+  'womens-soccer': WomensSoccer,
 };
 
 const renderView = (props: Props) => {
@@ -79,10 +79,11 @@ const App: React.FC<{}> = () => (
       <ErrorBoundary>
         <BrowserRouter>
           <Header />
-          <Nav />
-          <main>
-            <Route exact path="/" component={Home} />
-            <Route path="/:view" render={renderView} />
+          <main className="container w-full md:max-w-3xl mx-auto">
+            <div className="w-full px-4 md:px-6 text-gray-800 leading-normal">
+              <Route exact path="/" component={Home} />
+              <Route path="/:view" render={renderView} />
+            </div>
           </main>
           <Footer />
         </BrowserRouter>
@@ -92,7 +93,7 @@ const App: React.FC<{}> = () => (
 );
 
 if (process.env.NODE_ENV === 'development' && (module as any).hot) {
-  import('react-hot-loader').then(hotLoader => {
+  import('react-hot-loader').then((hotLoader) => {
     const FinalApp = hotLoader.hot(module as any)(App);
     ReactDOM.render(<FinalApp />, document.getElementsByClassName('root')[0]);
   });
