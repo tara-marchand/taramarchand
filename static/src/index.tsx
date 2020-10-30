@@ -79,8 +79,8 @@ const App: React.FC<{}> = () => (
       <ErrorBoundary>
         <BrowserRouter>
           <Header />
-          <main className="container w-full md:max-w-3xl mx-auto">
-            <div className="w-full px-4 md:px-6 text-gray-800 leading-normal">
+          <main className="container w-full px-3 md:max-w-xl mx-auto">
+            <div className="w-full py-3 text-gray-800 text-sm leading-normal">
               <Route exact path="/" component={Home} />
               <Route path="/:view" render={renderView} />
             </div>

@@ -6,5 +6,12 @@ module.exports = {
   plugins: [],
   prefix: '',
   separator: ':',
-  theme: {},
+  theme: {
+    extend: {
+      screens: {
+        print: { raw: 'print' },
+        // => @media print { ... }
+      },
+    },
+  },
 };

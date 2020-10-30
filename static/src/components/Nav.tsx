@@ -13,13 +13,8 @@ type Props = RouteComponentProps<any>;
 
 const Nav: React.FC<Props> = () => {
   return (
-    <div
-      id="nav-content"
-      className="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-gray-100 md:bg-transparent z-20"
-    >
-      <ul className="list-reset lg:flex justify-end flex-1 items-center">
-        {getAllNavLinks()}
-      </ul>
+    <div className="print:hidden inline-flex justify-end items-center">
+      <ul className="list-reset items-center">{getAllNavLinks()}</ul>
     </div>
   );
 };
@@ -36,11 +31,11 @@ function getAllNavLinks() {
 }
 
 function getOneNavLink(link: LinkData, index: number) {
-  const className = 'inline-block py-2 px-4 text-gray-900';
+  const className = 'text-gray-900';
   const linkClassName = 'text-gray-600 hover:text-gray-600 hover:underline';
 
   return (
-    <li className="mr-3" key={uuid4()}>
+    <li className="ml-3" key={uuid4()}>
       <MenuLink
         className={className}
         exact={true}
