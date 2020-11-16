@@ -12,21 +12,21 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, RouteComponentProps } from 'react-router-dom';
 import 'regenerator-runtime';
 import WebFont from 'webfontloader';
+import { Ballot } from './components/Ballot';
+import Books from './components/Books';
+import Covid19 from './components/Covid19';
 import ErrorBoundary from './components/ErrorBoundary';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import Nav from './components/Nav';
-import { Ballot } from './components/views/Ballot';
-import Books from './components/views/Books';
-import Covid19 from './components/views/Covid19';
-import Home from './components/views/Home';
-import Japanese from './components/views/Japanese';
-import Movies from './components/views/Movies';
-import Resume from './components/views/Resume';
-import SFData from './components/views/SFData';
-import WomensSoccer from './components/views/WomensSoccer';
+import Home from './components/Home';
+import Japanese from './components/Japanese';
+import { LwtDebug2020 } from './components/LwtDebug2020';
+import Movies from './components/Movies';
+import Resume from './components/Resume';
+import SFData from './components/SFData';
+import WomensSoccer from './components/WomensSoccer';
+import store from './data/store';
 import './index.scss';
-import store from './store';
 
 Highcharts.setOptions({
   lang: {
@@ -61,6 +61,7 @@ const views = {
   books: Books,
   covid19: Covid19,
   japanese: Japanese,
+  'lwt-debug-2020': LwtDebug2020,
   movies: Movies,
   resume: Resume,
   'sf-data': SFData,

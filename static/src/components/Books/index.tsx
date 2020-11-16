@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getData } from '../../../utils';
+import { getData } from '../../data/utils';
 import Book, { BookProps } from './Book';
 import { SET_BOOKS } from './types';
 
@@ -28,16 +28,16 @@ export default function Books() {
       .then((response: Response) => {
         return response.json();
       })
-      .then(books => {
+      .then((books) => {
         dispatch({ payload: books, type: SET_BOOKS });
       })
-      .catch(error => console.error(error));
+      .catch((error) => console.error(error));
   }, [!books]);
 
   return (
     <div>
       {books.length > 0 &&
-        books.map(book => (
+        books.map((book) => (
           <Book title={book.title} authors={book.authors} key={book.id} />
         ))}
     </div>

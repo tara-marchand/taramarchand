@@ -2,7 +2,7 @@ import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import takeRight from 'lodash.takeright';
 import * as React from 'react';
-import { getData } from '../../../utils';
+import { getData } from '../../data/utils';
 import { getOptionsStatesCaDaily } from './config';
 import { transformDataForCaByDay } from './data';
 

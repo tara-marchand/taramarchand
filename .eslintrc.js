@@ -2,7 +2,7 @@ module.exports = {
   env: {
     es6: true,
     browser: true,
-    node: false
+    node: false,
   },
   extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier'],
   overrides: [
@@ -16,11 +16,11 @@ module.exports = {
         'prettier/@typescript-eslint',
         'prettier/babel',
         'prettier/react',
-        'prettier/standard'
+        'prettier/standard',
       ],
       parser: '@typescript-eslint/parser',
       parserOptions: {
-        project: './tsconfig.json'
+        project: './config/tsconfig.json',
       },
       plugins: [
         '@typescript-eslint',
@@ -28,28 +28,28 @@ module.exports = {
         'prettier',
         'react',
         'react-hooks',
-        'standard'
-      ]
+        'standard',
+      ],
     },
     {
       env: {
         es6: true,
         browser: false,
-        node: true
+        node: true,
       },
-      files: [path.resolve(process.cwd(), 'app/**/*.*')]
-    }
+      files: './app',
+    },
   ],
   parser: 'babel-eslint',
   plugins: ['react'],
   rules: {
     'prettier/prettier': 'error',
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
-    'react-hooks/exhaustive-deps': 'warn' // Checks effect dependencies
+    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
   },
   settings: {
     react: {
-      version: 'detect'
-    }
-  }
+      version: 'detect',
+    },
+  },
 };

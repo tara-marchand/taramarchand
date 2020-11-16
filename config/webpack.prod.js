@@ -7,7 +7,6 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
-const WorkboxPlugin = require('workbox-webpack-plugin');
 
 dotenv.config();
 
@@ -19,10 +18,10 @@ const babelOptions = {
     [
       'lodash',
       {
-        id: ['lodash']
-      }
-    ]
-  ]
+        id: ['lodash'],
+      },
+    ],
+  ],
 };
 
 module.exports = {
@@ -37,21 +36,21 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
-            options: babelOptions
-          }
-        ]
+            options: babelOptions,
+          },
+        ],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         use: {
-          loader: 'file-loader'
-        }
+          loader: 'file-loader',
+        },
       },
       {
         test: /\.(jpg|png|svg)$/,
         use: {
-          loader: 'url-loader'
-        }
+          loader: 'url-loader',
+        },
       },
       {
         test: /\.ts(x?)$/,
@@ -59,22 +58,22 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
-            options: babelOptions
+            options: babelOptions,
           },
           {
             loader: 'ts-loader',
             options: {
               configFile: 'config/tsconfig.json',
-              transpileOnly: true
-            }
-          }
-        ]
+              transpileOnly: true,
+            },
+          },
+        ],
       },
       {
         test: /\.(css|scss|sass)$/,
         include: [
           path.resolve(process.cwd(), 'static/src'),
-          path.resolve(process.cwd(), 'node_modules')
+          path.resolve(process.cwd(), 'node_modules'),
         ],
         use: [
           MiniCssExtractPlugin.loader,
@@ -87,54 +86,52 @@ module.exports = {
                 require('postcss-import')(),
                 require('precss')(),
                 require('tailwindcss')('./config/tailwind.config.js'),
-                require('autoprefixer')()
-              ]
-            }
+                require('autoprefixer')(),
+              ],
+            },
           },
           'sass-loader',
-          'resolve-url-loader'
-        ]
-      }
-    ]
+          'resolve-url-loader',
+        ],
+      },
+      {
+        test: /\.html$/i,
+        loader: 'html-loader',
+      },
+    ],
   },
   optimization: {
     minimizer: [
       new TerserPlugin({
         cache: true,
-        sourceMap: true
+        sourceMap: true,
       }),
-      new OptimizeCSSAssetsPlugin({})
-    ]
+      new OptimizeCSSAssetsPlugin({}),
+    ],
   },
   output: {
     filename: 'main.bundle.js',
     path: path.resolve(process.cwd(), 'static/dist'),
-    publicPath: '/static/'
+    publicPath: '/static/',
   },
   performance: {
-    hints: false
+    hints: false,
   },
   plugins: [
     new CopyPlugin({
-      patterns: [{ from: './static/src/images', to: 'images' }]
+      patterns: [{ from: './static/src/images', to: 'images' }],
     }),
     new MiniCssExtractPlugin({
-      filename: 'main.css'
+      filename: 'main.css',
     }),
     new webpack.DefinePlugin({
       'process.env.BROWSER': JSON.stringify(true),
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
-    // Disabling service worker for now
-    // new WorkboxPlugin.GenerateSW({
-    //   clientsClaim: true,
-    //   skipWaiting: true,
-    //   swDest: 'worker.js'
-    // })
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.scss', '.css'],
-    modules: ['node_modules', 'static/src']
+    modules: ['node_modules', 'static/src'],
   },
-  target: 'web'
+  target: 'web',
 };
