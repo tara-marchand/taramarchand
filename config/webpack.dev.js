@@ -1,6 +1,5 @@
 /* eslint-env node */
 const CopyPlugin = require('copy-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const webpack = require('webpack');
 
@@ -120,7 +119,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [{ from: './static/src/images', to: 'images' }],
     }),
-    new Dotenv({ path: '../.env' }),
+    new webpack.EnvironmentPlugin(['AMPLITUDE_API_KEY', 'NODE_ENV']),
     new webpack.HotModuleReplacementPlugin(),
     new WebpackWatchRunPlugin(),
   ],
