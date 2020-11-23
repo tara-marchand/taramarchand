@@ -120,7 +120,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [{ from: './static/src/images', to: 'images' }],
     }),
-    new Dotenv(),
+    new Dotenv({ path: '../.env' }),
     new webpack.HotModuleReplacementPlugin(),
     new WebpackWatchRunPlugin(),
   ],

@@ -121,7 +121,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'main.css',
     }),
-    new Dotenv(),
+    new Dotenv({ path: '../.env' }),
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.scss', '.css'],
