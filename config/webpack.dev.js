@@ -1,12 +1,10 @@
 /* eslint-env node */
 const CopyPlugin = require('copy-webpack-plugin');
-const dotenv = require('dotenv');
+const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const webpack = require('webpack');
 
 const WebpackWatchRunPlugin = require('./WebpackWatchRunPlugin');
-
-dotenv.config();
 
 const babelOptions = {
   presets: ['@babel/preset-env', '@babel/preset-react'],
@@ -122,10 +120,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [{ from: './static/src/images', to: 'images' }],
     }),
-    new webpack.DefinePlugin({
-      'process.env.BROWSER': JSON.stringify(true),
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-    }),
+    new Dotenv(),
     new webpack.HotModuleReplacementPlugin(),
     new WebpackWatchRunPlugin(),
   ],

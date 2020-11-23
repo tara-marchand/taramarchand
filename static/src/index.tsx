@@ -1,4 +1,5 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import amplitude, { AmplitudeClient } from 'amplitude-js';
 import 'core-js/stable';
 import Highcharts from 'highcharts';
 import L from 'leaflet';
@@ -11,7 +12,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, RouteComponentProps } from 'react-router-dom';
 import 'regenerator-runtime';
-import WebFont from 'webfontloader';
 import { Ballot } from './components/Ballot';
 import Books from './components/Books';
 import Covid19 from './components/Covid19';
@@ -28,16 +28,19 @@ import WomensSoccer from './components/WomensSoccer';
 import store from './data/store';
 import './index.scss';
 
+const amp: AmplitudeClient = amplitude.getInstance(
+  process.env.AMPLITUDE_API_KEY
+);
+process.env.AMPLITUDE_API_KEY &&
+  amp.init(process.env.AMPLITUDE_API_KEY, undefined, {
+    includeUtm: true,
+    includeReferrer: true,
+  });
+
 Highcharts.setOptions({
   lang: {
     decimalPoint: '.',
     thousandsSep: ',',
-  },
-});
-
-WebFont.load({
-  google: {
-    families: ['EB Garamond', 'sans-serif'],
   },
 });
 
@@ -92,6 +95,8 @@ const App: React.FC<{}> = () => (
     </Provider>
   </ApolloProvider>
 );
+
+amp.logEvent('APP_RENDER');
 
 if (process.env.NODE_ENV === 'development' && (module as any).hot) {
   import('react-hot-loader').then((hotLoader) => {
