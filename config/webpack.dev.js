@@ -3,8 +3,6 @@ const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
-const WebpackWatchRunPlugin = require('./WebpackWatchRunPlugin');
-
 const babelOptions = {
   presets: ['@babel/preset-env', '@babel/preset-react'],
   plugins: [
@@ -87,13 +85,13 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
-              plugins: [
-                require('postcss-import')(),
-                require('precss')(),
-                require('tailwindcss')('./config/tailwind.config.js'),
-                require('autoprefixer')(),
-              ],
+              postcssOptions: {
+                plugins: [
+                  require('postcss-import')(),
+                  require('precss')(),
+                  require('tailwindcss')('./config/tailwind.config.js'),
+                ],
+              },
               sourceMap: true,
             },
           },
@@ -121,7 +119,6 @@ module.exports = {
     }),
     new webpack.EnvironmentPlugin(['AMPLITUDE_API_KEY', 'NODE_ENV']),
     new webpack.HotModuleReplacementPlugin(),
-    new WebpackWatchRunPlugin(),
   ],
   resolve: {
     alias: { 'react-dom': '@hot-loader/react-dom' },
