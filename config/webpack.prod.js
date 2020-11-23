@@ -99,12 +99,7 @@ module.exports = {
     ],
   },
   optimization: {
-    minimizer: [
-      new TerserPlugin({
-        cache: true,
-      }),
-      new OptimizeCSSAssetsPlugin({}),
-    ],
+    minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({})],
   },
   output: {
     filename: 'main.bundle.js',
