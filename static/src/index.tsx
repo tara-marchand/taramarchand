@@ -12,19 +12,11 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, RouteComponentProps } from 'react-router-dom';
 import 'regenerator-runtime';
-import { Ballot } from './components/Ballot';
-import Books from './components/Books';
-import Covid19 from './components/Covid19';
 import ErrorBoundary from './components/ErrorBoundary';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Home from './components/Home';
-import Japanese from './components/Japanese';
-import { LwtDebug2020 } from './components/LwtDebug2020';
-import Movies from './components/Movies';
 import Resume from './components/Resume';
-import SFData from './components/SFData';
-import WomensSoccer from './components/WomensSoccer';
 import store from './data/store';
 import './index.scss';
 
@@ -57,26 +49,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-type Props = RouteComponentProps<any>;
-
-const views = {
-  ballot: Ballot,
-  books: Books,
-  covid19: Covid19,
-  japanese: Japanese,
-  'lwt-debug-2020': LwtDebug2020,
-  movies: Movies,
-  resume: Resume,
-  'sf-data': SFData,
-  'womens-soccer': WomensSoccer,
-};
-
-const renderView = (props: Props) => {
-  const View = views[props.match.params.view];
-
-  return View ? <View {...props} /> : <Home />;
-};
-
 const App: React.FC<{}> = () => (
   <ApolloProvider client={client}>
     <Provider store={store}>
@@ -86,7 +58,7 @@ const App: React.FC<{}> = () => (
           <main className="container w-full px-3 md:max-w-xl mx-auto">
             <div className="w-full py-3 text-gray-800 text-sm leading-normal">
               <Route exact path="/" component={Home} />
-              <Route path="/:view" render={renderView} />
+              <Route path="/resume" component={Resume} />
             </div>
           </main>
           <Footer />
