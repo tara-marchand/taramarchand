@@ -6,6 +6,7 @@ const webpack = require('webpack');
 const babelOptions = {
   presets: ['@babel/preset-env', '@babel/preset-react'],
   plugins: [
+    'react-hot-loader/babel',
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-proposal-object-rest-spread',
     [
@@ -14,7 +15,6 @@ const babelOptions = {
         id: ['lodash'],
       },
     ],
-    'react-hot-loader/babel',
   ],
 };
 
@@ -23,8 +23,8 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: {
     app: [
-      'webpack-hot-middleware/client',
       'react-hot-loader/patch',
+      'webpack-hot-middleware/client?http://localhost:8080',
       './static/src/index.tsx',
     ],
   },
@@ -114,11 +114,11 @@ module.exports = {
     publicPath: '/static/',
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.EnvironmentPlugin(['AMPLITUDE_API_KEY', 'NODE_ENV']),
     new CopyPlugin({
       patterns: [{ from: './static/src/images', to: 'images' }],
     }),
-    new webpack.EnvironmentPlugin(['AMPLITUDE_API_KEY', 'NODE_ENV']),
-    new webpack.HotModuleReplacementPlugin(),
   ],
   resolve: {
     alias: { 'react-dom': '@hot-loader/react-dom' },
@@ -128,7 +128,6 @@ module.exports = {
   target: 'web',
   watchOptions: {
     ignored: [
-      path.resolve(process.cwd(), './*'),
       path.resolve(process.cwd(), 'config'),
       path.resolve(process.cwd(), 'node_modules'),
       path.resolve(process.cwd(), 'app/dist'),

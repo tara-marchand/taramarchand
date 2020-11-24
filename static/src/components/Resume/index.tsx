@@ -10,11 +10,11 @@ class Resume extends React.PureComponent<{}> {
     return (
       <div>
         {this.renderBasics()}
-        <hr className="mt-4 mb-2" />
+        <hr />
         {this.renderWork()}
-        <hr className="mt-4 mb-2" />
+        <hr />
         {this.renderSkills()}
-        <hr className="mt-4 mb-2" />
+        <hr />
         {this.renderEducation()}
       </div>
     );
@@ -26,22 +26,17 @@ class Resume extends React.PureComponent<{}> {
     return (
       <React.Fragment>
         {basics && (
-          <section className="basics">
+          <section>
             <div>
               <span>
-                <a className="underline" href={`mailto:${basics.email}`}>
-                  {basics.email}{' '}
-                </a>
+                <a href={`mailto:${basics.email}`}>{basics.email} </a>
               </span>
               <span>
-                <span>·</span>{' '}
-                <a className="underline" href={basics.website}>
-                  {basics.website}
-                </a>
+                <span>·</span> <a href={basics.website}>{basics.website}</a>
               </span>
             </div>
             {basics.profiles && (
-              <section className="profiles print:hidden">
+              <section>
                 {basics.profiles.map((profile, index) => (
                   <span key={index}>
                     {index > 0 && (
@@ -49,9 +44,7 @@ class Resume extends React.PureComponent<{}> {
                         <span>·</span>{' '}
                       </>
                     )}
-                    <a className="underline" href={profile.url}>
-                      {profile.network}{' '}
-                    </a>
+                    <a href={profile.url}>{profile.network} </a>
                   </span>
                 ))}
               </section>
@@ -68,8 +61,8 @@ class Resume extends React.PureComponent<{}> {
     return (
       <React.Fragment>
         {skills && (
-          <section className="skills">
-            <h2 className="text-xl">Skills</h2>
+          <section>
+            <h2>Skills</h2>
             {skills &&
               skills.map((skill, index) => (
                 <div key={index}>
@@ -98,27 +91,19 @@ class Resume extends React.PureComponent<{}> {
     return (
       <React.Fragment>
         {work && (
-          <section className="work">
-            <h2 className="text-xl">Experience</h2>
+          <section>
+            <h2>Experience</h2>
             {work.map((workplace: Resume.Work, index: number) => {
               return (
                 <div key={index}>
-                  <h4
-                    className={clsx(
-                      { 'mt-4': index > 0, 'mt-2': index === 0 },
-                      'mb-2',
-                      'text-lg'
-                    )}
-                  >
-                    {workplace.position}
-                  </h4>
+                  <h4>{workplace.position}</h4>
                   <div>
                     <a href={workplace.website}>{workplace.company} </a>
                     ·&nbsp;
                     <span>{workplace.startDate}-</span>
                     <span>{workplace.endDate}</span>
                   </div>
-                  <ul className="list-disc ml-6">
+                  <ul>
                     {workplace.highlights.map((highlight, index2: number) => (
                       <li
                         key={index2}
@@ -131,9 +116,7 @@ class Resume extends React.PureComponent<{}> {
             })}
           </section>
         )}
-        <p className="mt-4">
-          Information about earlier positions available upon request.
-        </p>
+        <p>Information about earlier positions available upon request.</p>
       </React.Fragment>
     );
   }
@@ -144,8 +127,8 @@ class Resume extends React.PureComponent<{}> {
     return (
       <React.Fragment>
         {education && (
-          <section className="education">
-            <h2 className="text-xl">Education</h2>
+          <section>
+            <h2>Education</h2>
             <ul>
               {education.map((ed: Resume.Education, index: number) => (
                 <li key={index}>
