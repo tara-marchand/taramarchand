@@ -5,8 +5,8 @@ type Props = RouteComponentProps<any>;
 
 const Footer: React.FC<Props> = () => {
   return (
-    <footer className="print:hidden bg-white border-t border-gray-400 w-full">
-      <div className="container px-3 md:max-w-xl mx-auto flex items-center py-6">
+    <footer className="print:hidden border-t border-gray-400 w-full">
+      <div className="container px-3 sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto flex items-center py-6">
         <a
           className="text-gray-500"
           href="https://twitter.com/trmarchand"

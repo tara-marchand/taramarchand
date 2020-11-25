@@ -1,7 +1,6 @@
-import clsx from 'clsx';
 import * as React from 'react';
 import * as resumeJson from './resume.json';
-import { Resume } from './util';
+import {Resume} from './util';
 
 class Resume extends React.PureComponent<{}> {
   data: Resume.Data = resumeJson.default;
@@ -114,9 +113,9 @@ class Resume extends React.PureComponent<{}> {
                 </div>
               );
             })}
+            <p>Information about earlier positions available upon request.</p>
           </section>
         )}
-        <p>Information about earlier positions available upon request.</p>
       </React.Fragment>
     );
   }

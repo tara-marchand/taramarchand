@@ -14,7 +14,7 @@ type Props = RouteComponentProps<any>;
 const Nav: React.FC<Props> = () => {
   return (
     <div className="print:hidden inline-flex justify-end items-center">
-      <ul className="list-reset items-center">{getAllNavLinks()}</ul>
+      <ul className="list-none mt-0 mb-0 pl-0 items-center">{getAllNavLinks()}</ul>
     </div>
   );
 };
