@@ -23,6 +23,12 @@ router.get('/api/books', (req, res) => {
   });
 });
 
+router.get('/api/jobs', (req, res) => {
+  models.Job.findAll().then((jobs) => {
+    res.status(200).json(jobs).end();
+  });
+});
+
 router.get('*', (req, res) => {
   getBrowserTimingHeader().then((browserTimingHeader) => {
     res.render('index', {

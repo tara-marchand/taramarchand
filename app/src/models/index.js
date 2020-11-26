@@ -5,9 +5,10 @@ const sequelize = new Sequelize.Sequelize(process.env.DATABASE_URL, {
   dialectOptions: {
     ssl: {
       require: true,
-      rejectUnauthorized: false
-    }
-  }
+      rejectUnauthorized: false,
+    },
+  },
+  quoteIdentifiers: false,
 });
 
 // https://github.com/sequelize/express-example/issues/74#issuecomment-478133128
@@ -22,7 +23,7 @@ context
     models[sequelizeModel.name] = sequelizeModel;
   });
 
-Object.keys(models).forEach(modelName => {
+Object.keys(models).forEach((modelName) => {
   if (models[modelName].associate) {
     models[modelName].associate(models);
   }
@@ -30,5 +31,7 @@ Object.keys(models).forEach(modelName => {
 
 models.sequelize = sequelize;
 models.Sequelize = Sequelize;
+
+sequelize.sync({ force: true });
 
 export default models;

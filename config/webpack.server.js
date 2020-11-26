@@ -13,7 +13,10 @@ const serverPath = `./app/src/${fileName}`;
 
 module.exports = {
   entry: {
-    index: serverPath
+    index: serverPath,
+  },
+  experiments: {
+    topLevelAwait: true,
   },
   externals: [nodeExternals()],
   mode: process.env.NODE_ENV,
@@ -30,26 +33,26 @@ module.exports = {
             plugins: [
               '@babel/plugin-proposal-class-properties',
               '@babel/plugin-proposal-object-rest-spread',
-              '@babel/plugin-transform-modules-commonjs'
-            ]
-          }
-        }
-      }
-    ]
+              '@babel/plugin-transform-modules-commonjs',
+            ],
+          },
+        },
+      },
+    ],
   },
   node: {
     __dirname: false,
-    __filename: false
+    __filename: false,
   },
   output: {
     path: path.join(__dirname, '../app/dist'),
-    publicPath: '/'
+    publicPath: '/',
   },
   plugins: [
     new NewrelicWebpackPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    })
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    }),
   ],
-  target: 'node'
+  target: 'node',
 };
