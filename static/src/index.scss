@@ -12,7 +12,8 @@
     @apply no-underline;
   }
 
-  a:hover, a:active {
+  a:hover,
+  a:active {
     @apply underline;
   }
 
