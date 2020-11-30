@@ -4,7 +4,11 @@ module.exports = {
   important: false,
   plugins: [],
   prefix: '',
-  purge: ['../static/src/**/*.jsx', '../static/src/**/*.tsx'],
+  purge: [
+    '../views/**/*.hbs',
+    '../static/src/**/*.jsx',
+    '../static/src/**/*.tsx',
+  ],
   separator: ':',
   theme: {
     extend: {
