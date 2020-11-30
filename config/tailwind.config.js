@@ -1,16 +1,10 @@
 const { colors } = require('tailwindcss/defaultTheme');
 
 module.exports = {
-  corePlugins: {
-    preflight: false
-  },
   important: false,
   plugins: [],
   prefix: '',
-  purge: [
-    '../static/src/**/*.jsx',
-    '../static/src/**/*.tsx',
-  ],
+  purge: ['../static/src/**/*.jsx', '../static/src/**/*.tsx'],
   separator: ':',
   theme: {
     extend: {
