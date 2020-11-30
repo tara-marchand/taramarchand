@@ -5,20 +5,3 @@
 @import 'tailwindcss/components';
 
 @import 'tailwindcss/utilities';
-
-@layer base {
-  a {
-    @apply text-gray-600;
-    @apply no-underline;
-  }
-
-  a:hover,
-  a:active {
-    @apply underline;
-  }
-
-  hr {
-    @apply mt-6;
-    @apply mb-0;
-  }
-}
