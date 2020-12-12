@@ -9,6 +9,7 @@ import Footer from './Footer';
 import Header from './Header';
 import Home from './Home';
 import Resume from './Resume';
+import { JobHunt } from './JobHunt';
 
 const App: React.FunctionComponent<{}> = () => (
   <ErrorBoundary>
@@ -18,6 +19,7 @@ const App: React.FunctionComponent<{}> = () => (
         <div className="w-full py-3 text-gray-800 text-xl leading-normal">
           <Route exact path="/" component={Home} />
           <Route path="/resume" component={Resume} />
+          <Route path="/jobs" component={JobHunt} />
         </div>
       </main>
       <Footer />

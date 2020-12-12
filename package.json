@@ -8,7 +8,7 @@
     "url": "https://github.com/tara-marchand/taramarchand.git"
   },
   "engines": {
-    "node": "^12"
+    "node": "^14"
   },
   "scripts": {
     "clean": "rm -rf ./static/dist",

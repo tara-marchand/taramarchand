@@ -24,7 +24,7 @@ export function main(app) {
     '.hbs',
     exphbs({
       defaultLayout: 'main',
-      extname: '.hbs'
+      extname: '.hbs',
     })
   );
 
@@ -33,7 +33,7 @@ export function main(app) {
   app.use(
     '/static',
     express.static(path.resolve(process.cwd(), 'static/dist'), {
-      index: false
+      index: false,
     })
   );
 
@@ -46,7 +46,7 @@ export function main(app) {
 
   const port = process.env.PORT || 5000;
 
-  app.listen(port, function() {
+  app.listen(port, function () {
     console.info(`App listening on port ${port}.`);
   });
 }
