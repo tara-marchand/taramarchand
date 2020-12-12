@@ -88,8 +88,8 @@ module.exports = {
               postcssOptions: {
                 plugins: [
                   require('postcss-import')(),
-                  require('precss')(),
                   require('tailwindcss')('./config/tailwind.config.js'),
+                  require('autoprefixer')(),
                 ],
               },
               sourceMap: true,

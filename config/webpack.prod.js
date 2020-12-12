@@ -74,14 +74,13 @@ module.exports = {
         ],
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader',
+          { loader: 'css-loader', options: { importLoaders: 1 } },
           {
             loader: 'postcss-loader',
             options: {
               postcssOptions: {
                 plugins: [
                   require('postcss-import')(),
-                  require('precss')(),
                   require('tailwindcss')('./config/tailwind.config.js'),
                   require('autoprefixer')(),
                 ],

@@ -1,5 +1,4 @@
 import 'core-js/stable';
-import 'leaflet/dist/leaflet.css';
 import React from 'react';
 import 'react-hot-loader';
 import { hot } from 'react-hot-loader/root';
