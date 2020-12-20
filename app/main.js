@@ -1,17 +1,17 @@
-import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
-import express from 'express';
-import exphbs from 'express-handlebars';
-import morgan from 'morgan';
-import NodeCache from 'node-cache';
-import path from 'path';
-import router from './router';
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+const express = require('express');
+const exphbs = require('express-handlebars');
+const morgan = require('morgan');
+const NodeCache = require('node-cache');
+const path = require('path');
+const router = require('./router');
 
-export const myCache = new NodeCache();
+const myCache = new NodeCache();
 
 dotenv.config();
 
-export function main(app) {
+function main(app) {
   app.use(bodyParser.raw());
 
   app.use(
@@ -50,3 +50,8 @@ export function main(app) {
     console.info(`App listening on port ${port}.`);
   });
 }
+
+module.exports = {
+  myCache,
+  main,
+};

@@ -29,7 +29,7 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        include: ['/app/src', '/static/src'],
+        include: ['/static/src'],
         use: [
           {
             loader: 'babel-loader',

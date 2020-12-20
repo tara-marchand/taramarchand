@@ -1,16 +1,15 @@
-import express from 'express';
-import models from './models';
+const newrelic = require('newrelic');
+const express = require('express');
+const models = require('./models');
 
 const { NEW_RELIC_ENABLED: isNewRelicEnabled, NODE_ENV: nodeEnv } = process.env;
 const isProd = nodeEnv === 'production';
 const router = express.Router();
 
 function getBrowserTimingHeader() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     if (isNewRelicEnabled) {
-      import('newrelic').then((newrelic) => {
-        resolve(newrelic.getBrowserTimingHeader());
-      });
+      resolve(newrelic.getBrowserTimingHeader());
     } else {
       resolve({});
     }
@@ -39,4 +38,4 @@ router.get('*', (req, res) => {
   });
 });
 
-export default router;
+module.exports = router;

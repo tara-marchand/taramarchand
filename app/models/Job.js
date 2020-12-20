@@ -25,4 +25,4 @@ function Job(sequelize, DataTypes) {
   return Job;
 }
 
-export default Job;
+module.exports = Job;

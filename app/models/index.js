@@ -1,4 +1,7 @@
-import Sequelize from 'sequelize';
+const Sequelize = require('sequelize');
+
+const Book = require('./Book');
+const Job = require('./Job');
 
 const sequelize = new Sequelize.Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
@@ -11,17 +14,9 @@ const sequelize = new Sequelize.Sequelize(process.env.DATABASE_URL, {
   quoteIdentifiers: false,
 });
 
-// https://github.com/sequelize/express-example/issues/74#issuecomment-478133128
 const models = {};
-const context = require.context('.', true, /^\.\/(?!index\.js).*\.js$/, 'sync');
-
-context
-  .keys()
-  .map(context)
-  .forEach(({ default: module }) => {
-    const sequelizeModel = module(sequelize, Sequelize);
-    models[sequelizeModel.name] = sequelizeModel;
-  });
+models.Book = Book(sequelize, Sequelize);
+models.Job = Job(sequelize, Sequelize);
 
 Object.keys(models).forEach((modelName) => {
   if (models[modelName].associate) {
@@ -34,4 +29,4 @@ models.Sequelize = Sequelize;
 
 sequelize.sync({ force: true });
 
-export default models;
+module.exports = models;

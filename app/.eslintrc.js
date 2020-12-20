@@ -1,11 +1,10 @@
 module.exports = {
   env: {
-    node: true
+    node: true,
   },
-  parser: 'babel-eslint',
   parserOptions: {
     ecmaFeatures: {
-      impliedStrict: true
-    }
-  }
+      impliedStrict: true,
+    },
+  },
 };

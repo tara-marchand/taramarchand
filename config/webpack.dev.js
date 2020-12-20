@@ -33,7 +33,7 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        include: ['/app/src', '/static/src'],
+        include: ['/static/src'],
         use: [
           {
             loader: 'babel-loader',
@@ -130,7 +130,7 @@ module.exports = {
     ignored: [
       path.resolve(process.cwd(), 'config'),
       path.resolve(process.cwd(), 'node_modules'),
-      path.resolve(process.cwd(), 'app/dist'),
+      path.resolve(process.cwd(), 'app'),
       path.resolve(process.cwd(), 'static/dist'),
     ],
   },
