@@ -1,24 +1,22 @@
-const express = require('express');
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
+const fastify = require('fastify');
+const HMR = require('fastify-webpack-hmr');
+const middie = require('middie');
+
 const config = require('../config/webpack.dev');
 const main = require('./main').main;
 
-const app = express();
+(async function init() {
+  const app = fastify();
 
-const compiler = webpack(config);
+  await app.register(middie);
 
-app.use(
-  webpackDevMiddleware(compiler, {
-    publicPath: config.output.publicPath,
-  })
-);
+  app.register(HMR, {
+    config,
+    webpackDev: {
+      publicPath: config.output.publicPath,
+    },
+    webpackHot: { reload: true },
+  });
 
-app.use(
-  webpackHotMiddleware(compiler, {
-    reload: true,
-  })
-);
-
-main(app);
+  main(app);
+})();

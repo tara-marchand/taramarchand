@@ -1,14 +1,16 @@
-const compression = require('compression');
-const express = require('express');
-require('newrelic');
-const webpack = require('webpack');
-const config = require('../config/webpack.prod');
+const newrelic = require('newrelic');
+const fastifyCompress = require('fastify-compress');
+const fastify = require('fastify');
+const middie = require('middie');
+
 const main = require('./main').main;
 
-webpack(config);
+(async function init() {
+  const app = fastify({ logger: true });
 
-const app = express();
+  await app.register(middie);
 
-app.use(compression());
+  app.register(fastifyCompress);
 
-main(app);
+  main(app, newrelic);
+})();

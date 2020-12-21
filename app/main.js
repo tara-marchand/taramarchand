@@ -1,53 +1,80 @@
-const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-const express = require('express');
-const exphbs = require('express-handlebars');
-const morgan = require('morgan');
+const fastifyStatic = require('fastify-static');
+const handlebars = require('handlebars');
 const NodeCache = require('node-cache');
 const path = require('path');
-const router = require('./router');
+const pointOfView = require('point-of-view');
 
-const myCache = new NodeCache();
+const models = require('./models');
 
 dotenv.config();
 
-function main(app) {
-  app.use(bodyParser.raw());
+const myCache = new NodeCache();
+const isProd = process.env.NODE_ENV === 'production';
 
-  app.use(
-    morgan(
-      '[:date[clf]] ":method :url HTTP/:http-version" :status :response-time ms - :res[content-length]'
-    )
-  );
+function main(app, newrelic) {
+  app.register(pointOfView, {
+    engine: {
+      handlebars,
+    },
+    layout: 'views/layouts/main.hbs',
+    options: {
+      partials: {
+        index: 'views/index.hbs',
+      },
+    },
+  });
 
-  app.engine(
-    '.hbs',
-    exphbs({
-      defaultLayout: 'main',
-      extname: '.hbs',
-    })
-  );
+  app.register(fastifyStatic, {
+    root: path.resolve(process.cwd(), 'static/dist'),
+    prefix: '/static/',
+  });
 
-  app.set('view engine', '.hbs');
+  app.register(fastifyStatic, {
+    root: path.resolve(process.cwd(), 'node_modules'),
+    prefix: '/node_modules/',
+    decorateReply: false,
+  });
 
-  app.use(
-    '/static',
-    express.static(path.resolve(process.cwd(), 'static/dist'), {
-      index: false,
-    })
-  );
+  app.get('/api/books', (req, reply) => {
+    models.Book.findAll().then((books) => {
+      reply.send(books);
+    });
+  });
 
-  app.use(
-    '/node_modules',
-    express.static(path.resolve(process.cwd(), 'node_modules'))
-  );
+  app.get('/api/jobs', (req, reply) => {
+    models.Job.findAll().then((jobs) => {
+      reply.send(jobs);
+    });
+  });
 
-  app.use('/', router);
+  app.get('*', (req, reply) => {
+    getBrowserTimingHeader(newrelic).then((browserTimingHeader) => {
+      reply.view('views/index.hbs', {
+        browserTimingHeader,
+        isProd,
+      });
+    });
+  });
 
   const port = process.env.PORT || 5000;
 
-  app.listen(port, function () {
-    console.info(`App listening on port ${port}.`);
+  app.listen(port, '0.0.0.0', (err) => {
+    if (err) {
+      app.log.error(err);
+      process.exit(1);
+    }
+    app.log.info(`App listening on port ${port}.`);
+  });
+}
+
+function getBrowserTimingHeader(newrelic) {
+  return new Promise((resolve) => {
+    if (isProd) {
+      resolve(newrelic.getBrowserTimingHeader());
+    } else {
+      resolve({});
+    }
   });
 }
 
