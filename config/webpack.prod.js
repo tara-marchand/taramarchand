@@ -2,7 +2,7 @@
 const CopyPlugin = require('copy-webpack-plugin');
 const glob = require('glob');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
@@ -98,7 +98,7 @@ module.exports = {
     ],
   },
   optimization: {
-    minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({})],
+    minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
   },
   output: {
     filename: 'main.bundle.js',

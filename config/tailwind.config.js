@@ -4,6 +4,10 @@ module.exports = {
   important: false,
   plugins: [],
   prefix: '',
+  purge: {
+    content: ['./views/**/*.hbs', './static/**/*.tsx'],
+    mode: 'layers',
+  },
   separator: ':',
   theme: {
     extend: {

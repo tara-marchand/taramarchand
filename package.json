@@ -54,6 +54,7 @@
     "copy-webpack-plugin": "^6.3.2",
     "core-js": "^3.6.5",
     "css-loader": "^5.0.1",
+    "css-minimizer-webpack-plugin": "^1.1.5",
     "csv-parse": "^4.11.1",
     "d3-array": "^2.8.0",
     "date-fns": "^2.16.1",
@@ -88,7 +89,6 @@
     "newrelic": "^6.14.0",
     "node-cache": "^5.1.2",
     "node-sass": "^4.14.1",
-    "optimize-css-assets-webpack-plugin": "^5.0.4",
     "pg": "^8.3.0",
     "pg-hstore": "^2.3.3",
     "point-of-view": "^4.7.0",
@@ -163,9 +163,7 @@
     "prettier": "^2.0.5",
     "react-hot-loader": "^4.13.0",
     "stylelint": "^13.6.1",
-    "stylelint-config-recommended": "^3.0.0",
-    "webpack-dev-middleware": "^4.0.2",
-    "webpack-hot-middleware": "^2.25.0"
+    "stylelint-config-recommended": "^3.0.0"
   },
   "prettier": {
     "singleQuote": true
