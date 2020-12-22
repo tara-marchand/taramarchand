@@ -1,8 +1,8 @@
 const fastify = require('fastify');
 const HMR = require('fastify-webpack-hmr');
 const middie = require('middie');
+const path = require('path');
 
-const config = require('../config/webpack.dev');
 const main = require('./main').main;
 
 (async function init() {
@@ -11,9 +11,9 @@ const main = require('./main').main;
   await app.register(middie);
 
   app.register(HMR, {
-    config,
+    config: path.join(process.cwd(), 'config/webpack.dev'),
     webpackDev: {
-      publicPath: config.output.publicPath,
+      publicPath: '/static/',
     },
     webpackHot: { reload: true },
   });

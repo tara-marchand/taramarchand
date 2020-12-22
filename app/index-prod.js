@@ -1,7 +1,7 @@
-const newrelic = require('newrelic');
-const fastifyCompress = require('fastify-compress');
 const fastify = require('fastify');
+const fastifyCompress = require('fastify-compress');
 const middie = require('middie');
+const newrelic = require('newrelic');
 
 const main = require('./main').main;
 

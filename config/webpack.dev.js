@@ -2,6 +2,7 @@
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 
 const babelOptions = {
   presets: ['@babel/preset-env', '@babel/preset-react'],
@@ -115,7 +116,7 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.EnvironmentPlugin(['AMPLITUDE_API_KEY', 'NODE_ENV']),
+    new Dotenv(),
     new CopyPlugin({
       patterns: [{ from: './static/src/images', to: 'images' }],
     }),

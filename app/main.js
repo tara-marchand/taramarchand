@@ -61,6 +61,7 @@ function main(app, newrelic) {
 
   app.listen(port, '0.0.0.0', (err) => {
     if (err) {
+      console.log(err);
       app.log.error(err);
       process.exit(1);
     }
