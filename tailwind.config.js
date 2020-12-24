@@ -5,7 +5,7 @@ module.exports = {
   plugins: [],
   prefix: '',
   purge: {
-    content: ['./views/**/*.hbs', './static/**/*.tsx'],
+    content: ['./app/views/**/*.hbs', './static/**/*.tsx'],
     mode: 'layers',
   },
   separator: ':',
@@ -13,7 +13,6 @@ module.exports = {
     extend: {
       screens: {
         print: { raw: 'print' },
-        // => @media print { ... }
       },
     },
   },

@@ -1,66 +1,44 @@
 /* eslint-env node */
 const CopyPlugin = require('copy-webpack-plugin');
-const path = require('path');
-const webpack = require('webpack');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const glob = require('glob');
+const path = require('path');
 
 const babelOptions = {
   presets: ['@babel/preset-env', '@babel/preset-react'],
   plugins: [
-    'react-hot-loader/babel',
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-proposal-object-rest-spread',
-    [
-      'lodash',
-      {
-        id: ['lodash'],
-      },
-    ],
+    ['lodash', { id: ['lodash'] }],
   ],
 };
 
 module.exports = {
   context: path.resolve(process.cwd()),
-  devtool: 'inline-source-map',
-  entry: {
-    app: [
-      'react-hot-loader/patch',
-      'webpack-hot-middleware/client?http://localhost:8080',
-      './static/src/index.tsx',
-    ],
-  },
-  mode: 'development',
+  entry: { app: ['./static/src/index.tsx'] },
+  mode: 'production',
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         include: ['/static/src'],
-        use: [
-          {
-            loader: 'babel-loader',
-            options: babelOptions,
-          },
-        ],
+        use: [{ loader: 'babel-loader', options: babelOptions }],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
-        use: {
-          loader: 'file-loader',
-        },
+        use: { loader: 'file-loader' },
       },
       {
         test: /\.(jpg|png|svg)$/,
-        use: {
-          loader: 'url-loader',
-        },
+        use: { loader: 'url-loader' },
       },
       {
         test: /\.ts(x?)$/,
-        include: [path.resolve(process.cwd(), 'static/src')],
+        include: [glob.sync(path.resolve(process.cwd(), 'static/src'))],
         use: [
-          {
-            loader: 'react-hot-loader/webpack',
-          },
           {
             loader: 'babel-loader',
             options: babelOptions,
@@ -68,8 +46,8 @@ module.exports = {
           {
             loader: 'ts-loader',
             options: {
-              configFile: 'config/tsconfig.json',
-              transpileOnly: true, // HMR doesn't work without this
+              configFile: 'tsconfig.json',
+              transpileOnly: true,
             },
           },
         ],
@@ -81,7 +59,7 @@ module.exports = {
           path.resolve(process.cwd(), 'node_modules'),
         ],
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           { loader: 'css-loader', options: { importLoaders: 1 } },
           {
             loader: 'postcss-loader',
@@ -89,11 +67,10 @@ module.exports = {
               postcssOptions: {
                 plugins: [
                   require('postcss-import')(),
-                  require('tailwindcss')('./config/tailwind.config.js'),
+                  require('tailwindcss')('./tailwind.config.js'),
                   require('autoprefixer')(),
                 ],
               },
-              sourceMap: true,
             },
           },
           'sass-loader',
@@ -107,32 +84,28 @@ module.exports = {
     ],
   },
   optimization: {
-    removeAvailableModules: true,
+    minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
   },
   output: {
     filename: 'main.bundle.js',
     path: path.resolve(process.cwd(), 'static/dist'),
     publicPath: '/static/',
   },
+  performance: {
+    hints: false,
+  },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new Dotenv(),
     new CopyPlugin({
       patterns: [{ from: './static/src/images', to: 'images' }],
     }),
+    new MiniCssExtractPlugin({
+      filename: 'main.css',
+    }),
+    new Dotenv(),
   ],
   resolve: {
-    alias: { 'react-dom': '@hot-loader/react-dom' },
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.scss', '.css'],
     modules: ['node_modules', 'static/src'],
   },
   target: 'web',
-  watchOptions: {
-    ignored: [
-      path.resolve(process.cwd(), 'config'),
-      path.resolve(process.cwd(), 'node_modules'),
-      path.resolve(process.cwd(), 'app'),
-      path.resolve(process.cwd(), 'static/dist'),
-    ],
-  },
 };

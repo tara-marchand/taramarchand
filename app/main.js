@@ -17,10 +17,10 @@ function main(app, newrelic) {
     engine: {
       handlebars,
     },
-    layout: 'views/layouts/main.hbs',
+    layout: 'app/views/layouts/main.hbs',
     options: {
       partials: {
-        index: 'views/index.hbs',
+        index: 'app/views/index.hbs',
       },
     },
   });
@@ -50,7 +50,7 @@ function main(app, newrelic) {
 
   app.get('*', (req, reply) => {
     getBrowserTimingHeader(newrelic).then((browserTimingHeader) => {
-      reply.view('views/index.hbs', {
+      reply.view('app/views/index.hbs', {
         browserTimingHeader,
         isProd,
       });

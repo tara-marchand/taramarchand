@@ -11,7 +11,7 @@ const Header: React.FC<Props> = () => {
     <nav className="w-full print:border-b-0 border-b border-gray-400">
       <div className="px-3 sm:max-w-2xl md:max-w-3xl lg:max-w-4xl flex items-center justify-between mx-auto py-3 print:pt-3 print:pb-0">
         <MenuLink
-          className="text-black important no-underline font-bold text-3xl"
+          className="text-black important no-underline font-bold text-4xl"
           exact={true}
           key={uuid4()}
           strict

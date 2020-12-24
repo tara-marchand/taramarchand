@@ -11,7 +11,7 @@ const main = require('./main').main;
   await app.register(middie);
 
   app.register(HMR, {
-    config: path.join(process.cwd(), 'config/webpack.dev'),
+    config: path.join(process.cwd(), 'webpack.dev'),
     webpackDev: {
       publicPath: '/static/',
     },
