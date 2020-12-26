@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import 'regenerator-runtime';
 import App from './components/App';
 import store from './data/store';
-import './index.scss';
+import './index.css';
 
 const amp: AmplitudeClient = amplitude.getInstance(
   process.env.AMPLITUDE_API_KEY

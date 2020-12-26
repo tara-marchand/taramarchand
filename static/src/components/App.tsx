@@ -15,8 +15,8 @@ const App: React.FunctionComponent<{}> = () => (
   <ErrorBoundary>
     <BrowserRouter>
       <Header />
-      <main className="container px-3 sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto">
-        <div className="w-full py-3 text-gray-800 text-xl leading-normal">
+      <main>
+        <div>
           <Route exact path="/" component={Home} />
           <Route path="/resume" component={Resume} />
           <Route path="/jobs" component={JobHunt} />

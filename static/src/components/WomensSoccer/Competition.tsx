@@ -9,7 +9,7 @@ export default function Competition(props: Props) {
   const { competition_name: name, country_name: country } = props;
 
   return (
-    <div className="Competition">
+    <div>
       <h2>
         {name}, {country}
       </h2>

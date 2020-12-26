@@ -3,20 +3,22 @@ import { withRouter } from 'react-router-dom';
 import { v4 as uuid4 } from 'uuid';
 import MenuLink from './MenuLink';
 import Nav from './Nav';
+import tw from 'twin.macro';
 
 interface Props {}
 
 const Header: React.FC<Props> = () => {
   return (
-    <nav className="w-full print:border-b-0 border-b border-gray-400">
-      <div className="px-3 sm:max-w-2xl md:max-w-3xl lg:max-w-4xl flex items-center justify-between mx-auto py-3 print:pt-3 print:pb-0">
+    <nav>
+      <div>
         <MenuLink
-          className="text-black important no-underline font-bold text-4xl"
+          className="text-3xl"
           exact={true}
           key={uuid4()}
           strict
           text="Tara Marchand"
           to="/"
+          tw="font-bold"
         />
         <Nav />
       </div>

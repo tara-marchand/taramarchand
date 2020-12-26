@@ -2,7 +2,7 @@ const { colors } = require('tailwindcss/defaultTheme');
 
 module.exports = {
   important: false,
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
   prefix: '',
   purge: {
     content: ['./app/views/**/*.hbs', './static/**/*.tsx'],
@@ -10,10 +10,6 @@ module.exports = {
   },
   separator: ':',
   theme: {
-    extend: {
-      screens: {
-        print: { raw: 'print' },
-      },
-    },
+    extend: { screens: { print: { raw: 'print' } } },
   },
 };

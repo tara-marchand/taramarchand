@@ -7,7 +7,7 @@ export default class WomensSoccer extends React.PureComponent<Props, any> {
 
   public render() {
     return (
-      <div className="WomensSoccer">
+      <div>
         {/* {this.competitions.map((competition) => {
             const {competition_name: name, country_name: country} = competition;
             

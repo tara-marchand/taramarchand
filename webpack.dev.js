@@ -59,7 +59,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(css|scss|sass)$/,
+        test: /\.css$/,
         include: [
           path.resolve(process.cwd(), 'static/src'),
           path.resolve(process.cwd(), 'node_modules'),
@@ -70,18 +70,9 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              postcssOptions: {
-                plugins: [
-                  require('postcss-import')(),
-                  require('tailwindcss')('./tailwind.config.js'),
-                  require('autoprefixer')(),
-                ],
-              },
               sourceMap: true,
             },
           },
-          'sass-loader',
-          'resolve-url-loader',
         ],
       },
       {
@@ -107,7 +98,7 @@ module.exports = {
   ],
   resolve: {
     alias: { 'react-dom': '@hot-loader/react-dom' },
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.scss', '.css'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.css'],
     modules: ['node_modules', 'static/src'],
   },
   target: 'web',

@@ -6,7 +6,7 @@ const path = require('path');
 const main = require('./main').main;
 
 (async function init() {
-  const app = fastify();
+  const app = fastify({ logger: 'debug' });
 
   await app.register(middie);
 
