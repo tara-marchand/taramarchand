@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as resumeJson from './resume.json';
-import {Resume} from './util';
+import { Resume } from './util';
 
 class Resume extends React.PureComponent<{}> {
   data: Resume.Data = resumeJson.default;
@@ -9,11 +9,8 @@ class Resume extends React.PureComponent<{}> {
     return (
       <div>
         {this.renderBasics()}
-        <hr />
         {this.renderWork()}
-        <hr />
         {this.renderSkills()}
-        <hr />
         {this.renderEducation()}
       </div>
     );

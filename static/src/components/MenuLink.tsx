@@ -12,7 +12,6 @@ export default function MenuLink(props: Props) {
     activeStyle,
     className,
     exact,
-    linkClassName,
     isActive: getIsActive,
     location,
     strict,
@@ -64,11 +63,11 @@ export default function MenuLink(props: Props) {
             style={isActive ? { ...style, ...activeStyle } : style}
           >
             {!isActive ? (
-              <NavLink to={to} {...rest} className={linkClassName}>
+              <NavLink to={to} {...rest}>
                 {text}
               </NavLink>
             ) : (
-              <>{text}</>
+              <a className="hover:no-underline">{text}</a>
             )}
           </div>
         );

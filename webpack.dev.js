@@ -81,6 +81,9 @@ module.exports = {
       },
     ],
   },
+  node: {
+    fs: 'empty',
+  },
   optimization: {
     removeAvailableModules: true,
   },

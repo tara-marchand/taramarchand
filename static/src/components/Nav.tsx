@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { v4 as uuid4 } from 'uuid';
@@ -11,13 +10,7 @@ interface LinkData {
 
 type Props = RouteComponentProps<any>;
 
-const Nav: React.FC<Props> = () => {
-  return (
-    <div>
-      <ul>{getAllNavLinks()}</ul>
-    </div>
-  );
-};
+const Nav: React.FC<Props> = () => <div>{getAllNavLinks()}</div>;
 
 function getAllNavLinks() {
   const links: LinkData[] = [
@@ -31,22 +24,21 @@ function getAllNavLinks() {
 }
 
 function getOneNavLink(link: LinkData, index: number) {
-  const className = '';
-  const linkClassName = '';
+  const className = 'underline';
+  const activeClassName = 'no-underline';
 
   return (
-    <li key={uuid4()}>
-      <MenuLink
-        className={className}
-        exact={true}
-        linkClassName={linkClassName}
-        strict
-        text={link.label}
-        to={link.to}
-      >
-        {link.label}
-      </MenuLink>
-    </li>
+    <MenuLink
+      activeClassName={activeClassName}
+      className={className}
+      exact={true}
+      key={uuid4()}
+      strict
+      text={link.label}
+      to={link.to}
+    >
+      {link.label}
+    </MenuLink>
   );
 }
 

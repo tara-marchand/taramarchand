@@ -1,5 +1,3 @@
-const { colors } = require('tailwindcss/defaultTheme');
-
 module.exports = {
   important: false,
   plugins: [require('@tailwindcss/typography')],
@@ -10,6 +8,20 @@ module.exports = {
   },
   separator: ':',
   theme: {
-    extend: { screens: { print: { raw: 'print' } } },
+    extend: {
+      screens: {
+        print: { raw: 'print' },
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            'line-height': '1.5em',
+            h2: {
+              'margin-top': '1.25em',
+            },
+          },
+        },
+      },
+    },
   },
 };

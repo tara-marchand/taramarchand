@@ -5,15 +5,17 @@ type Props = RouteComponentProps<any>;
 
 const Footer: React.FC<Props> = () => {
   return (
-    <footer>
-      <div>
+    <footer className="bg-gray-400">
+      <div className="flex mx-auto pt-6 pb-6 prose">
         <a
+          className="mr-6"
           href="https://twitter.com/trmarchand"
           rel="noopener noreferrer"
           target="_blank"
         >
           <svg
             fill="currentColor"
+            height="30px"
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="2"
@@ -29,6 +31,7 @@ const Footer: React.FC<Props> = () => {
         >
           <svg
             fill="currentColor"
+            height="30px"
             stroke="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"
