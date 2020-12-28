@@ -1,5 +1,6 @@
 import amplitude, { AmplitudeClient } from 'amplitude-js';
 import 'core-js/stable';
+import dotenv from 'dotenv';
 import Highcharts from 'highcharts';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -9,6 +10,8 @@ import 'regenerator-runtime';
 import App from './components/App';
 import store from './data/store';
 import './index.css';
+
+dotenv.config();
 
 const amp: AmplitudeClient = amplitude.getInstance(
   process.env.AMPLITUDE_API_KEY
