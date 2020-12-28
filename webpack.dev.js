@@ -1,6 +1,4 @@
-/* eslint-env node */
 const CopyPlugin = require('copy-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const webpack = require('webpack');
 
@@ -94,10 +92,10 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new Dotenv(),
     new CopyPlugin({
       patterns: [{ from: './static/src/images', to: 'images' }],
     }),
+    new webpack.EnvironmentPlugin(['AMPLITUDE_API_KEY', 'NODE_ENV']),
   ],
   resolve: {
     alias: { 'react-dom': '@hot-loader/react-dom' },

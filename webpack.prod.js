@@ -1,11 +1,10 @@
-/* eslint-env node */
 const CopyPlugin = require('copy-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const glob = require('glob');
 const path = require('path');
+const webpack = require('webpack');
 
 const babelOptions = {
   presets: ['@babel/preset-env', '@babel/preset-react'],
@@ -93,7 +92,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'main.css',
     }),
-    new Dotenv(),
+    new webpack.EnvironmentPlugin(['AMPLITUDE_API_KEY', 'NODE_ENV']),
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.css'],
