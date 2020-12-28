@@ -4,12 +4,13 @@ import 'react-hot-loader';
 import { hot } from 'react-hot-loader/root';
 import { BrowserRouter, Route } from 'react-router-dom';
 import 'regenerator-runtime';
+import Covid19 from './Covid19';
 import ErrorBoundary from './ErrorBoundary';
 import Footer from './Footer';
 import Header from './Header';
 import Home from './Home';
-import Resume from './Resume';
 import { JobHunt } from './JobHunt';
+import Resume from './Resume';
 
 const App: React.FunctionComponent<{}> = () => (
   <ErrorBoundary>
@@ -20,6 +21,7 @@ const App: React.FunctionComponent<{}> = () => (
           <Route exact path="/" component={Home} />
           <Route path="/resume" component={Resume} />
           <Route path="/jobs" component={JobHunt} />
+          <Route path="/covid19" component={Covid19} />
         </div>
       </main>
       <Footer />

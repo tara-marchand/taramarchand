@@ -12,6 +12,14 @@ function Job(sequelize, DataTypes) {
         allowNull: false,
         type: DataTypes.TEXT,
       },
+      datePosted: {
+        allowNull: false,
+        type: DataTypes.TEXT,
+      },
+      description: {
+        allowNull: false,
+        type: DataTypes.TEXT,
+      },
       title: {
         allowNull: false,
         type: DataTypes.TEXT,

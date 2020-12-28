@@ -1,11 +1,11 @@
-export interface Daily {
+type Daily = {
   checkTimeEt: string;
   commercialScore: number | null;
   dataQualityGrade: string;
   date: number | null;
   dateChecked: string;
   dateModified: string;
-  death: number | null;
+  death: number;
   deathConfirmed: number | null;
   deathIncrease: number | null;
   deathProbable: number | null;
@@ -53,4 +53,6 @@ export interface Daily {
   totalTestsPeopleAntigen: number | null;
   totalTestsPeopleViral: number | null;
   totalTestsViral: number | null;
-}
+};
+
+type PartialPoint = Partial<Highcharts.Point>;

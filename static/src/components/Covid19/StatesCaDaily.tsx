@@ -8,7 +8,7 @@ import { transformDataForCaByDay } from './data';
 
 export default function StatesCaDaily() {
   const fetchController: AbortController = new AbortController();
-  const [data, setData] = React.useState<object[]>([]);
+  const [data, setData] = React.useState<PartialPoint[]>([]);
 
   React.useEffect(() => {
     return () => {
@@ -17,21 +17,22 @@ export default function StatesCaDaily() {
   }, []);
 
   React.useEffect(() => {
-    getData(
+    const dataPromise = getData(
       'https://api.covidtracking.com/v1/states/ca/daily.json',
       fetchController
-    )
-      .then((response: Response) => {
-        return response.json();
-      })
-      .then((data) => {
-        // get deaths by day by state
-        const transformedData = transformDataForCaByDay(data);
+    );
 
-        setData(transformedData);
-      })
-      .catch((error) => console.error(error));
-  }, [!data]);
+    dataPromise &&
+      dataPromise
+        .then((response: Response) => {
+          return response.json();
+        })
+        .then((data: Daily[]) => {
+          // get deaths by day by state
+          setData(transformDataForCaByDay(data));
+        })
+        .catch((error) => console.error(error));
+  }, [!data.length]);
 
   const last30DaysOfData = takeRight(data, 30);
 
