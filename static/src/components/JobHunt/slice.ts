@@ -1,12 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Job } from './Job';
+import { Job } from './JobSection';
 import { getData } from '../../data/utils';
 
-interface JobsState {
-  entities: Job[];
-}
-
-const initialState = { entities: [] } as JobsState;
+const initialState = { entities: [] } as JobList;
 
 const fetchJobs = createAsyncThunk('jobs', async (thunkAPI: object) => {
   const fetchController: AbortController = new AbortController();
@@ -35,12 +31,12 @@ export const fetchJobsAirtable = createAsyncThunk(
   }
 );
 
-export const jobsSlice = createSlice({
+export const jobs = createSlice({
   name: 'jobs',
   initialState,
   reducers: {
     createJob(state, action) {
-      state.jobs.push(action.payload);
+      state.entities.push(action.payload);
     },
   },
   extraReducers: {
@@ -53,6 +49,7 @@ export const jobsSlice = createSlice({
           company: job.fields.Company,
           dateApplied: job.fields['Applied Date'],
           title: job.fields.Role,
+          url: job.fields.Link,
         } as Job;
       });
     },

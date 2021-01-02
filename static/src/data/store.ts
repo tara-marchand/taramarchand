@@ -1,13 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import books from '../components/Books/reducer';
-import { jobsSlice } from '../components/JobHunt/slice';
+import { booksReducer } from '../components/Books/reducer';
+import { jobs } from '../components/JobHunt/slice';
 
-const { reducer: jobs } = jobsSlice;
+const rootReducer = combineReducers({
+  books: booksReducer,
+  jobs: jobs.reducer,
+});
+
+export type RootState = ReturnType<typeof rootReducer>;
 
 export default configureStore({
-  reducer: {
-    books,
-    jobs,
-  },
+  reducer: rootReducer,
 });
