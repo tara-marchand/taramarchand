@@ -4,11 +4,17 @@ const handlebars = require('handlebars');
 const NodeCache = require('node-cache');
 const path = require('path');
 const pointOfView = require('point-of-view');
+const Airtable = require('airtable');
 
 const models = require('./models');
 
 dotenv.config();
 
+Airtable.configure({
+  apiKey: process.env.AIRTABLE_API_KEY,
+});
+
+const airtableBase = Airtable.base('app915q92oWW2aV5C');
 const myCache = new NodeCache();
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -46,6 +52,31 @@ function main(app, newrelic) {
     models.Job.findAll().then((jobs) => {
       reply.send(jobs);
     });
+  });
+
+  app.get('/api/jobs-airtable', (req, reply) => {
+    const jobs = [];
+
+    airtableBase('Job Leads')
+      .select({
+        maxRecords: 100,
+        view: 'All Positions',
+      })
+      .eachPage(
+        function page(jobsResult, fetchNextPage) {
+          jobsResult.forEach(function (job) {
+            app.log.info(job);
+            jobs.push(job);
+          });
+          fetchNextPage();
+        },
+        function done(err) {
+          if (err) {
+            app.log.error(err);
+          }
+          reply.send(jobs);
+        }
+      );
   });
 
   app.get('*', (req, reply) => {

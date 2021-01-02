@@ -3,10 +3,10 @@ import { Job } from './Job';
 import { getData } from '../../data/utils';
 
 interface JobsState {
-  jobs: Job[];
+  entities: Job[];
 }
 
-const initialState = { jobs: [] } as JobsState;
+const initialState = { entities: [] } as JobsState;
 
 const fetchJobs = createAsyncThunk('jobs', async (thunkAPI: object) => {
   const fetchController: AbortController = new AbortController();
@@ -23,6 +23,18 @@ const fetchJobs = createAsyncThunk('jobs', async (thunkAPI: object) => {
   }
 });
 
+export const fetchJobsAirtable = createAsyncThunk(
+  'jobs/fetchFromAirtable',
+  async (thunkAPI: object) => {
+    const fetchController: AbortController = new AbortController();
+    const response = await getData('/api/jobs-airtable', fetchController);
+
+    if (response instanceof Response) {
+      return response.json();
+    }
+  }
+);
+
 export const jobsSlice = createSlice({
   name: 'jobs',
   initialState,
@@ -30,15 +42,19 @@ export const jobsSlice = createSlice({
     createJob(state, action) {
       state.jobs.push(action.payload);
     },
-    setJobs(state, action) {
-      state.jobs = action.payload;
-    },
   },
   extraReducers: {
-    // Add reducers for additional action types here, and handle loading state as needed
     [fetchJobs.fulfilled]: (state, action) => {
-      // Add user to the state array
-      state.jobs.push(action.payload);
+      state.entities = action.payload;
+    },
+    [fetchJobsAirtable.fulfilled]: (state, action) => {
+      state.entities = action.payload.map((job: any) => {
+        return {
+          company: job.fields.Company,
+          dateApplied: job.fields['Applied Date'],
+          title: job.fields.Role,
+        } as Job;
+      });
     },
   },
 });

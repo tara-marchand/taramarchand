@@ -1,10 +1,12 @@
 import React from 'react';
 
 export type Job = {
-  baseSalary?: number;
   company: string;
-  datePosted: string;
-  description: string;
+  dateApplied: string;
+  title: string;
+  // optional
+  baseSalary?: number;
+  description?: string;
   experienceRequirements?: string;
   incentiveCompensation?: string;
   jobLocation?: {
@@ -16,16 +18,15 @@ export type Job = {
   qualifications?: string;
   responsibilities?: string;
   skills?: string;
-  title: string;
 };
 
 export const Job = (props: Job) => {
   return (
-    <div>
-      <h2>{props.title}</h2>
-      <h3>{props.company}</h3>
-      <p>{props.datePosted}</p>
-      <p>{props.description}</p>
-    </div>
+    <p>
+      <div>
+        {props.title}, {props.company}
+      </div>
+      <div>Applied: {props.dateApplied}</div>
+    </p>
   );
 };
