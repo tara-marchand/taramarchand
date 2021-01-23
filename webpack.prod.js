@@ -32,13 +32,6 @@ module.exports = {
           {
             loader: 'babel-loader',
           },
-          {
-            loader: 'ts-loader',
-            options: {
-              configFile: 'tsconfig.json',
-              transpileOnly: true,
-            },
-          },
         ],
       },
       {

@@ -1,5 +1,10 @@
-const presets = ['@babel/preset-env', '@babel/preset-react'];
+const presets = [
+  ['@babel/preset-typescript', { allExtensions: true, isTSX: true }],
+  '@babel/preset-env',
+  '@babel/preset-react',
+];
 const plugins = [
+  '@babel/plugin-syntax-dynamic-import',
   '@babel/plugin-proposal-class-properties',
   '@babel/plugin-proposal-object-rest-spread',
   ['lodash', { id: ['lodash'] }],
