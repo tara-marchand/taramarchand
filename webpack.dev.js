@@ -2,16 +2,6 @@ const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
-const babelOptions = {
-  presets: ['@babel/preset-env', '@babel/preset-react'],
-  plugins: [
-    'react-hot-loader/babel',
-    '@babel/plugin-proposal-class-properties',
-    '@babel/plugin-proposal-object-rest-spread',
-    ['lodash', { id: ['lodash'] }],
-  ],
-};
-
 module.exports = {
   context: path.resolve(process.cwd()),
   devtool: 'inline-source-map',
@@ -28,7 +18,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: ['/static/src'],
-        use: [{ loader: 'babel-loader', options: babelOptions }],
+        use: [{ loader: 'babel-loader' }],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
@@ -45,7 +35,6 @@ module.exports = {
           { loader: 'react-hot-loader/webpack' },
           {
             loader: 'babel-loader',
-            options: babelOptions,
           },
           {
             loader: 'ts-loader',

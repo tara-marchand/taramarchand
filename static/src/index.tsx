@@ -34,3 +34,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementsByClassName('root')[0]
 );
+
+export { amp };

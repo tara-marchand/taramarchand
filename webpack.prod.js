@@ -6,15 +6,6 @@ const glob = require('glob');
 const path = require('path');
 const webpack = require('webpack');
 
-const babelOptions = {
-  presets: ['@babel/preset-env', '@babel/preset-react'],
-  plugins: [
-    '@babel/plugin-proposal-class-properties',
-    '@babel/plugin-proposal-object-rest-spread',
-    ['lodash', { id: ['lodash'] }],
-  ],
-};
-
 module.exports = {
   context: path.resolve(process.cwd()),
   entry: { app: ['./static/src/index.tsx'] },
@@ -24,7 +15,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: ['/static/src'],
-        use: [{ loader: 'babel-loader', options: babelOptions }],
+        use: [{ loader: 'babel-loader' }],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
@@ -40,7 +31,6 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
-            options: babelOptions,
           },
           {
             loader: 'ts-loader',

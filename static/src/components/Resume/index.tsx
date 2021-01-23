@@ -1,23 +1,28 @@
 import * as React from 'react';
-import * as resumeJson from './resume.json';
-import { Resume } from './util';
+import { amp } from '../../index';
+import resumeJson from './resume.json';
 
-class Resume extends React.PureComponent<{}> {
-  data: Resume.Data = resumeJson.default;
+function ResumeView() {
+  let data: ResumeData = {};
 
-  render() {
-    return (
-      <div>
-        {this.renderBasics()}
-        {this.renderWork()}
-        {this.renderSkills()}
-        {this.renderEducation()}
-      </div>
-    );
+  try {
+    data = resumeJson;
+    amp && amp.logEvent('RESUME_RENDER');
+  } catch (error) {
+    console.log(error);
   }
 
-  renderBasics() {
-    const { basics } = this.data;
+  return (
+    <div>
+      {renderBasics()}
+      {renderWork()}
+      {renderSkills()}
+      {renderEducation()}
+    </div>
+  );
+
+  function renderBasics() {
+    const { basics } = data;
 
     return (
       <React.Fragment>
@@ -51,8 +56,8 @@ class Resume extends React.PureComponent<{}> {
     );
   }
 
-  renderSkills() {
-    const { skills } = this.data;
+  function renderSkills() {
+    const { skills } = data;
 
     return (
       <React.Fragment>
@@ -60,7 +65,7 @@ class Resume extends React.PureComponent<{}> {
           <section>
             <h2>Skills</h2>
             {skills &&
-              skills.map((skill, index) => (
+              skills.map((skill: ResumeSkill, index: number) => (
                 <div key={index}>
                   <div>
                     <strong>{skill.name}: </strong>
@@ -81,15 +86,15 @@ class Resume extends React.PureComponent<{}> {
     );
   }
 
-  renderWork() {
-    const { work } = this.data;
+  function renderWork() {
+    const { work } = data;
 
     return (
       <React.Fragment>
         {work && (
           <section>
             <h2>Experience</h2>
-            {work.map((workplace: Resume.Work, index: number) => {
+            {work.map((workplace: ResumeWork, index: number) => {
               return (
                 <div key={index}>
                   <h4>{workplace.position}</h4>
@@ -117,8 +122,8 @@ class Resume extends React.PureComponent<{}> {
     );
   }
 
-  renderEducation() {
-    const { education } = this.data;
+  function renderEducation() {
+    const { education } = data;
 
     return (
       <React.Fragment>
@@ -126,7 +131,7 @@ class Resume extends React.PureComponent<{}> {
           <section>
             <h2>Education</h2>
             <ul>
-              {education.map((ed: Resume.Education, index: number) => (
+              {education.map((ed: ResumeEducation, index: number) => (
                 <li key={index}>
                   {ed.institution} · {ed.studyType}, {ed.area}
                 </li>
@@ -139,4 +144,4 @@ class Resume extends React.PureComponent<{}> {
   }
 }
 
-export default Resume;
+export default ResumeView;
