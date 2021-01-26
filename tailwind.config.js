@@ -1,6 +1,6 @@
 module.exports = {
   important: false,
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
   prefix: '',
   purge: {
     content: ['./app/views/**/*.hbs', './static/**/*.tsx'],

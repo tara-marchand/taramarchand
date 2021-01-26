@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Job } from './JobSection';
 import { getData } from '../../data/utils';
 
 const initialState = { entities: [] } as JobList;

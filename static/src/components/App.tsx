@@ -17,7 +17,7 @@ const App: React.FunctionComponent<{}> = () => (
     <BrowserRouter>
       <Header />
       <main>
-        <div className="mx-auto pt-6 pb-6 prose">
+        <div className="mx-auto prose pt-6 pb-6">
           <Route exact path="/" component={Home} />
           <Route path="/resume" component={Resume} />
           <Route path="/jobs" component={JobHunt} />

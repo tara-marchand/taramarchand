@@ -1,10 +1,10 @@
-type Job = {
+interface Job {
   company: string;
   dateApplied: string;
   title: string;
   url: string;
-};
+}
 
-type JobList = {
+interface JobList {
   entities: Job[];
-};
+}
