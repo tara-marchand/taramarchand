@@ -8,13 +8,13 @@ const webpack = require('webpack');
 
 module.exports = {
   context: path.resolve(process.cwd()),
-  entry: { app: ['./static/src/index.tsx'] },
+  entry: { app: ['./client/src/index.tsx'] },
   mode: 'production',
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        include: ['/static/src'],
+        include: ['/client/src'],
         use: [{ loader: 'babel-loader' }],
       },
       {
@@ -27,7 +27,7 @@ module.exports = {
       },
       {
         test: /\.ts(x?)$/,
-        include: [glob.sync(path.resolve(process.cwd(), 'static/src'))],
+        include: [glob.sync(path.resolve(process.cwd(), 'client/src'))],
         use: [
           {
             loader: 'babel-loader',
@@ -37,7 +37,7 @@ module.exports = {
       {
         test: /\.css$/,
         include: [
-          path.resolve(process.cwd(), 'static/src'),
+          path.resolve(process.cwd(), 'client/src'),
           path.resolve(process.cwd(), 'node_modules'),
         ],
         use: [
@@ -62,15 +62,15 @@ module.exports = {
   },
   output: {
     filename: 'main.bundle.js',
-    path: path.resolve(process.cwd(), 'static/dist'),
-    publicPath: '/static/',
+    path: path.resolve(process.cwd(), 'client/dist'),
+    publicPath: '/client/',
   },
   performance: {
     hints: false,
   },
   plugins: [
     new CopyPlugin({
-      patterns: [{ from: './static/src/images', to: 'images' }],
+      patterns: [{ from: './client/src/images', to: 'images' }],
     }),
     new MiniCssExtractPlugin({
       filename: 'main.css',
@@ -79,7 +79,7 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.css'],
-    modules: ['node_modules', 'static/src'],
+    modules: ['node_modules', 'client/src'],
   },
   target: 'web',
 };

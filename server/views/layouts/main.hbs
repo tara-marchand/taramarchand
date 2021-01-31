@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    {{#if isProd}}{{{browserTimingHeader}}}{{/if}}
+    <title>Tara Marchand</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{#if isProd}}
+    <link rel="stylesheet" type="text/css" href="/client/main.css">
+    {{/if}}
+</head>
+
+<body>
+    {{{body}}}
+    <script src="/client/main.bundle.js"></script>
+</body>
+
+</html>

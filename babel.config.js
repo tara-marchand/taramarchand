@@ -1,6 +1,6 @@
 const presets = [
   ['@babel/preset-typescript', { allExtensions: true, isTSX: true }],
-  '@babel/preset-env',
+  ['@babel/preset-env', { targets: { esmodules: true } }],
   '@babel/preset-react',
 ];
 const plugins = [

@@ -9,7 +9,7 @@ module.exports = {
     app: [
       'react-hot-loader/patch',
       'webpack-hot-middleware/client?http://localhost:8080',
-      './static/src/index.tsx',
+      './client/src/index.tsx',
     ],
   },
   mode: 'development',
@@ -17,7 +17,7 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        include: ['/static/src'],
+        include: ['/client/src'],
         use: [{ loader: 'babel-loader' }],
       },
       {
@@ -30,7 +30,7 @@ module.exports = {
       },
       {
         test: /\.ts(x?)$/,
-        include: [path.resolve(process.cwd(), 'static/src')],
+        include: [path.resolve(process.cwd(), 'client/src')],
         use: [
           { loader: 'react-hot-loader/webpack' },
           {
@@ -41,7 +41,7 @@ module.exports = {
       {
         test: /\.css$/,
         include: [
-          path.resolve(process.cwd(), 'static/src'),
+          path.resolve(process.cwd(), 'client/src'),
           path.resolve(process.cwd(), 'node_modules'),
         ],
         use: [
@@ -69,30 +69,35 @@ module.exports = {
   },
   output: {
     filename: 'main.bundle.js',
-    path: path.resolve(process.cwd(), 'static/dist'),
-    publicPath: '/static/',
+    path: path.resolve(process.cwd(), 'client/dist'),
+    publicPath: '/client/',
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new CopyPlugin({
-      patterns: [{ from: './static/src/images', to: 'images' }],
+      patterns: [{ from: './client/src/images', to: 'images' }],
     }),
     new webpack.EnvironmentPlugin(['AMPLITUDE_API_KEY', 'NODE_ENV']),
   ],
   resolve: {
     alias: { 'react-dom': '@hot-loader/react-dom' },
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.css'],
-    modules: ['node_modules', 'static/src'],
+    modules: ['node_modules', 'client/src'],
   },
   target: 'web',
   watchOptions: {
     ignored: [
-      path.resolve(process.cwd(), 'Procfile.*'),
+      path.resolve(process.cwd(), '\\.next'),
       path.resolve(process.cwd(), '.*.js'),
       path.resolve(process.cwd(), '.*.json'),
+      path.resolve(process.cwd(), 'build'),
+      path.resolve(process.cwd(), 'client/dist'),
       path.resolve(process.cwd(), 'node_modules'),
-      path.resolve(process.cwd(), 'app'),
-      path.resolve(process.cwd(), 'static/dist'),
+      path.resolve(process.cwd(), 'pages'),
+      path.resolve(process.cwd(), 'Procfile.*'),
+      path.resolve(process.cwd(), 'public'),
+      path.resolve(process.cwd(), 'server'),
+      path.resolve(process.cwd(), 'stats'),
     ],
   },
 };
