@@ -4,7 +4,7 @@
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
     "jsx": "preserve",
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
     "outDir": "../build/",
     "resolveJsonModule": true,
@@ -17,13 +17,21 @@
       "./node_modules/next",
       "./client/src"
     ],
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
     "isolatedModules": true
   },
-  "include": ["client/src/**/*"],
-  "exclude": ["./node_modules"]
+  "include": [
+    "client/src/**/*"
+  ],
+  "exclude": [
+    "./node_modules"
+  ]
 }

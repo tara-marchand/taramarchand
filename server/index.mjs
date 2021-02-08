@@ -2,6 +2,7 @@ import Airtable from 'airtable';
 import dotenv from 'dotenv';
 import Fastify from 'fastify';
 import fastifyCompress from 'fastify-compress';
+import fastifyNextJs from 'fastify-nextjs';
 import fastifyStatic from 'fastify-static';
 import webpackHMR from 'fastify-webpack-hmr';
 import handlebars from 'handlebars';
@@ -30,6 +31,10 @@ Airtable.configure({
 async function build() {
   const fastify = Fastify({ logger: true });
 
+  // Next.js handlers
+  fastify.register(fastifyNextJs).after(() => fastify.next('/test'));
+
+  // Fastify handlers
   await fastify.register(middie);
 
   fastify.register(fastifyStatic, {
@@ -135,11 +140,6 @@ build()
     console.error(error);
     process.exit(1);
   });
-
-// fastify.register(fastifyNextJs).after(() => {
-//   console.log(fastify);
-//   fastify.next('/test');
-// });
 
 function getBrowserTimingHeader(nrInstance) {
   return new Promise((resolve, reject) => {

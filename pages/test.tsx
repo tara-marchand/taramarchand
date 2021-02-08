@@ -6,4 +6,4 @@ function test({}: Props): ReactElement {
   return <div>Test!</div>;
 }
 
-export { test };
+export default test;
