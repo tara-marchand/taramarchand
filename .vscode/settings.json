@@ -1,5 +1,4 @@
 {
-  "editor.formatOnSave": true,
   "files.associations": {
     "*.js": "javascriptreact",
     "*.ts": "typescriptreact"

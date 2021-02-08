@@ -66,9 +66,18 @@ module.exports = {
   },
   optimization: {
     removeAvailableModules: true,
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendors: {
+          filename: 'vendors.js',
+          test: /[\\/]node_modules[\\/]/,
+        },
+      },
+    },
   },
   output: {
-    filename: 'main.bundle.js',
+    filename: 'main.js',
     path: path.resolve(process.cwd(), 'client/dist'),
     publicPath: '/client/',
   },

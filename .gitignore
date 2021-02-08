@@ -1,7 +1,7 @@
 .DS_Store
 .env
 server/dist
-static/dist
+client/dist
 node_modules
 npm-debug.log
 stats
