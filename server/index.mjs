@@ -1,158 +1,67 @@
 import Airtable from 'airtable';
-import dotenv from 'dotenv';
 import Fastify from 'fastify';
-import fastifyCompress from 'fastify-compress';
-import fastifyNextJs from 'fastify-nextjs';
 import fastifyStatic from 'fastify-static';
-import webpackHMR from 'fastify-webpack-hmr';
-import handlebars from 'handlebars';
-import middie from 'middie';
-import newrelic from 'newrelic';
+import Next from 'next';
 import NodeCache from 'node-cache';
-import { join, resolve as _resolve } from 'path';
-import pointOfView from 'point-of-view';
-import { models } from './models/index.mjs';
+import path, { resolve } from 'path';
+import fastifyPlugin from 'fastify-plugin';
+// import { models } from './models/index.mjs';
 
 const port = process.env.PORT || 5000;
 const env = process.env.NODE_ENV;
 const isDev = env === 'development';
 const isProd = env === 'production';
-const airtableBase = Airtable.base('app915q92oWW2aV5C');
 
-const nrInstance = isDev ? undefined : newrelic;
 const myCache = new NodeCache();
-
-dotenv.config();
 
 Airtable.configure({
   apiKey: process.env.AIRTABLE_API_KEY,
 });
 
-async function build() {
-  const fastify = Fastify({ logger: true });
+function build() {
+  const LOG_LEVEL = isProd ? 'error' : 'debug';
 
-  // Next.js handlers
-  fastify.register(fastifyNextJs).after(() => fastify.next('/test'));
+  const fastify = Fastify({ logger: { level: LOG_LEVEL } });
+  const nextApp = Next({ dev: isDev });
+  const nextRequestHandler = nextApp.getRequestHandler();
 
-  // Fastify handlers
-  await fastify.register(middie);
-
-  fastify.register(fastifyStatic, {
-    root: _resolve(process.cwd(), 'client/dist'),
-    prefix: '/client/',
-  });
-
-  fastify.register(fastifyStatic, {
-    root: _resolve(process.cwd(), 'node_modules'),
-    prefix: '/node_modules/',
-    decorateReply: false,
-  });
-
-  if (isDev) {
-    fastify.register(webpackHMR, {
-      config: join(process.cwd(), 'webpack.dev'),
-      webpackDev: { publicPath: '/client/' },
-      webpackHot: { reload: true },
+  return nextApp.prepare().then(() => {
+    fastify.register(fastifyStatic, {
+      root: path.join(process.cwd(), 'public'),
+      prefix: '/public/',
     });
-  } else if (isProd) {
-    fastify.register(fastifyCompress);
-  }
+    fastify.after();
 
-  fastify
-    .register(pointOfView, {
-      engine: { handlebars },
-      layout: 'server/views/layouts/main.hbs',
-      options: { partials: { index: 'server/views/index.hbs' } },
-    })
-    .after(() => {
-      fastify.route({
-        method: 'GET',
-        url: '/api/books',
-        handler: async (req, reply) => {
-          const books = models.Book.findAll();
-          reply.send(books);
-        },
+    if (isDev) {
+      fastify.get('/_next/*', (req, reply) => {
+        nextRequestHandler(req.raw, reply.raw).then(() => {
+          reply.sent = true;
+        });
       });
+    }
 
-      fastify.route({
-        method: 'GET',
-        url: '/api/jobs',
-        handler: async (req, reply) => {
-          const jobs = models.Job.findAll();
-          reply.send(jobs);
-        },
-      });
-
-      fastify.route({
-        method: 'GET',
-        url: '/api/jobs-airtable',
-        handler: async (req, reply) => {
-          const jobs = [];
-
-          airtableBase('Job Leads')
-            .select({
-              maxRecords: 100,
-              view: 'All Positions',
-            })
-            .eachPage(
-              function page(jobsResult, fetchNextPage) {
-                jobsResult.forEach(function (job) {
-                  fastify.log.info(job);
-                  jobs.push(job);
-                });
-                fetchNextPage();
-              },
-              function done(err) {
-                if (err) {
-                  fastify.log.error(err);
-                }
-                reply.send(jobs);
-              }
-            );
-        },
-      });
-
-      fastify.route({
-        method: 'GET',
-        url: '/*',
-        handler: (req, reply) => {
-          getBrowserTimingHeader(nrInstance)
-            .then((browserTimingHeader) => {
-              reply.view('server/views/index.hbs', {
-                browserTimingHeader,
-                isProd,
-              });
-            })
-            .catch((error) => {
-              fastify.log.error(error);
-              reply.sent = true;
-            });
-        },
+    fastify.all('/*', (req, reply) => {
+      nextRequestHandler(req.raw, reply.raw).then(() => {
+        reply.sent = true;
       });
     });
 
-  return fastify;
+    fastify.setNotFoundHandler((request, reply) => {
+      nextApp.render404(request.raw, reply.raw).then(() => {
+        reply.sent = true;
+      });
+    });
+
+    return fastify;
+  });
 }
 
 build()
-  .then((fastify) => fastify.listen(port))
-  .catch((error) => {
-    console.error(error);
-    process.exit(1);
-  });
-
-function getBrowserTimingHeader(nrInstance) {
-  return new Promise((resolve, reject) => {
-    try {
-      if (isProd) {
-        resolve(nrInstance.getBrowserTimingHeader());
-      } else {
-        resolve({});
-      }
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
+  .then((fastifyApp) => {
+    const url = `http://localhost:${port}`;
+    fastifyApp.log.info({ url }, 'Server is ready');
+    fastifyApp.listen(port);
+  })
+  .catch((error) => console.error(error));
 
 export { myCache };

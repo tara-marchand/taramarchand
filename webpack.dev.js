@@ -1,6 +1,9 @@
+const dotenv = require('dotenv');
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
+
+dotenv.config();
 
 module.exports = {
   context: path.resolve(process.cwd()),

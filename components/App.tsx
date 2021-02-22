@@ -8,9 +8,9 @@ import Covid19 from './Covid19';
 import ErrorBoundary from './ErrorBoundary';
 import Footer from './Footer';
 import Header from './Header';
-import Home from './Home';
+// import Home from './Home';
 import { JobHunt } from './JobHunt';
-import Resume from './Resume';
+// import Resume from '../../../pages/Resume';
 
 const App: React.FunctionComponent<{}> = () => (
   <ErrorBoundary>
@@ -18,8 +18,8 @@ const App: React.FunctionComponent<{}> = () => (
       <Header />
       <main>
         <div className="mx-auto prose pt-6 pb-6">
-          <Route exact path="/" component={Home} />
-          <Route path="/resume" component={Resume} />
+          {/* <Route exact path="/" component={Home} /> */}
+          {/* <Route path="/resume" component={Resume} /> */}
           <Route path="/jobs" component={JobHunt} />
           <Route path="/covid19" component={Covid19} />
         </div>

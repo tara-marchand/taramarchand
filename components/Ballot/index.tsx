@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { getData } from '../../data/utils';
 import { v4 as uuid4 } from 'uuid';
 import ballotJson from './250361.json';
 

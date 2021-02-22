@@ -2,7 +2,7 @@ module.exports = {
   important: false,
   plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
   prefix: '',
-  purge: ['./server/views/**/*.hbs', './client/src/**/*.tsx'],
+  purge: ['./components/**/*.tsx', './pages/**/*.tsx'],
   separator: ':',
   theme: {
     extend: {

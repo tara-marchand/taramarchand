@@ -1,7 +1,4 @@
 import fetch from 'isomorphic-fetch';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 export function isDev() {
   return process.env.NODE_ENV === 'development';

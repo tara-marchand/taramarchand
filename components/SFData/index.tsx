@@ -1,5 +1,5 @@
 import React from 'react';
-import { getData } from '../../data/utils';
+import { getData } from '../../../../data/utils';
 import RestHealthScoresChart, {
   transformHealthScoresData,
   zip94112RestHealthUrl,
