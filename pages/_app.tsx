@@ -1,10 +1,15 @@
+import '../styles/globals.css';
+
 import { AmplitudeClient } from 'amplitude-js';
 import { AppProps } from 'next/dist/next-server/lib/router/router';
 import Head from 'next/head';
 import React from 'react';
 import { Provider } from 'react-redux';
+
+import ErrorBoundary from '../components/ErrorBoundary';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 import store from '../data/store';
-import '../styles/globals.css';
 
 let nrSnippet: string | undefined;
 
@@ -59,17 +64,30 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 
   const comp = <Component {...pageProps} amplitude={amplitude} />;
 
-  if (process.env.NODE_ENV === 'production') {
-    return (
-      <>
+  return (
+    <>
+      {process.env.NODE_ENV === 'production' && (
         <Head>
           <NrScript />
         </Head>
-        <Provider store={store}>{comp}</Provider>
-      </>
-    );
-  }
-  return <Provider store={store}>{comp}</Provider>;
+      )}
+      <Provider store={store}>
+        <ErrorBoundary>
+          <div className="max-w-full">
+            <div className="max-w-prose mx-auto">
+              <Header />
+              <main>
+                <div className="mx-auto prose prose-lg pt-6 pb-6 max-w-prose">
+                  {comp}
+                </div>
+              </main>
+              <Footer />
+            </div>
+          </div>
+        </ErrorBoundary>
+      </Provider>
+    </>
+  );
 }
 
 export default MyApp;

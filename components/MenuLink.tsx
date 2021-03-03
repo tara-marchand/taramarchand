@@ -1,77 +1,28 @@
+import Link, { LinkProps } from 'next/link';
+import { useRouter } from 'next/router';
 import * as React from 'react';
-import { NavLink, NavLinkProps, Route } from 'react-router-dom';
 
-interface Props extends NavLinkProps {
-  linkClassName?: string;
+type Props = LinkProps & {
+  className?: string;
   text: string;
-}
+};
+type LinkRef = HTMLAnchorElement;
 
-export default function MenuLink(props: Props) {
-  const {
-    activeClassName,
-    activeStyle,
-    className,
-    exact,
-    isActive: getIsActive,
-    location,
-    strict,
-    style,
-    text,
-    to,
-    ...rest
-  } = props;
+function MenuLink(props: Props, ref: React.Ref<LinkRef>) {
+  const router = useRouter();
 
-  let path = '';
-  switch (typeof to) {
-    case 'string':
-      path = to;
-      break;
-    case 'object':
-      path = to.pathname || '';
-      break;
-    case 'function':
-      if (location) {
-        const loc = to(location);
-
-        if (typeof loc === 'object' && loc.pathname) {
-          path = loc.pathname;
-        } else if (typeof loc === 'string') {
-          path = loc;
-        }
-      }
-      break;
-    default:
-      break;
+  let className = props.className || '';
+  if (router.pathname === props.href) {
+    className = `${className} selected`;
   }
 
   return (
-    <Route
-      path={path}
-      exact={exact}
-      strict={strict}
-      children={({ location, match }) => {
-        let isActive = false;
-        if (match) {
-          isActive = !!(getIsActive ? getIsActive(match, location) : match);
-        }
-
-        return (
-          <div
-            className={
-              isActive ? [activeClassName, className].join(' ') : className
-            }
-            style={isActive ? { ...style, ...activeStyle } : style}
-          >
-            {!isActive ? (
-              <NavLink to={to} {...rest}>
-                {text}
-              </NavLink>
-            ) : (
-              <a className="hover:no-underline">{text}</a>
-            )}
-          </div>
-        );
-      }}
-    />
+    <Link href={props.href} passHref>
+      <a className={className} href={props.href.toString()} ref={ref}>
+        {props.text}
+      </a>
+    </Link>
   );
 }
+
+export default React.forwardRef<LinkRef, Props>(MenuLink);

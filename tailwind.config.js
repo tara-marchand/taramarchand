@@ -12,9 +12,11 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
-            'line-height': '1.5em',
-            h2: {
-              'margin-top': '1.25em',
+            a: {
+              'text-decoration': 'none',
+            },
+            'a:hover': {
+              'text-decoration': 'none',
             },
           },
         },

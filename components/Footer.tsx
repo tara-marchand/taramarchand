@@ -1,12 +1,9 @@
 import * as React from 'react';
-import { RouteComponentProps, withRouter } from 'react-router';
 
-type Props = RouteComponentProps<any>;
-
-const Footer: React.FC<Props> = () => {
+const Footer: React.FunctionComponent = () => {
   return (
-    <footer className="bg-gray-400">
-      <div className="flex mx-auto pt-6 pb-6 prose">
+    <footer className="bg-gray-400 max-w-prose">
+      <div className="flex mx-auto pt-6 pb-6 prose prose-lg">
         <a
           className="mr-6"
           href="https://twitter.com/trmarchand"
@@ -50,4 +47,4 @@ const Footer: React.FC<Props> = () => {
   );
 };
 
-export default withRouter(Footer);
+export default Footer;

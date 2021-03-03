@@ -6,29 +6,11 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'standard',
-    'prettier',
-    'prettier/standard',
-    'prettier/babel',
-    'prettier/react',
-    'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier/@typescript-eslint',
+    'eslint-config-prettier',
   ],
-  parser: 'babel-eslint',
-  plugins: [
-    'standard',
-    '@typescript-eslint',
-    'babel',
-    'prettier',
-    'react',
-    'react-hooks',
-  ],
-  rules: {
-    'prettier/prettier': 'error',
-    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
-    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
-  },
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
   settings: {
     react: {
       version: 'detect',

@@ -3,9 +3,7 @@ import Fastify from 'fastify';
 import fastifyStatic from 'fastify-static';
 import Next from 'next';
 import NodeCache from 'node-cache';
-import path, { resolve } from 'path';
-import fastifyPlugin from 'fastify-plugin';
-// import { models } from './models/index.mjs';
+import path from 'path';
 
 const port = process.env.PORT || 5000;
 const env = process.env.NODE_ENV;
