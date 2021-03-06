@@ -4,17 +4,15 @@ import MenuLink from './MenuLink';
 
 const Header: React.FunctionComponent = () => {
   return (
-    <nav className="bg-gray-300 max-w-prose">
-      <div className="py-3">
-        <div className="flex">
-          <div>
-            <MenuLink className="text-3xl" href="/" text="Tara Marchand" />
-          </div>
+    <nav className="bg-gray-300 p-6 prose prose-m max-w-none">
+      <div className="flex">
+        <div>
+          <MenuLink className="text-3xl" href="/" text="Tara Marchand" />
         </div>
-        <div className="items-center">
-          <div className="flex flex-col">
-            <MenuLink href="/resume" text="Resume" />
-          </div>
+      </div>
+      <div className="items-center">
+        <div className="flex flex-col">
+          <MenuLink href="/resume" text="Resume" />
         </div>
       </div>
     </nav>

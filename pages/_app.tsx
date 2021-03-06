@@ -73,16 +73,14 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       )}
       <Provider store={store}>
         <ErrorBoundary>
-          <div className="max-w-full">
-            <div className="max-w-prose mx-auto">
-              <Header />
-              <main>
-                <div className="mx-auto prose prose-lg pt-6 pb-6 max-w-prose">
-                  {comp}
-                </div>
-              </main>
-              <Footer />
-            </div>
+          <div className="grid grid-cols-1 grid-rows-8">
+            <Header />
+            <main className="row-span-6">
+              <div className="mx-auto prose prose-m pt-6 pb-6">
+                {comp}
+              </div>
+            </main>
+            <Footer />
           </div>
         </ErrorBoundary>
       </Provider>
