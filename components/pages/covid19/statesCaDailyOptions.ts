@@ -1,13 +1,11 @@
-export function getOptionsStatesCaDaily(
-  data: PartialPoint[]
-): Highcharts.Options {
+export function getOptions(): Highcharts.Options {
   return {
     legend: {
       enabled: false,
     },
     series: [
       {
-        data,
+        // data,
         type: 'line',
       },
     ],

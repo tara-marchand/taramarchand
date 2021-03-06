@@ -54,5 +54,3 @@ type Daily = {
   totalTestsPeopleViral: number | null;
   totalTestsViral: number | null;
 };
-
-type PartialPoint = Partial<Highcharts.Point>;

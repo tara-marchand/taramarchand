@@ -1,43 +1,45 @@
 module.exports = {
   env: {
     es6: true,
-    browser: true,
-    node: false,
+    node: true,
   },
+  root: true,
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'eslint-config-prettier',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'prettier',
   ],
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
-  settings: {
-    react: {
-      version: 'detect',
-    },
-  },
   overrides: [
-    {
-      files: ['components/**/*', 'pages/**/*'],
-      env: {
-        es6: true,
-        browser: true,
-        node: true,
-      },
-    },
-    {
-      files: ['server/**/*'],
-      env: {
-        es6: true,
-        browser: false,
-        node: true,
-      },
-    },
     {
       files: ['**/*.ts', '**/*.tsx'],
       parser: '@typescript-eslint/parser',
       parserOptions: {
         project: './tsconfig.json',
+      },
+      plugins: ['@typescript-eslint'],
+      extends: [
+        'plugin:import/typescript',
+        'plugin:@typescript-eslint/recommended',
+      ],
+      rules: { '@typescript-eslint/explicit-module-boundary-types': ['off'] },
+    },
+    {
+      files: [
+        'components/**/*',
+        'data/**/*',
+        'pages/**/*',
+        'types/**/*',
+        'utils/**/*',
+      ],
+      env: {
+        browser: true,
+      },
+      extends: ['plugin:react/recommended', 'plugin:react-hooks/recommended'],
+      settings: {
+        react: {
+          version: 'detect',
+        },
       },
     },
   ],
