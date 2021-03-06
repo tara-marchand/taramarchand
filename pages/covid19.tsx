@@ -1,8 +1,7 @@
 import { parse } from 'date-fns';
 import { sortBy, takeRight } from 'lodash';
-import { InferGetStaticPropsType } from 'next';
 import React from 'react';
-
+import useSWR from 'swr';
 import StatesCaDaily from '../components/pages/covid19/StatesCaDaily';
 
 const transformDataForCaByDay = (
@@ -28,24 +27,25 @@ const transformDataForCaByDay = (
     (day) => day.x
   );
 
-export async function getStaticProps() {
-  const response = await fetch(
-    'https://api.covidtracking.com/v1/states/ca/daily.json'
-  );
-  const data: Daily[] = await response.json();
+export default function Covid19(): React.ReactElement | null {
+  const { data, error } = useSWR<Daily[]>('/api/user', async () => {
+    const response = await fetch(
+      'https://api.covidtracking.com/v1/states/ca/daily.json'
+    );
+    return await response.json();
+  });
+
+  if (error) {
+    console.error(error);
+  }
+
+  if (!data) {
+    return null;
+  }
+
   const transformedData = transformDataForCaByDay(data);
   const last30DaysOfTransformedData = takeRight(transformedData, 30);
 
-  return {
-    props: {
-      last30DaysOfTransformedData,
-    },
-  };
-}
-
-export default function covid19({
-  last30DaysOfTransformedData,
-}: InferGetStaticPropsType<typeof getStaticProps>): React.ReactElement {
   return (
     <div>
       <StatesCaDaily
