@@ -12,10 +12,6 @@
     "npm": "^7"
   },
   "scripts": {
-    "clean": "rm -rf ./client/dist",
-    "build": "npm run build:prod",
-    "build:dev": "npm run clean && NODE_ENV=development npx webpack --config=webpack.dev.js --env NODE_ENV=development",
-    "build:prod": "npm run clean && NODE_ENV=production npx webpack --config=webpack.prod.js --env NODE_ENV=production",
     "start": "npm run start:dev",
     "start:dev": "NEW_RELIC_ENABLED=false NODE_ENV=development node server/index.mjs",
     "start:prod": "NEW_RELIC_ENABLED=true NODE_ENV=production node server/index.mjs",
