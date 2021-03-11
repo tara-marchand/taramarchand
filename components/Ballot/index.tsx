@@ -5,16 +5,16 @@ import ballotJson from './250361.json';
 interface Ballot {
   [key: string]: any;
 }
-interface Props {}
-
-export const Ballot: React.FunctionComponent<Props> = (props) => {
-  const [ballot, setBallot] = React.useState<Ballot>(null);
-  const fetchController: AbortController = new AbortController();
+export const Ballot: React.FunctionComponent = () => {
+  const [ballot, setBallot] = React.useState<Ballot>();
 
   React.useEffect(() => {
     setBallot(ballotJson);
   }, [!ballot]);
 
+  if (!ballot) {
+    return null;
+  }
   return (
     ballot && (
       <form>
