@@ -1,30 +1,33 @@
 import { AmplitudeClient } from 'amplitude-js';
 import React from 'react';
+
 import resumeJson from '../data/resume.json';
 
 interface Props {
   amplitude?: AmplitudeClient;
+  data: ResumeData;
+}
+export async function getStaticProps() {
+  const data: ResumeData = resumeJson;
+
+  return {
+    props: {
+      data,
+    }, // will be passed to the page component as props
+  };
 }
 
 export default function resume(props: Props): JSX.Element {
-  let data: ResumeData = {};
-
   const { amplitude } = props;
-
-  try {
-    data = resumeJson;
-  } catch (error) {
-    console.log(error);
-  }
 
   amplitude && amplitude.logEvent('RESUME_RENDER');
 
   return (
     <div>
-      {renderBasics(data)}
-      {renderWork(data)}
-      {renderSkills(data)}
-      {renderEducation(data)}
+      {renderBasics(props.data)}
+      {renderWork(props.data)}
+      {renderSkills(props.data)}
+      {renderEducation(props.data)}
     </div>
   );
 }
@@ -75,8 +78,7 @@ function renderSkills(data: ResumeData): JSX.Element | null {
     <section>
       <h2>Skills</h2>
       {skills.map((skill: ResumeSkill, index: number) => (
-        <div key={index}>
-          <div>
+        <div className="py-2" key={index}>
             <strong>{skill.name}: </strong>
             {skill.keywords.map((keyword, index) => {
               const value =
@@ -84,7 +86,6 @@ function renderSkills(data: ResumeData): JSX.Element | null {
 
               return <span key={index}>{value}</span>;
             })}
-          </div>
         </div>
       ))}
     </section>
