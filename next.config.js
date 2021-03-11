@@ -29,8 +29,13 @@ module.exports = (phase) => {
     })(),
   };
 
+  const typescript = {
+    ignoreBuildErrors: true,
+  };
+
   // next.config.js object
   return {
     env,
+    typescript,
   };
 };
