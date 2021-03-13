@@ -82,6 +82,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     <>
       {process.env.NODE_ENV === 'production' && (
         <Head>
+          <title>Tara Marchand</title>
           <NrScript />
           <CounterScript />
         </Head>
