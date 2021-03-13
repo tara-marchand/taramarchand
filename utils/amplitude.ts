@@ -1,14 +1,16 @@
+import { AmplitudeClient } from 'amplitude-js';
+
 let amplitudeInstance: AmplitudeClient | undefined;
 
-if (
-  window &&
-  process.env.NODE_ENV === 'production' &&
-  process.env.AMPLITUDE_API_KEY
-) {
+if (window && process.env.NODE_ENV === 'production') {
   import('amplitude-js').then((amp) => {
-    amplitudeInstance = amp.getInstance(process.env.AMPLITUDE_API_KEY);
+    const { AMPLITUDE_API_KEY } = process.env;
+    if (!AMPLITUDE_API_KEY) {
+      return;
+    }
 
-    amplitudeInstance.init(process.env.AMPLITUDE_API_KEY, undefined, {
+    amplitudeInstance = amp.getInstance(process.env.AMPLITUDE_API_KEY);
+    amplitudeInstance.init(AMPLITUDE_API_KEY, undefined, {
       includeUtm: true,
       includeReferrer: true,
     });
