@@ -12,6 +12,7 @@ import Header from '../components/Header';
 import store from '../data/store';
 
 let nrSnippet: string | undefined;
+let counterSnippet: string | undefined;
 
 // For browser
 if (typeof window !== 'undefined') {
@@ -23,6 +24,7 @@ if (typeof window !== 'undefined') {
 
   if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
     nrSnippet = process.env.NEW_RELIC_SNIPPET;
+    counterSnippet = process.env.COUNTER_SNIPPET;
   }
 
   import('highcharts').then((Highcharts) => {
@@ -43,6 +45,18 @@ const NrScript = (): JSX.Element | null => {
     <script
       type="text/javascript"
       dangerouslySetInnerHTML={{ __html: nrSnippet }}
+    ></script>
+  );
+};
+
+const CounterScript = (): JSX.Element | null => {
+  if (!counterSnippet || typeof window !== 'undefined') {
+    return null;
+  }
+  return (
+    <script
+      type="text/javascript"
+      dangerouslySetInnerHTML={{ __html: counterSnippet }}
     ></script>
   );
 };
@@ -69,6 +83,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       {process.env.NODE_ENV === 'production' && (
         <Head>
           <NrScript />
+          <CounterScript />
         </Head>
       )}
       <Provider store={store}>
@@ -76,9 +91,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
           <div className="grid grid-cols-1 grid-rows-8">
             <Header />
             <main className="row-span-6">
-              <div className="mx-auto prose prose-m pt-6 pb-6">
-                {comp}
-              </div>
+              <div className="mx-auto prose prose-m pt-6 pb-6">{comp}</div>
             </main>
             <Footer />
           </div>

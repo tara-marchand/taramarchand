@@ -27,6 +27,14 @@ module.exports = (phase) => {
         return fs.readFileSync('./utils/newRelicSnippet.ts').toString();
       }
     })(),
+    COUNTER_SNIPPET: (() => {
+      if (isDev || isStaging) {
+        return;
+      }
+      if (isProd) {
+        return fs.readFileSync('./utils/counterSnippet.ts').toString();
+      }
+    })(),
   };
 
   const typescript = {
