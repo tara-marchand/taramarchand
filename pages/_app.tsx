@@ -38,7 +38,7 @@ if (typeof window !== 'undefined') {
 }
 
 const NrScript = (): JSX.Element | null => {
-  if (!nrSnippet || typeof window !== 'undefined') {
+  if (!nrSnippet || typeof window === 'undefined') {
     return null;
   }
   return (
@@ -50,7 +50,7 @@ const NrScript = (): JSX.Element | null => {
 };
 
 const CounterScript = (): JSX.Element | null => {
-  if (!counterSnippet || typeof window !== 'undefined') {
+  if (!counterSnippet || typeof window === 'undefined') {
     return null;
   }
   return (
