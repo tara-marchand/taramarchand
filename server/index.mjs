@@ -30,13 +30,11 @@ function build() {
     });
     fastify.after();
 
-    if (isDev) {
-      fastify.get('/_next/*', (req, reply) => {
-        nextRequestHandler(req.raw, reply.raw).then(() => {
-          reply.sent = true;
-        });
+    fastify.get('/_next/*', (req, reply) => {
+      nextRequestHandler(req.raw, reply.raw).then(() => {
+        reply.sent = true;
       });
-    }
+    });
 
     fastify.all('/*', (req, reply) => {
       nextRequestHandler(req.raw, reply.raw).then(() => {
@@ -58,7 +56,7 @@ build()
   .then((fastifyApp) => {
     const url = `http://localhost:${port}`;
     fastifyApp.log.info({ url }, 'Server is ready');
-    fastifyApp.listen(port);
+    fastifyApp.listen(port, '0.0.0.0');
   })
   .catch((error) => console.error(error));
 
