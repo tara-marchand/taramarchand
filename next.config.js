@@ -1,8 +1,8 @@
-const fs = require('fs');
 const {
   PHASE_DEVELOPMENT_SERVER,
   PHASE_PRODUCTION_BUILD,
 } = require('next/constants');
+const fs = require('fs');
 
 module.exports = (phase) => {
   // when started in development mode `next dev` or `npm run dev` regardless of the value of STAGING environmental variable
@@ -19,22 +19,8 @@ module.exports = (phase) => {
   );
 
   const env = {
-    NEW_RELIC_SNIPPET: (() => {
-      if (isDev || isStaging) {
-        return;
-      }
-      if (isProd) {
-        return fs.readFileSync('./utils/newRelicSnippet.ts').toString();
-      }
-    })(),
-    COUNTER_SNIPPET: (() => {
-      if (isDev || isStaging) {
-        return;
-      }
-      if (isProd) {
-        return fs.readFileSync('./utils/counterSnippet.ts').toString();
-      }
-    })(),
+    NEW_RELIC_SNIPPET: fs.readFileSync('./utils/newRelicSnippet.ts').toString(),
+    COUNTER_SNIPPET: fs.readFileSync('./utils/counterSnippet.ts').toString(),
   };
 
   const typescript = {
