@@ -11,8 +11,8 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import store from '../data/store';
 
-let nrSnippet: string | undefined;
-let counterSnippet: string | undefined;
+const nrSnippet = process.env.NEW_RELIC_SNIPPET;
+const counterSnippet = process.env.COUNTER_SNIPPET;
 
 // For browser
 if (typeof window !== 'undefined') {
@@ -21,11 +21,6 @@ if (typeof window !== 'undefined') {
     console.log(event.promise); // [object Promise] - the promise that generated the error
     console.log(event.reason); // Error: Whoops! - the unhandled error object
   });
-
-  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
-    nrSnippet = process.env.NEW_RELIC_SNIPPET;
-    counterSnippet = process.env.COUNTER_SNIPPET;
-  }
 
   import('highcharts').then((Highcharts) => {
     Highcharts.setOptions({
@@ -38,27 +33,17 @@ if (typeof window !== 'undefined') {
 }
 
 const NrScript = (): JSX.Element | null => {
-  if (!nrSnippet || typeof window === 'undefined') {
+  if (!nrSnippet || typeof window !== 'undefined') {
     return null;
   }
-  return (
-    <script
-      type="text/javascript"
-      dangerouslySetInnerHTML={{ __html: nrSnippet }}
-    ></script>
-  );
+  return <script dangerouslySetInnerHTML={{ __html: nrSnippet }}></script>;
 };
 
 const CounterScript = (): JSX.Element | null => {
-  if (!counterSnippet || typeof window === 'undefined') {
+  if (!counterSnippet || typeof window !== 'undefined') {
     return null;
   }
-  return (
-    <script
-      type="text/javascript"
-      dangerouslySetInnerHTML={{ __html: counterSnippet }}
-    ></script>
-  );
+  return <script dangerouslySetInnerHTML={{ __html: counterSnippet }}></script>;
 };
 
 interface CompProps {
@@ -80,13 +65,11 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 
   return (
     <>
-      {process.env.NODE_ENV === 'production' && (
-        <Head>
-          <title>Tara Marchand</title>
-          <NrScript />
-          <CounterScript />
-        </Head>
-      )}
+      <Head>
+        <title>Tara Marchand</title>
+        {process.env.NODE_ENV === 'production' && <NrScript />}
+        {process.env.NODE_ENV === 'production' && <CounterScript />}
+      </Head>
       <Provider store={store}>
         <ErrorBoundary>
           <div className="font-sans leading-5 grid grid-cols-1 grid-rows-8">
