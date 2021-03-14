@@ -2,8 +2,8 @@ import * as React from 'react';
 
 const Footer: React.FunctionComponent = () => {
   return (
-    <footer className="bg-gray-400 p-6 prose prose-m max-w-full">
-      <div className="flex max-w-prose mx-auto">
+    <footer className="bg-gray-400 p-6 max-w-full">
+      <div className="flex px-6 md:px-0 max-w-xl mx-auto">
         <a
           className="mr-6"
           href="https://twitter.com/trmarchand"

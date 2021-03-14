@@ -1,8 +1,9 @@
 import Airtable from 'airtable';
 import React, { ReactElement } from 'react';
 import { v4 as uuid4 } from 'uuid';
+
 import AddJob from '../components/JobHunt/AddJob';
-import { JobSection } from '../components/JobHunt/JobSection';
+import { JobCard } from '../components/JobHunt/JobCard';
 import { Job } from '../components/JobHunt/types';
 
 const airtableBase = Airtable.base('app915q92oWW2aV5C');
@@ -24,8 +25,8 @@ export async function getServerSideProps() {
       ({
         company: record.fields.Company,
         dateApplied: record.fields['Applied Date'],
-        title: record.fields.Link,
-        url: record.fields.role,
+        title: record.fields.Role,
+        url: record.fields.Link,
       } as Job)
   );
 
@@ -37,11 +38,11 @@ export async function getServerSideProps() {
 function jobs(props: ServerSideProps): ReactElement {
   return (
     <div>
-      <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
         {props.jobs &&
           props.jobs.length > 0 &&
-          props.jobs.map((job: any) => (
-            <JobSection
+          props.jobs.map((job: Job) => (
+            <JobCard
               company={job.company}
               dateApplied={job.dateApplied}
               key={uuid4()}

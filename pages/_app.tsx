@@ -89,10 +89,12 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       )}
       <Provider store={store}>
         <ErrorBoundary>
-          <div className="grid grid-cols-1 grid-rows-8">
+          <div className="font-sans leading-5 grid grid-cols-1 grid-rows-8">
             <Header />
             <main className="row-span-6">
-              <div className="mx-auto prose prose-m pt-6 pb-6">{comp}</div>
+              <div className="px-6 md:px-0 pt-6 pb-6 max-w-xl mx-auto">
+                {comp}
+              </div>
             </main>
             <Footer />
           </div>
