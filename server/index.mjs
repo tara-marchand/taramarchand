@@ -16,18 +16,18 @@ const isProd = env === 'production';
 const myCache = new NodeCache();
 let amplitudeUserId;
 
-Airtable.configure({
-  apiKey: process.env.AIRTABLE_API_KEY,
-});
-
 function build() {
   const LOG_LEVEL = isProd ? 'error' : 'info';
 
   const fastify = Fastify({ logger: { level: LOG_LEVEL } });
   const nextApp = Next({ dev: isDev });
   const nextRequestHandler = nextApp.getRequestHandler();
-  const amplitudeClient =
-    isProd || isDev ? Amplitude.init(process.env.AIRTABLE_API_KEY) : undefined;
+  const amplitudeClient = isProd
+    ? Amplitude.init(process.env.AMPLITUDE_API_KEY)
+    : undefined;
+  Airtable.configure({
+    apiKey: process.env.AIRTABLE_API_KEY,
+  });
 
   return nextApp.prepare().then(() => {
     fastify.register(fastifyStatic, {
@@ -44,10 +44,10 @@ function build() {
 
     fastify.all('/*', (req, reply) => {
       nextRequestHandler(req.raw, reply.raw).then(() => {
-        if (isProd || isDev) {
+        if (isProd) {
           const clientAddress =
             req.headers['x-forwarded-for'] || req.remoteAddress;
-          fastify.log.info({ clientAddress });
+
           clientAddress &&
             dns.reverse(clientAddress, function (err, domains) {
               if (err) {
@@ -55,7 +55,7 @@ function build() {
               }
               const hostname = domains && domains.length ? domains[0] : '';
 
-              fastify.log.info({ clientHostname: hostname });
+              fastify.log.error({ clientHostname: hostname });
 
               if (amplitudeClient) {
                 amplitudeUserId = amplitudeUserId ? amplitudeUserId : uuid4();
