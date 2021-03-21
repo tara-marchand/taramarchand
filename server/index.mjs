@@ -53,6 +53,7 @@ function build() {
               if (err) {
                 fastify.log.error(err.toString());
                 reply.sent = true;
+                return;
               }
               const hostname = domains && domains.length ? domains[0] : '';
 
@@ -70,15 +71,18 @@ function build() {
               }
 
               reply.sent = true;
+              return;
             });
         }
         reply.sent = true;
+        return;
       });
     });
 
     fastify.setNotFoundHandler((request, reply) => {
       nextApp.render404(request.raw, reply.raw).then(() => {
         reply.sent = true;
+        return;
       });
     });
 
