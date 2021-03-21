@@ -52,8 +52,6 @@ function build() {
             dns.reverse(clientAddress, function (err, domains) {
               if (err) {
                 fastify.log.error(err.toString());
-                reply.sent = true;
-                return;
               }
               const hostname = domains && domains.length ? domains[0] : '';
 
@@ -69,13 +67,9 @@ function build() {
                   },
                 });
               }
-
-              reply.sent = true;
-              return;
             });
         }
         reply.sent = true;
-        return;
       });
     });
 
