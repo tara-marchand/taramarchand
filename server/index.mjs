@@ -4,6 +4,7 @@ import fastifyStatic from 'fastify-static';
 import Next from 'next';
 import NodeCache from 'node-cache';
 import path from 'path';
+import dns from 'dns';
 
 const port = process.env.PORT || 5000;
 const env = process.env.NODE_ENV;
@@ -17,7 +18,7 @@ Airtable.configure({
 });
 
 function build() {
-  const LOG_LEVEL = isProd ? 'error' : 'debug';
+  const LOG_LEVEL = isProd ? 'error' : 'info';
 
   const fastify = Fastify({ logger: { level: LOG_LEVEL } });
   const nextApp = Next({ dev: isDev });
@@ -38,7 +39,19 @@ function build() {
 
     fastify.all('/*', (req, reply) => {
       nextRequestHandler(req.raw, reply.raw).then(() => {
-        reply.sent = true;
+        const clientAddress =
+          req.headers['x-forwarded-for'] || req.remoteAddress;
+
+        dns.reverse(clientAddress, function (err, domains) {
+          if (err) {
+            fastify.log.error(err.toString());
+            reply.sent = true;
+          }
+          domains &&
+            domains.length &&
+            fastify.log.info({ clientHostname: domains[0] });
+          reply.sent = true;
+        });
       });
     });
 

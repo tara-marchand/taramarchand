@@ -1,7 +1,5 @@
 import React, { ReactElement, useState } from 'react';
 
-interface Props {}
-
 function AddJob({}: Props): ReactElement {
   const [company, setCompany] = useState<string>();
   const [dateApplied, setDateApplied] = useState<string>();
