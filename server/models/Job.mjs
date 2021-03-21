@@ -1,27 +1,32 @@
 // Sequelize model for a job.
 function Job(sequelize, DataTypes) {
-  const Job = sequelize.define(
+  return sequelize.define(
     'Job',
     {
       id: {
-        type: DataTypes.INTEGER,
+        allowNull: false,
+        type: DataTypes.TEXT,
         primaryKey: true,
-        autoIncrement: true,
+      },
+      applied: {
+        type: DataTypes.TEXT,
       },
       company: {
         allowNull: false,
         type: DataTypes.TEXT,
       },
-      datePosted: {
+      created: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      link: {
+        type: DataTypes.TEXT,
+      },
+      role: {
         allowNull: false,
         type: DataTypes.TEXT,
       },
-      description: {
-        allowNull: false,
-        type: DataTypes.TEXT,
-      },
-      title: {
-        allowNull: false,
+      status: {
         type: DataTypes.TEXT,
       },
     },
@@ -29,8 +34,6 @@ function Job(sequelize, DataTypes) {
       tableName: 'jobs',
     }
   );
-
-  return Job;
 }
 
 export { Job };

@@ -3,7 +3,6 @@ module.exports = {
     es6: true,
     node: true,
   },
-  root: true,
   extends: [
     'eslint:recommended',
     'plugin:import/errors',
@@ -11,19 +10,6 @@ module.exports = {
     'prettier',
   ],
   overrides: [
-    {
-      files: ['**/*.ts', '**/*.tsx'],
-      parser: '@typescript-eslint/parser',
-      parserOptions: {
-        project: './tsconfig.json',
-      },
-      plugins: ['@typescript-eslint'],
-      extends: [
-        'plugin:import/typescript',
-        'plugin:@typescript-eslint/recommended',
-      ],
-      rules: { '@typescript-eslint/explicit-module-boundary-types': ['off'] },
-    },
     {
       files: [
         'components/**/*',
@@ -35,12 +21,40 @@ module.exports = {
       env: {
         browser: true,
       },
-      extends: ['plugin:react/recommended', 'plugin:react-hooks/recommended'],
+      extends: [
+        'plugin:react/recommended',
+        'plugin:react-hooks/recommended',
+        'plugin:import/typescript',
+        'plugin:@typescript-eslint/recommended',
+      ],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        project: './tsconfig.json',
+      },
+      plugins: ['@typescript-eslint'],
+      rules: {
+        '@typescript-eslint/explicit-module-boundary-types': ['off'],
+      },
       settings: {
+        'import/parsers': {
+          '@typescript-eslint/parser': ['.ts', '.tsx'],
+        },
+        'import/resolver': {
+          typescript: {
+            alwaysTryTypes: true,
+          },
+        },
         react: {
           version: 'detect',
         },
       },
     },
   ],
+  parser: '@babel/eslint-parser',
+  plugins: ['import'],
+  root: true,
+  rules: {
+    // turn on errors for missing imports
+    'import/no-unresolved': 'error',
+  },
 };

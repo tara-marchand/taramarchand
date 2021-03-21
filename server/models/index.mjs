@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import Sequelize, { Sequelize as _Sequelize } from 'sequelize';
-import { Book } from './Book.mjs';
+// import { Book } from './Book.mjs';
 import { Job } from './Job.mjs';
 
 config();
@@ -17,7 +17,7 @@ const sequelize = new _Sequelize(process.env.DATABASE_URL, {
 });
 
 const models = {};
-models.Book = Book(sequelize, Sequelize);
+// models.Book = Book(sequelize, Sequelize);
 models.Job = Job(sequelize, Sequelize);
 
 Object.keys(models).forEach((modelName) => {

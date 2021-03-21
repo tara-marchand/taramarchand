@@ -14,6 +14,8 @@ if (window && process.env.NODE_ENV === 'production') {
       includeUtm: true,
       includeReferrer: true,
     });
+    amplitudeInstance.setUserId(null); // not string 'null'
+    amplitudeInstance.regenerateDeviceId();
   });
 }
 
