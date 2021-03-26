@@ -42,35 +42,45 @@ function build() {
       });
     });
 
+    fastify.post('/api/contact', (req, res) => {
+      const { email, message, name } = req.body;
+      res.status(200).send(JSON.stringify(req.body));
+    });
+
     fastify.all('/*', (req, reply) => {
-      nextRequestHandler(req.raw, reply.raw).then(() => {
-        if (isProd) {
-          const clientAddress =
-            req.headers['x-forwarded-for'] || req.remoteAddress;
+      nextRequestHandler(req.raw, reply.raw)
+        .then(() => {
+          if (isProd) {
+            const clientAddress =
+              req.headers['x-forwarded-for'] || req.remoteAddress;
 
-          clientAddress &&
-            dns.reverse(clientAddress, function (err, domains) {
-              if (err) {
-                fastify.log.error(err.toString());
-              }
-              const hostname = domains && domains.length ? domains[0] : '';
+            clientAddress &&
+              dns.reverse(clientAddress, function (err, domains) {
+                if (err) {
+                  fastify.log.error(err.toString());
+                }
+                const hostname = domains && domains.length ? domains[0] : '';
 
-              fastify.log.error({ clientHostname: hostname });
+                fastify.log.error({ clientHostname: hostname });
 
-              if (amplitudeClient) {
-                amplitudeUserId = amplitudeUserId ? amplitudeUserId : uuid4();
-                amplitudeClient.logEvent({
-                  event_type: 'CLIENT_REQUEST',
-                  user_id: amplitudeUserId,
-                  user_properties: {
-                    hostname,
-                  },
-                });
-              }
-            });
-        }
-        reply.sent = true;
-      });
+                if (amplitudeClient) {
+                  amplitudeUserId = amplitudeUserId ? amplitudeUserId : uuid4();
+                  amplitudeClient.logEvent({
+                    event_type: 'CLIENT_REQUEST',
+                    user_id: amplitudeUserId,
+                    user_properties: {
+                      hostname,
+                    },
+                  });
+                }
+              });
+          }
+          reply.sent = true;
+        })
+        .catch((error) => {
+          fastify.log.error(error);
+          reply.sent = true;
+        });
     });
 
     fastify.setNotFoundHandler((request, reply) => {
