@@ -43,7 +43,6 @@ function build() {
     });
 
     fastify.post('/api/contact', (req, res) => {
-      const { email, message, name } = req.body;
       res.status(200).send(JSON.stringify(req.body));
     });
 
