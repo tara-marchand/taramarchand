@@ -1,10 +1,13 @@
+import { AmplitudeClient } from 'amplitude-js';
 import React from 'react';
 
 import resumeJson from '../data/resume.json';
 
 interface Props {
+  amplitude?: AmplitudeClient;
   data: ResumeData;
 }
+
 export async function getStaticProps() {
   const data: ResumeData = resumeJson;
 
@@ -16,6 +19,10 @@ export async function getStaticProps() {
 }
 
 export default function resume(props: Props): JSX.Element {
+  const { amplitude } = props;
+
+  amplitude && amplitude.logEvent('RESUME_RENDER');
+
   return (
     <div>
       {renderBasics(props.data)}
