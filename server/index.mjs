@@ -56,21 +56,21 @@ function build() {
             clientAddress &&
               dns.reverse(clientAddress, function (err, domains) {
                 if (err) {
-                  fastify.log.error(err.toString());
+                  fastify.log.error();
                 }
+
                 const hostname = domains && domains.length ? domains[0] : '';
 
-                fastify.log.error({ clientHostname: hostname });
-
                 if (amplitudeClient) {
-                  amplitudeUserId = amplitudeUserId ? amplitudeUserId : uuid4();
-                  amplitudeClient.logEvent({
+                  const event = {
                     event_type: 'CLIENT_REQUEST',
                     user_id: amplitudeUserId,
-                    user_properties: {
-                      hostname,
-                    },
-                  });
+                  };
+                  if (hostname !== '') {
+                    event.user_properties.hostname = hostname;
+                  }
+                  amplitudeUserId = amplitudeUserId ? amplitudeUserId : uuid4();
+                  amplitudeClient.logEvent(event);
                 }
               });
           }
