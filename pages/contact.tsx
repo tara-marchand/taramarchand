@@ -1,4 +1,3 @@
-import nodemailer from 'nodemailer';
 import React from 'react';
 
 export default function home(): JSX.Element {
@@ -70,18 +69,18 @@ async function submitContactForm(event: React.FormEvent<HTMLFormElement>) {
   const body = JSON.stringify({
     email: (elements.namedItem('email') as HTMLInputElement).value,
     message: (elements.namedItem('message') as HTMLTextAreaElement).value,
-    name: (elements.namedItem('name') as HTMLInputElement).value,
+    name: (elements.namedItem('name') as HTMLInputElement).value
   });
 
   fetch('/api/contact', {
     body,
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    method: 'POST',
+    method: 'POST'
   })
-    .then((response) => response.json())
-    .catch((reason) => {
+    .then(response => response.json())
+    .catch(reason => {
       console.log(reason);
     });
 }

@@ -1,12 +1,16 @@
-import { v4 as uuid4 } from 'uuid';
+import * as Amplitude from '@amplitude/node';
 import Airtable from 'airtable';
 import Fastify from 'fastify';
+import fastifyJwt from 'fastify-jwt';
 import fastifyStatic from 'fastify-static';
 import Next from 'next';
 import NodeCache from 'node-cache';
 import path from 'path';
-import dns from 'dns';
-import * as Amplitude from '@amplitude/node';
+import './models/index.mjs';
+import fastifyNodemailer from 'fastify-nodemailer';
+import { fastifyAuthenticate } from './plugins/fastify-authenticate.mjs';
+import { routes } from './routes/index.mjs';
+import nodemailerMailgunTransport from 'nodemailer-mailgun-transport';
 
 const port = process.env.PORT || 5000;
 const env = process.env.NODE_ENV;
@@ -14,73 +18,51 @@ const isDev = env === 'development';
 const isProd = env === 'production';
 
 const myCache = new NodeCache();
-let amplitudeUserId;
 
 function build() {
   const LOG_LEVEL = isProd ? 'error' : 'info';
 
   const fastify = Fastify({ logger: { level: LOG_LEVEL } });
   const nextApp = Next({ dev: isDev });
-  const nextRequestHandler = nextApp.getRequestHandler();
   const amplitudeClient = isProd
     ? Amplitude.init(process.env.AMPLITUDE_API_KEY)
     : undefined;
   Airtable.configure({
-    apiKey: process.env.AIRTABLE_API_KEY,
+    apiKey: process.env.AIRTABLE_API_KEY
   });
 
   return nextApp.prepare().then(() => {
-    fastify.register(fastifyStatic, {
-      root: path.join(process.cwd(), 'public'),
-      prefix: '/public/',
+    fastify.register(fastifyJwt, {
+      secret: process.env.AUTH_JWT_SIGNATURE
     });
     fastify.after();
 
-    fastify.get('/_next/*', (req, reply) => {
-      nextRequestHandler(req.raw, reply.raw).then(() => {
-        reply.sent = true;
-      });
+    fastify.register(fastifyAuthenticate);
+    fastify.after(error => {
+      fastify.log.error(error);
     });
 
-    fastify.post('/api/contact', (req, res) => {
-      res.status(200).send(JSON.stringify(req.body));
+    fastify.register(
+      fastifyNodemailer,
+      nodemailerMailgunTransport({
+        auth: {
+          api_key: process.env.MAILGUN_API_KEY,
+          domain: process.env.MAILGUN_DOMAIN
+        }
+      })
+    );
+
+    fastify.register(fastifyStatic, {
+      root: path.join(process.cwd(), 'public'),
+      prefix: '/public/'
     });
+    fastify.after();
 
-    fastify.all('/*', (req, reply) => {
-      nextRequestHandler(req.raw, reply.raw)
-        .then(() => {
-          if (isProd) {
-            const clientAddress =
-              req.headers['x-forwarded-for'] || req.remoteAddress;
-
-            clientAddress &&
-              dns.reverse(clientAddress, function (err, domains) {
-                if (err) {
-                  fastify.log.error();
-                }
-
-                const hostname = domains && domains.length ? domains[0] : '';
-
-                if (amplitudeClient) {
-                  const event = {
-                    event_type: 'CLIENT_REQUEST',
-                    user_id: amplitudeUserId,
-                  };
-                  if (hostname !== '') {
-                    event.user_properties.hostname = hostname;
-                  }
-                  amplitudeUserId = amplitudeUserId ? amplitudeUserId : uuid4();
-                  amplitudeClient.logEvent(event);
-                }
-              });
-          }
-          reply.sent = true;
-        })
-        .catch((error) => {
-          fastify.log.error(error);
-          reply.sent = true;
-        });
+    fastify.register(routes, {
+      amplitudeClient,
+      nextApp
     });
+    fastify.after();
 
     fastify.setNotFoundHandler((request, reply) => {
       nextApp.render404(request.raw, reply.raw).then(() => {
@@ -94,11 +76,11 @@ function build() {
 }
 
 build()
-  .then((fastifyApp) => {
+  .then(fastifyApp => {
     const url = `http://localhost:${port}`;
     fastifyApp.log.info({ url }, 'Server is ready');
     fastifyApp.listen(port, '0.0.0.0');
   })
-  .catch((error) => console.error(error));
+  .catch(error => console.error(error));
 
 export { myCache };
