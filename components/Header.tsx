@@ -10,7 +10,8 @@ const Header: React.FunctionComponent = () => {
           <MenuLink className="text-3xl" href="/" text="Tara Marchand" />
         </h1>
         <nav className="items-center md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-900 flex flex-wrap justify-center">
-          <MenuLink href="/resume" text="Resume" />
+          <MenuLink className="mr-4" href="/resume" text="Resume" />
+          <MenuLink href="/contact" text="Contact" />
         </nav>
       </div>
     </header>

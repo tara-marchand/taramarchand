@@ -18,21 +18,35 @@ export const routes = function(fastify, opts, done) {
     });
   });
 
-  fastify.post('/api/contact', (req, reply, next) => {
+  const contactSchema = {
+    type: 'object',
+    required: ['email', 'message', 'name'],
+    properties: {
+      email: { type: 'string' },
+      message: { type: 'string' },
+      name: { type: 'string' }
+    }
+  };
+
+  fastify.post('/api/contact', contactSchema, (req, reply) => {
     let { nodemailer } = fastify;
-    let from = req.params.email;
+    let subject = '[taramarchand.com] Contact form message';
+    if (req.body.name) {
+      subject += ` from ${req.body.name}`;
+    }
 
     nodemailer.sendMail(
       {
-        from,
+        from: req.body.email,
         to: 'tara@mac.com',
-        subject: 'foo',
-        text: 'bar'
+        subject,
+        text: req.body.message
       },
       (err, info) => {
         if (err) {
-          next(err);
+          fastify.log.error(err);
         }
+
         reply.send({
           messageId: info.messageId
         });
@@ -45,12 +59,12 @@ export const routes = function(fastify, opts, done) {
     {
       preValidation: [fastify.authenticate]
     },
-    (req, reply) => {
+    req => {
       return req.user;
     }
   );
 
-  fastify.get('/login', (req, reply) => {
+  fastify.get('/login', req => {
     const email = req.email;
     const userRecord = User.findOne({ email });
 
@@ -87,32 +101,18 @@ export const routes = function(fastify, opts, done) {
 
   fastify.all('/*', (req, reply) => {
     nextRequestHandler(req.raw, reply.raw).then(() => {
-      if (isProd) {
-        const clientAddress =
-          req.headers['x-forwarded-for'] || req.remoteAddress;
+      const clientAddress = req.headers['x-forwarded-for'] || req.remoteAddress;
+      fastify.log.info(`${clientAddress}`, clientAddress);
 
-        clientAddress &&
-          dns.reverse(clientAddress, function(err, domains) {
-            if (err) {
-              fastify.log.error(err.toString());
-            }
-            const hostname = domains && domains.length ? domains[0] : '';
-
-            fastify.log.error({ clientHostname: hostname });
-
-            if (opts.amplitudeClient) {
-              const event = {
-                event_type: 'CLIENT_REQUEST',
-                user_id: amplitudeUserId
-              };
-              if (hostname !== '') {
-                event.user_properties.hostname = hostname;
-              }
-              amplitudeUserId = amplitudeUserId ? amplitudeUserId : uuid4();
-              opts.amplitudeClient.logEvent(event);
-            }
-          });
+      if (opts.amplitudeClient) {
+        const event = {
+          event_type: 'CLIENT_REQUEST',
+          user_id: amplitudeUserId
+        };
+        amplitudeUserId = amplitudeUserId ? amplitudeUserId : uuid4();
+        opts.amplitudeClient.logEvent(event);
       }
+
       reply.sent = true;
     });
   });
