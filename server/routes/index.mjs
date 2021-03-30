@@ -1,15 +1,9 @@
-import dns from 'dns';
 import * as jwt from 'jsonwebtoken';
-import { v4 as uuid4 } from 'uuid';
 import user from '../models/User.mjs';
 
 const { User } = user;
-let amplitudeUserId;
 
-const env = process.env.NODE_ENV;
-const isProd = env === 'production';
-
-export const routes = function(fastify, opts, done) {
+export const routes = function (fastify, opts, done) {
   const nextRequestHandler = opts.nextApp.getRequestHandler();
 
   fastify.get('/_next/*', (req, reply) => {
@@ -24,8 +18,8 @@ export const routes = function(fastify, opts, done) {
     properties: {
       email: { type: 'string' },
       message: { type: 'string' },
-      name: { type: 'string' }
-    }
+      name: { type: 'string' },
+    },
   };
 
   fastify.post('/api/contact', contactSchema, (req, reply) => {
@@ -40,7 +34,7 @@ export const routes = function(fastify, opts, done) {
         from: req.body.email,
         to: 'tara@mac.com',
         subject,
-        text: req.body.message
+        text: req.body.message,
       },
       (err, info) => {
         if (err) {
@@ -48,7 +42,7 @@ export const routes = function(fastify, opts, done) {
         }
 
         reply.send({
-          messageId: info.messageId
+          messageId: info.messageId,
         });
       }
     );
@@ -57,14 +51,14 @@ export const routes = function(fastify, opts, done) {
   fastify.get(
     '/admin',
     {
-      preValidation: [fastify.authenticate]
+      preValidation: [fastify.authenticate],
     },
-    req => {
+    (req) => {
       return req.user;
     }
   );
 
-  fastify.get('/login', req => {
+  fastify.get('/login', (req) => {
     const email = req.email;
     const userRecord = User.findOne({ email });
 
@@ -84,7 +78,7 @@ export const routes = function(fastify, opts, done) {
     const data = {
       id: userRecord.id,
       name: userRecord.name,
-      email: userRecord.email
+      email: userRecord.email,
     };
     const signature = process.env.AUTH_JWT_SIGNATURE;
     const expiration = '6h';
@@ -93,9 +87,9 @@ export const routes = function(fastify, opts, done) {
     return {
       user: {
         email: userRecord.email,
-        name: userRecord.name
+        name: userRecord.name,
       },
-      token
+      token,
     };
   });
 
@@ -103,15 +97,6 @@ export const routes = function(fastify, opts, done) {
     nextRequestHandler(req.raw, reply.raw).then(() => {
       const clientAddress = req.headers['x-forwarded-for'] || req.remoteAddress;
       fastify.log.info(`${clientAddress}`, clientAddress);
-
-      if (opts.amplitudeClient) {
-        const event = {
-          event_type: 'CLIENT_REQUEST',
-          user_id: amplitudeUserId
-        };
-        amplitudeUserId = amplitudeUserId ? amplitudeUserId : uuid4();
-        opts.amplitudeClient.logEvent(event);
-      }
 
       reply.sent = true;
     });

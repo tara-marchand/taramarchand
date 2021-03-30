@@ -1,4 +1,3 @@
-import * as Amplitude from '@amplitude/node';
 import Airtable from 'airtable';
 import Fastify from 'fastify';
 import fastifyJwt from 'fastify-jwt';
@@ -24,21 +23,18 @@ function build() {
 
   const fastify = Fastify({ logger: { level: LOG_LEVEL } });
   const nextApp = Next({ dev: isDev });
-  const amplitudeClient = isProd
-    ? Amplitude.init(process.env.AMPLITUDE_API_KEY)
-    : undefined;
   Airtable.configure({
-    apiKey: process.env.AIRTABLE_API_KEY
+    apiKey: process.env.AIRTABLE_API_KEY,
   });
 
   return nextApp.prepare().then(() => {
     fastify.register(fastifyJwt, {
-      secret: process.env.AUTH_JWT_SIGNATURE
+      secret: process.env.AUTH_JWT_SIGNATURE,
     });
     fastify.after();
 
     fastify.register(fastifyAuthenticate);
-    fastify.after(error => {
+    fastify.after((error) => {
       fastify.log.error(error);
     });
 
@@ -47,20 +43,19 @@ function build() {
       nodemailerMailgunTransport({
         auth: {
           api_key: process.env.MAILGUN_API_KEY,
-          domain: process.env.MAILGUN_DOMAIN
-        }
+          domain: process.env.MAILGUN_DOMAIN,
+        },
       })
     );
 
     fastify.register(fastifyStatic, {
       root: path.join(process.cwd(), 'public'),
-      prefix: '/public/'
+      prefix: '/public/',
     });
     fastify.after();
 
     fastify.register(routes, {
-      amplitudeClient,
-      nextApp
+      nextApp,
     });
     fastify.after();
 
@@ -76,11 +71,11 @@ function build() {
 }
 
 build()
-  .then(fastifyApp => {
+  .then((fastifyApp) => {
     const url = `http://localhost:${port}`;
     fastifyApp.log.info({ url }, 'Server is ready');
     fastifyApp.listen(port, '0.0.0.0');
   })
-  .catch(error => console.error(error));
+  .catch((error) => console.error(error));
 
 export { myCache };
