@@ -1,7 +1,7 @@
-import NextAuth from 'next-auth';
-import Providers from 'next-auth/providers';
+const NextAuth = require('next-auth');
+const Providers = require('next-auth/providers');
 
-export default NextAuth({
+module.exports = NextAuth({
   // Configure one or more authentication providers
   providers: [
     Providers.Credentials({
@@ -14,7 +14,7 @@ export default NextAuth({
         username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials) {
+      authorize(credentials) {
         // Add logic here to look up the user from the credentials supplied
         const user = { id: 1, name: 'J Smith', email: 'jsmith@example.com' };
 

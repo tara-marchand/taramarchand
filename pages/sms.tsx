@@ -2,18 +2,17 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-export default function Contact(): JSX.Element {
+export default function Sms(): JSX.Element {
   const { register, handleSubmit, errors } = useForm();
   const router = useRouter();
 
-  async function submitContactForm(bodyData: {
-    email: string;
+  async function submitSmsForm(bodyData: {
+    fromEmail: string;
     message: string;
-    name: string;
   }) {
     const body = JSON.stringify(bodyData);
 
-    fetch('/api/contact', {
+    fetch('/api/sms', {
       body,
       headers: {
         'Content-Type': 'application/json',
@@ -27,43 +26,21 @@ export default function Contact(): JSX.Element {
   }
 
   return (
-    <form
-      className="w-full max-w-lg"
-      onSubmit={handleSubmit(submitContactForm)}
-    >
+    <form className="w-full max-w-lg" onSubmit={handleSubmit(submitSmsForm)}>
       <div className="flex flex-wrap -mx-2 mb-4">
         <div className="w-full px-3">
-          <label className="block mb-2" htmlFor="name">
-            Name <span className="text-red-500">*</span>
+          <label className="block mb-2" htmlFor="fromEmail">
+            Your Email <span className="text-red-500">*</span>
           </label>
           <input
-            autoComplete="name"
-            className="appearance-none block w-full border py-2 px-3 mb-3 bg-gray-100 focus:outline-none focus:bg-white"
-            id="name"
-            name="name"
-            type="text"
-            placeholder="First Last"
-            ref={register({ required: 'Name is required.' })}
-          />
-          {errors.name && (
-            <span className="text-red-500">{errors.name.message}</span>
-          )}
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-2 mb-4">
-        <div className="w-full px-3">
-          <label className="block mb-2" htmlFor="email">
-            Email <span className="text-red-500">*</span>
-          </label>
-          <input
-            autoComplete="email"
+            autoComplete="fromEmail"
             className="appearance-none block w-full border py-2 px-3 mb-3 focus:outline-none bg-gray-100 focus:bg-white"
-            id="email"
-            name="email"
+            id="fromEmail"
+            name="fromEmail"
             type="text"
             placeholder="username@domain.com"
             ref={register({
-              required: 'Email is required.',
+              required: 'Your email address is required.',
               pattern: {
                 value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
                 message: 'Value must match email address format.',

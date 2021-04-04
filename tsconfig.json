@@ -29,6 +29,7 @@
     "isolatedModules": true
   },
   "include": [
+    "./.eslintrc.js",
     "./components/**/*",
     "./data/**/*",
     "./pages/**/*",

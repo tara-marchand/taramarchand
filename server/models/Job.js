@@ -6,34 +6,34 @@ function Job(sequelize, DataTypes) {
       id: {
         allowNull: false,
         type: DataTypes.TEXT,
-        primaryKey: true
+        primaryKey: true,
       },
       applied: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
       },
       company: {
         allowNull: false,
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
       },
       created: {
         allowNull: false,
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
       },
       link: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
       },
       role: {
         allowNull: false,
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
       },
       status: {
-        type: DataTypes.TEXT
-      }
+        type: DataTypes.TEXT,
+      },
     },
     {
-      tableName: 'jobs'
+      tableName: 'jobs',
     }
   );
 }
 
-export default { Job };
+module.exports = { Job };

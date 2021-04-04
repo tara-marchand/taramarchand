@@ -1,8 +1,8 @@
-import fp from 'fastify-plugin';
+const fp = require('fastify-plugin');
 
 const fastifyAuthenticate = fp(
-  function(fastify, options, next) {
-    fastify.decorate('authenticate', function(request, reply) {
+  function (fastify, options, next) {
+    fastify.decorate('authenticate', function (request, reply) {
       try {
         request.jwtVerify();
       } catch (err) {
@@ -15,4 +15,4 @@ const fastifyAuthenticate = fp(
   { name: 'fastify-authenticate' }
 );
 
-export { fastifyAuthenticate };
+module.exports = { fastifyAuthenticate };

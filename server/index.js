@@ -1,15 +1,14 @@
-import Airtable from 'airtable';
-import Fastify from 'fastify';
-import fastifyJwt from 'fastify-jwt';
-import fastifyStatic from 'fastify-static';
-import Next from 'next';
-import NodeCache from 'node-cache';
-import path from 'path';
-import './models/index.mjs';
-import fastifyNodemailer from 'fastify-nodemailer';
-import { fastifyAuthenticate } from './plugins/fastify-authenticate.mjs';
-import { routes } from './routes/index.mjs';
-import nodemailerMailgunTransport from 'nodemailer-mailgun-transport';
+const Airtable = require('airtable');
+const Fastify = require('fastify');
+const fastifyJwt = require('fastify-jwt');
+const fastifyStatic = require('fastify-static');
+const Next = require('next');
+const NodeCache = require('node-cache');
+const path = require('path');
+require('./models');
+const fastifyNodemailer = require('fastify-nodemailer');
+const { fastifyAuthenticate } = require('./plugins/fastify-authenticate');
+const nodemailerMailgunTransport = require('nodemailer-mailgun-transport');
 
 const port = process.env.PORT || 5000;
 const env = process.env.NODE_ENV;
@@ -19,24 +18,21 @@ const isProd = env === 'production';
 const myCache = new NodeCache();
 
 function build() {
-  const LOG_LEVEL = isProd ? 'error' : 'info';
-
-  const fastify = Fastify({ logger: { level: LOG_LEVEL } });
   const nextApp = Next({ dev: isDev });
+
   Airtable.configure({
     apiKey: process.env.AIRTABLE_API_KEY,
   });
 
   return nextApp.prepare().then(() => {
+    const LOG_LEVEL = isProd ? 'error' : 'info';
+    const fastify = Fastify({ logger: { level: LOG_LEVEL } });
+
     fastify.register(fastifyJwt, {
       secret: process.env.AUTH_JWT_SIGNATURE,
     });
-    fastify.after();
 
     fastify.register(fastifyAuthenticate);
-    fastify.after((error) => {
-      fastify.log.error(error);
-    });
 
     fastify.register(
       fastifyNodemailer,
@@ -52,12 +48,24 @@ function build() {
       root: path.join(process.cwd(), 'public'),
       prefix: '/public/',
     });
-    fastify.after();
 
-    fastify.register(routes, {
-      nextApp,
+    const nextHandler = nextApp.getRequestHandler();
+
+    fastify.register(require('./routes/admin'), {
+      prefix: '/admin',
     });
-    fastify.after();
+    fastify.register(require('./routes/api'), { prefix: '/api' });
+    fastify.register(
+      (fastify2, opts2, done2) => {
+        fastify2.get('/*', (req, reply) => {
+          opts2.nextHandler(req.raw, reply.raw);
+          reply.sent = true;
+        });
+
+        done2();
+      },
+      { nextHandler }
+    );
 
     fastify.setNotFoundHandler((request, reply) => {
       nextApp.render404(request.raw, reply.raw).then(() => {
@@ -78,4 +86,4 @@ build()
   })
   .catch((error) => console.error(error));
 
-export { myCache };
+module.exports = { myCache };

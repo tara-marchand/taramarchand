@@ -1,27 +1,27 @@
-import Sequelize from 'sequelize';
+const Sequelize = require('sequelize');
 
 function User(sequelize, DataTypes) {
   const User = sequelize.define('User', {
     id: {
       type: DataTypes.UUID,
       defaultValue: Sequelize.UUIDV4(),
-      primaryKey: true
+      primaryKey: true,
     },
     email: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     name: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     password: {
       allowNull: false,
-      type: DataTypes.STRING
-    }
+      type: DataTypes.STRING,
+    },
   });
 
   return User;
 }
 
-export default { User };
+module.exports = { User };

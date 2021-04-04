@@ -1,31 +1,31 @@
-import { config } from 'dotenv';
-import pg from 'pg';
-import Sequelize, { Sequelize as _Sequelize } from 'sequelize';
+const { config } = require('dotenv');
+const pg = require('pg');
+const Sequelize = require('sequelize');
 
-import user from './User.mjs';
-import job from './Job.mjs';
+const user = require('./User');
+const job = require('./Job');
 const { User } = user;
 const { Job } = job;
 
 config();
 
-const sequelize = new _Sequelize(process.env.DATABASE_URL, {
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
   dialectModule: pg,
   dialectOptions: {
     ssl: {
       require: true,
-      rejectUnauthorized: false
-    }
+      rejectUnauthorized: false,
+    },
   },
-  quoteIdentifiers: false
+  quoteIdentifiers: false,
 });
 
 const models = {};
 models.Job = Job(sequelize, Sequelize);
 models.User = User(sequelize, Sequelize);
 
-Object.keys(models).forEach(modelName => {
+Object.keys(models).forEach((modelName) => {
   if (models[modelName].associate) {
     models[modelName].associate(models);
   }
@@ -36,4 +36,4 @@ models.Sequelize = Sequelize;
 
 sequelize.sync({ force: true });
 
-export default { models };
+module.exports = { models };
