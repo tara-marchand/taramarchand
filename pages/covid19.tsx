@@ -1,8 +1,10 @@
 import { parse } from 'date-fns';
 import { sortBy, takeRight } from 'lodash';
 import React from 'react';
-import useSWR from 'swr';
+import useSwr from 'swr';
+// import useSWR from 'swr';
 import StatesCaDaily from '../components/pages/covid19/StatesCaDaily';
+import Highcharts from 'highcharts';
 
 const transformDataForCaByDay = (
   statesCaDailyRaw: Daily[]
@@ -21,14 +23,14 @@ const transformDataForCaByDay = (
 
       return {
         x: parsedDateUtcMilliseconds,
-        y: day.death,
+        y: day.death
       };
     }),
-    (day) => day.x
+    day => day.x
   );
 
 export default function Covid19(): React.ReactElement | null {
-  const { data, error } = useSWR<Daily[]>('/api/user', async () => {
+  const { data, error } = useSwr<Daily[]>('/api/user', async () => {
     const response = await fetch(
       'https://api.covidtracking.com/v1/states/ca/daily.json'
     );

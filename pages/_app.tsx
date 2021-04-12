@@ -63,6 +63,8 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 
   const comp = <Component {...pageProps} amplitude={amplitude} />;
 
+  amplitude && amplitude.logEvent('APP_RENDER');
+
   return (
     <>
       <Head>

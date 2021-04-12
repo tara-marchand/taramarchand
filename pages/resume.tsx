@@ -18,7 +18,7 @@ export async function getStaticProps() {
   };
 }
 
-export default function resume(props: Props): JSX.Element {
+export default function Resume(props: Props): JSX.Element {
   const { amplitude } = props;
 
   amplitude && amplitude.logEvent('RESUME_RENDER');
