@@ -1,16 +1,15 @@
 const fp = require('fastify-plugin');
 
 const fastifyAuthenticate = fp(
-  function (fastify, options, next) {
-    fastify.decorate('authenticate', function (request, reply) {
+  function (fastify, _opts, done) {
+    fastify.decorate('authenticate', async function (req, reply) {
       try {
-        request.jwtVerify();
+        await req.jwtVerify();
       } catch (err) {
         reply.send(err);
       }
     });
-
-    next();
+    done();
   },
   { name: 'fastify-authenticate' }
 );

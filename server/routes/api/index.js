@@ -1,5 +1,5 @@
 const twilio = require('twilio');
-const user = require('../models/User');
+const user = require('../../models/User');
 const jwt = require('jsonwebtoken');
 
 const { User } = user;
@@ -24,6 +24,12 @@ const smsSchema = {
 };
 
 module.exports = function api(fastify, _opts, done) {
+  fastify.post('/signup', (req, reply) => {
+    const token = fastify.jwt.sign({ foo: 'bar' });
+
+    reply.send({ token });
+  });
+
   fastify.get('/login', (req, reply) => {
     const email = req.email;
     const userRecord = User.findOne({ email });
@@ -57,6 +63,37 @@ module.exports = function api(fastify, _opts, done) {
       },
       token,
     });
+  });
+
+  fastify.get('/cookies', (req, reply) => {
+    const token = reply.jwtSign({
+      name: 'foo',
+      role: ['admin', 'spy'],
+    });
+
+    reply
+      .setCookie('token', token, {
+        domain: '*',
+        path: '/',
+        secure: true,
+        httpOnly: true,
+        sameSite: true,
+      })
+      .code(200)
+      .send('Cookie sent');
+  });
+
+  fastify.get('/verifycookie', async (req, reply) => {
+    try {
+      req
+        .jwtVerify()
+        .then(() => {
+          reply.send({ code: 'OK', message: 'it works!' });
+        })
+        .catch((error) => fastify.log.error(error));
+    } catch (error) {
+      reply.send(error);
+    }
   });
 
   fastify.post('/contact', contactSchema, (req, reply) => {

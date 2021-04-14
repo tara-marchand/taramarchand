@@ -2,6 +2,7 @@ const Airtable = require('airtable');
 const Fastify = require('fastify');
 const fastifyJwt = require('fastify-jwt');
 const fastifyStatic = require('fastify-static');
+const fastifyCookie = require('fastify-cookie');
 const Next = require('next');
 const NodeCache = require('node-cache');
 const path = require('path');
@@ -27,6 +28,8 @@ function build() {
   return nextApp.prepare().then(() => {
     const LOG_LEVEL = isProd ? 'error' : 'info';
     const fastify = Fastify({ logger: { level: LOG_LEVEL } });
+
+    fastify.register(fastifyCookie);
 
     fastify.register(fastifyJwt, {
       secret: process.env.AUTH_JWT_SIGNATURE,
