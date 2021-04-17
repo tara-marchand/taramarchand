@@ -19,8 +19,12 @@ module.exports = (phase) => {
   );
 
   const env = {
-    NEW_RELIC_SNIPPET: fs.readFileSync('./utils/newRelicSnippet.ts').toString(),
-    COUNTER_SNIPPET: fs.readFileSync('./utils/counterSnippet.ts').toString(),
+    NEW_RELIC_SNIPPET: fs
+      .readFileSync('./src/utils/newRelicSnippet.ts')
+      .toString(),
+    COUNTER_SNIPPET: fs
+      .readFileSync('./src/utils/counterSnippet.ts')
+      .toString(),
   };
 
   const typescript = {

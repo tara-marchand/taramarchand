@@ -1,16 +1,3 @@
-import { v4 as uuid4 } from 'uuid';
-import Airtable from 'airtable';
-import Fastify from 'fastify';
-import fastifyJwt from 'fastify-jwt';
-import fastifyStatic from 'fastify-static';
-import Next from 'next';
-import NodeCache from 'node-cache';
-import path from 'path';
-import './models/index.mjs';
-import fastifyNodemailer from 'fastify-nodemailer';
-import { fastifyAuthenticate } from './plugins/fastify-authenticate.mjs';
-import { routes } from './routes/index.mjs';
-import nodemailerMailgunTransport from 'nodemailer-mailgun-transport';
 const Airtable = require('airtable');
 const Fastify = require('fastify');
 const fastifyJwt = require('fastify-jwt');
@@ -61,13 +48,13 @@ function build() {
     );
 
     fastify.register(fastifyStatic, {
-      root: path.join(process.cwd(), 'public'),
+      root: path.join(process.cwd(), 'src/public'),
       prefix: '/public/',
     });
 
     const nextHandler = nextApp.getRequestHandler();
 
-    fastify.register(require('./routes/admin'), {
+    fastify.register(require('./routes/api/admin'), {
       prefix: '/admin',
     });
     fastify.register(require('./routes/api'), { prefix: '/api' });

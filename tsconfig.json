@@ -3,38 +3,26 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
     "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "moduleResolution": "node",
-    "outDir": "../build/",
+    "noEmit": true,
+    "noImplicitAny": false,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "strict": true,
     "suppressImplicitAnyIndexErrors": true,
     "target": "es6",
     "typeRoots": [
       "./node_modules/@types",
       "./node_modules/fastify",
-      "./node_modules/next",
-      "./components",
-      "./data",
-      "./pages",
-      "./types",
-      "./utils"
-    ],
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "isolatedModules": true
+      "./node_modules/next"
+    ]
   },
-  "include": [
-    "./.eslintrc.js",
-    "./components/**/*",
-    "./data/**/*",
-    "./pages/**/*",
-    "./types/**/*",
-    "./utils/**/*"
-  ],
-  "exclude": ["./node_modules", "./server"]
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "server"]
 }

@@ -3,7 +3,7 @@ import { sortBy, takeRight } from 'lodash';
 import React from 'react';
 import useSwr from 'swr';
 // import useSWR from 'swr';
-import StatesCaDaily from '../components/pages/covid19/StatesCaDaily';
+import StatesCaDaily from '../components/old/covid19/StatesCaDaily';
 import Highcharts from 'highcharts';
 
 const transformDataForCaByDay = (
@@ -23,10 +23,10 @@ const transformDataForCaByDay = (
 
       return {
         x: parsedDateUtcMilliseconds,
-        y: day.death
+        y: day.death,
       };
     }),
-    day => day.x
+    (day) => day.x
   );
 
 export default function Covid19(): React.ReactElement | null {
