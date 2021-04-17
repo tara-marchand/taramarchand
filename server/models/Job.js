@@ -1,5 +1,4 @@
-// Sequelize model for a job.
-function Job(sequelize, DataTypes) {
+module.exports = function Job(sequelize, DataTypes) {
   return sequelize.define(
     'Job',
     {
@@ -34,6 +33,4 @@ function Job(sequelize, DataTypes) {
       tableName: 'jobs',
     }
   );
-}
-
-module.exports = { Job };
+};

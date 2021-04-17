@@ -1,5 +1,5 @@
 const twilio = require('twilio');
-const user = require('../../models/User');
+const user = require('../models/User');
 const jwt = require('jsonwebtoken');
 
 const { User } = user;

@@ -1,11 +1,17 @@
 import get from 'lodash.get';
 import React, { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Link, { LinkProps } from 'next/link';
+
+interface UserState {
+  email: string;
+  name: string;
+  password: string;
+}
 
 export default function Signup(): ReactElement {
   const { register, handleSubmit, errors } = useForm();
-  const [user, setUser] = useState<{ name?: string; password?: string }>({
+  const [user, setUser] = useState<UserState>({
+    email: '',
     name: '',
     password: '',
   });
@@ -13,20 +19,20 @@ export default function Signup(): ReactElement {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = get(e, 'target.name');
     const value = get(e, 'target.value');
-    const update = {};
-    update[name] = value;
 
-    setUser(() => update);
+    const newUserState: UserState = Object.assign({}, user);
+    newUserState[name] = value;
+
+    setUser(() => newUserState);
   };
 
   const onSignupClick = () => {
-    const userData = {
-      name: user.name,
-      password: user.password,
-    };
+    // send `user`
 
     // TODO POST /api/users
-    console.log('Sign up ' + userData.name + ' ' + userData.password);
+    console.log(
+      'Sign up ' + user.name + ' ' + user.email + ' ' + user.password
+    );
   };
 
   return (
@@ -47,6 +53,27 @@ export default function Signup(): ReactElement {
               ref={register({ required: 'Name is required.' })}
               type="text"
               value={user.name}
+            />
+            {errors.name && (
+              <span className="text-red-500">{errors.name.message}</span>
+            )}
+          </div>
+        </div>
+        <div className="flex flex-wrap -mx-2 mb-4">
+          <div className="w-full px-3">
+            <label className="block mb-2" htmlFor="email">
+              Name <span className="text-red-500">*</span>
+            </label>
+            <input
+              autoComplete="email"
+              className="appearance-none block w-full border py-2 px-3 mb-3 bg-gray-100 focus:outline-none focus:bg-white"
+              id="email"
+              name="email"
+              onChange={onChange}
+              placeholder="username@hostname.com"
+              ref={register({ required: 'Email is required.' })}
+              type="text"
+              value={user.email}
             />
             {errors.name && (
               <span className="text-red-500">{errors.name.message}</span>

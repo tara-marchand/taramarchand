@@ -2,10 +2,9 @@ const { config } = require('dotenv');
 const pg = require('pg');
 const Sequelize = require('sequelize');
 
-const user = require('./User');
-const job = require('./Job');
-const { User } = user;
-const { Job } = job;
+const AuthToken = require('./AuthToken');
+const User = require('./User');
+const Job = require('./Job');
 
 config();
 
@@ -22,6 +21,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 });
 
 const models = {};
+models.AuthToken = AuthToken(sequelize, Sequelize);
 models.Job = Job(sequelize, Sequelize);
 models.User = User(sequelize, Sequelize);
 

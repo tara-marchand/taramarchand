@@ -1,4 +1,6 @@
+// Fastify route schema
 module.exports = {
+  $id: 'userSchema',
   type: 'object',
   properties: {
     id: {
@@ -14,4 +16,5 @@ module.exports = {
       type: 'string',
     },
   },
+  required: ['email', 'password'],
 };

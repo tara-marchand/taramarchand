@@ -1,6 +1,5 @@
-// Sequelize model for a book.
-function Book(sequelize, DataTypes) {
-  const Book = sequelize.define('Book', {
+module.exports = function Book(sequelize, DataTypes) {
+  return sequelize.define('Book', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -15,8 +14,4 @@ function Book(sequelize, DataTypes) {
       type: DataTypes.TEXT,
     },
   });
-
-  return Book;
-}
-
-export { Book };
+};

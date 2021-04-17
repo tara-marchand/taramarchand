@@ -54,10 +54,12 @@ function build() {
 
     const nextHandler = nextApp.getRequestHandler();
 
-    fastify.register(require('./routes/api/admin'), {
-      prefix: '/admin',
-    });
-    fastify.register(require('./routes/api'), { prefix: '/api' });
+    // Add schemas for routes
+    fastify.addSchema(require('./schemas/user'));
+
+    fastify.register(require('./api'), { prefix: '/api' });
+
+    // Render everything else (UI) using next
     fastify.register(
       (fastify2, opts2, done2) => {
         fastify2.get('/*', (req, reply) => {
