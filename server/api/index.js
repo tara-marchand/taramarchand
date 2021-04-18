@@ -1,6 +1,8 @@
 const twilio = require('twilio');
+
 const user = require('../models/User');
 const jwt = require('jsonwebtoken');
+const models = require('../models');
 
 const { User } = user;
 
@@ -24,13 +26,13 @@ const smsSchema = {
 };
 
 module.exports = function api(fastify, _opts, done) {
-  fastify.post('/signup', (req, reply) => {
+  fastify.post('/_signup', (req, reply) => {
     const token = fastify.jwt.sign({ foo: 'bar' });
 
     reply.send({ token });
   });
 
-  fastify.get('/login', (req, reply) => {
+  fastify.get('/_login', (req, reply) => {
     const email = req.email;
     const userRecord = User.findOne({ email });
 
@@ -65,7 +67,7 @@ module.exports = function api(fastify, _opts, done) {
     });
   });
 
-  fastify.get('/cookies', (req, reply) => {
+  fastify.get('/_cookies', (req, reply) => {
     const token = reply.jwtSign({
       name: 'foo',
       role: ['admin', 'spy'],
@@ -83,7 +85,7 @@ module.exports = function api(fastify, _opts, done) {
       .send('Cookie sent');
   });
 
-  fastify.get('/verifycookie', async (req, reply) => {
+  fastify.get('/_verifycookie', async (req, reply) => {
     try {
       req
         .jwtVerify()
@@ -136,6 +138,65 @@ module.exports = function api(fastify, _opts, done) {
         to: myPhoneNum,
       })
       .then((message) => reply.send(message));
+  });
+
+  // Log in
+  fastify.route({
+    method: 'POST',
+    url: '/login',
+    schema: {
+      body: { $ref: 'userSchema#' },
+      response: {
+        200: { $ref: 'userSchema#' },
+      },
+    },
+    handler: async function (request, reply) {
+      const { email, password } = request.body;
+
+      // if the username / password is missing, we use status code 400
+      // indicating a bad request was made and send back a message
+      if (!email || !password) {
+        return reply
+          .status(400)
+          .send('Request missing email or password param');
+      }
+
+      try {
+        let user = await models.User.authenticate(email, password);
+        user = await user.authorize();
+
+        return reply.serialize(user);
+      } catch (err) {
+        return reply.status(400).send('Invalid email or password');
+      }
+    },
+  });
+
+  // Log out
+  fastify.route({
+    method: 'DELETE',
+    url: '/logout',
+    schema: {
+      body: { $ref: 'userSchema#' },
+      response: {
+        200: { $ref: 'userSchema#' },
+      },
+    },
+    handler: async function (request, reply) {
+      const {
+        user,
+        cookies: { auth_token: authToken },
+      } = request;
+
+      if (user && authToken) {
+        await request.user.logout(authToken);
+        return reply.status(204).send();
+      }
+
+      return reply
+        .status(400)
+        .send({ errors: [{ message: 'Not authenticated' }] });
+    },
   });
 
   done();

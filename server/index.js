@@ -6,6 +6,7 @@ const fastifyCookie = require('fastify-cookie');
 const Next = require('next');
 const NodeCache = require('node-cache');
 const path = require('path');
+
 require('./models');
 const fastifyNodemailer = require('fastify-nodemailer');
 const { fastifyAuthenticate } = require('./plugins/fastify-authenticate');
@@ -58,14 +59,15 @@ function build() {
     fastify.addSchema(require('./schemas/user'));
 
     fastify.register(require('./api'), { prefix: '/api' });
+    fastify.register(require('./api/users'), { prefix: '/api/users' });
 
-    // Render everything else (UI) using next
     fastify.register(
       (fastify2, opts2, done2) => {
-        fastify2.get('/*', (req, reply) => {
-          opts2.nextHandler(req.raw, reply.raw);
-          reply.sent = true;
-        });
+        fastify2.get('/*', (request, reply) =>
+          opts2.nextHandler(request.raw, reply.raw).then(() => {
+            reply.sent = true;
+          })
+        );
 
         done2();
       },
