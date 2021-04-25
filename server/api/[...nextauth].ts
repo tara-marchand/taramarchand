@@ -1,7 +1,7 @@
-const NextAuth = require('next-auth');
-const Providers = require('next-auth/providers');
+import NextAuth from 'next-auth';
+import Providers from 'next-auth/providers';
 
-module.exports = NextAuth({
+export default NextAuth({
   // Configure one or more authentication providers
   providers: [
     Providers.Credentials({

@@ -17,12 +17,8 @@
     "strict": true,
     "suppressImplicitAnyIndexErrors": true,
     "target": "es6",
-    "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules/fastify",
-      "./node_modules/next"
-    ]
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "include": ["./src/**/*"],
-  "exclude": ["node_modules", "server"]
+  "exclude": ["node_modules"]
 }

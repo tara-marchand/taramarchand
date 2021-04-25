@@ -1,8 +1,8 @@
-const bcrypt = require('bcrypt');
-const userSchema = require('../schemas/user');
-const models = require('../models').models;
+import bcrypt from 'bcrypt';
+import userSchema from '../schemas/user';
+import { models } from '../models';
 
-module.exports = function api(fastify, _opts, done) {
+export default function api(fastify, _opts, done) {
   // Create new user
   fastify.route({
     method: 'POST',
@@ -25,7 +25,11 @@ module.exports = function api(fastify, _opts, done) {
         // const userData = await user.authorize();
 
         // Send back the new user and auth token to the client
-        return reply.serialize(user);
+        return reply.serialize({
+          id: user.id,
+          email: user.email,
+          name: user.name,
+        });
       } catch (err) {
         return reply.status(400).send(err);
       }

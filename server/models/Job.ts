@@ -1,4 +1,4 @@
-module.exports = function Job(sequelize, DataTypes) {
+export default function Job(sequelize, DataTypes) {
   return sequelize.define(
     'Job',
     {

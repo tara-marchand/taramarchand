@@ -1,8 +1,7 @@
-const twilio = require('twilio');
-
-const user = require('../models/User');
-const jwt = require('jsonwebtoken');
-const models = require('../models');
+import twilio from 'twilio';
+import user from '../models/User';
+import jwt from 'jsonwebtoken';
+import models from '../models';
 
 const { User } = user;
 
@@ -25,7 +24,7 @@ const smsSchema = {
   },
 };
 
-module.exports = function api(fastify, _opts, done) {
+export default function api(fastify, _opts, done) {
   fastify.post('/_signup', (req, reply) => {
     const token = fastify.jwt.sign({ foo: 'bar' });
 

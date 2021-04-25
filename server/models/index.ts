@@ -1,10 +1,9 @@
-const { config } = require('dotenv');
-const pg = require('pg');
-const Sequelize = require('sequelize');
-
-const AuthToken = require('./AuthToken');
-const User = require('./User');
-const Job = require('./Job');
+import { config } from 'dotenv';
+import pg from 'pg';
+import { Model, Sequelize } from 'sequelize';
+import AuthToken from './AuthToken';
+import User from './User';
+import Job from './Job';
 
 config();
 
@@ -20,7 +19,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
   quoteIdentifiers: false,
 });
 
-const models = {};
+const models: { [modelName: string]: Model } = {};
 models.AuthToken = AuthToken(sequelize, Sequelize);
 models.Job = Job(sequelize, Sequelize);
 models.User = User(sequelize, Sequelize);
@@ -36,4 +35,4 @@ models.Sequelize = Sequelize;
 
 sequelize.sync({ force: true });
 
-module.exports = { models };
+export default { models };

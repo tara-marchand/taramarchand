@@ -13,16 +13,18 @@
   },
   "scripts": {
     "build": "NODE_ENV=production next build",
+    "build:server": "tsc --project tsconfig.server.json",
     "start": "npm run start:dev",
-    "start:dev": "NEW_RELIC_ENABLED=false NODE_ENV=development node server/index.js",
-    "start:prod": "NEW_RELIC_ENABLED=true NODE_ENV=production node server/index.js",
-    "start:prod:local": "npm run build; NEW_RELIC_ENABLED=false NODE_ENV=production node server/index.js",
+    "start:dev": "NEW_RELIC_ENABLED=false NODE_ENV=development npm run build:server && node .server/index.js",
+    "start:prod": "NEW_RELIC_ENABLED=true NODE_ENV=production npm run build:server && node .server/index.js",
+    "start:prod:local": "npm run build; NEW_RELIC_ENABLED=false NODE_ENV=production npm run build:server && node .server/index.js",
     "heroku-postbuild": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "5to6-codemod": "^1.8.0",
     "@amplitude/node": "^1.5.1",
     "@apollo/client": "^3.2.8",
     "@emotion/react": "^11.1.4",

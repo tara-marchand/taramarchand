@@ -1,5 +1,5 @@
-const fp = require('fastify-plugin');
-const models = require('../models');
+import fp from 'fastify-plugin';
+import models from '../models';
 
 const fastifyAuthenticate = fp(
   function (fastify, _opts, done) {
@@ -23,4 +23,4 @@ const fastifyAuthenticate = fp(
   { name: 'fastify-authenticate' }
 );
 
-module.exports = { fastifyAuthenticate };
+export default { fastifyAuthenticate };

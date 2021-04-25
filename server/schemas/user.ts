@@ -1,5 +1,5 @@
 // Fastify route schema
-module.exports = {
+export default {
   $id: 'userSchema',
   type: 'object',
   properties: {

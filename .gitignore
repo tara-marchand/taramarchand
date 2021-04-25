@@ -10,3 +10,4 @@ newrelic_agent.log
 yarn-error.log
 .vscode
 .next
+.server

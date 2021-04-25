@@ -1,16 +1,15 @@
-const Airtable = require('airtable');
-const Fastify = require('fastify');
-const fastifyJwt = require('fastify-jwt');
-const fastifyStatic = require('fastify-static');
-const fastifyCookie = require('fastify-cookie');
-const Next = require('next');
-const NodeCache = require('node-cache');
-const path = require('path');
-
-require('./models');
-const fastifyNodemailer = require('fastify-nodemailer');
-const { fastifyAuthenticate } = require('./plugins/fastify-authenticate');
-const nodemailerMailgunTransport = require('nodemailer-mailgun-transport');
+import Airtable from 'airtable';
+import Fastify from 'fastify';
+import fastifyJwt from 'fastify-jwt';
+import fastifyStatic from 'fastify-static';
+import fastifyCookie from 'fastify-cookie';
+import Next from 'next';
+import NodeCache from 'node-cache';
+import path from 'path';
+import './models';
+import fastifyNodemailer from 'fastify-nodemailer';
+import { fastifyAuthenticate } from './plugins/fastify-authenticate';
+import nodemailerMailgunTransport from 'nodemailer-mailgun-transport';
 
 const port = process.env.PORT || 5000;
 const env = process.env.NODE_ENV;
@@ -55,7 +54,7 @@ function build() {
 
     const nextHandler = nextApp.getRequestHandler();
 
-    // Add schemas for routes
+    // Add schemas for API routes
     fastify.addSchema(require('./schemas/user'));
 
     fastify.register(require('./api'), { prefix: '/api' });
@@ -63,6 +62,10 @@ function build() {
 
     fastify.register(
       (fastify2, opts2, done2) => {
+        fastify2.get('/favicon.ico', (_request, reply) => {
+          reply.code(404).send();
+        });
+
         fastify2.get('/*', (request, reply) =>
           opts2.nextHandler(request.raw, reply.raw).then(() => {
             reply.sent = true;
@@ -93,4 +96,4 @@ build()
   })
   .catch((error) => console.error(error));
 
-module.exports = { myCache };
+export default { myCache };

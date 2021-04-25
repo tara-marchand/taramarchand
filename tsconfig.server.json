@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "lib": [],
+    "module": "commonjs",
+    "sourceMap": true,
+    "outDir": ".server/"
+  },
+  "include": ["./server/**/*"],
+  "exclude": ["node_modules"]
+}
