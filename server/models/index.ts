@@ -12,7 +12,7 @@ let sequelize;
 let models: {
   [modelName: string]: Sequelize.ModelDefined<any, any>;
 } = {};
-const dbUrl = get(process.env, 'DATABASE_URL');
+const dbUrl = process.env.DATABASE_URL;
 
 if (dbUrl) {
   sequelize = new Sequelize.Sequelize(dbUrl, {

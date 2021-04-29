@@ -26,13 +26,15 @@ const myCache = new NodeCache();
 
 function build() {
   const nextApp = Next({ dev: isDev });
-  const airtableApiKey = get(process.env, 'AIRTABLE_API_KEY');
+  const airtableApiKey = process.env.AIRTABLE_API_KEY;
   const airtableConfig: any = {};
+
   if (airtableApiKey) {
     airtableConfig.apiKey = airtableApiKey;
+
+    Airtable.configure(airtableConfig);
   }
 
-  Airtable.configure(airtableConfig);
 
   return nextApp.prepare().then(() => {
     const LOG_LEVEL = isProd ? 'error' : 'info';
