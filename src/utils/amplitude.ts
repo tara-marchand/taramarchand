@@ -1,8 +1,8 @@
-import amplitude, { AmplitudeClient } from 'amplitude-js';
+import amplitude from 'amplitude-js';
 
-let amplitudeInstance: AmplitudeClient | undefined;
+let amplitudeInstance: amplitude.AmplitudeClient | undefined;
 
-if (window && process.env.NODE_ENV === 'production') {
+if (window && process.env.NODE_ENV === 'development') {
   const ampApiKey = process.env.NEXT_PUBLIC_AMPLITUDE_API_KEY;
   if (ampApiKey) {
     amplitudeInstance = amplitude.getInstance(ampApiKey);
@@ -16,4 +16,4 @@ if (window && process.env.NODE_ENV === 'production') {
   }
 }
 
-export { amplitudeInstance };
+export const getAmplitudeInstance = () => amplitudeInstance;

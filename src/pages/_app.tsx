@@ -46,20 +46,13 @@ const CounterScript = (): JSX.Element | null => {
   return <script dangerouslySetInnerHTML={{ __html: counterSnippet }}></script>;
 };
 
-interface CompProps {
-  amplitude?: AmplitudeClient;
-}
-
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
-  const compProps: CompProps = {};
-
   let amplitude: AmplitudeClient | undefined;
-  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
+  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
     import('../utils/amplitude').then((importedAmp) => {
-      amplitude = importedAmp.amplitudeInstance;
+      amplitude = importedAmp.getAmplitudeInstance();
     });
   }
-  compProps.amplitude = amplitude;
 
   const comp = <Component {...pageProps} amplitude={amplitude} />;
 
