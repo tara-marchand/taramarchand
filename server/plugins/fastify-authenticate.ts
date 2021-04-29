@@ -1,5 +1,6 @@
 import fp from 'fastify-plugin';
-import models from '../models';
+
+import { models, sequelize } from '../models';
 
 const fastifyAuthenticate = fp(
   function (fastify, _opts, done) {
@@ -7,7 +8,7 @@ const fastifyAuthenticate = fp(
       const token = request.cookies.auth_token || request.headers.authorization;
 
       if (token) {
-        const authToken = await models.AuthToken.find({
+        const authToken = await sequelize.models.AuthToken.find({
           where: { token },
           include: models.User,
         });
@@ -23,4 +24,5 @@ const fastifyAuthenticate = fp(
   { name: 'fastify-authenticate' }
 );
 
-export default { fastifyAuthenticate };
+export {fastifyAuthenticate};
+

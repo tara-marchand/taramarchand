@@ -1,6 +1,6 @@
 // Fastify route schema
-export default {
-  $id: 'userSchema',
+export const userSchema = {
+  $id: 'user',
   type: 'object',
   properties: {
     id: {

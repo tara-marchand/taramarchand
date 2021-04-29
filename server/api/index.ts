@@ -1,28 +1,12 @@
+import jwt, { Secret } from 'jsonwebtoken';
+import Sequelize from 'sequelize';
+import { FindOptions } from 'sequelize/types';
 import twilio from 'twilio';
-import user from '../models/User';
-import jwt from 'jsonwebtoken';
-import models from '../models';
 
-const { User } = user;
-
-const contactSchema = {
-  type: 'object',
-  required: ['email', 'message', 'name'],
-  properties: {
-    email: { type: 'string' },
-    message: { type: 'string' },
-    name: { type: 'string' },
-  },
-};
-
-const smsSchema = {
-  type: 'object',
-  required: ['fromEmail', 'message'],
-  properties: {
-    fromEmail: { type: 'string' },
-    message: { type: 'string' },
-  },
-};
+import { models, sequelize } from '../models';
+import { User, UserAttributes, UserCreationAttributes } from '../models/User';
+import { contactSchema } from '../schemas/contact';
+import { smsSchema } from '../schemas/sms';
 
 export default function api(fastify, _opts, done) {
   fastify.post('/_signup', (req, reply) => {
@@ -31,9 +15,11 @@ export default function api(fastify, _opts, done) {
     reply.send({ token });
   });
 
-  fastify.get('/_login', (req, reply) => {
+  fastify.get('/_login', async (req, reply) => {
     const email = req.email;
-    const userRecord = User.findOne({ email });
+    const userRecord = (await sequelize.models.User.findOne({
+      email,
+    } as FindOptions<UserAttributes>)) as User;
 
     if (!userRecord) {
       throw new Error('User not found');
@@ -53,7 +39,7 @@ export default function api(fastify, _opts, done) {
       name: userRecord.name,
       email: userRecord.email,
     };
-    const signature = process.env.AUTH_JWT_SIGNATURE;
+    const signature = process.env.AUTH_JWT_SIGNATURE as Secret;
     const expiration = '6h';
     const token = jwt.sign({ data }, signature, { expiresIn: expiration });
 
@@ -128,7 +114,7 @@ export default function api(fastify, _opts, done) {
       process.env.TWILIO_ACCOUNT_SID,
       process.env.TWILIO_AUTH_TOKEN
     );
-    const myPhoneNum = process.env.MY_PHONE_NUM;
+    const myPhoneNum = process.env.MY_PHONE_NUM || '';
 
     twilioClient.messages
       .create({
@@ -144,9 +130,9 @@ export default function api(fastify, _opts, done) {
     method: 'POST',
     url: '/login',
     schema: {
-      body: { $ref: 'userSchema#' },
+      body: { $ref: 'user#' },
       response: {
-        200: { $ref: 'userSchema#' },
+        200: { $ref: 'user#' },
       },
     },
     handler: async function (request, reply) {
@@ -161,7 +147,7 @@ export default function api(fastify, _opts, done) {
       }
 
       try {
-        let user = await models.User.authenticate(email, password);
+        let user = await User.authenticate(email, password);
         user = await user.authorize();
 
         return reply.serialize(user);
@@ -176,9 +162,9 @@ export default function api(fastify, _opts, done) {
     method: 'DELETE',
     url: '/logout',
     schema: {
-      body: { $ref: 'userSchema#' },
+      body: { $ref: 'user#' },
       response: {
-        200: { $ref: 'userSchema#' },
+        200: { $ref: 'user#' },
       },
     },
     handler: async function (request, reply) {
@@ -199,4 +185,4 @@ export default function api(fastify, _opts, done) {
   });
 
   done();
-};
+}

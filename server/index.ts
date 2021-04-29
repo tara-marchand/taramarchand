@@ -1,15 +1,21 @@
+import './models';
+
 import Airtable from 'airtable';
 import Fastify from 'fastify';
-import fastifyJwt from 'fastify-jwt';
-import fastifyStatic from 'fastify-static';
 import fastifyCookie from 'fastify-cookie';
+import fastifyJwt, { Secret } from 'fastify-jwt';
+import fastifyNodemailer from 'fastify-nodemailer';
+import fastifyStatic from 'fastify-static';
+import get from 'lodash.get';
 import Next from 'next';
 import NodeCache from 'node-cache';
-import path from 'path';
-import './models';
-import fastifyNodemailer from 'fastify-nodemailer';
-import { fastifyAuthenticate } from './plugins/fastify-authenticate';
 import nodemailerMailgunTransport from 'nodemailer-mailgun-transport';
+import path from 'path';
+
+import { fastifyAuthenticate } from './plugins/fastify-authenticate';
+import { contactSchema } from './schemas/contact';
+import { smsSchema } from './schemas/sms';
+import { userSchema } from './schemas/user';
 
 const port = process.env.PORT || 5000;
 const env = process.env.NODE_ENV;
@@ -20,10 +26,13 @@ const myCache = new NodeCache();
 
 function build() {
   const nextApp = Next({ dev: isDev });
+  const airtableApiKey = get(process.env, 'AIRTABLE_API_KEY');
+  const airtableConfig: any = {};
+  if (airtableApiKey) {
+    airtableConfig.apiKey = airtableApiKey;
+  }
 
-  Airtable.configure({
-    apiKey: process.env.AIRTABLE_API_KEY,
-  });
+  Airtable.configure(airtableConfig);
 
   return nextApp.prepare().then(() => {
     const LOG_LEVEL = isProd ? 'error' : 'info';
@@ -32,7 +41,7 @@ function build() {
     fastify.register(fastifyCookie);
 
     fastify.register(fastifyJwt, {
-      secret: process.env.AUTH_JWT_SIGNATURE,
+      secret: process.env.AUTH_JWT_SIGNATURE as Secret,
     });
 
     fastify.register(fastifyAuthenticate);
@@ -55,10 +64,12 @@ function build() {
     const nextHandler = nextApp.getRequestHandler();
 
     // Add schemas for API routes
-    fastify.addSchema(require('./schemas/user'));
+    fastify.addSchema(contactSchema);
+    fastify.addSchema(smsSchema);
+    fastify.addSchema(userSchema);
 
-    fastify.register(require('./api'), { prefix: '/api' });
-    fastify.register(require('./api/users'), { prefix: '/api/users' });
+    fastify.register(import('./api'), { prefix: '/api' });
+    fastify.register(import('./api/users'), { prefix: '/api/users' });
 
     fastify.register(
       (fastify2, opts2, done2) => {

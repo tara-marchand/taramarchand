@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
-import userSchema from '../schemas/user';
+import { userSchema } from '../schemas/user';
 import { models } from '../models';
+import { User } from '../models/User';
 
 export default function api(fastify, _opts, done) {
   // Create new user
@@ -20,7 +21,7 @@ export default function api(fastify, _opts, done) {
       try {
         const user = await models.User.create(
           Object.assign(request.body, { password: hashedPassword })
-        );
+        ) as User;
         // Data will be an object with the user and its `AuthToken`
         // const userData = await user.authorize();
 

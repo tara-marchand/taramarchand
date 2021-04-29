@@ -1,12 +1,12 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "allowJs": true,
+    "esModuleInterop": true,
     "lib": [],
     "module": "commonjs",
+    "skipLibCheck": true,
     "sourceMap": true,
-    "outDir": ".server/"
+    "outDir": ".server"
   },
-  "include": ["./server/**/*"],
+  "include": ["server/**/*"],
   "exclude": ["node_modules"]
 }

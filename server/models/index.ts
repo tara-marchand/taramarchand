@@ -1,38 +1,36 @@
 import { config } from 'dotenv';
+import get from 'lodash.get';
 import pg from 'pg';
-import { Model, Sequelize } from 'sequelize';
-import AuthToken from './AuthToken';
-import User from './User';
-import Job from './Job';
+import Sequelize, { DataTypes } from 'sequelize';
+
+import { AuthToken, AuthTokenFactory } from './AuthToken';
+import { UserFactory, User } from './User';
 
 config();
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: 'postgres',
-  dialectModule: pg,
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
+let sequelize;
+let models: {
+  [modelName: string]: Sequelize.ModelDefined<any, any>;
+} = {};
+const dbUrl = get(process.env, 'DATABASE_URL');
+
+if (dbUrl) {
+  sequelize = new Sequelize.Sequelize(dbUrl, {
+    dialect: 'postgres',
+    dialectModule: pg,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
     },
-  },
-  quoteIdentifiers: false,
-});
+    quoteIdentifiers: false,
+  });
 
-const models: { [modelName: string]: Model } = {};
-models.AuthToken = AuthToken(sequelize, Sequelize);
-models.Job = Job(sequelize, Sequelize);
-models.User = User(sequelize, Sequelize);
+  models.AuthToken = AuthTokenFactory(sequelize, DataTypes);
+  models.User = UserFactory(sequelize, DataTypes);
 
-Object.keys(models).forEach((modelName) => {
-  if (models[modelName].associate) {
-    models[modelName].associate(models);
-  }
-});
+  sequelize.sync({ force: true });
+}
 
-models.sequelize = sequelize;
-models.Sequelize = Sequelize;
-
-sequelize.sync({ force: true });
-
-export default { models };
+export { models, sequelize };

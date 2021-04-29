@@ -1,21 +1,35 @@
-export default (sequelize, DataTypes) => {
-  const AuthToken = sequelize.define(
-    'AuthToken',
-    {
-      token: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
-    },
-    {}
-  );
+import Sequelize from 'sequelize';
+import { models } from '.';
+import { User } from './User';
 
-  AuthToken.associate = function (models) {
-    AuthToken.belongsTo(models.User);
-  };
+interface AuthTokenAttributes {
+  token: string;
+}
+
+interface AuthTokenCreationAttributes {}
+
+export class AuthToken
+  extends Sequelize.Model<AuthTokenAttributes, AuthTokenCreationAttributes>
+  implements AuthTokenAttributes {
+  public token!: string;
+
+  // timestamps!
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
+  public generate!: (userId: string) => void;
+}
+
+export const AuthTokenFactory = (sequelize: Sequelize.Sequelize, DataTypes) => {
+  const model = sequelize.define<AuthToken>('AuthToken', {
+    token: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+  });
 
   // Generates a random 15-character token & associates it with a user
-  AuthToken.generate = async function (userId) {
+  model.prototype.generate = async (userId) => {
     if (!userId) {
       throw new Error('AuthToken requires a user ID');
     }
@@ -30,8 +44,8 @@ export default (sequelize, DataTypes) => {
       );
     }
 
-    return AuthToken.create({ token, userId });
+    return model.create({ token });
   };
 
-  return AuthToken;
+  return model;
 };

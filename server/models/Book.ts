@@ -1,5 +1,5 @@
-export default function Book(sequelize, DataTypes) {
-  return sequelize.define('Book', {
+export default function BookFactory(sequelize, DataTypes) {
+  const book = sequelize.define('Book', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -14,4 +14,6 @@ export default function Book(sequelize, DataTypes) {
       type: DataTypes.TEXT,
     },
   });
-};
+
+  return book;
+}
