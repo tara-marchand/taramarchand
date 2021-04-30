@@ -1,15 +1,15 @@
 import '../styles/globals.css';
 
-import { AmplitudeClient } from 'amplitude-js';
 import { AppProps } from 'next/dist/next-server/lib/router/router';
 import Head from 'next/head';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Provider } from 'react-redux';
 
 import ErrorBoundary from '../components/ErrorBoundary';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import store from '../data/store';
+import { isProd } from '../data/utils';
 
 const nrSnippet = process.env.NEW_RELIC_SNIPPET;
 const counterSnippet = process.env.COUNTER_SNIPPET;
@@ -46,24 +46,42 @@ const CounterScript = (): JSX.Element | null => {
   return <script dangerouslySetInnerHTML={{ __html: counterSnippet }}></script>;
 };
 
+const AmplitudeContext = React.createContext<amplitude.AmplitudeClient | null>(
+  null
+);
+
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
-  let amplitude: AmplitudeClient | undefined;
-  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
-    import('../utils/amplitude').then((importedAmp) => {
-      amplitude = importedAmp.getAmplitudeInstance();
+  let amplitudeInstance;
+
+  if (typeof window !== 'undefined' && isProd()) {
+    import('amplitude-js').then((amplitude) => {
+      const ampApiKey = process.env.NEXT_PUBLIC_AMPLITUDE_API_KEY;
+
+      if (ampApiKey) {
+        const amplitudeInstance = amplitude.getInstance(ampApiKey);
+        amplitudeInstance.init(ampApiKey, undefined, {
+          includeUtm: true,
+          includeReferrer: true,
+        });
+
+        const identify = new amplitudeInstance.Identify();
+        amplitudeInstance.identify(identify);
+      }
     });
   }
 
-  const comp = <Component {...pageProps} amplitude={amplitude} />;
-
-  amplitude && amplitude.logEvent('APP_RENDER');
+  const comp = (
+    <AmplitudeContext.Provider value={amplitudeInstance}>
+      <Component {...pageProps} />
+    </AmplitudeContext.Provider>
+  );
 
   return (
     <>
       <Head>
         <title>Tara Marchand</title>
-        {process.env.NODE_ENV === 'production' && <NrScript />}
-        {process.env.NODE_ENV === 'production' && <CounterScript />}
+        {isProd() && <NrScript />}
+        {isProd() && <CounterScript />}
       </Head>
       <Provider store={store}>
         <ErrorBoundary>
@@ -82,4 +100,6 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   );
 }
 
+export const useAmplitude = () =>
+  useContext<amplitude.AmplitudeClient | null>(AmplitudeContext);
 export default MyApp;
