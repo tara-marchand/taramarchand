@@ -2,7 +2,7 @@ import React from 'react';
 import { useAmplitude } from './_app';
 
 export default function Home(): JSX.Element {
-  const amplitudeInstance = useAmplitude();
+  const amplitudeInstance = useAmplitude()?.ampInstance;
 
   amplitudeInstance && amplitudeInstance.logEvent('HOME_RENDER');
   return (
