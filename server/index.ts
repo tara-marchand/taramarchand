@@ -15,7 +15,7 @@ import path from 'path';
 import { fastifyAuthenticate } from './plugins/fastify-authenticate';
 import { contactSchema } from './schemas/contact';
 import { smsSchema } from './schemas/sms';
-import { userSchema } from './schemas/user';
+import { signupRequest, signupResponse } from './schemas/signup';
 
 const port = process.env.PORT || 5000;
 const env = process.env.NODE_ENV;
@@ -34,7 +34,6 @@ function build() {
 
     Airtable.configure(airtableConfig);
   }
-
 
   return nextApp.prepare().then(() => {
     const LOG_LEVEL = isProd ? 'error' : 'info';
@@ -68,10 +67,10 @@ function build() {
     // Add schemas for API routes
     fastify.addSchema(contactSchema);
     fastify.addSchema(smsSchema);
-    fastify.addSchema(userSchema);
+    fastify.addSchema(signupRequest);
+    fastify.addSchema(signupResponse);
 
     fastify.register(import('./api'), { prefix: '/api' });
-    fastify.register(import('./api/users'), { prefix: '/api/users' });
 
     fastify.register(
       (fastify2, opts2, done2) => {

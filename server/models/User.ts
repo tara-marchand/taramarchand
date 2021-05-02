@@ -14,19 +14,18 @@ import { AuthToken } from './AuthToken';
 export interface UserAttributes {
   email: string;
   id: number;
-  name: string;
   password: string;
 }
 
 // Some attributes are optional in `User.build` and `User.create` calls
-export interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+export interface UserCreationAttributes
+  extends Optional<UserAttributes, 'id'> {}
 
 export class User
   extends Sequelize.Model<UserAttributes, UserCreationAttributes>
   implements UserAttributes {
   public id!: number; // Note that the `null assertion` `!` is required in strict mode.
   public email!: string;
-  public name!: string;
   public password!: string; // for nullable fields
 
   // timestamps!
@@ -51,7 +50,7 @@ export class User
   public static logout: () => any;
 }
 
-export const UserFactory = (sequelize: Sequelize.Sequelize, DataTypes) => {  
+export const UserFactory = (sequelize: Sequelize.Sequelize, DataTypes) => {
   const model = sequelize.define<User, UserAttributes>('User', {
     id: {
       type: DataTypes.UUID,
@@ -63,10 +62,6 @@ export const UserFactory = (sequelize: Sequelize.Sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING,
       unique: true,
-    },
-    name: {
-      allowNull: false,
-      type: DataTypes.STRING,
     },
     password: {
       allowNull: false,

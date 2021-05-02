@@ -7,49 +7,77 @@ import { models, sequelize } from '../models';
 import { User, UserAttributes, UserCreationAttributes } from '../models/User';
 import { contactSchema } from '../schemas/contact';
 import { smsSchema } from '../schemas/sms';
+import { signupRequest, signupResponse } from '../schemas/signup';
+import bcrypt from 'bcrypt';
 
 export default function api(fastify, _opts, done) {
-  fastify.post('/_signup', (req, reply) => {
-    const token = fastify.jwt.sign({ foo: 'bar' });
+  fastify.post('/signup', (req, reply) => {
+    fastify.route({
+      method: 'POST',
+      // preValidation: fastify.authenticate,
+      url: '/signup',
+      schema: {
+        body: signupRequest,
+        response: {
+          200: signupResponse,
+        },
+      },
+      handler: async function (request, reply) {
+        const hashedPassword = bcrypt.hashSync(request.body.password, 10);
 
-    reply.send({ token });
+        // Create new user
+        try {
+          const userData = Object.assign({}, request.body, {
+            password: hashedPassword,
+          });
+          const user = (await models.User.create(userData)) as User;
+          // Data will be an object with the user and its `AuthToken`
+          // Send back the new user and auth token to the client
+          //
+          // const userData = await user.authorize();
+          // const token = fastify.jwt.sign({ foo: 'bar' });
+          // reply.send({ userData, token });
+          return reply.serialize({
+            id: user.id,
+            email: user.email,
+          });
+        } catch (err) {
+          return reply.status(400).send(err);
+        }
+      },
+    });
   });
 
-  fastify.get('/_login', async (req, reply) => {
-    const email = req.email;
-    const userRecord = (await sequelize.models.User.findOne({
-      email,
-    } as FindOptions<UserAttributes>)) as User;
+  // Log in
+  fastify.route({
+    method: 'POST',
+    url: '/signin',
+    // schema: {
+    //   body: { $ref: 'user#' },
+    //   response: {
+    //     200: { $ref: 'user#' },
+    //   },
+    // },
+    handler: async function (request, reply) {
+      const { email, password } = request.body;
 
-    if (!userRecord) {
-      throw new Error('User not found');
-    } else {
-      const correctPassword = fastify.jwt.verify(
-        userRecord.password,
-        req.password
-      );
-
-      if (!correctPassword) {
-        throw new Error('Incorrect password');
+      // if the username / password is missing, we use status code 400
+      // indicating a bad request was made and send back a message
+      if (!email || !password) {
+        return reply
+          .status(400)
+          .send('Request missing email or password param');
       }
-    }
 
-    const data = {
-      id: userRecord.id,
-      name: userRecord.name,
-      email: userRecord.email,
-    };
-    const signature = process.env.AUTH_JWT_SIGNATURE as Secret;
-    const expiration = '6h';
-    const token = jwt.sign({ data }, signature, { expiresIn: expiration });
+      try {
+        let user = await User.authenticate(email, password);
+        user = await user.authorize();
 
-    reply.send({
-      user: {
-        email: userRecord.email,
-        name: userRecord.name,
-      },
-      token,
-    });
+        return reply.serialize(user);
+      } catch (err) {
+        return reply.status(400).send('Invalid email or password');
+      }
+    },
   });
 
   fastify.get('/_cookies', (req, reply) => {
@@ -125,48 +153,16 @@ export default function api(fastify, _opts, done) {
       .then((message) => reply.send(message));
   });
 
-  // Log in
-  fastify.route({
-    method: 'POST',
-    url: '/login',
-    schema: {
-      body: { $ref: 'user#' },
-      response: {
-        200: { $ref: 'user#' },
-      },
-    },
-    handler: async function (request, reply) {
-      const { email, password } = request.body;
-
-      // if the username / password is missing, we use status code 400
-      // indicating a bad request was made and send back a message
-      if (!email || !password) {
-        return reply
-          .status(400)
-          .send('Request missing email or password param');
-      }
-
-      try {
-        let user = await User.authenticate(email, password);
-        user = await user.authorize();
-
-        return reply.serialize(user);
-      } catch (err) {
-        return reply.status(400).send('Invalid email or password');
-      }
-    },
-  });
-
   // Log out
   fastify.route({
     method: 'DELETE',
     url: '/logout',
-    schema: {
-      body: { $ref: 'user#' },
-      response: {
-        200: { $ref: 'user#' },
-      },
-    },
+    // schema: {
+    //   body: { $ref: 'user#' },
+    //   response: {
+    //     200: { $ref: 'user#' },
+    //   },
+    // },
     handler: async function (request, reply) {
       const {
         user,
