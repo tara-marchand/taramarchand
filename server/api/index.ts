@@ -1,33 +1,38 @@
-import jwt, { Secret } from 'jsonwebtoken';
-import Sequelize from 'sequelize';
-import { FindOptions } from 'sequelize/types';
+import bcrypt from 'bcrypt';
+import { FastifyInstance } from 'fastify';
 import twilio from 'twilio';
 
-import { models, sequelize } from '../models';
-import { User, UserAttributes, UserCreationAttributes } from '../models/User';
-import { contactSchema } from '../schemas/contact';
-import { smsSchema } from '../schemas/sms';
-import { signupRequest, signupResponse } from '../schemas/signup';
-import bcrypt from 'bcrypt';
+import { models } from '../models';
+import { User } from '../models/User';
+import get from 'lodash.get';
 
 export default function api(fastify, _opts, done) {
-  fastify.post('/signup', (req, reply) => {
-    fastify.route({
-      method: 'POST',
-      // preValidation: fastify.authenticate,
-      url: '/signup',
-      schema: {
-        body: signupRequest,
-        response: {
-          200: signupResponse,
+  fastify.route({
+    method: 'POST',
+    // preValidation: fastify.authenticate,
+    url: '/signup',
+    schema: {
+      body: {
+        schema: { $ref: 'https://www.taramarchand.com/#usersch' },
+      },
+      response: {
+        200: {
+          schema: { $ref: 'https://www.taramarchand.com/#usersch' },
         },
       },
-      handler: async function (request, reply) {
-        const hashedPassword = bcrypt.hashSync(request.body.password, 10);
+    },
+    handler: async function (request, reply) {
+      const body = get(request, 'body') as User | undefined;
+      let hashedPassword;
 
-        // Create new user
+      if (body) {
+        hashedPassword = bcrypt.hashSync(body.password, 10);
+      }
+
+      // Create new user
+      if (hashedPassword) {
         try {
-          const userData = Object.assign({}, request.body, {
+          const userData = Object.assign({}, body, {
             password: hashedPassword,
           });
           const user = (await models.User.create(userData)) as User;
@@ -44,33 +49,42 @@ export default function api(fastify, _opts, done) {
         } catch (err) {
           return reply.status(400).send(err);
         }
-      },
-    });
+      }
+    },
   });
 
   // Log in
   fastify.route({
     method: 'POST',
     url: '/signin',
-    // schema: {
-    //   body: { $ref: 'user#' },
-    //   response: {
-    //     200: { $ref: 'user#' },
-    //   },
-    // },
+    schema: {
+      body: {
+        id: {
+          type: 'number',
+        },
+        email: {
+          type: 'string',
+        },
+        password: {
+          type: 'string',
+        },
+      },
+    },
     handler: async function (request, reply) {
-      const { email, password } = request.body;
+      const body = get(request, 'body') as
+        | { email: string; password: string }
+        | undefined;
 
-      // if the username / password is missing, we use status code 400
+      // if the username /password is missing, use status code 400
       // indicating a bad request was made and send back a message
-      if (!email || !password) {
+      if (!body || !body.email || !body.password) {
         return reply
           .status(400)
-          .send('Request missing email or password param');
+          .send('Request missing body or email or password param');
       }
 
       try {
-        let user = await User.authenticate(email, password);
+        let user = await User.authenticate(body.email, body.password);
         user = await user.authorize();
 
         return reply.serialize(user);
@@ -80,8 +94,8 @@ export default function api(fastify, _opts, done) {
     },
   });
 
-  fastify.get('/_cookies', (req, reply) => {
-    const token = reply.jwtSign({
+  fastify.get('/_cookies', async (req, reply) => {
+    const token = await reply.jwtSign({
       name: 'foo',
       role: ['admin', 'spy'],
     });
@@ -111,46 +125,57 @@ export default function api(fastify, _opts, done) {
     }
   });
 
-  fastify.post('/contact', contactSchema, (req, reply) => {
-    let { nodemailer } = fastify;
-    let subject = '[taramarchand.com] Contact form message';
-    if (req.body.name) {
-      subject += ` from ${req.body.name}`;
-    }
-
-    nodemailer.sendMail(
-      {
-        from: req.body.email,
-        to: 'tara@mac.com',
-        subject,
-        text: req.body.message,
+  fastify.post(
+    '/contact',
+    {
+      schema: {
+        body:  { $ref: 'https://www.taramarchand.com/#contactsch' }
       },
-      (err, info) => {
-        if (err) {
-          fastify.log.error(err);
-        }
-
-        reply.send({
-          messageId: info.messageId,
-        });
+    },
+    (request, reply) => {
+      let { nodemailer } = fastify;
+      let subject = '[taramarchand.com] Contact form message';
+      if (request.body.name) {
+        subject += ` from ${request.body.name}`;
       }
-    );
-  });
 
-  fastify.post('/sms', smsSchema, (_req, reply) => {
-    const twilioClient = twilio(
-      process.env.TWILIO_ACCOUNT_SID,
-      process.env.TWILIO_AUTH_TOKEN
-    );
-    const myPhoneNum = process.env.MY_PHONE_NUM || '';
+      nodemailer.sendMail(
+        {
+          from: request.body.email,
+          to: 'tara@mac.com',
+          subject,
+          text: request.body.message,
+        },
+        (err, info) => {
+          if (err) {
+            fastify.log.error(err);
+          }
 
-    twilioClient.messages
-      .create({
-        body: 'body',
-        from: '',
-        to: myPhoneNum,
-      })
-      .then((message) => reply.send(message));
+          reply.send({
+            messageId: info.messageId,
+          });
+        }
+      );
+    }
+  );
+
+  fastify.post('/sms', {
+    schema: { $ref: 'https://www.taramarchand.com/#smssch' },
+    handler: (_req, reply) => {
+      const twilioClient = twilio(
+        process.env.TWILIO_ACCOUNT_SID,
+        process.env.TWILIO_AUTH_TOKEN
+      );
+      const myPhoneNum = process.env.MY_PHONE_NUM || '';
+
+      twilioClient.messages
+        .create({
+          body: 'body',
+          from: '',
+          to: myPhoneNum,
+        })
+        .then((message) => reply.send(message));
+    },
   });
 
   // Log out

@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "$id": "https://www.taramarchand.com/",
+  "title": "Schema",
+  "definitions": {
+    "contact": {
+      "$id": "#contactsch",
+      "type": "object",
+      "required": ["email", "message", "name"],
+      "properties": {
+        "email": { "type": "string" },
+        "message": { "type": "string" },
+        "name": { "type": "string" }
+      }
+    },
+    "sms": {
+      "$id": "#smssch",
+      "type": "object",
+      "required": ["fromEmail", "message"],
+      "properties": {
+        "fromEmail": { "type": "string" },
+        "message": { "type": "string" }
+      }
+    },
+    "user": {
+      "$id": "#usersch",
+      "type": "object",
+      "required": ["email"],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "id": {
+          "type": "number"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "type": "object"
+}

@@ -13,9 +13,7 @@ import nodemailerMailgunTransport from 'nodemailer-mailgun-transport';
 import path from 'path';
 
 import { fastifyAuthenticate } from './plugins/fastify-authenticate';
-import { contactSchema } from './schemas/contact';
-import { smsSchema } from './schemas/sms';
-import { signupRequest, signupResponse } from './schemas/signup';
+import schema from './schemas/index.json';
 
 const port = process.env.PORT || 5000;
 const env = process.env.NODE_ENV;
@@ -65,10 +63,7 @@ function build() {
     const nextHandler = nextApp.getRequestHandler();
 
     // Add schemas for API routes
-    fastify.addSchema(contactSchema);
-    fastify.addSchema(smsSchema);
-    fastify.addSchema(signupRequest);
-    fastify.addSchema(signupResponse);
+    fastify.addSchema(schema);
 
     fastify.register(import('./api'), { prefix: '/api' });
 
