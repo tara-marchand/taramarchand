@@ -13,7 +13,7 @@ import { AuthToken } from './AuthToken';
 
 export interface UserAttributes {
   email: string;
-  id: number;
+  id?: number;
   password: string;
 }
 
@@ -52,12 +52,6 @@ export class User
 
 export const UserFactory = (sequelize: Sequelize.Sequelize, DataTypes) => {
   const model = sequelize.define<User, UserAttributes>('User', {
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: Sequelize.UUIDV4,
-      primaryKey: true,
-      unique: true,
-    },
     email: {
       allowNull: false,
       type: DataTypes.STRING,

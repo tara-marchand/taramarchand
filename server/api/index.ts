@@ -59,21 +59,16 @@ export default function api(fastify, _opts, done) {
     url: '/signin',
     schema: {
       body: {
-        id: {
-          type: 'number',
-        },
-        email: {
-          type: 'string',
-        },
-        password: {
-          type: 'string',
+        schema: { $ref: 'https://www.taramarchand.com/#usersch' },
+      },
+      response: {
+        200: {
+          schema: { $ref: 'https://www.taramarchand.com/#usersch' },
         },
       },
     },
     handler: async function (request, reply) {
-      const body = get(request, 'body') as
-        | { email: string; password: string }
-        | undefined;
+      const body = get(request, 'body') as User | undefined;
 
       // if the username /password is missing, use status code 400
       // indicating a bad request was made and send back a message
