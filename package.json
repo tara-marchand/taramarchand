@@ -99,7 +99,7 @@
     "nodemailer-mailgun-transport": "^2.0.2",
     "pg": "^8.5.1",
     "point-of-view": "^4.7.0",
-    "postcss": "^8.2.8",
+    "postcss": "^8.2.10",
     "postcss-import": "^14.0.0",
     "postcss-loader": "^4.2.0",
     "postcss-url": "^10.1.3",
