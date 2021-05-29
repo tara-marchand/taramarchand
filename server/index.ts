@@ -14,6 +14,13 @@ import path from 'path';
 
 import { fastifyAuthenticate } from './plugins/fastify-authenticate';
 import schema from './schemas/index.json';
+import Mail from 'nodemailer/lib/mailer';
+
+declare module 'fastify' {
+  interface FastifyInstance {
+    nodemailer: Mail;
+  }
+}
 
 const port = process.env.PORT || 5000;
 const env = process.env.NODE_ENV;
@@ -24,36 +31,49 @@ const myCache = new NodeCache();
 
 function build() {
   const nextApp = Next({ dev: isDev });
-  const airtableApiKey = process.env.AIRTABLE_API_KEY;
-  const airtableConfig: any = {};
+  const airtableApiKey = get(process.env, 'AIRTABLE_API_KEY');
 
   if (airtableApiKey) {
+    const airtableConfig: Pick<
+      Airtable.AirtableOptions,
+      | 'apiKey'
+      | 'endpointUrl'
+      | 'apiVersion'
+      | 'noRetryIfRateLimited'
+      | 'requestTimeout'
+    > = {};
     airtableConfig.apiKey = airtableApiKey;
 
     Airtable.configure(airtableConfig);
   }
 
   return nextApp.prepare().then(() => {
-    const LOG_LEVEL = isProd ? 'error' : 'info';
+    const LOG_LEVEL = isProd ? 'error' : 'debug';
     const fastify = Fastify({ logger: { level: LOG_LEVEL } });
+    const authJwtSignature = get(process.env, 'AUTH_JWT_SIGNATURE');
+    const mailgunApiKey = get(process.env, 'MAILGUN_API_KEY');
+    const mailgunDomain = get(process.env, 'MAILGUN_DOMAIN');
 
     fastify.register(fastifyCookie);
 
-    fastify.register(fastifyJwt, {
-      secret: process.env.AUTH_JWT_SIGNATURE as Secret,
-    });
+    authJwtSignature &&
+      fastify.register(fastifyJwt, {
+        secret: authJwtSignature as Secret,
+      });
 
     fastify.register(fastifyAuthenticate);
 
-    fastify.register(
-      fastifyNodemailer,
-      nodemailerMailgunTransport({
-        auth: {
-          api_key: process.env.MAILGUN_API_KEY,
-          domain: process.env.MAILGUN_DOMAIN,
-        },
-      })
-    );
+    mailgunApiKey &&
+      mailgunDomain &&
+      fastify.register(
+        fastifyNodemailer,
+        nodemailerMailgunTransport({
+          auth: {
+            api_key: mailgunApiKey,
+            domain: mailgunDomain,
+          },
+        })
+      );
 
     fastify.register(fastifyStatic, {
       root: path.join(process.cwd(), 'src/public'),

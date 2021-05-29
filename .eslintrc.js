@@ -8,7 +8,6 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:@typescript-eslint/recommended',
   ],
-  ignorePatterns: ['./*.js'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
@@ -30,4 +29,13 @@ module.exports = {
       version: 'detect',
     },
   },
+  overrides: [
+    {
+      files: ['**/*.js'],
+      parser: 'espree',
+      parserOptions: {
+        ecmaVersion: 2015,
+      }
+    },
+  ],
 };

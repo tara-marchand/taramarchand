@@ -1,95 +1,91 @@
 import bcrypt from 'bcrypt';
-import Sequelize, {
-  Association,
+import {
   HasManyAddAssociationMixin,
   HasManyCountAssociationsMixin,
   HasManyCreateAssociationMixin,
   HasManyGetAssociationsMixin,
   HasManyHasAssociationMixin,
-  Optional,
 } from 'sequelize';
+import {
+  Table,
+  Column,
+  Model,
+  HasMany,
+  CreatedAt,
+  UpdatedAt,
+  AllowNull,
+  Unique,
+  PrimaryKey,
+  AutoIncrement,
+  DataType,
+} from 'sequelize-typescript';
 
 import { AuthToken } from './AuthToken';
 
-export interface UserAttributes {
-  email: string;
-  id?: number;
-  password: string;
-}
-
 // Some attributes are optional in `User.build` and `User.create` calls
-export interface UserCreationAttributes
-  extends Optional<UserAttributes, 'id'> {}
+@Table
+class User extends Model {
+  @AllowNull
+  @AutoIncrement
+  @PrimaryKey
+  @Column(DataType.INTEGER)
+  public id!: number;
 
-export class User
-  extends Sequelize.Model<UserAttributes, UserCreationAttributes>
-  implements UserAttributes {
-  public id!: number; // Note that the `null assertion` `!` is required in strict mode.
+  @AllowNull
+  @Unique
+  @Column(DataType.TEXT)
   public email!: string;
-  public password!: string; // for nullable fields
 
-  // timestamps!
+  @Column(DataType.TEXT)
+  public password!: string;
+
+  @CreatedAt
   public readonly createdAt!: Date;
+  @UpdatedAt
   public readonly updatedAt!: Date;
 
   // Since TS cannot determine model association at compile time
   // we have to declare them here purely virtually
   // these will not exist until `Model.init` was called.
-  public getAuthTokens!: HasManyGetAssociationsMixin<AuthToken>; // Note the null assertions!
+  public getAuthTokens!: HasManyGetAssociationsMixin<AuthToken>;
   public addAuthToken!: HasManyAddAssociationMixin<AuthToken, number>;
   public hasAuthToken!: HasManyHasAssociationMixin<AuthToken, number>;
   public countAuthTokens!: HasManyCountAssociationsMixin;
   public createAuthToken!: HasManyCreateAssociationMixin<AuthToken>;
 
-  public static associations: {
-    authTokens: Association<User, AuthToken>;
-  };
+  @HasMany(() => AuthToken)
+  public authTokens?: AuthToken[];
 
-  public static authenticate: (email: string, password: string) => any;
-  public static authorize: () => any;
-  public static logout: () => any;
-}
-
-export const UserFactory = (sequelize: Sequelize.Sequelize, DataTypes) => {
-  const model = sequelize.define<User, UserAttributes>('User', {
-    email: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      unique: true,
-    },
-    password: {
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-  });
-
-  model.hasMany(sequelize.models.AuthToken);
-
-  model.prototype.authenticate = async function (
+  public static authenticate: (
     email: string,
     password: string
-  ) {
-    const user = await this.findOne({ where: { email } });
+  ) => Promise<{ user: User; token: AuthToken }>;
+  public static logout?: (token: string) => Promise<void>;
 
-    if (bcrypt.compareSync(password, this.password)) {
-      return this.authorize();
-    }
-    throw new Error('Invalid password');
-  };
+  public authorize?: () => Promise<{ user: User; token: AuthToken }>;
+}
 
-  model.prototype.authorize = async function () {
-    const authTokenInstance = sequelize.models.AuthToken.build() as AuthToken;
-    const token = await authTokenInstance.generate(this.id);
+User.authenticate = async function (email: string, password: string) {
+  const user = await this.findOne({ where: { email } });
 
-    // `addAuthToken` is a generated method for 'hasMany' relationships
-    await this.addAuthToken(token);
-
-    return { user: this, token };
-  };
-
-  model.prototype.logout = async function (token) {
-    sequelize.models.AuthToken.destroy({ where: { token } });
-  };
-
-  return model;
+  if (user && user.authorize && bcrypt.compareSync(password, user.password)) {
+    return user.authorize();
+  }
+  throw new Error('Invalid password');
 };
+
+User.logout = async function (token: string) {
+  AuthToken.destroy({ where: { token } });
+};
+
+User.prototype.authorize = async function () {
+  const authTokenInstance = AuthToken.build();
+  const token = await authTokenInstance.generate(this.id);
+
+  // `addAuthToken` is a generated method for 'hasMany' relationships
+  await this.addAuthToken(token);
+
+  return { user: this, token };
+};
+
+export { User };

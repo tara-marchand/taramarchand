@@ -1,6 +1,7 @@
 import fp from 'fastify-plugin';
 
-import { models, sequelize } from '../models';
+import { sequelize } from '../models';
+import {User} from '../models/User';
 
 const fastifyAuthenticate = fp(
   function (fastify, _opts, done) {
@@ -10,7 +11,7 @@ const fastifyAuthenticate = fp(
       if (token) {
         const authToken = await sequelize.models.AuthToken.find({
           where: { token },
-          include: models.User,
+          include: User,
         });
 
         if (authToken) {

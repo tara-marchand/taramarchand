@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
+    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
+    "experimentalDecorators": true,
     "lib": [],
     "module": "commonjs",
     "outDir": ".server",
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "strictPropertyInitialization": false
   },
   "include": ["server/**/*"],
   "exclude": ["node_modules"]

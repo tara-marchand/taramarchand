@@ -7,9 +7,9 @@ export default function Contact(): JSX.Element {
   const router = useRouter();
 
   async function submitContactForm(bodyData: {
-    email: string;
-    message: string;
-    name: string;
+    from: string;
+    text: string;
+    to: string;
   }) {
     const body = JSON.stringify(bodyData);
 
@@ -34,13 +34,13 @@ export default function Contact(): JSX.Element {
       <div className="flex flex-wrap -mx-2 mb-4">
         <div className="w-full px-3">
           <label className="block mb-2" htmlFor="name">
-            Name <span className="text-red-500">*</span>
+            Your Name <span className="text-red-500">*</span>
           </label>
           <input
             autoComplete="name"
             className="appearance-none block w-full border py-2 px-3 mb-3 bg-gray-100 focus:outline-none focus:bg-white"
             id="name"
-            name="name"
+            name="Name"
             type="text"
             placeholder="First Last"
             ref={register({ required: 'Name is required.' })}

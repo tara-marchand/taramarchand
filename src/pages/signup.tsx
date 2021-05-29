@@ -18,7 +18,14 @@ export default function Signup(): ReactElement {
       },
       method: 'POST',
     })
-      .then(() => router.push('/'))
+      .then(() =>
+        router.push({
+          pathname: '/success',
+          query: {
+            type: 'signup',
+          },
+        })
+      )
       .catch((reason) => console.log(reason));
   }
 

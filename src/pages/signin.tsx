@@ -26,7 +26,9 @@ export default function SignIn({
       },
       method: 'POST',
     })
-      .then(() => router.push('/'))
+      .then(() => router.push({ pathname: '/success', query: {
+        type: 'signin'
+      }}))
       .catch((reason) => console.log(reason));
   }
 

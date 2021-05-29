@@ -1,51 +1,55 @@
-import Sequelize from 'sequelize';
-import { models } from '.';
+import {
+  BelongsTo,
+  Column,
+  CreatedAt,
+  ForeignKey,
+  Model,
+  Table,
+  Unique,
+  UpdatedAt,
+} from 'sequelize-typescript';
+
 import { User } from './User';
 
-interface AuthTokenAttributes {
-  token: string;
-}
-
-interface AuthTokenCreationAttributes {}
-
-export class AuthToken
-  extends Sequelize.Model<AuthTokenAttributes, AuthTokenCreationAttributes>
-  implements AuthTokenAttributes {
+@Table
+class AuthToken extends Model {
+  @Unique
+  @Column
   public token!: string;
 
-  // timestamps!
+  @CreatedAt
   public readonly createdAt!: Date;
+  
+  @UpdatedAt
   public readonly updatedAt!: Date;
 
-  public generate!: (userId: string) => void;
+  @ForeignKey(() => User)
+  @Column
+  userId!: number;
+
+  @BelongsTo(() => User)
+  user?: User;
+
+  public generate!: (userId: number) => Promise<AuthToken>;
 }
 
-export const AuthTokenFactory = (sequelize: Sequelize.Sequelize, DataTypes) => {
-  const model = sequelize.define<AuthToken>('AuthToken', {
-    token: {
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-  });
+// Generates a random 15-character token & associates it with a user
+AuthToken.prototype.generate = async (userId) => {
+  if (!userId) {
+    throw new Error('AuthToken requires a user ID');
+  }
 
-  // Generates a random 15-character token & associates it with a user
-  model.prototype.generate = async (userId) => {
-    if (!userId) {
-      throw new Error('AuthToken requires a user ID');
-    }
+  const possibleCharacters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + 'abcdefghijklmnopqrstuvwxyz0123456789';
+  let token = '';
 
-    const possibleCharacters =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + 'abcdefghijklmnopqrstuvwxyz0123456789';
-    let token = '';
+  for (let i = 0; i < 15; i++) {
+    token += possibleCharacters.charAt(
+      Math.floor(Math.random() * possibleCharacters.length)
+    );
+  }
 
-    for (var i = 0; i < 15; i++) {
-      token += possibleCharacters.charAt(
-        Math.floor(Math.random() * possibleCharacters.length)
-      );
-    }
-
-    return model.create({ token });
-  };
-
-  return model;
+  return AuthToken.create({ token });
 };
+
+export { AuthToken };
