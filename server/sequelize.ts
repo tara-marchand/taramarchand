@@ -5,7 +5,7 @@ import { Sequelize } from 'sequelize-typescript';
 
 config();
 
-let sequelize;
+let sequelize: Sequelize;
 const dbUrl = get(process.env, 'DATABASE_URL');
 
 if (dbUrl) {
@@ -18,7 +18,7 @@ if (dbUrl) {
         rejectUnauthorized: false,
       },
     },
-    models: [__dirname + '/AuthToken.ts', __dirname + '/User.ts'],
+    models: [__dirname + '/models/*.ts'],
     quoteIdentifiers: false,
   })
     .sync({ force: true })

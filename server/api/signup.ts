@@ -14,11 +14,11 @@ export const signup: FastifyPluginCallback<Record<never, never>> = (
     url: '/signup',
     schema: {
       body: {
-        schema: { $ref: 'https://www.taramarchand.com/#usersch' },
+        schema: { $ref: 'https://www.taramarchand.com/#user' },
       },
       response: {
         200: {
-          schema: { $ref: 'https://www.taramarchand.com/#usersch' },
+          schema: { $ref: 'https://www.taramarchand.com/#user' },
         },
       },
     },
@@ -37,9 +37,8 @@ export const signup: FastifyPluginCallback<Record<never, never>> = (
           const userData = Object.assign({}, body, {
             password: hashedPassword,
           });
-          const user = (await User.create(userData)) as User;
-          const userAndToken =
-            (await user) && user.authorize && user.authorize();
+          const user = await User.create(userData);
+          const userAndToken = User.authorize(user);
           const token = get(userAndToken, 'token');
           const id = get(userAndToken, 'user.id');
           const email = get(userAndToken, 'user.email');

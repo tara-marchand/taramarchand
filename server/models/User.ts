@@ -20,11 +20,11 @@ import {
   DataType,
 } from 'sequelize-typescript';
 
-import { AuthToken } from './AuthToken';
+import AuthToken from './AuthToken';
 
 // Some attributes are optional in `User.build` and `User.create` calls
 @Table
-class User extends Model {
+export default class User extends Model {
   @AllowNull
   @AutoIncrement
   @PrimaryKey
@@ -60,32 +60,33 @@ class User extends Model {
     email: string,
     password: string
   ) => Promise<{ user: User; token: AuthToken }>;
-  public static logout?: (token: string) => Promise<void>;
 
-  public authorize?: () => Promise<{ user: User; token: AuthToken }>;
+  public static authorize: (
+    user: User
+  ) => Promise<{ user: User; token: AuthToken }>;
+
+  public static signout: (authTokenValue: string) => Promise<void>;
 }
 
 User.authenticate = async function (email: string, password: string) {
-  const user = await this.findOne({ where: { email } });
+  const user = await User.findOne({ where: { email } });
 
-  if (user && user.authorize && bcrypt.compareSync(password, user.password)) {
-    return user.authorize();
+  if (user && bcrypt.compareSync(password, user.password)) {
+    return User.authorize(user);
   }
   throw new Error('Invalid password');
 };
 
-User.logout = async function (token: string) {
-  AuthToken.destroy({ where: { token } });
-};
-
-User.prototype.authorize = async function () {
+User.authorize = async function (user: User) {
   const authTokenInstance = AuthToken.build();
-  const token = await authTokenInstance.generate(this.id);
+  const token = await authTokenInstance.generate(user.id);
 
   // `addAuthToken` is a generated method for 'hasMany' relationships
-  await this.addAuthToken(token);
+  await user.addAuthToken(token);
 
-  return { user: this, token };
+  return { user, token };
 };
 
-export { User };
+User.signout = async function (authTokenValue: string) {
+  AuthToken.destroy({ where: { token: authTokenValue } });
+};

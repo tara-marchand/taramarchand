@@ -4,7 +4,7 @@
   "title": "Schema",
   "definitions": {
     "contact": {
-      "$id": "#contactsch",
+      "$id": "#contact",
       "type": "object",
       "required": ["email", "message", "name"],
       "properties": {
@@ -14,7 +14,7 @@
       }
     },
     "sms": {
-      "$id": "#smssch",
+      "$id": "#sms",
       "type": "object",
       "required": ["fromEmail", "message"],
       "properties": {
@@ -23,7 +23,7 @@
       }
     },
     "user": {
-      "$id": "#usersch",
+      "$id": "#user",
       "type": "object",
       "required": ["email"],
       "properties": {

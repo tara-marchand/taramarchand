@@ -26,14 +26,20 @@ export default function SignIn({
       },
       method: 'POST',
     })
-      .then(() => router.push({ pathname: '/success', query: {
-        type: 'signin'
-      }}))
+      .then(() =>
+        router.push({
+          pathname: '/success',
+          query: {
+            type: 'signin',
+          },
+        })
+      )
       .catch((reason) => console.log(reason));
   }
 
   return (
     <div className="w-full max-w-lg">
+      <h2>Sign in</h2>
       <form onSubmit={handleSubmit(submitSigninForm)}>
         <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
         <div className="flex flex-wrap -mx-2 mb-4">

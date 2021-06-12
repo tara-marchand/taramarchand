@@ -1,15 +1,17 @@
+import { FastifyPluginCallback, RouteHandlerMethod } from 'fastify';
 import fp from 'fastify-plugin';
+import AuthToken from '../models/AuthToken';
 
-import { sequelize } from '../models';
-import {User} from '../models/User';
+import User from '../models/User';
+import { sequelize } from '../sequelize';
 
 const fastifyAuthenticate = fp(
   function (fastify, _opts, done) {
-    fastify.decorate('authenticate', async function (request, _reply, done2) {
+    fastify.decorate('authenticate', async function (request) {
       const token = request.cookies.auth_token || request.headers.authorization;
 
       if (token) {
-        const authToken = await sequelize.models.AuthToken.find({
+        const authToken = await sequelize.models.AuthModel.find({
           where: { token },
           include: User,
         });
@@ -18,12 +20,10 @@ const fastifyAuthenticate = fp(
           request.user = authToken.User;
         }
       }
-      done2();
-    });
+    } as RouteHandlerMethod);
     done();
-  },
+  } as FastifyPluginCallback,
   { name: 'fastify-authenticate' }
 );
 
-export {fastifyAuthenticate};
-
+export { fastifyAuthenticate };

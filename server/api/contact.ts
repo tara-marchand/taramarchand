@@ -16,7 +16,7 @@ export const contact: FastifyPluginCallback<Record<never, never>> = (
     schema: {
       body: {
         schema: {
-          $ref: 'https://www.taramarchand.com/#contactsch',
+          $ref: 'https://www.taramarchand.com/#contact',
         },
       },
     },

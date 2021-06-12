@@ -18,19 +18,28 @@ export default function Signup(): ReactElement {
       },
       method: 'POST',
     })
-      .then(() =>
-        router.push({
-          pathname: '/success',
-          query: {
-            type: 'signup',
-          },
-        })
-      )
-      .catch((reason) => console.log(reason));
+      .then((response) => {
+        console.log(response);
+
+        if (response.ok) {
+          router.push({
+            pathname: '/success',
+            query: {
+              type: 'signup',
+            },
+          });
+        } else {
+          console.log(`Error ${response.status}: ${response.statusText}`);
+        }
+      })
+      .catch((reason) => {
+        console.log(reason);
+      });
   }
 
   return (
     <div className="w-full max-w-lg">
+      <h2>Sign up</h2>
       <form onSubmit={handleSubmit(submitSignupForm)}>
         <div className="flex flex-wrap -mx-2 mb-4">
           <div className="w-full px-3">
@@ -42,7 +51,7 @@ export default function Signup(): ReactElement {
               className="appearance-none block w-full border py-2 px-3 mb-3 bg-gray-100 focus:outline-none focus:bg-white"
               id="email"
               name="email"
-              placeholder="username@hostname.com"
+              placeholder="user@domain.com"
               ref={register({
                 required: 'Email is required.',
                 pattern: {

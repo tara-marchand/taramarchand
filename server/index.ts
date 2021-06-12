@@ -1,4 +1,4 @@
-import './models';
+import './sequelize';
 
 import Airtable from 'airtable';
 import Fastify from 'fastify';

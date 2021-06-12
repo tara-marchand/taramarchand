@@ -22,7 +22,7 @@ export const signout: FastifyPluginCallback<Record<never, never>> = (
       } = request;
 
       if (authToken) {
-        User.logout && (await User.logout(authToken));
+        User.signout && (await User.signout(authToken));
         return reply.status(204).send();
       }
 

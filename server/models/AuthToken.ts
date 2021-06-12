@@ -9,17 +9,17 @@ import {
   UpdatedAt,
 } from 'sequelize-typescript';
 
-import { User } from './User';
+import User from './User';
 
 @Table
-class AuthToken extends Model {
+export default class AuthToken extends Model {
   @Unique
   @Column
   public token!: string;
 
   @CreatedAt
   public readonly createdAt!: Date;
-  
+
   @UpdatedAt
   public readonly updatedAt!: Date;
 
@@ -31,9 +31,13 @@ class AuthToken extends Model {
   user?: User;
 
   public generate!: (userId: number) => Promise<AuthToken>;
+
+  public toString = (): string => this.token;
 }
 
-// Generates a random 15-character token & associates it with a user
+/**
+ * Generates a random 15-character token & associates it with a user
+ */
 AuthToken.prototype.generate = async (userId) => {
   if (!userId) {
     throw new Error('AuthToken requires a user ID');
@@ -51,5 +55,3 @@ AuthToken.prototype.generate = async (userId) => {
 
   return AuthToken.create({ token });
 };
-
-export { AuthToken };

@@ -12,7 +12,7 @@ export const sms: FastifyPluginCallback<Record<never, never>> = (
     schema: {
       body: {
         schema: {
-          $ref: 'https://www.taramarchand.com/#smssch',
+          $ref: 'https://www.taramarchand.com/#sms',
         },
       },
     },
