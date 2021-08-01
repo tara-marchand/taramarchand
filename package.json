@@ -19,6 +19,7 @@
     "start:prod": "NEW_RELIC_ENABLED=true NODE_ENV=production npm run build:server && node .server/index.js",
     "start:prod:local": "npm run build; NEW_RELIC_ENABLED=false NODE_ENV=production npm run build:server && node .server/index.js",
     "heroku-postbuild": "npm run build",
+    "lint": "next lint",
     "test": "DEBUG=start-server-and-test start-server-and-test start http://localhost:5000 cypress:run",
     "test:local": "DEBUG=start-server-and-test start-server-and-test start 5000 cypress:open",
     "cypress:open": "cypress open",

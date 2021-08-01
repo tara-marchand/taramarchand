@@ -2,6 +2,7 @@ import { getKanaByRomaji, gujuon } from 'japanese-kana';
 import React, { PureComponent } from 'react';
 import FlashCard from './FlashCard';
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Japanese {
   export interface State {
     hiragana: string;
@@ -11,12 +12,12 @@ export namespace Japanese {
   }
 }
 
-class Japanese extends PureComponent<object, Japanese.State> {
+class Japanese extends PureComponent<Record<string, unknown>, Japanese.State> {
   state = {
     hiragana: '',
     katakana: '',
     romaji: '',
-    showCard: false
+    showCard: false,
   };
 
   render() {

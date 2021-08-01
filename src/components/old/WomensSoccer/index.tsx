@@ -1,8 +1,6 @@
 import * as React from 'react';
 
-export interface Props {}
-
-export default class WomensSoccer extends React.PureComponent<Props, any> {
+export default class WomensSoccer extends React.PureComponent {
   // public competitions: WomensSoccerTypes.Competition[] = competitions.default;
 
   public render() {

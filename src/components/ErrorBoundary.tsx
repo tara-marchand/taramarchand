@@ -1,13 +1,14 @@
 import * as React from 'react';
 
-interface Props {}
-
 interface State {
   hasError: boolean;
 }
 
-export default class ErrorBoundary extends React.Component<Props, State> {
-  constructor(props: Props) {
+export default class ErrorBoundary extends React.Component<
+  Record<string, never>,
+  State
+> {
+  constructor(props: Record<string, never>) {
     super(props);
 
     this.state = { hasError: false };

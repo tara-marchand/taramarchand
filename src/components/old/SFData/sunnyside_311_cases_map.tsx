@@ -15,10 +15,11 @@ export const sunnyside311CasesUrl =
   encodeURIComponent("neighborhoods_sffind_boundaries = 'Sunnyside'") +
   '&$limit=25';
 
-const Sunnyside311CasesMap: React.FunctionComponent<Props> = props => {
+const Sunnyside311CasesMap: React.FunctionComponent<Props> = (props) => {
   const bounds = [] as LatLngTuple[];
 
-  const markers = props.cases.map(biz => {
+  // eslint-disable-next-line react/prop-types
+  const markers = props.cases.map((biz) => {
     const position = [biz.lat as number, biz.long as number] as LatLngTuple;
 
     bounds.push(position);
@@ -43,13 +44,13 @@ const Sunnyside311CasesMap: React.FunctionComponent<Props> = props => {
 };
 
 export function transformCasesData(casesData) {
-  return casesData.map(caseItem => {
+  return casesData.map((caseItem) => {
     // Only save the properties we're going to use
     return {
       address: caseItem.address,
       id: uuid4(),
       lat: caseItem.lat,
-      long: caseItem.long
+      long: caseItem.long,
     } as CaseLocation;
   });
 }

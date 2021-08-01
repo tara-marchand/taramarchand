@@ -1,7 +1,5 @@
 import React, { ReactElement } from 'react';
 
-interface Props {}
-
-export default function Dashboard({}: Props): ReactElement {
+export default function Dashboard(): ReactElement {
   return <div></div>;
 }

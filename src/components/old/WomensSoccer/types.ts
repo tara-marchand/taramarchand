@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace WomensSoccerTypes {
   export interface Competition {
     competition_id: number;

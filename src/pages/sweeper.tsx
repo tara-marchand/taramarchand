@@ -40,7 +40,9 @@ function Row(): ReactElement {
 }
 
 function Cell(): ReactElement {
-  function handleCellClick(e: Event) {}
+  function handleCellClick(e: Event) {
+    return;
+  }
 
   return <td onClick={handleCellClick}></td>;
 }
