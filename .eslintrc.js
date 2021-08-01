@@ -8,6 +8,7 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:@typescript-eslint/recommended',
   ],
+  ignorePatterns: ['next.config.js'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
@@ -31,11 +32,11 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/*.js'],
+      files: ['*.js', '**/*.js'],
       parser: 'espree',
       parserOptions: {
         ecmaVersion: 2015,
-      }
+      },
     },
   ],
 };

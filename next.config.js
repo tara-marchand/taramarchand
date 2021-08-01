@@ -3,6 +3,9 @@ const {
   PHASE_PRODUCTION_BUILD,
 } = require('next/constants');
 const fs = require('fs');
+const { merge } = require('webpack-merge');
+const nodeExternals = require('@newrelic/webpack-plugin/lib/externals');
+const NewrelicWebpackPlugin = require('@newrelic/webpack-plugin/lib/NewrelicWebpackPlugin');
 
 module.exports = (phase) => {
   // when started in development mode `next dev` or `npm run dev` regardless of the value of STAGING environmental variable
@@ -31,9 +34,24 @@ module.exports = (phase) => {
     ignoreBuildErrors: true,
   };
 
+  const webpack = (
+    config,
+    { _buildId, dev, isServer, _defaultLoaders, _webpack }
+  ) => {
+    if (!dev && isServer) {
+      return merge({}, config, {
+        // Return the modified config
+        externals: [nodeExternals()],
+        plugins: [new NewrelicWebpackPlugin()],
+      });
+    }
+    return config;
+  };
+
   // next.config.js object
   return {
     env,
     typescript,
+    webpack,
   };
 };
