@@ -179,6 +179,7 @@
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
     "eslint": "^7.4.0",
+    "eslint-config-next": "^11.0.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-import-resolver-typescript": "^2.4.0",
