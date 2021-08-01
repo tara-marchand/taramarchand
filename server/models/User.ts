@@ -7,17 +7,13 @@ import {
   HasManyHasAssociationMixin,
 } from 'sequelize';
 import {
-  Table,
-  Column,
-  Model,
-  HasMany,
-  CreatedAt,
-  UpdatedAt,
   AllowNull,
-  Unique,
-  PrimaryKey,
-  AutoIncrement,
+  Column,
   DataType,
+  HasMany,
+  Model,
+  Table,
+  Unique,
 } from 'sequelize-typescript';
 
 import AuthToken from './AuthToken';
@@ -26,23 +22,12 @@ import AuthToken from './AuthToken';
 @Table
 export default class User extends Model {
   @AllowNull
-  @AutoIncrement
-  @PrimaryKey
-  @Column(DataType.INTEGER)
-  public id!: number;
-
-  @AllowNull
   @Unique
   @Column(DataType.TEXT)
   public email!: string;
 
   @Column(DataType.TEXT)
   public password!: string;
-
-  @CreatedAt
-  public readonly createdAt!: Date;
-  @UpdatedAt
-  public readonly updatedAt!: Date;
 
   // Since TS cannot determine model association at compile time
   // we have to declare them here purely virtually

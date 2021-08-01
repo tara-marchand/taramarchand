@@ -1,6 +1,6 @@
 import { FastifyPluginCallback } from 'fastify';
 
-import { User } from '../models/User';
+import User from '../models/User';
 
 export const signout: FastifyPluginCallback<Record<never, never>> = (
   fastify,

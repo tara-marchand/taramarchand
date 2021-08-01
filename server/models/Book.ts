@@ -1,19 +1,10 @@
-export default function BookFactory(sequelize, DataTypes) {
-  const book = sequelize.define('Book', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    authors: {
-      allowNull: false,
-      type: DataTypes.TEXT,
-    },
-    title: {
-      allowNull: false,
-      type: DataTypes.TEXT,
-    },
-  });
+import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
-  return book;
+@Table
+export default class Book extends Model {
+  @Column(DataType.TEXT)
+  public authors!: string;
+
+  @Column(DataType.TEXT)
+  public title!: string;
 }

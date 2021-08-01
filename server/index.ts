@@ -1,5 +1,3 @@
-import './sequelize';
-
 import Airtable from 'airtable';
 import Fastify from 'fastify';
 import fastifyCookie from 'fastify-cookie';
@@ -10,15 +8,17 @@ import get from 'lodash.get';
 import Next from 'next';
 import NodeCache from 'node-cache';
 import nodemailerMailgunTransport from 'nodemailer-mailgun-transport';
-import path from 'path';
-
-import { fastifyAuthenticate } from './plugins/fastify-authenticate';
-import schema from './schemas/index.json';
 import Mail from 'nodemailer/lib/mailer';
+import path from 'path';
+import { Sequelize } from 'sequelize-typescript';
+import { fastifyAuthenticate } from './plugins/fastify-authenticate';
+import { fastifySequelize } from './plugins/fastify-sequelize';
+import schema from './schemas/index.json';
 
 declare module 'fastify' {
   interface FastifyInstance {
     nodemailer: Mail;
+    sequelize: Sequelize;
   }
 }
 
@@ -53,6 +53,8 @@ function build() {
     const authJwtSignature = get(process.env, 'AUTH_JWT_SIGNATURE');
     const mailgunApiKey = get(process.env, 'MAILGUN_API_KEY');
     const mailgunDomain = get(process.env, 'MAILGUN_DOMAIN');
+
+    fastify.register(fastifySequelize);
 
     fastify.register(fastifyCookie);
 

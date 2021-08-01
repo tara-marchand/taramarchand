@@ -1,7 +1,7 @@
 import { FastifyPluginCallback } from 'fastify';
 import get from 'lodash.get';
 
-import { User } from '../models/User';
+import User from '../models/User';
 
 export const signin: FastifyPluginCallback<Record<never, never>> = (
   fastify,
@@ -23,7 +23,7 @@ export const signin: FastifyPluginCallback<Record<never, never>> = (
     },
     handler: async function (request, reply) {
       const body = get(request, 'body') as User | undefined;
-
+      console.log(body);
       // If username or password is missing, send status code 400/bad request
       if (!body || !body.email || !body.password) {
         return reply.status(400).send('Missing email or password');
@@ -32,12 +32,13 @@ export const signin: FastifyPluginCallback<Record<never, never>> = (
       try {
         const userAndToken = await User.authenticate(body.email, body.password);
         const user = userAndToken.user;
-        const userAndTokenString = user && User.authorize(user);
 
-        if (userAndTokenString) {
-          return reply.serialize(userAndToken);
+        try {
+          const userAndTokenString = await User.authorize(user);
+          return reply.serialize(userAndTokenString);
+        } catch (error) {
+          return reply.status(500).send('Unable to authenticate');
         }
-        return reply.status(500).send('Unable to authenticate');
       } catch (err) {
         return reply.status(400).send('Invalid email or password');
       }

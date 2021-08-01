@@ -1,9 +1,9 @@
 import { FastifyPluginCallback, RouteHandlerMethod } from 'fastify';
 import fp from 'fastify-plugin';
-import AuthToken from '../models/AuthToken';
+import { get } from 'lodash';
 
+import AuthToken from '../models/AuthToken';
 import User from '../models/User';
-import { sequelize } from '../sequelize';
 
 const fastifyAuthenticate = fp(
   function (fastify, _opts, done) {
@@ -11,13 +11,14 @@ const fastifyAuthenticate = fp(
       const token = request.cookies.auth_token || request.headers.authorization;
 
       if (token) {
-        const authToken = await sequelize.models.AuthModel.find({
+        const authToken = await AuthToken.findOne({
           where: { token },
           include: User,
         });
+        const user = get(authToken, 'user');
 
-        if (authToken) {
-          request.user = authToken.User;
+        if (user) {
+          request.user = user;
         }
       }
     } as RouteHandlerMethod);

@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { FastifyPluginCallback, FastifyRequest } from 'fastify';
 import get from 'lodash.get';
 
-import { User } from '../models/User';
+import User from '../models/User';
 
 export const signup: FastifyPluginCallback<Record<never, never>> = (
   fastify,
@@ -23,14 +23,15 @@ export const signup: FastifyPluginCallback<Record<never, never>> = (
       },
     },
     handler: async function (
-      request: FastifyRequest<{ Body: { password: string } }>,
+      request: FastifyRequest<{ Body: { email: string; password: string } }>,
       reply
     ) {
       const body = get(request, 'body');
+      const password = get(body, 'password');
       let hashedPassword;
 
-      if (body) {
-        hashedPassword = bcrypt.hashSync(body.password, 10);
+      if (body && password) {
+        hashedPassword = bcrypt.hashSync(password, 10);
 
         // Create new user
         try {
@@ -38,7 +39,8 @@ export const signup: FastifyPluginCallback<Record<never, never>> = (
             password: hashedPassword,
           });
           const user = await User.create(userData);
-          const userAndToken = User.authorize(user);
+
+          const userAndToken = await User.authorize(user);
           const token = get(userAndToken, 'token');
           const id = get(userAndToken, 'user.id');
           const email = get(userAndToken, 'user.email');

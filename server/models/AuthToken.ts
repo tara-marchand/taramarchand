@@ -1,12 +1,10 @@
 import {
   BelongsTo,
   Column,
-  CreatedAt,
   ForeignKey,
   Model,
   Table,
   Unique,
-  UpdatedAt,
 } from 'sequelize-typescript';
 
 import User from './User';
@@ -16,12 +14,6 @@ export default class AuthToken extends Model {
   @Unique
   @Column
   public token!: string;
-
-  @CreatedAt
-  public readonly createdAt!: Date;
-
-  @UpdatedAt
-  public readonly updatedAt!: Date;
 
   @ForeignKey(() => User)
   @Column
