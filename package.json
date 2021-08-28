@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "NODE_ENV=production next build",
-    "build:server": "tsc --project tsconfig.server.json",
+    "build:server": "node server/scripts/json-schema-to-ts.js; tsc --project tsconfig.server.json",
     "start": "npm run start:dev",
     "start:dev": "NEW_RELIC_ENABLED=false NODE_ENV=development npm run build:server && node .server/index.js",
     "start:prod": "NEW_RELIC_ENABLED=true NODE_ENV=production npm run build:server && node .server/index.js",
