@@ -30,6 +30,10 @@ module.exports = (phase) => {
       .toString(),
   };
 
+  const experimental = {
+    esmExternals: true,
+  };
+
   const typescript = {
     ignoreBuildErrors: true,
   };
@@ -51,6 +55,7 @@ module.exports = (phase) => {
   // next.config.js object
   return {
     env,
+    experimental,
     typescript,
     webpack,
   };
