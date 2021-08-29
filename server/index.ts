@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV === 'production') {
+  require('newrelic');
+}
 import Airtable from 'airtable';
 import Fastify from 'fastify';
 import fastifyCookie from 'fastify-cookie';
@@ -9,7 +12,6 @@ import Next from 'next';
 import NodeCache from 'node-cache';
 import nodemailerMailgunTransport from 'nodemailer-mailgun-transport';
 import path from 'path';
-import { Sequelize } from 'sequelize-typescript';
 import { fastifyAuthenticate } from './plugins/fastify-authenticate';
 import { fastifySequelize } from './plugins/fastify-sequelize';
 import schema from './schemas/index.json';
