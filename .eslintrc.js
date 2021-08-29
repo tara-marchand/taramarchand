@@ -3,8 +3,7 @@ module.exports = {
     browser: true,
   },
   extends: [
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
+    'plugin:@next/next/recommended',
     'plugin:import/typescript',
     'plugin:@typescript-eslint/recommended',
   ],
@@ -25,9 +24,6 @@ module.exports = {
       typescript: {
         alwaysTryTypes: true,
       },
-    },
-    react: {
-      version: 'detect',
     },
   },
   overrides: [
