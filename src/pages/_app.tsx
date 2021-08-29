@@ -21,6 +21,7 @@ type AmplitudeContextType = {
 
 const nrSnippet = process.env.NEW_RELIC_SNIPPET;
 const counterSnippet = process.env.COUNTER_SNIPPET;
+const postHogSnippet = process.env.POSTHOG_SNIPPET;
 
 // For browser
 if (typeof window !== 'undefined') {
@@ -52,6 +53,13 @@ const CounterScript = (): JSX.Element | null => {
     return null;
   }
   return <script dangerouslySetInnerHTML={{ __html: counterSnippet }}></script>;
+};
+
+const PostHogScript = (): JSX.Element | null => {
+  if (!postHogSnippet || typeof window !== 'undefined') {
+    return null;
+  }
+  return <script dangerouslySetInnerHTML={{ __html: postHogSnippet }}></script>;
 };
 
 const AmplitudeContext = React.createContext<AmplitudeContextType>(null);
@@ -97,6 +105,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         <title>Tara Marchand</title>
         {isProd() && <NrScript />}
         {isProd() && <CounterScript />}
+        {isProd() && <PostHogScript />}
       </Head>
       <Provider store={store}>
         <ErrorBoundary>

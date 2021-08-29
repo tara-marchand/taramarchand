@@ -28,6 +28,9 @@ module.exports = (phase) => {
     COUNTER_SNIPPET: fs
       .readFileSync('./src/utils/counterSnippet.ts')
       .toString(),
+    POSTHOG_SNIPPET: fs
+      .readFileSync('./src/utils/postHogSnippet.ts')
+      .toString(),
   };
 
   const experimental = {
