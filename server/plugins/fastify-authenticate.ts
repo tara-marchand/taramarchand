@@ -1,6 +1,6 @@
 import { FastifyPluginCallback, RouteHandlerMethod } from 'fastify';
 import fp from 'fastify-plugin';
-import { get } from 'lodash';
+import get from 'lodash.get';
 
 import AuthToken from '../models/AuthToken';
 import User from '../models/User';
