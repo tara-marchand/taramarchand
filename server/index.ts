@@ -8,7 +8,6 @@ import get from 'lodash.get';
 import Next from 'next';
 import NodeCache from 'node-cache';
 import nodemailerMailgunTransport from 'nodemailer-mailgun-transport';
-import Mail from 'nodemailer/lib/mailer';
 import path from 'path';
 import { Sequelize } from 'sequelize-typescript';
 import { fastifyAuthenticate } from './plugins/fastify-authenticate';
@@ -17,7 +16,7 @@ import schema from './schemas/index.json';
 
 declare module 'fastify' {
   interface FastifyInstance {
-    nodemailer: Mail;
+    nodemailer: unknown;
     sequelize: Sequelize;
   }
 }

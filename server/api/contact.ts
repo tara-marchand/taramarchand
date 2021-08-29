@@ -1,5 +1,4 @@
 import {
-  FastifyError,
   FastifyInstance,
   FastifyPluginCallback,
   FastifyRequest,
@@ -45,7 +44,7 @@ export const contact: FastifyPluginCallback<Record<never, never>> = (
           subject,
           text: request.body.message,
         },
-        (err, info) => {
+        (err: Record<string, unknown>, info: Record<string, unknown>) => {
           console.log(request.body);
           if (err) {
             fastify.log.error(err.message as string);

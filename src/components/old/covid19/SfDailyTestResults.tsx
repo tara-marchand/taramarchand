@@ -1,6 +1,6 @@
 import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { get } from 'lodash';
+import get from 'lodash.get';
 import * as React from 'react';
 
 import { getOptions } from './statesCaDailyOptions';
