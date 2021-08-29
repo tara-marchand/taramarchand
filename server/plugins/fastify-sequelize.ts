@@ -1,5 +1,9 @@
 import { config } from 'dotenv';
-import { FastifyPluginCallback, RawServerBase } from 'fastify';
+import {
+  ExtendedFastifyInstance,
+  FastifyPluginCallback,
+  RawServerBase,
+} from 'fastify';
 import fp from 'fastify-plugin';
 import get from 'lodash.get';
 import pg from 'pg';
@@ -7,6 +11,7 @@ import { Sequelize } from 'sequelize-typescript';
 
 const fastifySequelize = fp(
   function (fastify, opts, done) {
+    const typedFastify = fastify as ExtendedFastifyInstance;
     config();
 
     const dbUrl = get(process.env, 'DATABASE_URL');
@@ -26,7 +31,7 @@ const fastifySequelize = fp(
       })
         .sync({ force: true })
         .then((_sequelize) => {
-          fastify.sequelize = _sequelize;
+          typedFastify.sequelize = _sequelize;
           done();
         })
         .catch((error) => console.log(error));
