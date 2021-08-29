@@ -1,5 +1,7 @@
 import * as fastify from 'fastify';
 
+import { ExtendedFastifyInstance } from '../types/fastify';
+
 export const contact: fastify.FastifyPluginCallback<Record<never, never>> = (
   fastify,
   _options,
@@ -19,14 +21,14 @@ export const contact: fastify.FastifyPluginCallback<Record<never, never>> = (
       request: fastify.FastifyRequest<{
         Body: {
           email: string;
-          fastify: fastify.ExtendedFastifyInstance;
+          fastify: ExtendedFastifyInstance;
           message: string;
           name: string;
         };
       }>,
       reply
     ) {
-      const typedThis = this as fastify.ExtendedFastifyInstance;
+      const typedThis = this as ExtendedFastifyInstance;
       const { nodemailer } = typedThis;
       let subject = '[taramarchand.com] Contact form message';
 

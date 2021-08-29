@@ -1,6 +1,6 @@
 declare module 'nodemailer/lib/mailer' {}
 
-type Nodemailer = {
+export type Nodemailer = {
   sendMail: (
     options: unknown,
     callback: (

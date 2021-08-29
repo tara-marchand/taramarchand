@@ -1,8 +1,8 @@
+import { FastifyInstance } from 'fastify';
 import { Sequelize } from 'sequelize-typescript';
+import { Nodemailer } from './nodemailer';
 
-declare module 'fastify' {
-  type ExtendedFastifyInstance = FastifyInstance & {
-    nodemailer: Nodemailer;
-    sequelize: Sequelize;
-  };
-}
+type ExtendedFastifyInstance = FastifyInstance & {
+  nodemailer: Nodemailer;
+  sequelize: Sequelize;
+};
