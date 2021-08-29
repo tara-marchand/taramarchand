@@ -1,13 +1,10 @@
 import { config } from 'dotenv';
-import {
-  ExtendedFastifyInstance,
-  FastifyPluginCallback,
-  RawServerBase,
-} from 'fastify';
+import { FastifyPluginCallback, RawServerBase } from 'fastify';
 import fp from 'fastify-plugin';
 import get from 'lodash.get';
 import pg from 'pg';
 import { Sequelize } from 'sequelize-typescript';
+import { ExtendedFastifyInstance } from '../types/fastify';
 
 const fastifySequelize = fp(
   function (fastify, opts, done) {
