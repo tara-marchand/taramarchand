@@ -1,10 +1,6 @@
-import fastify, {
-  ExtendedFastifyInstance,
-  FastifyPluginCallback,
-  FastifyRequest,
-} from 'fastify';
+import * as fastify from 'fastify';
 
-export const contact: FastifyPluginCallback<Record<never, never>> = (
+export const contact: fastify.FastifyPluginCallback<Record<never, never>> = (
   fastify,
   _options,
   done
@@ -20,17 +16,18 @@ export const contact: FastifyPluginCallback<Record<never, never>> = (
       },
     },
     handler: function (
-      request: FastifyRequest<{
+      request: fastify.FastifyRequest<{
         Body: {
           email: string;
-          fastify: ExtendedFastifyInstance;
+          fastify: fastify.ExtendedFastifyInstance;
           message: string;
           name: string;
         };
       }>,
       reply
     ) {
-      const { nodemailer } = this;
+      const typedThis = this as fastify.ExtendedFastifyInstance;
+      const { nodemailer } = typedThis;
       let subject = '[taramarchand.com] Contact form message';
 
       if (request.body.name) {
