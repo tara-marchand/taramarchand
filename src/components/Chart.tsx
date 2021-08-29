@@ -7,7 +7,6 @@ let defaultOptions: Highcharts.Options;
 
 export const Chart: React.FunctionComponent<{
   propsOptions?: Highcharts.Options;
-  // eslint-disable-next-line react/prop-types
 }> = ({ propsOptions }) => {
   const [options, setOptions] = useState(propsOptions);
 

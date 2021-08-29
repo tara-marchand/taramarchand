@@ -18,7 +18,6 @@ export const sunnyside311CasesUrl =
 const Sunnyside311CasesMap: React.FunctionComponent<Props> = (props) => {
   const bounds = [] as LatLngTuple[];
 
-  // eslint-disable-next-line react/prop-types
   const markers = props.cases.map((biz) => {
     const position = [biz.lat as number, biz.long as number] as LatLngTuple;
 
