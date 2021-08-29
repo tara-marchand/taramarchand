@@ -1,0 +1,10 @@
+// Special TS project file, used by eslint only
+{
+  "extends": "./tsconfig.server.json",
+  "include": [
+    // Repeated from base config's "include" setting
+    "server/**/*",
+    // eslint-only inclusion
+    ".eslintrc.js"
+  ]
+}

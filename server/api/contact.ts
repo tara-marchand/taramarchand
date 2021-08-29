@@ -1,8 +1,4 @@
-import {
-  FastifyInstance,
-  FastifyPluginCallback,
-  FastifyRequest,
-} from 'fastify';
+import { FastifyPluginCallback, FastifyRequest } from 'fastify';
 
 export const contact: FastifyPluginCallback<Record<never, never>> = (
   fastify,

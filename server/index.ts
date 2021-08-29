@@ -14,13 +14,6 @@ import { fastifyAuthenticate } from './plugins/fastify-authenticate';
 import { fastifySequelize } from './plugins/fastify-sequelize';
 import schema from './schemas/index.json';
 
-declare module 'fastify' {
-  interface FastifyInstance {
-    nodemailer: unknown;
-    sequelize: Sequelize;
-  }
-}
-
 const port = process.env.PORT || 5000;
 const env = process.env.NODE_ENV;
 const isDev = env === 'development';

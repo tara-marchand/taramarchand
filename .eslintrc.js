@@ -10,7 +10,7 @@ module.exports = {
   ignorePatterns: ['next.config.js'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: './tsconfig.json',
+    project: ['./tsconfig.json', './tsconfig.server.json'],
   },
   plugins: ['@typescript-eslint'],
   rules: {
@@ -18,7 +18,7 @@ module.exports = {
   },
   settings: {
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
+      '@typescript-eslint/parser': ['.d.ts', '.ts', '.tsx'],
     },
     'import/resolver': {
       typescript: {
