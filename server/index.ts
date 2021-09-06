@@ -15,16 +15,21 @@ import path from 'path';
 import { fastifyAuthenticate } from './plugins/fastify-authenticate';
 import { fastifySequelize } from './plugins/fastify-sequelize';
 import schema from './schemas/index.json';
+import { ExtendedFastifyInstance } from './types/fastify';
 
 const port = process.env.PORT || 5000;
 const env = process.env.NODE_ENV;
 const isDev = env === 'development';
 const isProd = env === 'production';
 
-const myCache = new NodeCache();
+const LOG_LEVEL = isProd ? 'warn' : 'info';
+let fastifyInstance: ExtendedFastifyInstance = Fastify({
+  logger: { level: LOG_LEVEL },
+});
+const nextInstance = Next({ dev: isDev });
+const cache = new NodeCache();
 
 function build() {
-  const nextApp = Next({ dev: isDev });
   const airtableApiKey = get(process.env, 'AIRTABLE_API_KEY');
 
   if (airtableApiKey) {
@@ -41,27 +46,29 @@ function build() {
     Airtable.configure(airtableConfig);
   }
 
-  return nextApp.prepare().then(() => {
-    const LOG_LEVEL = isProd ? 'error' : 'debug';
-    const fastify = Fastify({ logger: { level: LOG_LEVEL } });
+  return nextInstance.prepare().then(() => {
     const authJwtSignature = get(process.env, 'AUTH_JWT_SIGNATURE');
     const mailgunApiKey = get(process.env, 'MAILGUN_API_KEY');
     const mailgunDomain = get(process.env, 'MAILGUN_DOMAIN');
 
-    fastify.register(fastifySequelize);
+    fastifyInstance.register(fastifyStatic, {
+      root: path.join(process.cwd(), 'src/public'),
+      prefix: '/public/',
+    });
 
-    fastify.register(fastifyCookie);
+    fastifyInstance.register(fastifyCookie);
+
+    fastifyInstance.register(fastifySequelize);
 
     authJwtSignature &&
-      fastify.register(fastifyJwt, {
+      fastifyInstance.register(fastifyJwt, {
         secret: authJwtSignature as Secret,
       });
-
-    fastify.register(fastifyAuthenticate);
+    fastifyInstance.register(fastifyAuthenticate);
 
     mailgunApiKey &&
       mailgunDomain &&
-      fastify.register(
+      fastifyInstance.register(
         fastifyNodemailer,
         nodemailerMailgunTransport({
           auth: {
@@ -71,19 +78,14 @@ function build() {
         })
       );
 
-    fastify.register(fastifyStatic, {
-      root: path.join(process.cwd(), 'src/public'),
-      prefix: '/public/',
-    });
-
-    const nextHandler = nextApp.getRequestHandler();
+    const nextHandler = nextInstance.getRequestHandler();
 
     // Add schemas for API routes
-    fastify.addSchema(schema);
+    fastifyInstance.addSchema(schema);
 
-    fastify.register(import('./api'), { prefix: '/api' });
+    fastifyInstance.register(import('./api'), { prefix: '/api' });
 
-    fastify.register(
+    fastifyInstance.register(
       (fastify2, opts2, done2) => {
         fastify2.get('/favicon.ico', (_request, reply) => {
           reply.code(404).send();
@@ -100,23 +102,24 @@ function build() {
       { nextHandler }
     );
 
-    fastify.setNotFoundHandler((request, reply) => {
-      nextApp.render404(request.raw, reply.raw).then(() => {
+    fastifyInstance.setNotFoundHandler((request, reply) => {
+      nextInstance.render404(request.raw, reply.raw).then(() => {
         reply.sent = true;
         return;
       });
     });
 
-    return fastify;
+    return fastifyInstance;
   });
 }
 
 build()
-  .then((fastifyApp) => {
+  .then((fastifyApp: ExtendedFastifyInstance) => {
     const url = `http://localhost:${port}`;
     fastifyApp.log.info({ url }, 'Server is ready');
     fastifyApp.listen(port, '0.0.0.0');
+    fastifyInstance = fastifyApp as ExtendedFastifyInstance;
   })
   .catch((error) => console.error(error));
 
-export default { myCache };
+export { cache, fastifyInstance };

@@ -19,8 +19,6 @@ export default function Signup(): ReactElement {
       method: 'POST',
     })
       .then((response) => {
-        console.log(response);
-
         if (response.ok) {
           router.push({
             pathname: '/success',

@@ -37,14 +37,3 @@ export interface User {
   password?: string;
   [k: string]: unknown;
 }
-/**
- * This interface was referenced by `Schema`'s JSON-Schema
- * via the `definition` "signup-reply".
- */
-export interface SignupReply {
-  token?: {
-    [k: string]: unknown;
-  };
-  user?: number;
-  [k: string]: unknown;
-}

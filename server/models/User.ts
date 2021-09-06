@@ -15,7 +15,7 @@ import {
   Table,
   Unique,
 } from 'sequelize-typescript';
-
+import { ExtendedFastifyInstance } from '../types/fastify';
 import AuthToken from './AuthToken';
 
 // Some attributes are optional in `User.build` and `User.create` calls
@@ -41,37 +41,35 @@ export default class User extends Model {
   @HasMany(() => AuthToken)
   public authTokens?: AuthToken[];
 
-  public static authenticate: (
+  public static authenticate = async function (
     email: string,
-    password: string
-  ) => Promise<{ user: User; token: AuthToken }>;
+    password: string,
+    fastifyInstance: ExtendedFastifyInstance
+  ) {
+    const user = (await fastifyInstance.sequelize?.models.User.findOne({
+      where: { email },
+    })) as User;
 
-  public static authorize: (
-    user: User
-  ) => Promise<{ user: User; token: AuthToken }>;
+    if (user && bcrypt.compareSync(password, user.password)) {
+      return User.authorize(user);
+    }
+    throw new Error('Invalid password');
+  };
 
-  public static signout: (authTokenValue: string) => Promise<void>;
+  public static authorize = async function (user: User) {
+    const token = await AuthToken?.generate(user.id);
+    // `addAuthToken` is a generated method for 'hasMany' relationships
+    await user.addAuthToken(token);
+
+    return { user, token };
+  };
+
+  public static signout = async function (
+    authTokenValue: string,
+    fastifyInstance?: ExtendedFastifyInstance
+  ) {
+    fastifyInstance?.sequelize?.models.AuthToken.destroy({
+      where: { token: authTokenValue },
+    });
+  };
 }
-
-User.authenticate = async function (email: string, password: string) {
-  const user = await User.findOne({ where: { email } });
-
-  if (user && bcrypt.compareSync(password, user.password)) {
-    return User.authorize(user);
-  }
-  throw new Error('Invalid password');
-};
-
-User.authorize = async function (user: User) {
-  const authTokenInstance = AuthToken.build();
-  const token = await authTokenInstance.generate(user.id);
-
-  // `addAuthToken` is a generated method for 'hasMany' relationships
-  await user.addAuthToken(token);
-
-  return { user, token };
-};
-
-User.signout = async function (authTokenValue: string) {
-  AuthToken.destroy({ where: { token: authTokenValue } });
-};

@@ -1,15 +1,17 @@
 import bcrypt from 'bcrypt';
 import { FastifyPluginCallback, FastifyRequest } from 'fastify';
 import get from 'lodash.get';
+import createHttpError from 'http-errors';
 
 import User from '../models/User';
+import { ExtendedFastifyInstance } from '../types/fastify';
 
 export const signup: FastifyPluginCallback<Record<never, never>> = (
-  fastify,
+  fastifyInstance,
   _options,
   done
 ) => {
-  fastify.route({
+  fastifyInstance.route({
     method: 'POST',
     url: '/signup',
     schema: {
@@ -18,7 +20,7 @@ export const signup: FastifyPluginCallback<Record<never, never>> = (
       },
       response: {
         200: {
-          schema: { $ref: 'https://www.taramarchand.com/#user' },
+          schema: { $ref: 'https://www.taramarchand.com/#signup-reply' },
         },
       },
     },
@@ -26,35 +28,53 @@ export const signup: FastifyPluginCallback<Record<never, never>> = (
       request: FastifyRequest<{ Body: { email: string; password: string } }>,
       reply
     ) {
+      const fastifyInstance = reply.server as ExtendedFastifyInstance;
+      const sequelizeInstance = fastifyInstance.sequelize;
+
       const body = get(request, 'body');
       const password = get(body, 'password');
-      let hashedPassword;
+
+      const createUser = () => {
+        const userModelCtor = sequelizeInstance?.models.User;
+        fastifyInstance.log.info(userModelCtor);
+        if (!userModelCtor) {
+          reply.send(
+            createHttpError(503, 'Unable to get user model controller')
+          );
+          return;
+        }
+
+        const hashedPassword = bcrypt.hashSync(password, 10);
+        const userData = Object.assign({}, body, {
+          password: hashedPassword,
+        });
+        return userModelCtor?.build(userData);
+      };
 
       if (body && password) {
-        hashedPassword = bcrypt.hashSync(password, 10);
-
-        // Create new user
         try {
-          const userData = Object.assign({}, body, {
-            password: hashedPassword,
-          });
-          const user = await User.create(userData);
-
-          const userAndToken = await User.authorize(user);
-          const token = get(userAndToken, 'token');
-          const id = get(userAndToken, 'user.id');
-          const email = get(userAndToken, 'user.email');
-
-          if (token && id && email) {
-            return reply.serialize({
-              id,
-              email,
-              token,
-            });
+          const newUserInstance = createUser();
+          if (!newUserInstance) {
+            reply.send(
+              createHttpError(503, 'Unable to create new user instance')
+            );
+            return;
           }
-        } catch (err) {
-          return reply.status(400).send(err);
+
+          await newUserInstance.save();
+          const newUserInstanceAndToken = await User.authorize(
+            newUserInstance as User
+          );
+
+          reply.send(newUserInstanceAndToken);
+          return;
+        } catch (error) {
+          reply.send(error);
+          return;
         }
+      } else {
+        reply.send(createHttpError(400));
+        return;
       }
     },
   });

@@ -1,5 +1,9 @@
+import Image from 'next/image';
 import React from 'react';
+
 import { useAmplitude } from './_app';
+
+import bakerBeach from '../public/images/baker-beach.jpg';
 
 export default function Home(): JSX.Element {
   const amplitudeInstance = useAmplitude()?.ampInstance;
@@ -7,7 +11,7 @@ export default function Home(): JSX.Element {
   amplitudeInstance && amplitudeInstance.logEvent('HOME_RENDER');
   return (
     <div>
-      <img className="w-full h-auto" src="/public/images/baker-beach.jpg" />
+      <Image src={bakerBeach} alt="Baker Beach, San Francisco, CA" />
     </div>
   );
 }

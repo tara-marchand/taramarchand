@@ -8,6 +8,7 @@
     "importHelpers": true,
     "lib": ["es2020"],
     "module": "commonjs",
+    "noImplicitAny": true,
     "outDir": ".server",
     "removeComments": true,
     "resolveJsonModule": true,

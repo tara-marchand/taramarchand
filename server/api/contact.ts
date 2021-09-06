@@ -36,7 +36,7 @@ export const contact: fastify.FastifyPluginCallback<Record<never, never>> = (
         subject += ` from ${request.body.name}`;
       }
 
-      nodemailer.sendMail(
+      nodemailer?.sendMail(
         {
           from: request.body.email,
           to: 'tara@mac.com',

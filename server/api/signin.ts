@@ -1,5 +1,6 @@
 import { FastifyPluginCallback } from 'fastify';
 import get from 'lodash.get';
+import { fastifyInstance } from '..';
 
 import User from '../models/User';
 
@@ -30,7 +31,11 @@ export const signin: FastifyPluginCallback<Record<never, never>> = (
       }
 
       try {
-        const userAndToken = await User.authenticate(body.email, body.password);
+        const userAndToken = await User.authenticate(
+          body.email,
+          body.password,
+          fastifyInstance
+        );
         const user = userAndToken.user;
 
         try {

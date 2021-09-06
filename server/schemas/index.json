@@ -37,6 +37,18 @@
           "type": "string"
         }
       }
+    },
+    "signup-reply": {
+      "$id": "#signup-reply",
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "object"
+        },
+        "user": {
+          "type": "number"
+        }
+      }
     }
   },
   "type": "object"
