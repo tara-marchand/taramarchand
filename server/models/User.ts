@@ -61,7 +61,10 @@ export default class User extends Model {
     // `addAuthToken` is a generated method for 'hasMany' relationships
     await user.addAuthToken(token);
 
-    return { user, token };
+    return {
+      user: { id: user.id, email: user.email },
+      token: { id: token.id, token: token.token },
+    };
   };
 
   public static signout = async function (

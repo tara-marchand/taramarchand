@@ -1,8 +1,8 @@
 import { FastifyPluginCallback } from 'fastify';
-import get from 'lodash.get';
-import { fastifyInstance } from '..';
 
+import { fastifyInstance } from '../';
 import User from '../models/User';
+import { SignupOrSigninRequestBody } from './';
 
 export const signin: FastifyPluginCallback<Record<never, never>> = (
   fastify,
@@ -14,39 +14,23 @@ export const signin: FastifyPluginCallback<Record<never, never>> = (
     url: '/signin',
     schema: {
       body: {
-        schema: { $ref: 'https://www.taramarchand.com/#user' },
-      },
-      response: {
-        200: {
-          schema: { $ref: 'https://www.taramarchand.com/#user' },
+        properties: {
+          email: { type: 'string' },
+          password: { type: 'string' },
         },
+        required: ['email', 'password'],
       },
     },
     handler: async function (request, reply) {
-      const body = get(request, 'body') as User | undefined;
-      console.log(body);
-      // If username or password is missing, send status code 400/bad request
-      if (!body || !body.email || !body.password) {
-        return reply.status(400).send('Missing email or password');
-      }
+      const { email, password } = request.body as SignupOrSigninRequestBody;
 
-      try {
-        const userAndToken = await User.authenticate(
-          body.email,
-          body.password,
-          fastifyInstance
-        );
-        const user = userAndToken.user;
-
-        try {
-          const userAndTokenString = await User.authorize(user);
-          return reply.serialize(userAndTokenString);
-        } catch (error) {
-          return reply.status(500).send('Unable to authenticate');
-        }
-      } catch (err) {
-        return reply.status(400).send('Invalid email or password');
-      }
+      const userAndToken = await User.authenticate(
+        email,
+        password,
+        fastifyInstance
+      );
+      console.log(userAndToken);
+      return reply.send(userAndToken);
     },
   });
   done();

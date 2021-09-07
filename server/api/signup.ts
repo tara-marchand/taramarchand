@@ -1,10 +1,11 @@
 import bcrypt from 'bcrypt';
 import { FastifyPluginCallback, FastifyRequest } from 'fastify';
-import get from 'lodash.get';
 import createHttpError from 'http-errors';
+import get from 'lodash.get';
 
 import User from '../models/User';
 import { ExtendedFastifyInstance } from '../types/fastify';
+import { SignupOrSigninRequestBody } from './';
 
 export const signup: FastifyPluginCallback<Record<never, never>> = (
   fastifyInstance,
@@ -16,66 +17,33 @@ export const signup: FastifyPluginCallback<Record<never, never>> = (
     url: '/signup',
     schema: {
       body: {
-        schema: { $ref: 'https://www.taramarchand.com/#user' },
-      },
-      response: {
-        200: {
-          schema: { $ref: 'https://www.taramarchand.com/#signup-reply' },
+        properties: {
+          email: { type: 'string' },
+          password: { type: 'string' },
         },
+        required: ['email', 'password'],
       },
     },
     handler: async function (
-      request: FastifyRequest<{ Body: { email: string; password: string } }>,
+      request: FastifyRequest<{ Body: SignupOrSigninRequestBody }>,
       reply
     ) {
-      const fastifyInstance = reply.server as ExtendedFastifyInstance;
-      const sequelizeInstance = fastifyInstance.sequelize;
-
       const body = get(request, 'body');
-      const password = get(body, 'password');
+      const hashedPassword = bcrypt.hashSync(body.password, 10);
+      const userData = { email: body.email, password: hashedPassword };
 
-      const createUser = () => {
-        const userModelCtor = sequelizeInstance?.models.User;
-        fastifyInstance.log.info(userModelCtor);
-        if (!userModelCtor) {
-          reply.send(
-            createHttpError(503, 'Unable to get user model controller')
-          );
-          return;
-        }
+      (reply.server as ExtendedFastifyInstance).sequelize?.models.User?.create(
+        userData
+      )
+        .then(async (createdUser) => {
+          const { token, user } = await User.authorize(createdUser as User);
 
-        const hashedPassword = bcrypt.hashSync(password, 10);
-        const userData = Object.assign({}, body, {
-          password: hashedPassword,
-        });
-        return userModelCtor?.build(userData);
-      };
-
-      if (body && password) {
-        try {
-          const newUserInstance = createUser();
-          if (!newUserInstance) {
-            reply.send(
-              createHttpError(503, 'Unable to create new user instance')
-            );
-            return;
-          }
-
-          await newUserInstance.save();
-          const newUserInstanceAndToken = await User.authorize(
-            newUserInstance as User
-          );
-
-          reply.send(newUserInstanceAndToken);
-          return;
-        } catch (error) {
-          reply.send(error);
-          return;
-        }
-      } else {
-        reply.send(createHttpError(400));
-        return;
-      }
+          reply.send({
+            user: { email: user.get('email'), id: user.get('id') },
+            token: { id: token.get('id'), token: token.get('token') },
+          });
+        })
+        .catch((error) => reply.send(createHttpError('503', error)));
     },
   });
   done();

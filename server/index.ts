@@ -4,6 +4,7 @@ if (process.env.NODE_ENV === 'production') {
 import Airtable from 'airtable';
 import Fastify from 'fastify';
 import fastifyCookie from 'fastify-cookie';
+import fastifyFormbody from 'fastify-formbody';
 import fastifyJwt, { Secret } from 'fastify-jwt';
 import fastifyNodemailer from 'fastify-nodemailer';
 import fastifyStatic from 'fastify-static';
@@ -57,6 +58,8 @@ function build() {
     });
 
     fastifyInstance.register(fastifyCookie);
+
+    fastifyInstance.register(fastifyFormbody);
 
     fastifyInstance.register(fastifySequelize);
 
