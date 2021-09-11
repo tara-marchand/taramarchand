@@ -15,8 +15,7 @@ const fastifyAuthenticate = fp(
           where: { token },
           include: User,
         });
-        const user = get(authToken, 'user');
-
+        const user = authToken?.user;
         if (user) {
           request.user = user;
         }

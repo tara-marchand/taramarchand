@@ -1,11 +1,16 @@
 import bcrypt from 'bcrypt';
-import { FastifyPluginCallback, FastifyRequest } from 'fastify';
+import { FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify';
+import { IncomingMessage, Server, ServerResponse } from 'http';
 import createHttpError from 'http-errors';
 import get from 'lodash.get';
 
 import User from '../models/User';
 import { ExtendedFastifyInstance } from '../types/fastify';
 import { SignupOrSigninRequestBody } from './';
+
+type SignupRequest = FastifyRequest<{
+  Body: { email: string; password: string };
+}>;
 
 export const signup: FastifyPluginCallback<Record<never, never>> = (
   fastifyInstance,
@@ -15,35 +20,31 @@ export const signup: FastifyPluginCallback<Record<never, never>> = (
   fastifyInstance.route({
     method: 'POST',
     url: '/signup',
-    schema: {
-      body: {
-        properties: {
-          email: { type: 'string' },
-          password: { type: 'string' },
-        },
-        required: ['email', 'password'],
-      },
-    },
-    handler: async function (
-      request: FastifyRequest<{ Body: SignupOrSigninRequestBody }>,
-      reply
-    ) {
-      const body = get(request, 'body');
-      const hashedPassword = bcrypt.hashSync(body.password, 10);
-      const userData = { email: body.email, password: hashedPassword };
+    handler: function (request: SignupRequest, reply) {
+      const { email, password } = request.body;
+      const hashedPassword = bcrypt.hashSync(password, 10);
+      const userData = { email, password: hashedPassword };
 
       (reply.server as ExtendedFastifyInstance).sequelize?.models.User?.create(
         userData
       )
         .then(async (createdUser) => {
-          const { token, user } = await User.authorize(createdUser as User);
+          const tokenAndUser = await User.authorize(createdUser as User).catch(
+            (error) => {
+              throw new Error('Unable to authorize user');
+            }
+          );
+          const { email, id: userId } = tokenAndUser.user;
+          const { id: tokenId, token } = tokenAndUser.token;
 
           reply.send({
-            user: { email: user.get('email'), id: user.get('id') },
-            token: { id: token.get('id'), token: token.get('token') },
+            user: { email, id: userId },
+            token: { id: tokenId, token },
           });
         })
-        .catch((error) => reply.send(createHttpError('503', error)));
+        .catch((error) => {
+          throw new Error('Unable to create user');
+        });
     },
   });
   done();

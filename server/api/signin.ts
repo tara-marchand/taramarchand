@@ -12,15 +12,6 @@ export const signin: FastifyPluginCallback<Record<never, never>> = (
   fastify.route({
     method: 'POST',
     url: '/signin',
-    schema: {
-      body: {
-        properties: {
-          email: { type: 'string' },
-          password: { type: 'string' },
-        },
-        required: ['email', 'password'],
-      },
-    },
     handler: async function (request, reply) {
       const { email, password } = request.body as SignupOrSigninRequestBody;
 
@@ -28,9 +19,10 @@ export const signin: FastifyPluginCallback<Record<never, never>> = (
         email,
         password,
         fastifyInstance
-      );
-      console.log(userAndToken);
-      return reply.send(userAndToken);
+      ).catch((error) => {
+        throw new Error('Unable to authenticate user');
+      });
+      reply.send(userAndToken);
     },
   });
   done();

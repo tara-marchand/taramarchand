@@ -1,5 +1,6 @@
 import { FastifyPluginCallback } from 'fastify';
 import twilio from 'twilio';
+import { ExtendedFastifyInstance } from '../types/fastify';
 
 export const sms: FastifyPluginCallback<Record<never, never>> = (
   fastify,
@@ -9,6 +10,7 @@ export const sms: FastifyPluginCallback<Record<never, never>> = (
   fastify.route({
     method: 'POST',
     url: '/sms',
+    preHandler: (fastify as ExtendedFastifyInstance).authenticate,
     schema: {
       body: {
         schema: {
