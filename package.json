@@ -144,7 +144,7 @@
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
     "@babel/preset-typescript": "^7.12.7",
-    "@next/eslint-plugin-next": "^11.1.0",
+    "@next/eslint-plugin-next": "^11.1.2",
     "@types/amplitude-js": "^7.0.1",
     "@types/bcrypt": "^5.0.0",
     "@types/d3-array": "^2.0.0",

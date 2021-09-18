@@ -12,7 +12,7 @@ module.exports = {
   parserOptions: {
     project: ['./tsconfig.json', './tsconfig.server.json'],
   },
-  plugins: ['@typescript-eslint', '@next'],
+  plugins: ['@typescript-eslint', '@next/next'],
   rules: {
     '@typescript-eslint/explicit-module-boundary-types': ['off'],
   },
