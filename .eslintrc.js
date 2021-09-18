@@ -3,16 +3,16 @@ module.exports = {
     browser: true,
   },
   extends: [
-    'plugin:@next/next/recommended',
     'plugin:import/typescript',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@next/next/recommended',
   ],
   ignorePatterns: ['next.config.js'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: ['./tsconfig.json', './tsconfig.server.json'],
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', '@next'],
   rules: {
     '@typescript-eslint/explicit-module-boundary-types': ['off'],
   },
