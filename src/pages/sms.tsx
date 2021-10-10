@@ -12,7 +12,7 @@ export default function Sms(): JSX.Element {
   }) {
     const body = JSON.stringify(bodyData);
 
-    fetch('/api/sms', {
+    fetch('/fastify/api/sms', {
       body,
       headers: {
         'Content-Type': 'application/json',

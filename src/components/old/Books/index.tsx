@@ -24,7 +24,7 @@ export default function Books() {
   }, []);
 
   useEffect(() => {
-    getData('/api/books', fetchController)
+    getData('/fastify/api/books', fetchController)
       .then((response: Response) => {
         return response.json();
       })

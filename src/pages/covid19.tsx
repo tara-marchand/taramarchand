@@ -30,7 +30,7 @@ const transformDataForCaByDay = (
   );
 
 export default function Covid19(): React.ReactElement | null {
-  const { data, error } = useSwr<Daily[]>('/api/user', async () => {
+  const { data, error } = useSwr<Daily[]>('/fastify/api/user', async () => {
     const response = await fetch(
       'https://api.covidtracking.com/v1/states/ca/daily.json'
     );

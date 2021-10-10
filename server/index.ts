@@ -86,13 +86,19 @@ function build() {
     // Add schemas for API routes
     fastifyInstance.addSchema(schema);
 
-    fastifyInstance.register(import('./api'), { prefix: '/api' });
+    fastifyInstance.register(import('./api'), { prefix: '/fastify/api' });
 
     fastifyInstance.register(
       (fastify2, opts2, done2) => {
         fastify2.get('/favicon.ico', (_request, reply) => {
           reply.code(404).send();
         });
+
+        fastify2.post('/api/*', (request, reply) =>
+          opts2.nextHandler(request.raw, reply.raw).then(() => {
+            reply.sent = true;
+          })
+        );
 
         fastify2.get('/*', (request, reply) =>
           opts2.nextHandler(request.raw, reply.raw).then(() => {

@@ -19,7 +19,7 @@ export default function SignIn({
     const bodyJson = JSON.stringify(body);
 
     // send `user`
-    fetch('/api/signin', {
+    fetch('/fastify/api/signin', {
       body: bodyJson,
       headers: {
         'Content-Type': 'application/json',

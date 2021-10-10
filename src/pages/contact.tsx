@@ -13,7 +13,7 @@ export default function Contact(): JSX.Element {
   }) {
     const body = JSON.stringify(bodyData);
 
-    fetch('/api/contact', {
+    fetch('fastify/api/contact', {
       body,
       headers: {
         'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 
-import { AppProps } from 'next/dist/next-server/lib/router/router';
+import { Provider as SessionProvider } from 'next-auth/client';
+import { AppProps } from 'next/app';
 import Head from 'next/head';
 import React, { useContext, useState } from 'react';
 import { Provider } from 'react-redux';
@@ -94,9 +95,11 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   }
 
   const comp = (
-    <AmplitudeContext.Provider value={amp}>
-      <Component {...pageProps} />
-    </AmplitudeContext.Provider>
+    <SessionProvider session={pageProps.session}>
+      <AmplitudeContext.Provider value={amp}>
+        <Component {...pageProps} />
+      </AmplitudeContext.Provider>
+    </SessionProvider>
   );
 
   return (

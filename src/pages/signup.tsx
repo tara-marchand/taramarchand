@@ -11,7 +11,7 @@ export default function Signup(): ReactElement {
     const bodyJson = JSON.stringify(body);
 
     // send `user`
-    fetch('/api/signup', {
+    fetch('/fastify/api/signup', {
       body: bodyJson,
       headers: {
         'Content-Type': 'application/json',

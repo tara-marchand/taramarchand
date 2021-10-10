@@ -5,7 +5,7 @@ interface State {
 }
 
 export default class ErrorBoundary extends React.Component<
-  Record<string, never>,
+  React.PropsWithChildren<unknown>,
   State
 > {
   constructor(props: Record<string, never>) {
