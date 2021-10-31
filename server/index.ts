@@ -1,16 +1,18 @@
 if (process.env.NODE_ENV === 'production') {
   require('newrelic');
 }
+// Next.js config is a CommonJS module
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const nextConfig = require('../next.config');
+
 import Airtable from 'airtable';
 import Fastify from 'fastify';
 import fastifyCookie from 'fastify-cookie';
 import fastifyFormbody from 'fastify-formbody';
 import fastifyNextJs from 'fastify-nextjs';
 import get from 'lodash.get';
-import { NextConfig } from 'next';
 import NodeCache from 'node-cache';
 
-import { getNextConfig } from './next.config';
 import { fastifyMailgun } from './plugins/fastify-mailgun';
 import { fastifySequelize } from './plugins/fastify-sequelize';
 import schema from './schemas/index.json';
@@ -43,9 +45,6 @@ const createFastifyInstance = async () => {
   const fastifyInstance: ExtendedFastifyInstance = await Fastify({
     logger: { level: logLevel },
   });
-
-  // @ts-ignore
-  const nextConfig: Partial<NextConfig> = getNextConfig();
 
   return fastifyInstance
     .addSchema(schema)
