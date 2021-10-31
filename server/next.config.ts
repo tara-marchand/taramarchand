@@ -45,6 +45,6 @@ export const getNextConfig = (): NextConfig => {
     swcMinify: true,
     typescript,
     // @ts-ignore
-    webpack,
+    // webpack,
   };
 };

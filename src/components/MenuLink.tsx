@@ -36,4 +36,5 @@ function MenuLink(
 export default React.forwardRef<
   React.Ref<HTMLDivElement> & React.Ref<LinkRef>,
   Props
+  // @ts-ignore
 >(MenuLink);

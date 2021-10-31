@@ -52,12 +52,7 @@ const createFastifyInstance = async () => {
     .register(import('./api'), { prefix: '/fastify/api' })
     .register(fastifyNextJs, { conf: nextConfig, dev: isDev })
     .after(() => {
-      if (fastifyInstance.next) {
-        fastifyInstance.next('/*');
-        return fastifyInstance;
-      } else {
-        return;
-      }
+      fastifyInstance.next('/*');
     })
     .register(fastifyCookie)
     .register(fastifyFormbody)
@@ -65,9 +60,6 @@ const createFastifyInstance = async () => {
     .register(fastifyMailgun)
     .listen(port, '0.0.0.0')
     .then(() => {
-      fastifyInstance.ready(
-        (error?) => error && console.log(`Error starting Fastify: ${error}`)
-      );
       fastifyInstance.log.info(
         { url: `http://localhost:${port}` },
         'Server is ready'
