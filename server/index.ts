@@ -1,19 +1,16 @@
 if (process.env.NODE_ENV === 'production') {
   require('newrelic');
 }
-// Next.js config is a CommonJS module
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const nextConfig = require('../next.config');
 
 import Airtable from 'airtable';
 import Fastify from 'fastify';
 import fastifyCookie from 'fastify-cookie';
 import fastifyFormbody from 'fastify-formbody';
-import fastifyNextJs from 'fastify-nextjs';
 import get from 'lodash.get';
 import NodeCache from 'node-cache';
 
 import { fastifyMailgun } from './plugins/fastify-mailgun';
+import { fastifyNextWrapper } from './plugins/fastify-next-wrapper';
 import { fastifySequelize } from './plugins/fastify-sequelize';
 import schema from './schemas/index.json';
 import { ExtendedFastifyInstance } from './types/fastify';
@@ -44,17 +41,15 @@ if (airtableApiKey) {
 const createFastifyInstance = async () => {
   const fastifyInstance: ExtendedFastifyInstance = await Fastify({
     logger: { level: logLevel },
+    pluginTimeout: 15000,
   });
 
   return fastifyInstance
-    .addSchema(schema)
-    .register(import('./api'), { prefix: '/fastify/api' })
-    .register(fastifyNextJs, { conf: nextConfig, dev: isDev })
-    .after(() => {
-      fastifyInstance.next('/*');
-    })
+    .register(fastifyNextWrapper)
     .register(fastifyCookie)
     .register(fastifyFormbody)
+    .addSchema(schema)
+    .register(import('./api'), { prefix: '/fastify/api' })
     .register(fastifySequelize)
     .register(fastifyMailgun)
     .listen(port, '0.0.0.0')

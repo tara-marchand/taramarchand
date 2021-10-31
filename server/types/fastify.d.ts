@@ -16,7 +16,7 @@ type FastifyNextCallback = (
 ) => Promise<void>;
 
 export type ExtendedFastifyInstance = FastifyInstance & {
-  next(
+  next?(
     path: string,
     opts?:
       | {
