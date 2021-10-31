@@ -14,9 +14,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', '@next/next'],
   rules: {
-    '@typescript-eslint/ban-ts-comment': {
-      'ts-ignore': false,
-    },
+    '@typescript-eslint/ban-ts-comment': 1,
     '@typescript-eslint/explicit-module-boundary-types': ['off'],
   },
   settings: {

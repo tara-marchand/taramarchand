@@ -4,7 +4,6 @@ const fs = require('fs');
 const { merge } = require('webpack-merge');
 const nodeExternals = require('@newrelic/webpack-plugin/lib/externals');
 const NewrelicWebpackPlugin = require('@newrelic/webpack-plugin/lib/NewrelicWebpackPlugin');
-const path = require('path');
 
 export const getNextConfig = (): NextConfig => {
   const env = {
@@ -27,24 +26,10 @@ export const getNextConfig = (): NextConfig => {
     ignoreBuildErrors: true,
   };
 
-  const webpack: NextConfig['webpack'] = (config, { dev, isServer }) => {
-    if (!dev && isServer) {
-      return merge({}, config, {
-        // Return the modified config
-        externals: [nodeExternals()],
-        plugins: [new NewrelicWebpackPlugin()],
-      });
-    }
-    return config;
-  };
-
-  // next.config.js object
   return {
     env,
     experimental,
     swcMinify: true,
     typescript,
-    // @ts-ignore
-    // webpack,
   };
 };

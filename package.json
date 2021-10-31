@@ -13,11 +13,13 @@
     "npm": "^8"
   },
   "scripts": {
+    "build": "NODE_ENV=production next build",
     "build:server": "tsc --project tsconfig.server.json",
     "start": "npm run start:dev",
     "start:dev": "NEW_RELIC_ENABLED=false NODE_ENV=development npm run build:server && node --trace-warnings .server/index.js",
     "start:prod": "NEW_RELIC_ENABLED=true NODE_ENV=production npm run build:server && node .server/index.js",
     "start:prod:local": "NEW_RELIC_ENABLED=false NODE_ENV=production npm run build:server && node .server/index.js",
+    "heroku-postbuild": "npm run build",
     "lint": "next lint",
     "test": "DEBUG=start-server-and-test start-server-and-test start http://localhost:3000 cypress:run",
     "test:local": "DEBUG=start-server-and-test start-server-and-test start 3000 cypress:open",
