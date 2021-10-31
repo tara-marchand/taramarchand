@@ -9,8 +9,8 @@ import fastifyNextJs from 'fastify-nextjs';
 import get from 'lodash.get';
 import { NextConfig } from 'next';
 import NodeCache from 'node-cache';
-import getNextConfig from './next.config';
 
+import { getNextConfig } from './next.config';
 import { fastifyMailgun } from './plugins/fastify-mailgun';
 import { fastifySequelize } from './plugins/fastify-sequelize';
 import schema from './schemas/index.json';
@@ -39,7 +39,7 @@ if (airtableApiKey) {
   Airtable.configure(airtableConfig);
 }
 
-const setup = async () => {
+const createFastifyInstance = async () => {
   const fastifyInstance: ExtendedFastifyInstance = await Fastify({
     logger: { level: logLevel },
   });
@@ -48,31 +48,34 @@ const setup = async () => {
   const nextConfig: Partial<NextConfig> = getNextConfig();
 
   return fastifyInstance
-    .register(fastifySequelize)
-    .register(fastifyCookie)
-    .register(fastifyFormbody)
-    .register(fastifyMailgun)
     .addSchema(schema)
     .register(import('./api'), { prefix: '/fastify/api' })
     .register(fastifyNextJs, { conf: nextConfig, dev: isDev })
     .after(() => {
       if (fastifyInstance.next) {
         fastifyInstance.next('/*');
+        return fastifyInstance;
       } else {
         return;
       }
     })
+    .register(fastifyCookie)
+    .register(fastifyFormbody)
+    .register(fastifySequelize)
+    .register(fastifyMailgun)
     .listen(port, '0.0.0.0')
-    .then((error: string) => {
-      error && console.log(error);
+    .then(() => {
+      fastifyInstance.ready(
+        (error?) => error && console.log(`Error starting Fastify: ${error}`)
+      );
       fastifyInstance.log.info(
         { url: `http://localhost:${port}` },
         'Server is ready'
       );
     })
-    .catch((error) => console.log(`Error starting Fastify: ${error}`));
+    .catch((error) => error && console.log(`Error starting Fastify: ${error}`));
 };
 
-const fastifyInstance = setup();
+const fastifyInstance = createFastifyInstance();
 
 export { cache, fastifyInstance };

@@ -1,18 +1,21 @@
+import { NextConfig } from 'next';
+
 const fs = require('fs');
 const { merge } = require('webpack-merge');
 const nodeExternals = require('@newrelic/webpack-plugin/lib/externals');
 const NewrelicWebpackPlugin = require('@newrelic/webpack-plugin/lib/NewrelicWebpackPlugin');
+const path = require('path');
 
-module.exports = () => {
+export const getNextConfig = (): NextConfig => {
   const env = {
     NEW_RELIC_SNIPPET: fs
-      .readFileSync('./src/utils/newRelicSnippet.ts')
+      .readFileSync(__dirname + '/utils/newRelicSnippet.js')
       .toString(),
     COUNTER_SNIPPET: fs
-      .readFileSync('./src/utils/counterSnippet.ts')
+      .readFileSync(__dirname + '/utils/counterSnippet.js')
       .toString(),
     POSTHOG_SNIPPET: fs
-      .readFileSync('./src/utils/postHogSnippet.ts')
+      .readFileSync(__dirname + '/utils/postHogSnippet.js')
       .toString(),
   };
 
@@ -24,10 +27,7 @@ module.exports = () => {
     ignoreBuildErrors: true,
   };
 
-  const webpack = (
-    config,
-    { _buildId, dev, isServer, _defaultLoaders, _webpack }
-  ) => {
+  const webpack: NextConfig['webpack'] = (config, { dev, isServer }) => {
     if (!dev && isServer) {
       return merge({}, config, {
         // Return the modified config
@@ -42,7 +42,9 @@ module.exports = () => {
   return {
     env,
     experimental,
+    swcMinify: true,
     typescript,
+    // @ts-ignore
     webpack,
   };
 };
