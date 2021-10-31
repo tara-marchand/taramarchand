@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "taramarchand.com",
   "main": "./src/server/index.js",
+  "type": "commonjs",
   "repository": {
     "type": "git",
     "url": "https://github.com/tara-marchand/taramarchand.git"
@@ -12,16 +13,14 @@
     "npm": "^7"
   },
   "scripts": {
-    "build": "NODE_ENV=production next build",
     "build:server": "tsc --project tsconfig.server.json",
     "start": "npm run start:dev",
-    "start:dev": "NEW_RELIC_ENABLED=false NODE_ENV=development npm run build:server && node .server/index.js",
+    "start:dev": "NEW_RELIC_ENABLED=false NODE_ENV=development npm run build:server && node --trace-warnings .server/index.js",
     "start:prod": "NEW_RELIC_ENABLED=true NODE_ENV=production npm run build:server && node .server/index.js",
-    "start:prod:local": "npm run build; NEW_RELIC_ENABLED=false NODE_ENV=production npm run build:server && node .server/index.js",
-    "heroku-postbuild": "npm run build",
+    "start:prod:local": "NEW_RELIC_ENABLED=false NODE_ENV=production npm run build:server && node .server/index.js",
     "lint": "next lint",
-    "test": "DEBUG=start-server-and-test start-server-and-test start http://localhost:5000 cypress:run",
-    "test:local": "DEBUG=start-server-and-test start-server-and-test start 5000 cypress:open",
+    "test": "DEBUG=start-server-and-test start-server-and-test start http://localhost:3000 cypress:run",
+    "test:local": "DEBUG=start-server-and-test start-server-and-test start 3000 cypress:open",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
@@ -60,6 +59,7 @@
     "fastify-cookie": "^5.3.0",
     "fastify-formbody": "^5.1.0",
     "fastify-jwt": "^2.4.0",
+    "fastify-nextjs": "^6.0.0",
     "fastify-nodemailer": "^5.0.0",
     "fastify-plugin": "^3.0.0",
     "fastify-postgres": "^3.5.0",

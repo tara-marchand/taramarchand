@@ -1,6 +1,6 @@
 import '../styles/globals.css';
 
-import { Provider as SessionProvider } from 'next-auth/client';
+import { AmplitudeClient } from 'amplitude-js';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import React, { useContext, useState } from 'react';
@@ -11,7 +11,6 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import store from '../data/store';
 import { isProd } from '../data/utils';
-import { AmplitudeClient } from 'amplitude-js';
 
 type AmplitudeContextType = {
   ampInstance?: AmplitudeClient;
@@ -95,11 +94,9 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   }
 
   const comp = (
-    <SessionProvider session={pageProps.session}>
-      <AmplitudeContext.Provider value={amp}>
-        <Component {...pageProps} />
-      </AmplitudeContext.Provider>
-    </SessionProvider>
+    <AmplitudeContext.Provider value={amp}>
+      <Component {...pageProps} />
+    </AmplitudeContext.Provider>
   );
 
   return (

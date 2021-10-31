@@ -1,16 +1,11 @@
 import { FastifyPluginCallback } from 'fastify';
+import fp from 'fastify-plugin';
 import twilio from 'twilio';
-import { ExtendedFastifyInstance } from '../types/fastify';
 
-export const sms: FastifyPluginCallback<Record<never, never>> = (
-  fastify,
-  _options,
-  done
-) => {
+export const sms = fp(function (fastify, _options, done) {
   fastify.route({
     method: 'POST',
     url: '/sms',
-    preHandler: (fastify as ExtendedFastifyInstance).authenticate,
     schema: {
       body: {
         schema: {
@@ -35,6 +30,6 @@ export const sms: FastifyPluginCallback<Record<never, never>> = (
     },
   });
   done();
-};
+} as FastifyPluginCallback<Record<never, never>>);
 
 export default sms;

@@ -27,10 +27,10 @@ export default (request: NextApiRequest, response: NextApiResponse) =>
         }
 
         // Access token has expired, try to update it
-        return refreshAccessToken(token);
+        return await refreshAccessToken(token);
       },
 
-      session(session: Session, user: JWT | User) {
+      async session(session: Session, user: JWT | User) {
         session.user = user;
         return session;
       },

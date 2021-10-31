@@ -1,12 +1,9 @@
 import * as fastify from 'fastify';
+import fp from 'fastify-plugin';
 
 import { ExtendedFastifyInstance } from '../types/fastify';
 
-export const contact: fastify.FastifyPluginCallback<Record<never, never>> = (
-  fastify,
-  _options,
-  done
-) => {
+export const contact = fp(function (fastify, _options, done) {
   fastify.route({
     method: 'POST',
     url: '/contact',
@@ -57,6 +54,4 @@ export const contact: fastify.FastifyPluginCallback<Record<never, never>> = (
     },
   });
   done();
-};
-
-export default contact;
+} as fastify.FastifyPluginCallback<Record<never, never>>);

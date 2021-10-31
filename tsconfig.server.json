@@ -8,16 +8,22 @@
     "importHelpers": true,
     "lib": ["es2020"],
     "module": "commonjs",
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "outDir": ".server",
     "removeComments": true,
     "resolveJsonModule": true,
+    "rootDir": "./server",
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
     "strictPropertyInitialization": false,
     "target": "es2020",
-    "typeRoots": ["node_modules/@types", "server/types"]
+    "typeRoots": [
+      "node_modules/@types",
+      "server/types",
+      "node_modules/fastify-nextjs/index.d.ts"
+    ]
   },
   "include": ["server/**/*"],
   "exclude": ["node_modules"]
