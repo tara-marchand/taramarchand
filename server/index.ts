@@ -41,7 +41,7 @@ if (airtableApiKey) {
 const createFastifyInstance = async () => {
   const fastifyInstance: ExtendedFastifyInstance = await Fastify({
     logger: { level: logLevel },
-    pluginTimeout: 15000,
+    pluginTimeout: 17500,
   });
 
   return fastifyInstance

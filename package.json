@@ -34,6 +34,7 @@
     "@emotion/styled": "^11.0.0",
     "@headlessui/react": "^1.4.1",
     "@newrelic/native-metrics": "^7.0.2",
+    "@notionhq/client": "^0.4.4",
     "@reduxjs/toolkit": "^1.6.1",
     "@tailwindcss/aspect-ratio": "^0.2.1",
     "@tailwindcss/forms": "^0.3.3",
