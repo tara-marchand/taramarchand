@@ -2,9 +2,9 @@ import Airtable from 'airtable';
 import React, { ReactElement } from 'react';
 import { v4 as uuid4 } from 'uuid';
 
-import AddJob from '../components/old/jobs/AddJob';
-import { JobCard } from '../components/old/jobs/JobCard';
-import { Job } from '../components/old/jobs/types';
+import AddJob from '../components_archive/jobs/AddJob';
+import { JobCard } from '../components_archive/jobs/JobCard';
+import { Job } from '../components_archive/jobs/types';
 
 const airtableBase = Airtable.base('app915q92oWW2aV5C');
 

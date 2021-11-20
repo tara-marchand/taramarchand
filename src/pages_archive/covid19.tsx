@@ -3,7 +3,7 @@ import { sortBy, takeRight } from 'lodash';
 import React from 'react';
 import useSwr from 'swr';
 // import useSWR from 'swr';
-import StatesCaDaily from '../components/old/covid19/StatesCaDaily';
+import StatesCaDaily from '../components_archive/covid19/StatesCaDaily';
 import Highcharts from 'highcharts';
 
 const transformDataForCaByDay = (

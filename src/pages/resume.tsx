@@ -3,10 +3,10 @@ import React from 'react';
 
 import resumeJson from '../data/resume.json';
 
-interface Props {
+type Props = {
   amplitude?: AmplitudeClient;
   data: ResumeData;
-}
+};
 
 export async function getStaticProps() {
   const data: ResumeData = resumeJson;

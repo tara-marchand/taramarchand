@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getData } from '../../../data/utils';
+import { getData } from '../../data/utils';
 import Book, { BookProps } from './Book';
 import { SET_BOOKS } from './types';
 
