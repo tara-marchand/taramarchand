@@ -10,14 +10,10 @@ import { ExtendedFastifyInstance } from '../types/fastify';
 
 const fastifySequelize = fp(
   async function (fastify: ExtendedFastifyInstance, opts, done) {
-    const dbUrl = get(process.env, 'DATABASE_URL');
-    if (!dbUrl) {
-      return;
-    }
-
     config();
+    const dbUrl = process.env.DATABASE_URL;
 
-    fastify.sequelize = new Sequelize(dbUrl, {
+    const sequelize = !!dbUrl && new Sequelize(dbUrl, {
       dialect: 'postgres' as const,
       dialectModule: pg,
       dialectOptions: {
@@ -29,8 +25,10 @@ const fastifySequelize = fp(
       models: sequelizeModels,
       quoteIdentifiers: false,
     });
-    await fastify.sequelize.sync();
-
+    if (!!sequelize) {
+      fastify.sequelize = sequelize;
+      fastify.sequelize.sync();
+    }
     done();
   } as FastifyPluginCallback<Record<string, unknown>, RawServerBase>,
   { name: 'fastify-sequelize' }
