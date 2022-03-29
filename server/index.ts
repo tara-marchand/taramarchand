@@ -6,19 +6,23 @@ import Airtable from 'airtable';
 import Fastify from 'fastify';
 import fastifyCookie from 'fastify-cookie';
 import fastifyFormbody from 'fastify-formbody';
+import fastifyNext from 'fastify-nextjs';
 import get from 'lodash.get';
 import NodeCache from 'node-cache';
 
-import { fastifyMailgun } from './plugins/fastify-mailgun';
-import { fastifyNextWrapper } from './plugins/fastify-next-wrapper';
 import { fastifySequelize } from './plugins/fastify-sequelize';
 import schema from './schemas/index.json';
-import { ExtendedFastifyInstance } from './types/fastify';
+
+type ContactRequestBody = {
+  email: string;
+  message: string;
+  name: string;
+};
+
+const isDev = process.env.NODE_ENV === 'development';
+const isProd = process.env.NODE_ENV === 'production';
 
 const port = process.env.PORT || 3000;
-const env = process.env.NODE_ENV;
-const isDev = env === 'development';
-const isProd = env === 'production';
 const logLevel = isProd ? 'warn' : 'info';
 
 const cache = new NodeCache();
@@ -39,19 +43,71 @@ if (airtableApiKey) {
 }
 
 const createFastifyInstance = async () => {
-  const fastifyInstance: ExtendedFastifyInstance = await Fastify({
+  const fastifyInstance = Fastify({
     logger: { level: logLevel },
-    pluginTimeout: 17500,
+    pluginTimeout: 20000,
   });
 
-  return fastifyInstance
-    .register(fastifyNextWrapper)
+  fastifyInstance
     .register(fastifyCookie)
     .register(fastifyFormbody)
-    .addSchema(schema)
-    .register(import('./api'), { prefix: '/fastify/api' })
     .register(fastifySequelize)
-    .register(fastifyMailgun)
+    .addSchema(schema)
+    .route({
+      method: 'POST',
+      url: '/contact',
+      schema: {
+        body: {
+          schema: {
+            $ref: 'https://www.taramarchand.com/#contact',
+          },
+        },
+      },
+      handler: function (request, reply) {
+        const typedRequestBody = request.body as ContactRequestBody;
+        let subject = '[taramarchand.com] Contact form message';
+
+        if (typedRequestBody.name) {
+          subject += ` from ${(request.body as ContactRequestBody).name}`;
+        }
+
+        this.nodemailer?.sendMail(
+          {
+            from: typedRequestBody.email,
+            to: 'tara@mac.com',
+            subject,
+            text: typedRequestBody.message,
+          },
+          (err: Record<string, unknown>, info: Record<string, unknown>) => {
+            console.log(request.body);
+            if (err) {
+              this.log.error(err.message as string);
+            }
+            reply.send({
+              messageId: info.messageId,
+            });
+          }
+        );
+      },
+    })
+    .register(fastifyNext, {
+      dev: isDev,
+    })
+    .after(async function (error: Error) {
+      if (error) {
+        fastifyInstance.log.error(error.message);
+        process.exit(1);
+      }
+      fastifyInstance.next('/*');
+
+      // Register mailgun late to work around bug: https://github.com/vercel/next.js/issues/35314#issuecomment-1069661213
+      const fastifyMailgun = await (
+        await import('./plugins/fastify-mailgun')
+      ).default;
+      fastifyInstance.register(fastifyMailgun);
+    });
+
+  return fastifyInstance
     .listen(port, '0.0.0.0')
     .then(() => {
       fastifyInstance.log.info(

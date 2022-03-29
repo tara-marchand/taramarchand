@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-export default function Contact(): JSX.Element {
+export default function Contact() {
   const { register, handleSubmit, errors } = useForm();
   const router = useRouter();
 

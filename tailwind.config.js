@@ -8,7 +8,10 @@ module.exports = {
     require('@tailwindcss/forms'),
   ],
   prefix: '',
-  content: ['./src/**/*.tsx'],
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx}",
+    "./src/components/**/*.{js,ts,jsx,tsx}",
+  ],
   separator: ':',
   theme: {
     extend: {

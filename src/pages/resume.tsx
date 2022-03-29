@@ -1,15 +1,11 @@
-import { AmplitudeClient } from 'amplitude-js';
 import React from 'react';
 
-import resumeJson from '../data/resume.json';
-
 type Props = {
-  amplitude?: AmplitudeClient;
   data: ResumeData;
 };
 
 export async function getStaticProps() {
-  const data: ResumeData = resumeJson;
+  const data = (await import('../data/resume.json')).default;
 
   return {
     props: {
@@ -18,11 +14,7 @@ export async function getStaticProps() {
   };
 }
 
-export default function Resume(props: Props): JSX.Element {
-  const { amplitude } = props;
-
-  amplitude && amplitude.logEvent('RESUME_RENDER');
-
+export default function Resume(props: Props) {
   return (
     <div>
       {renderBasics(props.data)}
@@ -68,7 +60,7 @@ function renderBasics(data: ResumeData): JSX.Element | null {
   );
 }
 
-function renderSkills(data: ResumeData): JSX.Element | null {
+function renderSkills(data: ResumeData) {
   const { skills } = data;
 
   if (!skills) {
@@ -93,7 +85,7 @@ function renderSkills(data: ResumeData): JSX.Element | null {
   );
 }
 
-function renderWork(data: ResumeData): JSX.Element | null {
+function renderWork(data: ResumeData) {
   const { work } = data;
 
   if (!work) {
@@ -129,7 +121,7 @@ function renderWork(data: ResumeData): JSX.Element | null {
   );
 }
 
-function renderEducation(data: ResumeData): JSX.Element | null {
+function renderEducation(data: ResumeData) {
   const { education } = data;
 
   if (!education) {

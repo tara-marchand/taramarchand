@@ -3,6 +3,7 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -11,7 +12,11 @@
     "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
@@ -25,9 +30,17 @@
     "typeRoots": [
       "node_modules/@types",
       "src/types",
-      "node_modules/notion-sdk-js/src"
+      "node_modules/notion-sdk-js/src",
     ]
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "src/components/**/*",
+    "src/data/**/*",
+    "src/pages/**/*",
+    "src/types/**/*",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

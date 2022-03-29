@@ -28,4 +28,4 @@ const fastifyMailgun = fp(
   { name: 'fastify-mailgun' }
 );
 
-export { fastifyMailgun };
+export default fastifyMailgun;
