@@ -32,7 +32,7 @@ export default function Contact() {
   }, [captchaToken]);
 
   return (
-    <form className="w-full max-w-lg" onSubmit={handleSubmit(onSubmit)}>
+    <form className="w-full max-w-lg" onSubmit={onSubmit}>
       <div className="-mx-2 mb-4 flex flex-wrap">
         <div className="w-full px-3">
           <label className="mb-2 block" htmlFor="name">
@@ -93,6 +93,13 @@ export default function Contact() {
           )}
         </div>
       </div>
+      <div className="mb-4">
+        <HCaptcha
+          sitekey="131a7a71-ae46-4c71-abe0-79934e238aa3"
+          onVerify={setCaptchaToken}
+          ref={captchaRef}
+        />
+      </div>
       <div className="md:flex md:items-center">
         <div className="md:w-1/3">
           <button
@@ -104,12 +111,6 @@ export default function Contact() {
         </div>
         <div className="md:w-2/3"></div>
       </div>
-      <HCaptcha
-        sitekey="131a7a71-ae46-4c71-abe0-79934e238aa3"
-        onVerify={setCaptchaToken}
-        ref={captchaRef}
-      />
-      {captchaToken && <div>Success! Token: {captchaToken}</div>}
     </form>
   );
 }

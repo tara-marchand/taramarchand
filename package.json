@@ -19,8 +19,8 @@
     "heroku-postbuild": "npm run build:next",
     "start": "npm run start:dev",
     "start:dev": "npm run build:next && NEW_RELIC_ENABLED=false NODE_ENV=development npm run build:server && node --trace-warnings .server/index.js",
-    "start:prod": "npm run build:next && NEW_RELIC_ENABLED=true NODE_ENV=production npm run build:server && node .server/index.js",
-    "start:prod:local": "npm run build:next && NEW_RELIC_ENABLED=false NODE_ENV=production npm run build:server && node .server/index.js",
+    "start:prod": "npm run build:next && NODE_OPTIONS='-r @newrelic/next' NEW_RELIC_ENABLED=true NODE_ENV=production npm run build:server && node .server/index.js",
+    "start:prod:local": "npm run build:next && NODE_OPTIONS='-r @newrelic/next' NEW_RELIC_ENABLED=false NODE_ENV=production npm run build:server && node .server/index.js",
     "lint": "next lint"
   },
   "author": "",
@@ -33,6 +33,7 @@
     "@hcaptcha/react-hcaptcha": "^1.3.0",
     "@headlessui/react": "^1.5.0",
     "@newrelic/native-metrics": "^8.0.0",
+    "@newrelic/next": "^0.1.1",
     "@notionhq/client": "^0.4.13",
     "@reduxjs/toolkit": "^1.8.0",
     "@tailwindcss/aspect-ratio": "^0.4.0",
