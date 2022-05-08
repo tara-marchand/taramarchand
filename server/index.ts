@@ -6,7 +6,7 @@ import Airtable from 'airtable';
 import Fastify from 'fastify';
 import fastifyCookie from 'fastify-cookie';
 import fastifyFormbody from 'fastify-formbody';
-import fastifyNext from 'fastify-nextjs';
+import fastifyNext from '@fastify/nextjs';
 import get from 'lodash.get';
 import NodeCache from 'node-cache';
 
@@ -23,7 +23,7 @@ const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 
 const port = process.env.PORT || 3000;
-const logLevel = isProd ? 'warn' : 'info';
+const logLevel = isProd ? 'warn' : 'debug';
 
 const cache = new NodeCache();
 
@@ -47,6 +47,11 @@ const createFastifyInstance = async () => {
     logger: { level: logLevel },
     pluginTimeout: 20000,
   });
+
+  let _port = port;
+  if (typeof _port === 'string') {
+    _port = parseInt(_port, 10);
+  }
 
   fastifyInstance
     .register(fastifyCookie)
@@ -92,19 +97,21 @@ const createFastifyInstance = async () => {
     })
     .register(fastifyNext, {
       dev: isDev,
+      hostname: 'localhost',
+      port: _port,
     })
-    .after(async function (error: Error) {
+    .after(function (error: Error) {
       if (error) {
         fastifyInstance.log.error(error.message);
         process.exit(1);
       }
+
       fastifyInstance.next('/*');
 
       // Register mailgun late to work around bug: https://github.com/vercel/next.js/issues/35314#issuecomment-1069661213
-      const fastifyMailgun = await (
-        await import('./plugins/fastify-mailgun')
-      ).default;
-      fastifyInstance.register(fastifyMailgun);
+      import('./plugins/fastify-mailgun').then(({ default: mailgunPlugin }) => {
+        fastifyInstance.register(mailgunPlugin);
+      });
     });
 
   return fastifyInstance
