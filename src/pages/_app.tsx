@@ -1,6 +1,5 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import Script from 'next/script';
 import { Provider } from 'react-redux';
 
 import ErrorBoundary from '../components/ErrorBoundary';
@@ -13,6 +12,7 @@ import '../styles/globals.css';
 export async function getServerSideProps() {
   // You must require agent and put it within this function
   // otherwise it will try to get bundled by webpack and cause errors.
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const newrelic = require('newrelic');
   const browserTimingHeader = newrelic.getBrowserTimingHeader();
   return {
