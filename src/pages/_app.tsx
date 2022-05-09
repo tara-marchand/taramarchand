@@ -46,7 +46,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Tara Marchand</title>
       </Head>
-      {process.env.NODE_ENV === 'production' && (
+      {process.env.NEXT_PUBLIC_NODE_ENV === 'production' && (
         <div
           dangerouslySetInnerHTML={{ __html: pageProps.browserTimingHeader }}
         />
