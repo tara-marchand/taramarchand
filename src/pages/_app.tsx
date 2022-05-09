@@ -10,6 +10,18 @@ import store from '../data/store';
 
 import '../styles/globals.css';
 
+export async function getServerSideProps() {
+  // You must require agent and put it within this function
+  // otherwise it will try to get bundled by webpack and cause errors.
+  const newrelic = require('newrelic');
+  const browserTimingHeader = newrelic.getBrowserTimingHeader();
+  return {
+    props: {
+      browserTimingHeader,
+    },
+  };
+}
+
 // For browser
 if (typeof window !== 'undefined') {
   window.addEventListener('unhandledrejection', function (event) {
@@ -34,6 +46,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Tara Marchand</title>
       </Head>
+      {process.env.NODE_ENV === 'production' && (
+        <div
+          dangerouslySetInnerHTML={{ __html: pageProps.browserTimingHeader }}
+        />
+      )}
       <Provider store={store}>
         <ErrorBoundary>
           <div className="grid-rows-8 grid grid-cols-1 font-sans leading-5">
