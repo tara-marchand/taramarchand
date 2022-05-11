@@ -1,10 +1,6 @@
-if (process.env.NODE_ENV === 'production') {
-  require('newrelic');
-}
-
 import Airtable from 'airtable';
 import Fastify from 'fastify';
-import fastifyCookie from 'fastify-cookie';
+import fastifyCookie from '@fastify/cookie';
 import fastifyFormbody from 'fastify-formbody';
 import fastifyNext from '@fastify/nextjs';
 import get from 'lodash.get';
@@ -22,7 +18,7 @@ type ContactRequestBody = {
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3333;
 const logLevel = isProd ? 'warn' : 'debug';
 
 const cache = new NodeCache();

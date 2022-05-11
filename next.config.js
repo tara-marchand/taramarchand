@@ -7,6 +7,7 @@ const nextConfig = {
   experimental: {
     esmExternals: true,
   },
+  reactStrictMode: true,
   swcMinify: true,
   typescript: {
     ignoreBuildErrors: true,
