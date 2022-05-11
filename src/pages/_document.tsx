@@ -1,15 +1,11 @@
 import Document, {
-  DocumentProps,
   Head,
   Html,
   Main,
   NextScript,
 } from 'next/document';
+import { InferGetServerSidePropsType } from 'next/types';
 import React from 'react';
-
-type Props = DocumentProps & {
-  browserTimingHeader?: string;
-};
 
 export async function getServerSideProps() {
   // You must require agent and put it within this function
@@ -20,7 +16,7 @@ export async function getServerSideProps() {
   return { props: { browserTimingHeader } };
 }
 
-export default class MyDocument extends Document<Props> {
+export default class MyDocument extends Document<InferGetServerSidePropsType<typeof getServerSideProps>> {
   render() {
     const { browserTimingHeader } = this.props;
 

@@ -1,13 +1,12 @@
 import Head from 'next/head';
-import { browser } from 'process';
 import { Provider } from 'react-redux';
 
-import ErrorBoundary from '../components/ErrorBoundary';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
+import ErrorBoundary from './ErrorBoundary';
+import Footer from './Footer';
+import Header from './Header';
 import store from '../data/store';
 
-type Props = React.PropsWithChildren<{ browserTimingHeader?: string }>;
+type Props = React.PropsWithChildren<Record<string, unknown>>;
 
 // For browser
 if (typeof window !== 'undefined') {
@@ -27,7 +26,7 @@ if (typeof window !== 'undefined') {
   });
 }
 
-export default function Layout({ browserTimingHeader, children }: Props) {
+export default function Layout({ children }: Props) {
   return (
     <>
       <Head>
