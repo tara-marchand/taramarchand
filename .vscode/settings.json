@@ -6,6 +6,6 @@
   "typescript.format.enable": false,
   "typescript.reportStyleChecksAsWarnings": false,
   "typescript.tsdk": "node_modules/typescript/lib",
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "jest.jestCommandLine": "node_modules/.bin/jest"
 }
