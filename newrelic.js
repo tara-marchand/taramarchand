@@ -55,7 +55,7 @@ exports.config = {
   },
   application_logging: {
     forwarding: {
-      enable: true
+      enabled: true
     }
   }
 };
