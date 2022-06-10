@@ -34,7 +34,8 @@
       "endDate": "present",
       "summary": "",
       "highlights": [
-        "As part of Incubator innovation team, improve and enhance JavaScript mapping framework for consumer product platform.",
+        "Built out UI for security vulnerability management product incubation launch.",
+        "Improved and enhanced JavaScript mapping visualization framework.",
         "Define technical standards and processes; break down and scope projects.",
         "Collaborate with engineers, product managers, and designers; mentor junior engineers.",
         "Led UI engineering for company's internal data organization.",
@@ -115,19 +116,20 @@
         "CSS preprocessors (SCSS)",
         "version control systems (git)",
         "transpilation & bundling (Babel, Webpack)",
-        "testing, building, & deployment (Jest, Selenium, Jenkins)",
-        "package managers (npm, yarn)"
+        "test, build, & deploy (Jest, Testing Library, Jenkins)",
+        "package managers (NPM)"
       ]
     },
     {
       "name": "Interests",
       "keywords": [
+        "software development lifecycle",
         "software design & architecture",
-        "services & API integration",
+        "services & APIs (REST, GraphQL)",
         "performance & optimization",
         "data visualization",
         "visual and interaction design, user experience",
-        "continuous integration & deployment"
+        "continuous integration & deployment",
       ]
     }
   ]
