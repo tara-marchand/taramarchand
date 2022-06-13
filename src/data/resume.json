@@ -112,7 +112,7 @@
     {
       "name": "Tools",
       "keywords": [
-        "Browser- & server-side JavaScript & TypeScript (Node, React)",
+        "Browser- & server-side JavaScript & TypeScript (Node.js, React, Next.js, Fastify)",
         "CSS preprocessors (SCSS)",
         "version control systems (git)",
         "transpilation & bundling (Babel, Webpack)",
@@ -129,7 +129,7 @@
         "performance & optimization",
         "data visualization",
         "visual and interaction design, user experience",
-        "continuous integration & deployment",
+        "continuous integration & deployment"
       ]
     }
   ]
