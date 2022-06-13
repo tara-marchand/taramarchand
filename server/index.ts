@@ -118,7 +118,7 @@ const createFastifyInstance = async () => {
     });
 
   return fastifyInstance
-    .listen(port, '0.0.0.0')
+    .listen({ port: _port, host: '0.0.0.0' })
     .then(() => {
       fastifyInstance.log.info(
         { url: `http://localhost:${port}` },
