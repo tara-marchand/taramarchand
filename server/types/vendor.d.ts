@@ -5,6 +5,5 @@ declare module 'fastify-nodemailer';
 declare module 'fastify-sequelize';
 declare module 'http-errors';
 declare module 'lodash.get';
-declare module 'newrelic';
 declare module 'nodemailer-mailgun-transport';
 declare module 'pg';

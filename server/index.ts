@@ -2,19 +2,12 @@ import fastifyCookie from '@fastify/cookie';
 import fastifyFormbody from '@fastify/formbody';
 import fastifyNext from '@fastify/nextjs';
 import Airtable from 'airtable';
-import Fastify, { FastifyRequest } from 'fastify';
+import Fastify from 'fastify';
 import get from 'lodash.get';
 import NodeCache from 'node-cache';
 
 import { fastifySequelize } from './plugins/fastify-sequelize';
 import schema from './schemas/index.json';
-
-export type FastifyRequestWithNr = FastifyRequest & { newrelic: unknown };
-
-let newRelic: undefined | unknown;
-if (process.env.NEXT_PUBLIC_NODE_ENV === 'development') {
-  import('newrelic').then((_newRelic) => (newRelic = _newRelic));
-}
 
 type ContactRequestBody = {
   email: string;
