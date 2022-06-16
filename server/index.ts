@@ -2,9 +2,11 @@ import fastifyCookie from '@fastify/cookie';
 import fastifyFormbody from '@fastify/formbody';
 import fastifyNext from '@fastify/nextjs';
 import Airtable from 'airtable';
+import { log } from 'console';
 import Fastify from 'fastify';
 import get from 'lodash.get';
 import NodeCache from 'node-cache';
+import { collectDefaultMetrics, register } from 'prom-client';
 
 import { fastifySequelize } from './plugins/fastify-sequelize';
 import schema from './schemas/index.json';
@@ -14,6 +16,8 @@ type ContactRequestBody = {
   message: string;
   name: string;
 };
+
+collectDefaultMetrics();
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
@@ -91,6 +95,20 @@ const createFastifyInstance = async () => {
         );
       },
     })
+    .route({
+      method: 'GET',
+      url: '/metrics',
+      handler: async function (request, reply) {
+        try {
+          reply.header('Content-Type', register.contentType);
+          reply.send(await register.metrics());
+        } catch (ex) {
+          log(ex)
+          reply.code(500);
+        }
+      }
+    })
+
     .register(fastifyNext, {
       dev: isDev,
       hostname: 'localhost',
