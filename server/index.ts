@@ -2,7 +2,6 @@ import fastifyCookie from '@fastify/cookie';
 import fastifyFormbody from '@fastify/formbody';
 import fastifyNext from '@fastify/nextjs';
 import Airtable from 'airtable';
-import { log } from 'console';
 import Fastify from 'fastify';
 import get from 'lodash.get';
 import NodeCache from 'node-cache';
@@ -34,12 +33,9 @@ const transport: LoggerOptions = pino.transport({
     host: 'https://loki.tmarchand.com',
   },
 })
-
 const logger = pino(transport)
 
 collectDefaultMetrics();
-
-
 
 // Set up Airtable
 const airtableApiKey = get(process.env, 'AIRTABLE_API_KEY');
@@ -117,7 +113,7 @@ const createFastifyInstance = async () => {
           reply.header('Content-Type', register.contentType);
           reply.send(await register.metrics());
         } catch (ex) {
-          log(ex);
+          console.log(ex);
           reply.code(500);
         }
       },
