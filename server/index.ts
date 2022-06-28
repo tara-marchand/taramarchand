@@ -2,10 +2,10 @@ import fastifyCookie from '@fastify/cookie';
 import fastifyFormbody from '@fastify/formbody';
 import fastifyNext from '@fastify/nextjs';
 import Airtable from 'airtable';
+import { log } from 'console';
 import Fastify from 'fastify';
 import get from 'lodash.get';
 import NodeCache from 'node-cache';
-import pino from 'pino';
 import { collectDefaultMetrics, register } from 'prom-client';
 
 import { fastifySequelize } from './plugins/fastify-sequelize';
@@ -17,26 +17,15 @@ type ContactRequestBody = {
   name: string;
 };
 
+collectDefaultMetrics();
+
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
-const logLevel = isProd ? 'warn' : 'debug';
 
 const port = process.env.PORT || 3333;
+const logLevel = isProd ? 'warn' : 'debug';
+
 const cache = new NodeCache();
-
-const transport = pino.transport({
-  target: 'pino-loki',
-  options: {
-    labels: { application: 'taramarchand.com' },
-    logLevel,
-    host: 'https://loki.tmarchand.com',
-  },
-})
-// const logger = pino(
-//   transport
-// );
-
-collectDefaultMetrics();
 
 // Set up Airtable
 const airtableApiKey = get(process.env, 'AIRTABLE_API_KEY');
@@ -114,11 +103,12 @@ const createFastifyInstance = async () => {
           reply.header('Content-Type', register.contentType);
           reply.send(await register.metrics());
         } catch (ex) {
-          console.log(ex);
+          log(ex)
           reply.code(500);
         }
-      },
+      }
     })
+
     .register(fastifyNext, {
       dev: isDev,
       hostname: 'localhost',
