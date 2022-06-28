@@ -6,6 +6,7 @@ import { log } from 'console';
 import Fastify from 'fastify';
 import get from 'lodash.get';
 import NodeCache from 'node-cache';
+import pino, { LoggerOptions } from 'pino';
 import { collectDefaultMetrics, register } from 'prom-client';
 
 import { fastifySequelize } from './plugins/fastify-sequelize';
@@ -17,15 +18,28 @@ type ContactRequestBody = {
   name: string;
 };
 
-collectDefaultMetrics();
-
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
-
-const port = process.env.PORT || 3333;
 const logLevel = isProd ? 'warn' : 'debug';
 
+
+const port = process.env.PORT || 3333;
 const cache = new NodeCache();
+
+const transport: LoggerOptions = pino.transport({
+  target: 'pino-loki',
+  options: {
+    labels: { application: 'taramarchand.com' },
+    logLevel,
+    host: 'https://loki.tmarchand.com',
+  },
+})
+
+const logger = pino(transport)
+
+collectDefaultMetrics();
+
+
 
 // Set up Airtable
 const airtableApiKey = get(process.env, 'AIRTABLE_API_KEY');
@@ -44,7 +58,7 @@ if (airtableApiKey) {
 
 const createFastifyInstance = async () => {
   const fastifyInstance = Fastify({
-    logger: { level: logLevel },
+    logger,
     pluginTimeout: 20000,
   });
 
@@ -103,10 +117,10 @@ const createFastifyInstance = async () => {
           reply.header('Content-Type', register.contentType);
           reply.send(await register.metrics());
         } catch (ex) {
-          log(ex)
+          log(ex);
           reply.code(500);
         }
-      }
+      },
     })
 
     .register(fastifyNext, {
