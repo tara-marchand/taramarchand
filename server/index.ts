@@ -32,9 +32,9 @@ const transport = pino.transport({
     host: 'https://loki.tmarchand.com',
   },
 })
-const logger = pino(
-  transport
-);
+// const logger = pino(
+//   transport
+// );
 
 collectDefaultMetrics();
 
@@ -55,7 +55,7 @@ if (airtableApiKey) {
 
 const createFastifyInstance = async () => {
   const fastifyInstance = Fastify({
-    logger,
+    logger: { level: logLevel },
     pluginTimeout: 20000,
   });
 
