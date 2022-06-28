@@ -5,7 +5,7 @@ import Airtable from 'airtable';
 import Fastify from 'fastify';
 import get from 'lodash.get';
 import NodeCache from 'node-cache';
-import pino, { LoggerOptions } from 'pino';
+import pino from 'pino';
 import { collectDefaultMetrics, register } from 'prom-client';
 
 import { fastifySequelize } from './plugins/fastify-sequelize';
@@ -21,11 +21,10 @@ const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 const logLevel = isProd ? 'warn' : 'debug';
 
-
 const port = process.env.PORT || 3333;
 const cache = new NodeCache();
 
-const transport: LoggerOptions = pino.transport({
+const transport = pino.transport({
   target: 'pino-loki',
   options: {
     labels: { application: 'taramarchand.com' },
@@ -33,7 +32,9 @@ const transport: LoggerOptions = pino.transport({
     host: 'https://loki.tmarchand.com',
   },
 })
-const logger = pino(transport)
+const logger = pino(
+  transport
+);
 
 collectDefaultMetrics();
 
@@ -118,7 +119,6 @@ const createFastifyInstance = async () => {
         }
       },
     })
-
     .register(fastifyNext, {
       dev: isDev,
       hostname: 'localhost',
