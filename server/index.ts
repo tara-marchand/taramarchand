@@ -46,18 +46,23 @@ if (airtableApiKey) {
 }
 
 const options = {
-  host: 'http://loki.tmarchand.com', // Pino loki instance IP address and port
   applicationTag: 'taramarchand', // The tag every log file should be logged with
-  timeout: 3000, // Set timeout to 3 seconds, default is 30 minutes.
+  host: 'http://loki.tmarchand.com', // Pino loki instance IP address and port
+  labels: {
+    application: 'taramarchand.com'
+  },
   silenceErrors: false,
+  timeout: 3000, // Set timeout to 3 seconds, default is 30 minutes.
 };
 
-
+/**
+ * @see https://skaug.dev/node-js-app-with-loki/
+ */
 const createFastifyInstance = async () => {
   const streams = [
     { level: logLevel, stream: await createWriteStreamSync(options) },
   ];
-  let logger = pino({ level: 'info' }, pino.multistream(streams));
+  let logger = pino({ level: logLevel }, pino.multistream(streams));
 
   const fastifyInstance = Fastify({
     logger,
@@ -124,13 +129,13 @@ const createFastifyInstance = async () => {
         }
       }
     })
-
     .register(fastifyNext, {
       dev: isDev,
       hostname: 'localhost',
       port: _port,
     })
     .after(function (error: Error) {
+      fastifyInstance.log.info('hi')
       if (error) {
         fastifyInstance.log.error(error.message);
         process.exit(1);
