@@ -7,9 +7,12 @@ import Fastify from 'fastify';
 import get from 'lodash.get';
 import NodeCache from 'node-cache';
 import { collectDefaultMetrics, register } from 'prom-client';
+import pino from 'pino';
+import createWriteStreamSync from 'pino-loki'; // Pino-loki isn't available as a ES6 module yet
 
 import { fastifySequelize } from './plugins/fastify-sequelize';
 import schema from './schemas/index.json';
+import { Level } from 'pino';
 
 type ContactRequestBody = {
   email: string;
@@ -23,7 +26,7 @@ const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 
 const port = process.env.PORT || 3333;
-const logLevel = isProd ? 'warn' : 'debug';
+const logLevel: Level = isProd ? 'warn' : 'debug';
 
 const cache = new NodeCache();
 
@@ -42,9 +45,22 @@ if (airtableApiKey) {
   Airtable.configure(airtableConfig);
 }
 
+const options = {
+  host: 'http://loki.tmarchand.com', // Pino loki instance IP address and port
+  applicationTag: 'taramarchand', // The tag every log file should be logged with
+  timeout: 3000, // Set timeout to 3 seconds, default is 30 minutes.
+  silenceErrors: false,
+};
+
+
 const createFastifyInstance = async () => {
+  const streams = [
+    { level: logLevel, stream: await createWriteStreamSync(options) },
+  ];
+  let logger = pino({ level: 'info' }, pino.multistream(streams));
+
   const fastifyInstance = Fastify({
-    logger: { level: logLevel },
+    logger,
     pluginTimeout: 20000,
   });
 
