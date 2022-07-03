@@ -62,10 +62,10 @@ const createFastifyInstance = async () => {
   }
 
   fastifyInstance
+    .register(fastifyRealIpAddress)
     .register(fastifySequelize)
     .register(fastifyCookie)
     .register(fastifyFormbody)
-    .register(fastifyRealIpAddress)
     .addSchema(schema)
     .route({
       method: 'POST',

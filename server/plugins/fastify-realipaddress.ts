@@ -1,10 +1,21 @@
-import { FastifyInstance, FastifyPluginCallback, RawServerBase } from 'fastify';
+import {
+  FastifyError,
+  FastifyInstance,
+  FastifyPluginCallback,
+  FastifyPluginOptions,
+  FastifyTypeProviderDefault,
+  RawServerBase,
+} from 'fastify';
 import fp from 'fastify-plugin';
 
 const fastifyRealIpAddress = fp(
-  function (fastifyInstance: FastifyInstance, _options, done) {
+  function (
+    fastifyInstance: FastifyInstance,
+    _options: FastifyPluginOptions,
+    done: (error?: FastifyError) => void
+  ) {
     fastifyInstance.decorateRequest('realIpAddress', null);
-    fastifyInstance.addHook('preHandler', (request, _reply, _done) => {
+    fastifyInstance.addHook('onRequest', (request, _reply, done1) => {
       let realIp = request.headers['x-forwarded-for'];
 
       if (realIp) {
@@ -15,11 +26,10 @@ const fastifyRealIpAddress = fp(
         realIp = request.socket.remoteAddress;
       }
       request.realIpAddress = realIp;
-      fastifyInstance.log.info('incoming address real ip %s', request.realIpAddress);
-      _done();
+      done1();
     });
     done();
-  } as FastifyPluginCallback<Record<string, unknown>, RawServerBase>,
+  },
   { name: 'fastify-realipaddress' }
 );
 

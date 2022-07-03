@@ -14,7 +14,23 @@ const pinoLokiOptions = {
 
 export const getPinoLogger = async (logLevel: Level) =>
   pino(
-    { level: logLevel },
+    {
+      level: logLevel,
+      // @see https://github.com/fastify/fastify/blob/69df0e39fa5886fcd8d5411c590a429e16a2c3ae/lib/logger.js#L48
+      serializers: {
+        req: function asReqValue(req) {
+          return {
+            method: req.method,
+            url: req.url,
+            version: req.headers && req.headers['accept-version'],
+            hostname: req.hostname,
+            realIpAddress: req.realIpAddress,
+            remoteAddress: req.ip,
+            remotePort: req.socket ? req.socket.remotePort : undefined,
+          };
+        },
+      },
+    },
     // @see https://skaug.dev/node-js-app-with-loki/
     pino.multistream([
       { level: logLevel, stream: await createWriteStreamSync(pinoLokiOptions) },
@@ -25,9 +41,11 @@ export const getPinoLogger = async (logLevel: Level) =>
 const getPinoPrettyStream = () =>
   pinoPretty({
     colorize: true,
+    // {"level":30,"time":1656818242448,"pid":38346,"msg":"incoming address real ip 127.0.0.1"}
     messageFormat: (log: LogDescriptor, messageKey: string) => {
-      let message = log[messageKey];
+      const message = log[messageKey] as string;
       return message;
     },
-    singleLine: true
+    // '{level}',
+    singleLine: true,
   });
