@@ -15,7 +15,7 @@ const fastifyRealIpAddress = fp(
     done: (error?: FastifyError) => void
   ) {
     fastifyInstance.decorateRequest('realIpAddress', null);
-    fastifyInstance.addHook('onRequest', (request, _reply, done1) => {
+    fastifyInstance.addHook('onRequest', (request, _reply, _done) => {
       let realIp = request.headers['x-forwarded-for'];
 
       if (realIp) {
@@ -23,10 +23,10 @@ const fastifyRealIpAddress = fp(
           typeof realIp === 'string' ? realIp.split(',') : realIp;
         realIp = realIpList[realIpList.length - 1];
       } else {
-        realIp = request.socket.remoteAddress;
+        realIp = request.raw.socket.remoteAddress;
       }
       request.realIpAddress = realIp;
-      done1();
+      _done();
     });
     done();
   },
