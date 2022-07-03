@@ -7,12 +7,15 @@ import Fastify from 'fastify';
 import get from 'lodash.get';
 import NodeCache from 'node-cache';
 import { collectDefaultMetrics, register } from 'prom-client';
-import pino from 'pino';
+import pino, { LogDescriptor } from 'pino';
+import pinoPretty from 'pino-pretty';
 import createWriteStreamSync from 'pino-loki'; // Pino-loki isn't available as a ES6 module yet
 
 import { fastifySequelize } from './plugins/fastify-sequelize';
 import schema from './schemas/index.json';
 import { Level } from 'pino';
+import { getPinoLogger } from './logger';
+import { fastifyRealIpAddress } from './plugins/fastify-realipaddress';
 
 type ContactRequestBody = {
   email: string;
@@ -45,27 +48,11 @@ if (airtableApiKey) {
   Airtable.configure(airtableConfig);
 }
 
-const options = {
-  applicationTag: 'taramarchand', // The tag every log file should be logged with
-  host: 'http://loki.tmarchand.com', // Pino loki instance IP address and port
-  labels: {
-    application: 'taramarchand.com'
-  },
-  silenceErrors: false,
-  timeout: 3000, // Set timeout to 3 seconds, default is 30 minutes.
-};
-
-/**
- * @see https://skaug.dev/node-js-app-with-loki/
- */
 const createFastifyInstance = async () => {
-  const streams = [
-    { level: logLevel, stream: await createWriteStreamSync(options) },
-  ];
-  let logger = pino({ level: logLevel }, pino.multistream(streams));
+  const pinoLogger = await getPinoLogger(logLevel);
 
   const fastifyInstance = Fastify({
-    logger,
+    logger: pinoLogger,
     pluginTimeout: 20000,
   });
 
@@ -75,9 +62,10 @@ const createFastifyInstance = async () => {
   }
 
   fastifyInstance
+    .register(fastifySequelize)
     .register(fastifyCookie)
     .register(fastifyFormbody)
-    .register(fastifySequelize)
+    .register(fastifyRealIpAddress)
     .addSchema(schema)
     .route({
       method: 'POST',
@@ -124,10 +112,10 @@ const createFastifyInstance = async () => {
           reply.header('Content-Type', register.contentType);
           reply.send(await register.metrics());
         } catch (ex) {
-          log(ex)
+          log(ex);
           reply.code(500);
         }
-      }
+      },
     })
     .register(fastifyNext, {
       dev: isDev,
@@ -135,7 +123,6 @@ const createFastifyInstance = async () => {
       port: _port,
     })
     .after(function (error: Error) {
-      fastifyInstance.log.info('hi')
       if (error) {
         fastifyInstance.log.error(error.message);
         process.exit(1);

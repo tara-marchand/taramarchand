@@ -6,4 +6,7 @@ declare module 'fastify' {
     sequelize: Sequelize;
     nodemailer: Nodemailer;
   }
+  interface FastifyRequest {
+    realIpAddress?: string
+  }
 }
