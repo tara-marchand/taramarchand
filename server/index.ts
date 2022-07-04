@@ -7,9 +7,6 @@ import Fastify from 'fastify';
 import get from 'lodash.get';
 import NodeCache from 'node-cache';
 import { collectDefaultMetrics, register } from 'prom-client';
-import pino, { LogDescriptor } from 'pino';
-import pinoPretty from 'pino-pretty';
-import createWriteStreamSync from 'pino-loki'; // Pino-loki isn't available as a ES6 module yet
 
 import { fastifySequelize } from './plugins/fastify-sequelize';
 import schema from './schemas/index.json';
@@ -54,6 +51,7 @@ const createFastifyInstance = async () => {
   const fastifyInstance = Fastify({
     logger: pinoLogger,
     pluginTimeout: 20000,
+    trustProxy: true,
   });
 
   let _port = port;

@@ -1,11 +1,4 @@
-import {
-  FastifyError,
-  FastifyInstance,
-  FastifyPluginCallback,
-  FastifyPluginOptions,
-  FastifyTypeProviderDefault,
-  RawServerBase,
-} from 'fastify';
+import { FastifyError, FastifyInstance, FastifyPluginOptions } from 'fastify';
 import fp from 'fastify-plugin';
 
 const fastifyRealIpAddress = fp(
@@ -23,7 +16,7 @@ const fastifyRealIpAddress = fp(
           typeof realIp === 'string' ? realIp.split(',') : realIp;
         realIp = realIpList[realIpList.length - 1];
       } else {
-        realIp = request.raw.socket.remoteAddress;
+        realIp = request.ip;
       }
       request.realIpAddress = realIp;
       _done();
