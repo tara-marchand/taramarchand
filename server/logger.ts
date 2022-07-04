@@ -24,7 +24,6 @@ export const getPinoLogger = async (logLevel: Level) =>
             url: req.url,
             version: req.headers && req.headers['accept-version'],
             hostname: req.hostname,
-            realIpAddress: req.realIpAddress,
             remoteAddress: req.ip,
             remotePort: req.socket ? req.socket.remotePort : undefined,
           };

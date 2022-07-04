@@ -12,7 +12,6 @@ import { fastifySequelize } from './plugins/fastify-sequelize';
 import schema from './schemas/index.json';
 import { Level } from 'pino';
 import { getPinoLogger } from './logger';
-import { fastifyRealIpAddress } from './plugins/fastify-realipaddress';
 
 type ContactRequestBody = {
   email: string;
@@ -60,7 +59,6 @@ const createFastifyInstance = async () => {
   }
 
   fastifyInstance
-    .register(fastifyRealIpAddress)
     .register(fastifySequelize)
     .register(fastifyCookie)
     .register(fastifyFormbody)
