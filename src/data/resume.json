@@ -6,7 +6,7 @@
     "email": "tara@mac.com",
     "phone": "",
     "website": "http://www.taramarchand.com/",
-    "summary": "Experienced software engineer specializing in UI.",
+    "summary": "Lead software engineer specializing in the front end.",
     "profiles": [
       {
         "network": "GitHub",
@@ -34,13 +34,11 @@
       "endDate": "present",
       "summary": "",
       "highlights": [
-        "Built out UI for security vulnerability management product incubation launch.",
-        "Improved and enhanced JavaScript mapping visualization framework.",
+        "Helped build and launch new security vulnerability management UI.",
+        "Created system topology maps that used JavaScript to visualize entities' health and relationships.",
+        "Developed internal tools for salespeople to analyze customer account usage and other business data.",
         "Define technical standards and processes; break down and scope projects.",
         "Collaborate with engineers, product managers, and designers; mentor junior engineers.",
-        "Led UI engineering for company's internal data organization.",
-        "Built tools to analyze customer data using TypeScript-based React components.",
-        "Developed UI for New Relic's Infrastructure monitoring product.",
         "Promoted from Senior Software Engineer."
       ]
     },
