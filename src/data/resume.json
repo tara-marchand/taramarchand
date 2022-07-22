@@ -1,12 +1,9 @@
 {
   "basics": {
     "name": "Tara Marchand",
-    "label": "",
-    "picture": "",
     "email": "tara@mac.com",
-    "phone": "",
     "website": "http://www.taramarchand.com/",
-    "summary": "Lead software engineer specializing in the front end.",
+    "summary": "Lead front-end software engineer.",
     "profiles": [
       {
         "network": "GitHub",
@@ -25,83 +22,6 @@
       }
     ]
   },
-  "work": [
-    {
-      "company": "New Relic",
-      "position": "Lead Software Engineer",
-      "website": "http://www.newrelic.com/",
-      "startDate": "2017",
-      "endDate": "present",
-      "summary": "",
-      "highlights": [
-        "Helped build and launch new security vulnerability management UI.",
-        "Created system topology maps that used JavaScript to visualize entities' health and relationships.",
-        "Developed internal tools for salespeople to analyze customer account usage and other business data.",
-        "Define technical standards and processes; break down and scope projects.",
-        "Collaborate with engineers, product managers, and designers; mentor junior engineers.",
-        "Promoted from Senior Software Engineer."
-      ]
-    },
-    {
-      "company": "R/GA",
-      "position": "Technology Lead",
-      "website": "http://www.rga.com/",
-      "startDate": "2009",
-      "endDate": "2017",
-      "summary": "",
-      "highlights": [
-        "<strong>Google:</strong> Led Python development of billing application in an embedded agency team.",
-        "<strong>Dignity Health:</strong> Led technology discipline agency-side. Analyzed, recommended, and developed digital solutions.",
-        "<strong>Nike Events Platform:</strong> Led UI development for responsive, localized high-traffic web experiences. Managed 2 UI engineers.",
-        "<strong>Microsoft's Surface.com:</strong> Architected and developed a responsive website on a custom CMS for this new tablet's launch.",
-        "<strong>Nike+ FuelBand.com:</strong> Built the website UI for the debut of this activity tracker. Created user data visualizations.",
-        "Promoted from Front End Solutions Architect and previously from Senior Presentation Code Developer."
-      ]
-    },
-    {
-      "company": "DHAP Digital",
-      "position": "User Interface Developer",
-      "website": "http://www.dhapdigital.com/",
-      "startDate": "2007",
-      "endDate": "2009",
-      "summary": "",
-      "highlights": [
-        "<strong>Adobe Marketplace:</strong> Engineered the UI for application offering software extensions and add-ons.",
-        "<strong>Lexus.com:</strong> Developed and managed the UI for Lexus.com and other websites for related brands Toyota and Scion."
-      ]
-    },
-    {
-      "company": "Publicis Modem",
-      "position": "Senior User Interface Developer",
-      "website": "",
-      "startDate": "2005",
-      "endDate": "2007",
-      "summary": "",
-      "highlights": [
-        "<strong>Amgen and Wyeth:</strong> Developed UIs for patient education websites.",
-        "<strong>Amgen; Sprint:</strong> Built HTML emails, launched campaigns, and analyzed engagement.",
-        "Promoted from User Interface Developer."
-      ]
-    }
-  ],
-  "education": [
-    {
-      "institution": "University of California, Santa Barbara",
-      "area": "Biopsychology",
-      "studyType": "MA",
-      "startDate": "",
-      "endDate": "",
-      "gpa": ""
-    },
-    {
-      "institution": "University of California, Davis",
-      "area": "Psychology (Biology Emphasis)",
-      "studyType": "BS",
-      "startDate": "",
-      "endDate": "",
-      "gpa": ""
-    }
-  ],
   "skills": [
     {
       "name": "Languages",
@@ -110,11 +30,11 @@
     {
       "name": "Tools",
       "keywords": [
-        "Browser- & server-side JavaScript & TypeScript (Node.js, React, Next.js, Fastify)",
+        "JavaScript runtimes, frameworks, and libraries (Node.js, React, Next.js)",
         "CSS preprocessors (SCSS)",
-        "version control systems (git)",
-        "transpilation & bundling (Babel, Webpack)",
-        "test, build, & deploy (Jest, Testing Library, Jenkins)",
+        "version control systems (Git)",
+        "transpilers & bundlers (Babel, Webpack)",
+        "test, build, & deploy tools (Jest, Testing Library, Jenkins)",
         "package managers (NPM)"
       ]
     },
@@ -124,11 +44,75 @@
         "software development lifecycle",
         "software design & architecture",
         "services & APIs (REST, GraphQL)",
-        "performance & optimization",
+        "performance, scalability, & optimization",
         "data visualization",
-        "visual and interaction design, user experience",
+        "visual and interaction design and user experience",
         "continuous integration & deployment"
       ]
+    }
+  ],
+  "work": [
+    {
+      "company": "New Relic",
+      "position": "Lead Software Engineer",
+      "website": "http://www.newrelic.com/",
+      "startDate": "2017",
+      "highlights": [
+        "Iteratively develop interfaces to help with customers' network observability.",
+        "Helped build and launch new security vulnerability management UI.",
+        "Created topology maps to visualize system entities' health and relationships.",
+        "Developed internal tools for salespeople to analyze customer account usage and other business data.",
+        "Promoted from Senior Software Engineer."
+      ]
+    },
+    {
+      "company": "R/GA",
+      "position": "Technology Lead",
+      "website": "http://www.rga.com/",
+      "startDate": "2009",
+      "endDate": "2017",
+      "highlights": [
+        "Google: Led Python development of billing application in an embedded agency team.",
+        "Dignity Health: Led technology discipline agency-side. Analyzed, recommended, and developed digital solutions.",
+        "Nike Events Platform: Led UI development for responsive, localized high-traffic web experiences. Managed 2 UI engineers.",
+        "Microsoft's Surface.com: Architected and developed a responsive website on a custom CMS for this new tablet's launch.",
+        "Nike+ FuelBand.com: Built the website UI for the debut of this activity tracker. Created user data visualizations.",
+        "Promoted from Front End Solutions Architect and previously from Senior Presentation Code Developer."
+      ]
+    },
+    {
+      "company": "DHAP Digital",
+      "position": "User Interface Developer",
+      "website": "http://www.dhapdigital.com/",
+      "startDate": "2007",
+      "endDate": "2009",
+      "highlights": [
+        "Adobe Marketplace: Engineered the UI for application offering software extensions and add-ons.",
+        "Lexus.com: Developed and managed the UI for Lexus.com and other websites for related brands Toyota and Scion."
+      ]
+    },
+    {
+      "company": "Publicis Modem",
+      "position": "Senior User Interface Developer",
+      "startDate": "2005",
+      "endDate": "2007",
+      "highlights": [
+        "Amgen and Wyeth: Developed UIs for patient education websites.",
+        "Amgen; Sprint: Built HTML emails, launched campaigns, and analyzed engagement.",
+        "Promoted from User Interface Developer."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of California, Santa Barbara",
+      "area": "Biopsychology",
+      "studyType": "MA"
+    },
+    {
+      "institution": "University of California, Davis",
+      "area": "Psychology (Biology Emphasis)",
+      "studyType": "BS"
     }
   ]
 }

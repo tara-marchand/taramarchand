@@ -7,5 +7,17 @@
   "typescript.reportStyleChecksAsWarnings": false,
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.formatOnSave": false,
-  "jest.jestCommandLine": "node_modules/.bin/jest"
+  "jest.jestCommandLine": "node_modules/.bin/jest",
+  "grammarly.selectors": [
+    {
+      "language": "markdown",
+      "scheme": "untitled",
+      "pattern": "Untitled-1"
+    },
+    {
+      "language": "tex",
+      "scheme": "untitled",
+      "pattern": "Untitled-1"
+    }
+  ]
 }

@@ -34,10 +34,10 @@ export default function Layout({ children }: Props) {
       </Head>
       <Provider store={store}>
         <ErrorBoundary>
-          <div className="grid-rows-8 grid grid-cols-1 font-sans leading-5">
+          <div className="grid-rows-8 grid grid-cols-1 font-sans leading-relaxed">
             <Header />
             <main className="row-span-6">
-              <div className="mx-auto max-w-xl px-6 pt-6 pb-6 md:px-0">
+              <div className="mx-auto max-w-screen-md px-6 pt-6 pb-6 md:px-0">
                 {children}
               </div>
             </main>

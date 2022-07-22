@@ -32,7 +32,7 @@ export default function Contact() {
   }, [captchaToken]);
 
   return (
-    <form className="w-full max-w-lg" onSubmit={onSubmit}>
+    <form className="w-full max-w-full" onSubmit={onSubmit}>
       <div className="-mx-2 mb-4 flex flex-wrap">
         <div className="w-full px-3">
           <label className="mb-2 block" htmlFor="name">

@@ -18,8 +18,8 @@ export default function Resume(props: Props) {
   return (
     <div>
       {renderBasics(props.data)}
-      {renderWork(props.data)}
       {renderSkills(props.data)}
+      {renderWork(props.data)}
       {renderEducation(props.data)}
     </div>
   );
@@ -69,7 +69,7 @@ function renderSkills(data: ResumeData) {
 
   return (
     <section>
-      <h2>Skills</h2>
+      <h2>Summary</h2>
       {skills.map((skill: ResumeSkill, index: number) => (
         <div className="py-2" key={index}>
           <strong>{skill.name}: </strong>

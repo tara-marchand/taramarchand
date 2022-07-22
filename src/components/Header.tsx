@@ -4,12 +4,12 @@ import MenuLink from './MenuLink';
 
 const Header: React.FunctionComponent = () => {
   return (
-    <header className="bg-gray-300 p-6 max-w-full">
-      <div className="px-6 md:px-0 max-w-xl mx-auto flex flex-wrap flex-col md:flex-row items-center">
-        <h1 className="flex m-0">
+    <header className="max-w-full bg-gray-300 p-6">
+      <div className="mx-auto flex max-w-screen-md flex-col flex-wrap items-center px-6 md:flex-row md:px-0">
+        <h1 className="m-0 flex">
           <MenuLink className="text-3xl" href="/" text="Tara Marchand" />
         </h1>
-        <nav className="items-center md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-900 flex flex-wrap justify-center">
+        <nav className="flex flex-wrap items-center justify-center md:mr-auto md:ml-4 md:border-l md:border-gray-900 md:py-1 md:pl-4">
           <MenuLink className="mr-4" href="/resume" text="Resume" />
           <MenuLink href="/contact" text="Contact" />
         </nav>
