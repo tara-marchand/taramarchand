@@ -3,7 +3,10 @@
   "extends": "./tsconfig.json",
   "include": [
     // Repeated from base config's "include" setting
-    "src/**/*",
+    "src/components/**/*",
+    "src/data/**/*",
+    "src/pages/**/*",
+    "src/types/**/*",
     // eslint-only inclusion
     ".eslintrc.js"
   ]
