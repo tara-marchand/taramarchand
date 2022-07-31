@@ -1,7 +1,7 @@
 import { NextPageContext } from 'next';
 import { csrfToken } from 'next-auth/client';
 import React from 'react';
-import { Button } from '../components/Button';
+import { Button } from '../../src/components/Button';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 

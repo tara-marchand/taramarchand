@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 export default function Contact() {
   const [captchaToken, setCaptchaToken] = useState<string>();
-  const { register, getValues, handleSubmit, errors } = useForm();
+  const { register, getValues, errors } = useForm();
   const router = useRouter();
   const captchaRef = useRef<HCaptcha>(null);
 
@@ -29,7 +29,7 @@ export default function Contact() {
           console.log(reason);
         });
     }
-  }, [captchaToken]);
+  }, [captchaToken, getValues(), router]);
 
   return (
     <form className="w-full max-w-full" onSubmit={onSubmit}>

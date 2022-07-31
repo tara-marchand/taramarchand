@@ -19,7 +19,7 @@ export const Show = (props: Props) => {
 
   return (
     <div>
-      <a href={data.url} target="_blank">
+      <a href={data.url} target="_blank" rel="noreferrer">
         {data.name}
       </a>
     </div>

@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import ErrorBoundary from './ErrorBoundary';
 import Footer from './Footer';
 import Header from './Header';
-import store from '../data/store';
 
 type Props = React.PropsWithChildren<Record<string, unknown>>;
 
@@ -32,7 +31,6 @@ export default function Layout({ children }: Props) {
       <Head>
         <title>Tara Marchand</title>
       </Head>
-      <Provider store={store}>
         <ErrorBoundary>
           <div className="grid-rows-8 grid grid-cols-1 font-sans leading-relaxed">
             <Header />
@@ -44,7 +42,6 @@ export default function Layout({ children }: Props) {
             <Footer />
           </div>
         </ErrorBoundary>
-      </Provider>
     </>
   );
 }
