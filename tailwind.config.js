@@ -4,11 +4,17 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
   ],
-  theme: {
-    extend: {},
+  corePlugins: {
+    preflight: false,
   },
+  important: false,
   plugins: [
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/forms'),
   ],
+  prefix: '',
+  separator: ':',
+  theme: {
+    extend: {},
+  },
 };
