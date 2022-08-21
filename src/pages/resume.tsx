@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 type Props = {
@@ -33,30 +34,27 @@ function renderBasics(data: ResumeData): JSX.Element | null {
   }
 
   return (
-    <section>
-      <div>
-        <span>
-          <a href={`mailto:${basics.email}`}>{basics.email} </a>
-        </span>
-        <span>
-          <span>·</span> <a href={basics.website}>{basics.website}</a>
-        </span>
-      </div>
-      {basics.profiles && (
-        <section>
-          {basics.profiles.map((profile, index) => (
-            <span key={index}>
-              {index > 0 && (
-                <>
-                  <span>·</span>{' '}
-                </>
-              )}
-              <a href={profile.url}>{profile.network} </a>
-            </span>
-          ))}
-        </section>
-      )}
-    </section>
+    <>
+      <p>
+        <Link href="./resume.txt">(Text version)</Link>
+      </p>
+      <section>
+        {basics.profiles && (
+          <section>
+            {basics.profiles.map((profile, index) => (
+              <span key={index}>
+                {index > 0 && (
+                  <>
+                    <span>·</span>{' '}
+                  </>
+                )}
+                <a href={profile.url}>{profile.network} </a>
+              </span>
+            ))}
+          </section>
+        )}
+      </section>
+    </>
   );
 }
 
