@@ -1,0 +1,118 @@
+{
+  "basics": {
+    "name": "Tara Marchand",
+    "email": "tara@mac.com",
+    "website": "http://www.taramarchand.com/",
+    "summary": "Lead front-end software engineer.",
+    "profiles": [
+      {
+        "network": "GitHub",
+        "username": "tara-marchand",
+        "url": "https://github.com/tara-marchand"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "trmarch",
+        "url": "http://www.linkedin.com/in/trmarch/"
+      },
+      {
+        "network": "Twitter",
+        "username": "trmarchand",
+        "url": "https://twitter.com/trmarchand"
+      }
+    ]
+  },
+  "skills": [
+    {
+      "name": "Languages",
+      "keywords": ["JavaScript (& TypeScript)", "CSS", "HTML", "Python", "PHP"]
+    },
+    {
+      "name": "Tools",
+      "keywords": [
+        "JavaScript runtimes, frameworks, and libraries (Node.js, React, Next.js)",
+        "CSS preprocessors (SCSS)",
+        "version control systems (Git)",
+        "transpilers & bundlers (Babel, Webpack)",
+        "test, build, & deploy tools (Jest, Testing Library, Jenkins)",
+        "package managers (NPM)"
+      ]
+    },
+    {
+      "name": "Interests",
+      "keywords": [
+        "software development lifecycle",
+        "software design & architecture",
+        "services & APIs (REST, GraphQL)",
+        "performance, scalability, & optimization",
+        "data visualization",
+        "visual and interaction design and user experience",
+        "continuous integration & deployment"
+      ]
+    }
+  ],
+  "work": [
+    {
+      "company": "New Relic",
+      "position": "Lead Software Engineer",
+      "website": "http://www.newrelic.com/",
+      "startDate": "2017",
+      "highlights": [
+        "Iteratively develop interfaces to help with customers' network observability.",
+        "Helped build and launch new security vulnerability management UI.",
+        "Created topology maps to visualize system entities' health and relationships.",
+        "Developed internal tools for salespeople to analyze customer account usage and other business data.",
+        "Promoted from Senior Software Engineer."
+      ]
+    },
+    {
+      "company": "R/GA",
+      "position": "Technology Lead",
+      "website": "http://www.rga.com/",
+      "startDate": "2009",
+      "endDate": "2017",
+      "highlights": [
+        "Google: Led Python development of billing application in an embedded agency team.",
+        "Dignity Health: Led technology discipline agency-side. Analyzed, recommended, and developed digital solutions.",
+        "Nike Events Platform: Led UI development for responsive, localized high-traffic web experiences. Managed 2 UI engineers.",
+        "Microsoft's Surface.com: Architected and developed a responsive website on a custom CMS for this new tablet's launch.",
+        "Nike+ FuelBand.com: Built the website UI for the debut of this activity tracker. Created user data visualizations.",
+        "Promoted from Front End Solutions Architect and previously from Senior Presentation Code Developer."
+      ]
+    },
+    {
+      "company": "DHAP Digital",
+      "position": "User Interface Developer",
+      "website": "http://www.dhapdigital.com/",
+      "startDate": "2007",
+      "endDate": "2009",
+      "highlights": [
+        "Adobe Marketplace: Engineered the UI for application offering software extensions and add-ons.",
+        "Lexus.com: Developed and managed the UI for Lexus.com and other websites for related brands Toyota and Scion."
+      ]
+    },
+    {
+      "company": "Publicis Modem",
+      "position": "Senior User Interface Developer",
+      "startDate": "2005",
+      "endDate": "2007",
+      "highlights": [
+        "Amgen and Wyeth: Developed UIs for patient education websites.",
+        "Amgen; Sprint: Built HTML emails, launched campaigns, and analyzed engagement.",
+        "Promoted from User Interface Developer."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of California, Santa Barbara",
+      "area": "Biopsychology",
+      "studyType": "MA"
+    },
+    {
+      "institution": "University of California, Davis",
+      "area": "Psychology (Biology Emphasis)",
+      "studyType": "BS"
+    }
+  ]
+}

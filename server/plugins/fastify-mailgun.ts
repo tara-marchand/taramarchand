@@ -1,7 +1,7 @@
 import { FastifyPluginCallback, RawServerBase } from 'fastify';
 import fastifyNodemailer from 'fastify-nodemailer';
 import fp from 'fastify-plugin';
-import get from 'lodash.get';
+import { get } from 'lodash';
 import nodemailerMailgunTransport from 'nodemailer-mailgun-transport';
 
 const mailgunApiKey = get(process.env, 'MAILGUN_API_KEY');

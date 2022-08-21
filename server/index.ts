@@ -4,7 +4,7 @@ import fastifyNext from '@fastify/nextjs';
 import Airtable from 'airtable';
 import { log } from 'console';
 import Fastify from 'fastify';
-import get from 'lodash.get';
+import { get } from 'lodash';
 import NodeCache from 'node-cache';
 import { collectDefaultMetrics, register } from 'prom-client';
 
@@ -12,6 +12,7 @@ import { fastifySequelize } from './plugins/fastify-sequelize';
 import schema from './schemas/index.json';
 import { Level } from 'pino';
 import { getPinoLogger } from './logger';
+import { resumeToText } from './resumeToText';
 
 type ContactRequestBody = {
   email: string;
@@ -107,6 +108,19 @@ const createFastifyInstance = async () => {
         try {
           reply.header('Content-Type', register.contentType);
           reply.send(await register.metrics());
+        } catch (ex) {
+          log(ex);
+          reply.code(500);
+        }
+      },
+    })
+    .route({
+      method: 'GET',
+      url: '/resume.txt',
+      handler: async function (request, reply) {
+        try {
+          reply.header('Content-Type', 'text/plain');
+          reply.send(resumeToText());
         } catch (ex) {
           log(ex);
           reply.code(500);
