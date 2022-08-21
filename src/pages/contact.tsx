@@ -42,7 +42,6 @@ export default function Contact() {
             autoComplete="name"
             className="mb-3 block w-full appearance-none border bg-gray-100 py-2 px-3 focus:bg-white focus:outline-none"
             id="name"
-            name="Name"
             type="text"
             placeholder="First Last"
             {...register('name', { required: 'Name is required.' })}
@@ -61,7 +60,6 @@ export default function Contact() {
             autoComplete="email"
             className="mb-3 block w-full appearance-none border bg-gray-100 py-2 px-3 focus:bg-white focus:outline-none"
             id="email"
-            name="email"
             type="text"
             placeholder="username@domain.com"
             {...register('email', {
@@ -85,7 +83,6 @@ export default function Contact() {
           <textarea
             className="no-resize mb-3 block h-48 w-full resize-none appearance-none border bg-gray-100 py-2 px-3 focus:bg-white focus:outline-none"
             id="message"
-            name="message"
             {...register('message', { required: 'Message is required.' })}
           ></textarea>
           {errors.message && (
