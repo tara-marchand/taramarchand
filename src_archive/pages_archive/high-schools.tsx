@@ -1,7 +1,6 @@
 import Airtable from 'airtable';
 import { noop } from 'lodash';
 import React, { ReactElement } from 'react';
-import EasyEdit from 'react-easy-edit';
 
 const airtableHsSearchBase = Airtable.base('appxkLGn7WpgCoCbM');
 
