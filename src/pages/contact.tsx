@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 export default function Contact() {
   const [captchaToken, setCaptchaToken] = useState<string>();
-  const { register, getValues, errors } = useForm();
+  const { register, getValues, formState: { errors } } = useForm();
   const router = useRouter();
   const captchaRef = useRef<HCaptcha>(null);
 
@@ -46,8 +46,8 @@ export default function Contact() {
             placeholder="First Last"
             {...register('name', { required: 'Name is required.' })}
           />
-          {errors.name && (
-            <span className="text-red-500">{errors.name.message}</span>
+          {errors?.name && (
+            <span className="text-red-500">{errors?.name?.message}</span>
           )}
         </div>
       </div>
@@ -70,8 +70,8 @@ export default function Contact() {
               },
             })}
           />
-          {errors.email && (
-            <span className="text-red-500">{errors.email.message}</span>
+          {errors?.email && (
+            <span className="text-red-500">{errors?.email?.message}</span>
           )}
         </div>
       </div>
@@ -85,8 +85,8 @@ export default function Contact() {
             id="message"
             {...register('message', { required: 'Message is required.' })}
           ></textarea>
-          {errors.message && (
-            <span className="text-red-500">{errors.message.message}</span>
+          {errors?.message && (
+            <span className="text-red-500">{errors?.message?.message}</span>
           )}
         </div>
       </div>
