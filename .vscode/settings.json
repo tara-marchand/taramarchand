@@ -18,6 +18,11 @@
       "language": "tex",
       "scheme": "untitled",
       "pattern": "Untitled-1"
+    },
+    {
+      "language": "json",
+      "scheme": "file",
+      "pattern": "server/resume.json"
     }
   ]
 }

@@ -2,15 +2,11 @@ import resumeJson from './resume.json';
 
 export function resumeToText() {
   const { basics, education, skills, work } = resumeJson;
-  const phoneNum = process.env.MY_PHONE_NUM;
 
   const top = 'Tara Marchand';
-  const emailWebsitePhone = `${process.env.MY_EMAIL} - ${
+  const emailWebsite = `${process.env.MY_EMAIL} - ${
     resumeJson.basics.website
-  } - ${phoneNum?.slice(0, 3)}-${phoneNum?.slice(3, 6)}-${phoneNum?.slice(
-    6,
-    10
-  )}`;
+  }`;
 
   const profiles = `${basics.profiles.map((profile, index) => profile.url).join(' - ')}`;
 
@@ -38,7 +34,7 @@ Information about earlier positions available upon request.`;
 `;
 
   return `${top}
-${emailWebsitePhone}
+${emailWebsite}
 ${profiles}
 
 ---------------------------------------------------------------------------

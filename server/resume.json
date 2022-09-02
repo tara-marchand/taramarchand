@@ -2,7 +2,7 @@
   "basics": {
     "name": "Tara Marchand",
     "website": "http://www.taramarchand.com/",
-    "summary": "Lead front-end software engineer.",
+    "summary": "Lead software engineer.",
     "profiles": [
       {
         "network": "LinkedIn",
@@ -24,29 +24,35 @@
   "skills": [
     {
       "name": "Languages",
-      "keywords": ["JavaScript (& TypeScript)", "CSS", "HTML", "Python", "PHP"]
+      "keywords": [
+        "JavaScript (& TypeScript)",
+        "CSS",
+        "HTML",
+        "some Python and PHP"
+      ]
     },
     {
       "name": "Tools",
       "keywords": [
-        "JavaScript runtimes, frameworks, and libraries (Node.js, React, Next.js)",
+        "JavaScript runtimes, frameworks, and libraries (Node.js, Express, Fastify, React, Nest.js)",
         "CSS preprocessors (SCSS)",
-        "version control systems (Git)",
         "transpilers & bundlers (Babel, Webpack)",
-        "test, build, & deploy tools (Jest, Testing Library, Jenkins)",
-        "package managers (NPM)"
+        "testing tools (Jest, Testing Library, Selenium-related)",
+        "Version control, build, and deploy tools (Git, Docker, Jenkins)",
+        "package managers (NPM, Yarn)"
       ]
     },
     {
       "name": "Interests",
       "keywords": [
-        "software development lifecycle",
+        "full-stack development with a client-side focus",
         "software design & architecture",
-        "services & APIs (REST, GraphQL)",
         "performance, scalability, & optimization",
-        "data visualization",
-        "visual and interaction design and user experience",
-        "continuous integration & deployment"
+        "interaction design & user experience; data visualization",
+        "services & APIs (REST, GraphQL)",
+        "continuous integration & deployment",
+        "developer experience",
+        "technical leadership and mentorship"
       ]
     }
   ],
@@ -57,10 +63,11 @@
       "website": "http://www.newrelic.com/",
       "startDate": "2017",
       "highlights": [
-        "Iteratively develop interfaces to help with customers' network observability.",
+        "Building services for partner APIs to configure network monitoring; creating network data visualizations.",
         "Helped build and launch new security vulnerability management UI.",
-        "Created topology maps to visualize system entities' health and relationships.",
-        "Developed internal tools for salespeople to analyze customer account usage and other business data.",
+        "Created topology maps to depict system entities' health and relationships.",
+        "Developed custom business intelligence tools for salespeople to analyze customer account data.",
+        "Built interfaces for interacting with cloud and on-host integrations.",
         "Promoted from Senior Software Engineer."
       ]
     },
@@ -71,11 +78,10 @@
       "startDate": "2009",
       "endDate": "2017",
       "highlights": [
-        "Google: Led Python development of billing application in an embedded agency team.",
-        "Dignity Health: Led technology discipline agency-side. Analyzed, recommended, and developed digital solutions.",
-        "Nike Events Platform: Led UI development for responsive, localized high-traffic web experiences. Managed 2 UI engineers.",
-        "Microsoft's Surface.com: Architected and developed a responsive website on a custom CMS for this new tablet's launch.",
-        "Nike+ FuelBand.com: Built the website UI for the debut of this activity tracker. Created user data visualizations.",
+        "Developed the web application for the new Nike FuelBand activity tracker.",
+        "Launched localized UIs for signup tools for the new, global Nike Events Platform.",
+        "Created initial marketing site for new Microsoft Surface tablet.",
+        "Worked on an embedded agency team at Google to build a complex internal billing application.",
         "Promoted from Front End Solutions Architect and previously from Senior Presentation Code Developer."
       ]
     },
@@ -86,18 +92,19 @@
       "startDate": "2007",
       "endDate": "2009",
       "highlights": [
-        "Adobe Marketplace: Engineered the UI for application offering software extensions and add-ons.",
-        "Lexus.com: Developed and managed the UI for Lexus.com and other websites for related brands Toyota and Scion."
+        "Developed marketing websites for Toyota, Lexus, and Scion.",
+        "Maintained and enhanced functionality for Toyota-brand car customization tools.",
+        "Built the UI for then-new Adobe Marketplace, which offering software extensions and add-ons."
       ]
     },
     {
-      "company": "Publicis Modem",
+      "company": "Publicis Modem (f.k.a. Modem Media)",
       "position": "Senior User Interface Developer",
       "startDate": "2005",
       "endDate": "2007",
       "highlights": [
-        "Amgen and Wyeth: Developed UIs for patient education websites.",
-        "Amgen; Sprint: Built HTML emails, launched campaigns, and analyzed engagement.",
+        "Built custom marketing websites & HTML emails, managed & analyzed email campaigns.",
+        "Clients included Amgen and Wyeth Pharmaceuticals, Sprint, Microsoft, and Blue Shield.",
         "Promoted from User Interface Developer."
       ]
     }
