@@ -1,4 +1,4 @@
-import resumeJson from './resume.json';
+import resumeJson from '../src/data/resume.json';
 
 export function resumeToText() {
   const { basics, education, skills, work } = resumeJson;
