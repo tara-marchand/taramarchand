@@ -1,16 +1,27 @@
-import pino, { Level, LogDescriptor } from 'pino';
+import { TransportOptions } from '@lukadriel/pino-fluent';
+import pino, { Level } from 'pino';
 import createWriteStreamSync from 'pino-loki';
-import pinoPretty from 'pino-pretty';
 
-const pinoLokiOptions = {
+const _pinoLokiOptions = {
   applicationTag: 'taramarchand', // The tag every log file should be logged with
-  host: 'http://loki.tmarchand.com', // Pino loki instance IP address and port
+  host: 'https://loki.tmarchand.com', // Pino loki instance IP address and port
   labels: {
     application: 'taramarchand.com',
   },
   silenceErrors: false,
   timeout: 3000, // Set timeout to 3 seconds, default is 30 minutes.
 };
+
+const fluentBitTransport = pino.transport<TransportOptions>({
+  target: '@lukadriel/pino-fluent',
+  options: {
+    prefix: 'taramarchand.com',
+    socket: {
+      host: 'http://fluentbit.tmarchand.com',
+      timeout: 3000, // Set timeout to 3 seconds, default is 30 minutes.
+    },
+  },
+});
 
 export const getPinoLogger = async (logLevel: Level) =>
   pino(
@@ -31,20 +42,8 @@ export const getPinoLogger = async (logLevel: Level) =>
       },
     },
     // @see https://skaug.dev/node-js-app-with-loki/
-    pino.multistream([
-      { level: logLevel, stream: await createWriteStreamSync(pinoLokiOptions) },
-      { level: logLevel, stream: getPinoPrettyStream() },
-    ])
+    // pino.multistream([
+    //   { level: logLevel, stream: await createWriteStreamSync(pinoLokiOptions) },
+    // ])
+    fluentBitTransport,
   );
-
-const getPinoPrettyStream = () =>
-  pinoPretty({
-    colorize: true,
-    // {"level":30,"time":1656818242448,"pid":38346,"msg":"incoming address real ip 127.0.0.1"}
-    messageFormat: (log: LogDescriptor, messageKey: string) => {
-      const message = log[messageKey] as string;
-      return message;
-    },
-    // '{level}',
-    singleLine: true,
-  });
