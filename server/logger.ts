@@ -42,8 +42,8 @@ export const getPinoLogger = async (logLevel: Level) =>
       },
     },
     // @see https://skaug.dev/node-js-app-with-loki/
-    // pino.multistream([
-    //   { level: logLevel, stream: await createWriteStreamSync(pinoLokiOptions) },
-    // ])
-    fluentBitTransport,
+    pino.multistream([
+      { level: logLevel, stream: await createWriteStreamSync(pinoLokiOptions) },
+    ]),
+    // fluentBitTransport,
   );
