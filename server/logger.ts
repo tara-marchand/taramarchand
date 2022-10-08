@@ -2,7 +2,7 @@ import { TransportOptions } from '@lukadriel/pino-fluent';
 import pino, { Level } from 'pino';
 import createWriteStreamSync from 'pino-loki';
 
-const _pinoLokiOptions = {
+const pinoLokiOptions = {
   applicationTag: 'taramarchand', // The tag every log file should be logged with
   host: 'https://loki.tmarchand.com', // Pino loki instance IP address and port
   labels: {
@@ -17,7 +17,7 @@ const fluentBitTransport = pino.transport<TransportOptions>({
   options: {
     prefix: 'taramarchand.com',
     socket: {
-      host: 'http://fluentbit.tmarchand.com',
+      host: 'https://fluentbit.tmarchand.com',
       timeout: 3000, // Set timeout to 3 seconds, default is 30 minutes.
     },
   },
