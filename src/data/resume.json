@@ -2,7 +2,7 @@
   "basics": {
     "name": "Tara Marchand",
     "website": "http://www.taramarchand.com/",
-    "summary": "Lead software engineer.",
+    "summary": "Lead software engineer",
     "profiles": [
       {
         "network": "LinkedIn",
@@ -28,30 +28,31 @@
         "JavaScript (& TypeScript)",
         "CSS",
         "HTML",
-        "some Python and PHP"
+        "some Python, PHP, SQL"
       ]
     },
     {
-      "name": "Tools",
+      "name": "Technologies",
       "keywords": [
-        "JavaScript runtimes, frameworks, and libraries (Node.js, Express, Fastify, React, Nest.js)",
-        "CSS preprocessors (SCSS)",
-        "transpilers & bundlers (Babel, Webpack)",
-        "testing tools (Jest, Testing Library, Selenium-related)",
-        "Version control, build, and deploy tools (Git, Docker, Jenkins)",
-        "package managers (NPM, Yarn)"
+        "JS runtimes & frameworks (Node, Fastify, React)",
+        "CSS preprocessors ([S]CSS, LESS)",
+        "linters, transpilers, & bundlers (ESLint, Babel, Webpack)",
+        "testing (Jest, Testing Library, Selenium)",
+        "version control & integration (Git, Jenkins)",
+        "package management (NPM)",
+        "containers (Docker)"
       ]
     },
     {
       "name": "Interests",
       "keywords": [
-        "full-stack development with a client-side focus",
+        "front-end & full-stack development",
         "software design & architecture",
         "performance, scalability, & optimization",
         "interaction design & user experience; data visualization",
         "services & APIs (REST, GraphQL)",
-        "continuous integration & deployment",
-        "developer experience",
+        "continuous integration & deployment; observability",
+        "developer experience; documentation",
         "technical leadership and mentorship"
       ]
     }
@@ -63,11 +64,12 @@
       "website": "http://www.newrelic.com/",
       "startDate": "2017",
       "highlights": [
-        "Building services for partner APIs to configure network monitoring; creating network data visualizations.",
-        "Helped build and launch new security vulnerability management UI.",
-        "Created topology maps to depict system entities' health and relationships.",
-        "Developed custom business intelligence tools for salespeople to analyze customer account data.",
-        "Built interfaces for interacting with cloud and on-host integrations.",
+        "Helping create innovative product incubations for network monitoring, security, and topology mapping.",
+        "Building both an API and a consuming UI for configuring network monitoring tooling.",
+        "Helped build new security vulnerability management UI for a conference keynote launch.",
+        "Created topological map visualizations to depict system entities' health and relationships.",
+        "Developed custom business intelligence tools for salespeople to understand customer account data.",
+        "Built interfaces for enabling and configuring cloud and on-host integrations.",
         "Promoted from Senior Software Engineer."
       ]
     },
@@ -78,10 +80,11 @@
       "startDate": "2009",
       "endDate": "2017",
       "highlights": [
-        "Developed the web application for the new Nike FuelBand activity tracker.",
-        "Launched localized UIs for signup tools for the new, global Nike Events Platform.",
-        "Created initial marketing site for new Microsoft Surface tablet.",
-        "Worked on an embedded agency team at Google to build a complex internal billing application.",
+        "Built applications and sites for a variety of large clients including Nike, Google, Microsoft, and more.",
+        "Worked on an embedded team at Google to build the Python back end for a money-saving internal billing application.",
+        "Helped launch Nike's then-new events signup platform whose UI was localized in many different languages.",
+        "Created the site for the product launch for the then-new Microsoft Surface tablet.",
+        "Developed web application content and data visualizations for the first-of-its-kind Nike FuelBand activity tracker.",
         "Promoted from Front End Solutions Architect and previously from Senior Presentation Code Developer."
       ]
     },
@@ -92,9 +95,9 @@
       "startDate": "2007",
       "endDate": "2009",
       "highlights": [
-        "Developed marketing websites for Toyota, Lexus, and Scion.",
+        "Developed CMS-driven marketing websites and interactive features for Toyota, Lexus, and Scion.",
         "Maintained and enhanced functionality for Toyota-brand car customization tools.",
-        "Built the UI for then-new Adobe Marketplace, which offering software extensions and add-ons."
+        "Built the UI for the Adobe Marketplace, which offered software extensions and add-ons for Adobe products."
       ]
     },
     {
@@ -103,8 +106,8 @@
       "startDate": "2005",
       "endDate": "2007",
       "highlights": [
-        "Built custom marketing websites & HTML emails, managed & analyzed email campaigns.",
-        "Clients included Amgen and Wyeth Pharmaceuticals, Sprint, Microsoft, and Blue Shield.",
+        "Worked for large clients including Amgen and Wyeth Pharmaceuticals, Sprint, Verizon, Microsoft, and Blue Shield.",
+        "Built custom marketing websites & HTML emails, and managed & analyzed email campaigns.",
         "Promoted from User Interface Developer."
       ]
     }
