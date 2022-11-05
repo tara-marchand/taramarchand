@@ -25,7 +25,7 @@ function MenuLink(
   }
 
   return (
-    <Link href={href} passHref>
+    <Link legacyBehavior href={href} passHref>
       <a className={className} href={href.toString()} ref={ref}>
         {text}
       </a>
@@ -36,5 +36,4 @@ function MenuLink(
 export default React.forwardRef<
   React.Ref<HTMLDivElement> & React.Ref<LinkRef>,
   Props
-  // @ts-ignore
 >(MenuLink);

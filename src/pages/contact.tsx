@@ -14,6 +14,7 @@ export default function Contact() {
     captchaRef.current?.execute();
   }
 
+  const values = getValues();
   useEffect(() => {
     if (captchaToken) {
       const body = JSON.stringify(getValues());
@@ -29,7 +30,7 @@ export default function Contact() {
           console.log(reason);
         });
     }
-  }, [captchaToken, getValues(), router]);
+  }, [captchaToken, getValues, values, router]);
 
   return (
     <form className="w-full max-w-full" onSubmit={onSubmit}>
@@ -46,9 +47,11 @@ export default function Contact() {
             placeholder="First Last"
             {...register('name', { required: 'Name is required.' })}
           />
-          {errors?.name && (
-            <span className="text-red-500">{errors?.name?.message}</span>
-          )}
+          {errors &&
+            Array.isArray(errors) &&
+            errors?.map((error, index) => (
+              <span className="text-red-500" key={index}>{error?.name?.message}</span>
+            ))}
         </div>
       </div>
       <div className="-mx-2 mb-4 flex flex-wrap">
@@ -70,9 +73,11 @@ export default function Contact() {
               },
             })}
           />
-          {errors?.email && (
-            <span className="text-red-500">{errors?.email?.message}</span>
-          )}
+          {errors &&
+            Array.isArray(errors) &&
+            errors?.map((error, index) => (
+              <span className="text-red-500" key={index}>{error?.email?.message}</span>
+            ))}
         </div>
       </div>
       <div className="-mx-2 mb-4 flex flex-wrap">
@@ -85,9 +90,11 @@ export default function Contact() {
             id="message"
             {...register('message', { required: 'Message is required.' })}
           ></textarea>
-          {errors?.message && (
-            <span className="text-red-500">{errors?.message?.message}</span>
-          )}
+          {errors &&
+            Array.isArray(errors) &&
+            errors?.map((error, index) => (
+              <span className="text-red-500" key={index}>{error?.message?.message}</span>
+            ))}
         </div>
       </div>
       <div className="mb-4">

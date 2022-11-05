@@ -17,7 +17,7 @@ export function resumeToText() {
   const _work = `${work
     .map(
       (workplace, index) => `${workplace.position}
-${workplace.company} | ${workplace.startDate}-${workplace.endDate}
+${workplace.company} | ${workplace.startDate}-${workplace.endDate || 'present'}
 ${workplace.highlights
   .map(
     (highlight) => `- ${highlight}

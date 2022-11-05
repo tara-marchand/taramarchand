@@ -56,7 +56,7 @@ export default function Resume(props: Props) {
               return (
                 <div className="pt-2" key={index}>
                   <strong>{skill.name}</strong>
-                  <ul className="columns-2">
+                  <ul className="columns-2 gap-8">
                     {skill.keywords.map((keyword, index) => (
                       <li key={index}>{keyword}</li>
                     ))}
@@ -76,7 +76,7 @@ export default function Resume(props: Props) {
                 <a href={workplace.website}>{workplace.company} </a>
                 ·&nbsp;
                 <span>{workplace.startDate}-</span>
-                <span>{workplace.endDate}</span>
+                <span>{workplace.endDate || 'present'}</span>
               </div>
               <ul>
                 {workplace.highlights.map((highlight, index2: number) => (
