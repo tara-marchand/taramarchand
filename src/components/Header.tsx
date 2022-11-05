@@ -11,7 +11,6 @@ const Header: React.FunctionComponent = () => {
         </h1>
         <nav className="flex flex-wrap items-center justify-center md:mr-auto md:ml-4 md:border-l md:border-gray-900 md:py-1 md:pl-4">
           <MenuLink className="mr-4" href="/resume" text="Resume" />
-          <MenuLink href="/contact" text="Contact" />
         </nav>
       </div>
     </header>

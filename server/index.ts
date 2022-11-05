@@ -14,12 +14,6 @@ import { Level } from 'pino';
 import { getPinoLogger } from './logger';
 import { resumeToText } from './resumeToText';
 
-type ContactRequestBody = {
-  email: string;
-  message: string;
-  name: string;
-};
-
 collectDefaultMetrics();
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -64,43 +58,6 @@ const createFastifyInstance = async () => {
     .register(fastifyCookie)
     .register(fastifyFormbody)
     .addSchema(schema)
-    .route({
-      method: 'POST',
-      url: '/contact',
-      schema: {
-        body: {
-          schema: {
-            $ref: 'https://www.taramarchand.com/#contact',
-          },
-        },
-      },
-      handler: function (request, reply) {
-        const typedRequestBody = request.body as ContactRequestBody;
-        let subject = '[taramarchand.com] Contact form message';
-
-        if (typedRequestBody.name) {
-          subject += ` from ${(request.body as ContactRequestBody).name}`;
-        }
-
-        this.nodemailer?.sendMail(
-          {
-            from: typedRequestBody.email,
-            to: 'tara@mac.com',
-            subject,
-            text: typedRequestBody.message,
-          },
-          (err: Record<string, unknown>, info: Record<string, unknown>) => {
-            console.log(request.body);
-            if (err) {
-              this.log.error(err.message as string);
-            }
-            reply.send({
-              messageId: info.messageId,
-            });
-          }
-        );
-      },
-    })
     .route({
       method: 'GET',
       url: '/metrics',
