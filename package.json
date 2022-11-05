@@ -21,7 +21,8 @@
     "start:dev": "concurrently \"npm run build:next\" \"NODE_ENV=development npm run build:server\" && node --trace-warnings .server/server/index.js",
     "start:prod": "concurrently \"npm run build:next\" \"NODE_ENV=production npm run build:server\" && node .server/server/index.js",
     "start:prod:local": "concurrently \"npm run build:next\" \"NODE_ENV=production npm run build:server\" && node .server/server/index.js",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postbuild": "next-sitemap"
   },
   "author": "",
   "license": "ISC",
@@ -78,6 +79,7 @@
     "mime-types": "^2.1.34",
     "moment": "^2.29.3",
     "next": "^12.3.1",
+    "next-sitemap": "^3.1.30",
     "node-cache": "^5.1.2",
     "nodemailer-mailgun-transport": "^2.1.3",
     "pg": "^8.7.3",

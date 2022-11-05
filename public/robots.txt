@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.taramarchand.com
+
+# Sitemaps
+Sitemap: https://www.taramarchand.com/sitemap.xml
