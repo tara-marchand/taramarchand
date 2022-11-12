@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { LinkedInIcon } from './LinkedInIcon';
-import { TwitterIcon } from './TwitterIcon';
 import { SocialIcon } from 'react-social-icons';
 
 const Footer: React.FunctionComponent = () => {
@@ -33,6 +31,12 @@ const Footer: React.FunctionComponent = () => {
           rel="noopener noreferrer"
           target="_blank"
         />
+        <a
+          href="https://tech.lgbt/@taram"
+          rel="me noopener noreferrer"
+          target="_blank"
+          style={{ display: 'none' }}
+        >Mastodon</a>
       </div>
     </footer>
   );

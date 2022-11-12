@@ -19,7 +19,8 @@ collectDefaultMetrics();
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 
-const port = process.env.PORT || 3333;
+const port = 3333;
+// const port = process.env.PORT || 3333;
 const logLevel: Level = isProd ? 'info' : 'debug';
 
 const cache = new NodeCache();
