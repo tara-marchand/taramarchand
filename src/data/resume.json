@@ -34,12 +34,13 @@
     {
       "name": "Technologies",
       "keywords": [
-        "JS runtimes & frameworks (Node, Fastify, React)",
+        "JS/TS runtimes & frameworks (Node, React)",
         "CSS preprocessors ([S]CSS, LESS)",
-        "linters, transpilers, & bundlers (ESLint, Babel, Webpack)",
+        "linters & bundlers (ESLint, Webpack)",
         "testing (Jest, Testing Library, Selenium)",
         "version control & integration (Git, Jenkins)",
-        "package management (NPM)",
+        "package management (NPM, Yarn)",
+        "appl frameworks (Fastify, Next.js, Nest.js)",
         "containers (Docker)"
       ]
     },
@@ -47,13 +48,13 @@
       "name": "Interests",
       "keywords": [
         "front-end & full-stack development",
+        "services & APIs (REST, GraphQL)",
+        "continuous integration & deployment",
         "software design & architecture",
         "performance, scalability, & optimization",
-        "interaction design & user experience; data visualization",
-        "services & APIs (REST, GraphQL)",
-        "continuous integration & deployment; observability",
-        "developer experience; documentation",
-        "technical leadership and mentorship"
+        "developer experience & documentation",
+        "technical leadership & mentorship",
+        "user experience design; data visualization"
       ]
     }
   ],
@@ -64,7 +65,7 @@
       "website": "http://www.newrelic.com/",
       "startDate": "2017",
       "highlights": [
-        "Helping create innovative product incubations for network monitoring, security, and topology mapping.",
+        "Creating innovative product incubations for network monitoring, security, and topology mapping.",
         "Building both an API and a consuming UI for configuring network monitoring tooling.",
         "Helped build new security vulnerability management UI for a conference keynote launch.",
         "Created topological map visualizations to depict system entities' health and relationships.",
@@ -81,11 +82,11 @@
       "endDate": "2017",
       "highlights": [
         "Built applications and sites for a variety of large clients including Nike, Google, Microsoft, and more.",
-        "Worked on an embedded team at Google to build the Python back end for a money-saving internal billing application.",
-        "Helped launch Nike's then-new events signup platform whose UI was localized in many different languages.",
+        "Worked at Google to build the Python back end for a crucial billing application.",
+        "Helped launch Nike's then-new events signup platform whose UI was localized in various languages.",
         "Created the site for the product launch for the then-new Microsoft Surface tablet.",
-        "Developed web application content and data visualizations for the first-of-its-kind Nike FuelBand activity tracker.",
-        "Promoted from Front End Solutions Architect and previously from Senior Presentation Code Developer."
+        "Developed web application and data visualizations for first-of-its-kind Nike FuelBand activity tracker.",
+        "Promoted from Front End Solutions Architect and from Senior Presentation Code Developer."
       ]
     },
     {
@@ -97,7 +98,7 @@
       "highlights": [
         "Developed CMS-driven marketing websites and interactive features for Toyota, Lexus, and Scion.",
         "Maintained and enhanced functionality for Toyota-brand car customization tools.",
-        "Built the UI for the Adobe Marketplace, which offered software extensions and add-ons for Adobe products."
+        "Built the UI for the Adobe Marketplace that offered software add-ons for Adobe products."
       ]
     },
     {
@@ -106,8 +107,8 @@
       "startDate": "2005",
       "endDate": "2007",
       "highlights": [
-        "Worked for large clients including Amgen and Wyeth Pharmaceuticals, Sprint, Verizon, Microsoft, and Blue Shield.",
         "Built custom marketing websites & HTML emails, and managed & analyzed email campaigns.",
+        "Notable clients included Amgen/Wyeth Pharmaceuticals, Sprint, Verizon, Microsoft, Blue Shield.",
         "Promoted from User Interface Developer."
       ]
     }

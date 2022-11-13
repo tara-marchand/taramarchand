@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { LinkedInIcon } from './LinkedInIcon';
-import { TwitterIcon } from './TwitterIcon';
 import { SocialIcon } from 'react-social-icons';
 
 const Footer: React.FunctionComponent = () => {
