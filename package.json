@@ -9,9 +9,10 @@
     "url": "https://github.com/tara-marchand/taramarchand.git"
   },
   "engines": {
-    "node": "^16",
-    "npm": "^8"
+    "node": "^18",
+    "npm": "^9"
   },
+  "cacheDirectories": [".next/cache"],
   "scripts": {
     "build:next": "NODE_ENV=production next build",
     "build:server": "npm run clean:server && tsc --project tsconfig.server.json",
@@ -99,8 +100,8 @@
     "react-dom": "^18.2.0",
     "react-from-dom": "^0.6.2",
     "react-hook-form": "^7.34.2",
+    "react-icons": "^4.6.0",
     "react-redux": "^7.2.6",
-    "react-social-icons": "^5.15.0",
     "redux": "^4.1.2",
     "reflect-metadata": "^0.1.13",
     "remark": "^14.0.2",
