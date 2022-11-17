@@ -1,20 +1,29 @@
-import fastifyCookie from '@fastify/cookie';
-import fastifyFormbody from '@fastify/formbody';
-import fastifyNext from '@fastify/nextjs';
 import Airtable from 'airtable';
 import { log } from 'console';
 import Fastify from 'fastify';
 import { get } from 'lodash';
 import NodeCache from 'node-cache';
-import { collectDefaultMetrics, register } from 'prom-client';
-
-import { fastifySequelize } from './plugins/fastify-sequelize';
-import schema from './schemas/index.json';
 import { Level } from 'pino';
-import { getPinoLogger } from './logger';
-import { resumeToText } from './resumeToText';
 
-collectDefaultMetrics();
+import fastifyCookie from '@fastify/cookie';
+import fastifyFormbody from '@fastify/formbody';
+import fastifyNext from '@fastify/nextjs';
+import { registerInstrumentations } from '@opentelemetry/instrumentation';
+import { FastifyInstrumentation } from '@opentelemetry/instrumentation-fastify';
+import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
+
+import { getPinoLogger } from './logger';
+import { fastifySequelize } from './plugins/fastify-sequelize';
+import { resumeToText } from './resumeToText';
+import schema from './schemas/index.json';
+
+registerInstrumentations({
+  instrumentations: [
+    // Fastify instrumentation expects HTTP layer to be instrumented
+    new HttpInstrumentation(),
+    new FastifyInstrumentation(),
+  ],
+});
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
@@ -58,19 +67,19 @@ const createFastifyInstance = async () => {
     .register(fastifyCookie)
     .register(fastifyFormbody)
     .addSchema(schema)
-    .route({
-      method: 'GET',
-      url: '/metrics',
-      handler: async function (request, reply) {
-        try {
-          reply.header('Content-Type', register.contentType);
-          reply.send(await register.metrics());
-        } catch (ex) {
-          log(ex);
-          reply.code(500);
-        }
-      },
-    })
+    // .route({
+    //   method: 'GET',
+    //   url: '/metrics',
+    //   handler: async function (request, reply) {
+    //     try {
+    //       reply.header('Content-Type', register.contentType);
+    //       reply.send(await register.metrics());
+    //     } catch (ex) {
+    //       log(ex);
+    //       reply.code(500);
+    //     }
+    //   },
+    // })
     .route({
       method: 'GET',
       url: '/resume.txt',
@@ -86,8 +95,6 @@ const createFastifyInstance = async () => {
     })
     .register(fastifyNext, {
       dev: isDev,
-      hostname: 'localhost',
-      port: _port,
     })
     .after(function (error: Error) {
       if (error) {
