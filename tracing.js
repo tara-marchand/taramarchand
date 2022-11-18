@@ -19,12 +19,12 @@ const { startServer } = require('./server');
 // configure the SDK to export telemetry data to the console
 // enable all auto-instrumentations from the meta package
 const exporterOptions = {
-  url: 'http://localhost:4318/v1/traces',
+  url: 'http://153.92.214.154:4318/v1/traces',
 };
 const traceExporter = new OTLPTraceExporter(exporterOptions);
 const sdk = new opentelemetry.NodeSDK({
   resource: new Resource({
-    [SemanticResourceAttributes.SERVICE_NAME]: 'SigNoz-Nextjs-Example',
+    [SemanticResourceAttributes.SERVICE_NAME]: 'taramarchand.com',
   }),
   traceExporter,
   instrumentations: [getNodeAutoInstrumentations()],

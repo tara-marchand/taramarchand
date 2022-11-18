@@ -8,21 +8,53 @@ import { Level } from 'pino';
 import fastifyCookie from '@fastify/cookie';
 import fastifyFormbody from '@fastify/formbody';
 import fastifyNext from '@fastify/nextjs';
-import { registerInstrumentations } from '@opentelemetry/instrumentation';
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { FastifyInstrumentation } from '@opentelemetry/instrumentation-fastify';
 import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
+import { Resource } from '@opentelemetry/resources';
+import { NodeSDK } from '@opentelemetry/sdk-node';
+import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
 
 import { getPinoLogger } from './logger';
 import { fastifySequelize } from './plugins/fastify-sequelize';
 import { resumeToText } from './resumeToText';
 import schema from './schemas/index.json';
 
-registerInstrumentations({
+let fastifyInstance;
+
+const exporterOptions = {
+  url: 'http://153.92.214.154:4318/v1/traces',
+};
+const traceExporter = new OTLPTraceExporter(exporterOptions);
+const sdk = new NodeSDK({
+  resource: new Resource({
+    [SemanticResourceAttributes.SERVICE_NAME]: 'taramarchand.com',
+  }),
+  traceExporter,
   instrumentations: [
     // Fastify instrumentation expects HTTP layer to be instrumented
     new HttpInstrumentation(),
     new FastifyInstrumentation(),
   ],
+});
+
+// initialize the SDK and register with the OpenTelemetry API
+// this enables the API to record telemetry
+sdk
+  .start()
+  .then(() => console.log('Tracing initialized'))
+  .then(() => {
+    fastifyInstance = createFastifyInstance();
+  })
+  .catch((error) => console.log('Error initializing tracing', error));
+
+// gracefully shut down the SDK on process exit
+process.on('SIGTERM', () => {
+  sdk
+    .shutdown()
+    .then(() => console.log('Tracing terminated'))
+    .catch((error) => console.log('Error terminating tracing', error))
+    .finally(() => process.exit(0));
 });
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -67,19 +99,19 @@ const createFastifyInstance = async () => {
     .register(fastifyCookie)
     .register(fastifyFormbody)
     .addSchema(schema)
-    // .route({
-    //   method: 'GET',
-    //   url: '/metrics',
-    //   handler: async function (request, reply) {
-    //     try {
-    //       reply.header('Content-Type', register.contentType);
-    //       reply.send(await register.metrics());
-    //     } catch (ex) {
-    //       log(ex);
-    //       reply.code(500);
-    //     }
-    //   },
-    // })
+    .route({
+      method: 'GET',
+      url: '/metrics',
+      handler: async function (request, reply) {
+        try {
+          reply.header('Content-Type', register.contentType);
+          reply.send(await register.metrics());
+        } catch (ex) {
+          log(ex);
+          reply.code(500);
+        }
+      },
+    })
     .route({
       method: 'GET',
       url: '/resume.txt',
@@ -120,7 +152,5 @@ const createFastifyInstance = async () => {
     })
     .catch((error) => error && console.log(`Error starting Fastify: ${error}`));
 };
-
-const fastifyInstance = createFastifyInstance();
 
 export { cache, fastifyInstance };
