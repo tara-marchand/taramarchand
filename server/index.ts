@@ -32,7 +32,6 @@ const sdk = new NodeSDK({
   }),
   traceExporter,
   instrumentations: [
-    // Fastify instrumentation expects HTTP layer to be instrumented
     new HttpInstrumentation(),
     new FastifyInstrumentation(),
   ],
@@ -99,19 +98,6 @@ const createFastifyInstance = async () => {
     .register(fastifyCookie)
     .register(fastifyFormbody)
     .addSchema(schema)
-    .route({
-      method: 'GET',
-      url: '/metrics',
-      handler: async function (request, reply) {
-        try {
-          reply.header('Content-Type', register.contentType);
-          reply.send(await register.metrics());
-        } catch (ex) {
-          log(ex);
-          reply.code(500);
-        }
-      },
-    })
     .route({
       method: 'GET',
       url: '/resume.txt',
