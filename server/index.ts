@@ -60,13 +60,6 @@ if (airtableApiKey) {
 }
 
 const createFastifyInstance = async () => {
-  const { endpoint, port: promPort } = PrometheusExporter.DEFAULT_OPTIONS;
-  const promExporter = new PrometheusExporter({}, () => {
-    console.log(
-      `Prometheus scrape endpoint: http://localhost:${promPort}${endpoint}`
-    );
-  });
-
   const pinoLogger = await getPinoLogger(logLevel);
 
   const fastifyInstance = Fastify({
@@ -85,18 +78,6 @@ const createFastifyInstance = async () => {
     .register(fastifyCookie)
     .register(fastifyFormbody)
     .addSchema(schema)
-    .route({
-      method: 'GET',
-      url: '/metrics',
-      handler: async function (request, reply) {
-        try {
-          return promExporter.getMetricsRequestHandler(request.raw, reply.raw);
-        } catch (ex) {
-          log(ex);
-          reply.code(500);
-        }
-      },
-    })
     .route({
       method: 'GET',
       url: '/resume.txt',
