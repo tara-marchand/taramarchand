@@ -13,9 +13,9 @@ import { fastifySequelize } from './plugins/fastify-sequelize';
 import { resumeToText } from './resumeToText';
 import schema from './schemas/index.json';
 import { getOtelSdk } from './otel';
+import { PrometheusExporter } from '@opentelemetry/exporter-prometheus';
 
-const port = (process.env.PORT && parseInt(process.env.PORT, 10)) || 3333;
-const otelSdk = getOtelSdk(port);
+const otelSdk = getOtelSdk();
 let fastifyInstance;
 
 // Initialize the SDK and register with the OpenTelemetry API to record telemetry
@@ -39,6 +39,7 @@ process.on('SIGTERM', () => {
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 
+const port = process.env.PORT || 3333;
 const logLevel: Level = isProd ? 'info' : 'debug';
 
 const cache = new NodeCache();
@@ -59,6 +60,13 @@ if (airtableApiKey) {
 }
 
 const createFastifyInstance = async () => {
+  const { endpoint, port: promPort } = PrometheusExporter.DEFAULT_OPTIONS;
+  const promExporter = new PrometheusExporter({}, () => {
+    console.log(
+      `Prometheus scrape endpoint: http://localhost:${promPort}${endpoint}`
+    );
+  });
+
   const pinoLogger = await getPinoLogger(logLevel);
 
   const fastifyInstance = Fastify({
@@ -77,27 +85,18 @@ const createFastifyInstance = async () => {
     .register(fastifyCookie)
     .register(fastifyFormbody)
     .addSchema(schema)
-    // .route({
-    //   method: 'GET',
-    //   url: '/metrics',
-    //   handler: async function (request, reply) {
-    //     try {
-    //       reply.header('Content-Type', register.contentType);
-    //       reply.send(await register.metrics());
-    //     } catch (ex) {
-    //       log(ex);
-    //       reply.code(500);
-    //     }
-    //   },
-    //   handler: async (request, reply) => {
-    //     try {
-    //       reply.header('Content-Type', promRegistry.contentType);
-    //       reply.send(await promRegistry.metrics());
-    //     } catch (ex) {
-    //       reply.code(500);
-    //     }
-    //   },
-    // })
+    .route({
+      method: 'GET',
+      url: '/metrics',
+      handler: async function (request, reply) {
+        try {
+          return promExporter.getMetricsRequestHandler(request.raw, reply.raw);
+        } catch (ex) {
+          log(ex);
+          reply.code(500);
+        }
+      },
+    })
     .route({
       method: 'GET',
       url: '/resume.txt',

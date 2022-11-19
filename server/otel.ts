@@ -9,18 +9,8 @@ const traceExporter = new OTLPTraceExporter({
   url: 'http://153.92.214.154:4318/v1/traces',
 });
 
-export function getOtelSdk(port: number) {
+export function getOtelSdk() {
   return new NodeSDK({
-    metricReader: new PrometheusExporter(
-      {
-        port,
-      },
-      () => {
-        console.log(
-          `Prometheus scrape endpoint: http://localhost:${port}${PrometheusExporter.DEFAULT_OPTIONS.endpoint}`
-        );
-      }
-    ),
     resource: new Resource({
       [SemanticResourceAttributes.SERVICE_NAME]: 'taramarchand.com',
     }),
