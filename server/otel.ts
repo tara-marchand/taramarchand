@@ -5,20 +5,22 @@ import { Resource } from '@opentelemetry/resources';
 import { NodeSDK } from '@opentelemetry/sdk-node';
 import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
 
-const { endpoint, port: promPort } = PrometheusExporter.DEFAULT_OPTIONS;
-const promExporter = new PrometheusExporter({}, () => {
-  console.log(
-    `Prometheus scrape endpoint: http://localhost:${promPort}${endpoint}`
-  );
-});
-
 const traceExporter = new OTLPTraceExporter({
   url: 'http://153.92.214.154:4318/v1/traces',
 });
 
-export function getOtelSdk() {
+export function getOtelSdk(port: number) {
   return new NodeSDK({
-    metricReader: promExporter,
+    metricReader: new PrometheusExporter(
+      {
+        port,
+      },
+      () => {
+        console.log(
+          `Prometheus scrape endpoint: http://localhost:${port}${PrometheusExporter.DEFAULT_OPTIONS.endpoint}`
+        );
+      }
+    ),
     resource: new Resource({
       [SemanticResourceAttributes.SERVICE_NAME]: 'taramarchand.com',
     }),

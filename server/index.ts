@@ -14,7 +14,8 @@ import { resumeToText } from './resumeToText';
 import schema from './schemas/index.json';
 import { getOtelSdk } from './otel';
 
-const otelSdk = getOtelSdk();
+const port = (process.env.PORT && parseInt(process.env.PORT, 10)) || 3333;
+const otelSdk = getOtelSdk(port);
 let fastifyInstance;
 
 // Initialize the SDK and register with the OpenTelemetry API to record telemetry
@@ -38,7 +39,6 @@ process.on('SIGTERM', () => {
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 
-const port = process.env.PORT || 3333;
 const logLevel: Level = isProd ? 'info' : 'debug';
 
 const cache = new NodeCache();
@@ -80,15 +80,15 @@ const createFastifyInstance = async () => {
     // .route({
     //   method: 'GET',
     //   url: '/metrics',
-      //   handler: async function (request, reply) {
-      //     try {
-      //       reply.header('Content-Type', register.contentType);
-      //       reply.send(await register.metrics());
-      //     } catch (ex) {
-      //       log(ex);
-      //       reply.code(500);
-      //     }
-      //   },
+    //   handler: async function (request, reply) {
+    //     try {
+    //       reply.header('Content-Type', register.contentType);
+    //       reply.send(await register.metrics());
+    //     } catch (ex) {
+    //       log(ex);
+    //       reply.code(500);
+    //     }
+    //   },
     //   handler: async (request, reply) => {
     //     try {
     //       reply.header('Content-Type', promRegistry.contentType);
