@@ -1,3 +1,6 @@
+import fastifyCookie from '@fastify/cookie';
+import fastifyFormbody from '@fastify/formbody';
+import fastifyNext from '@fastify/nextjs';
 import Airtable from 'airtable';
 import { log } from 'console';
 import Fastify from 'fastify';
@@ -5,41 +8,17 @@ import { get } from 'lodash';
 import NodeCache from 'node-cache';
 import { Level } from 'pino';
 
-import fastifyCookie from '@fastify/cookie';
-import fastifyFormbody from '@fastify/formbody';
-import fastifyNext from '@fastify/nextjs';
-import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
-import { FastifyInstrumentation } from '@opentelemetry/instrumentation-fastify';
-import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
-import { Resource } from '@opentelemetry/resources';
-import { NodeSDK } from '@opentelemetry/sdk-node';
-import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
-
 import { getPinoLogger } from './logger';
 import { fastifySequelize } from './plugins/fastify-sequelize';
 import { resumeToText } from './resumeToText';
 import schema from './schemas/index.json';
+import { getOtelSdk } from './otel';
 
+const otelSdk = getOtelSdk();
 let fastifyInstance;
 
-const exporterOptions = {
-  url: 'http://153.92.214.154:4318/v1/traces',
-};
-const traceExporter = new OTLPTraceExporter(exporterOptions);
-const sdk = new NodeSDK({
-  resource: new Resource({
-    [SemanticResourceAttributes.SERVICE_NAME]: 'taramarchand.com',
-  }),
-  traceExporter,
-  instrumentations: [
-    new HttpInstrumentation(),
-    new FastifyInstrumentation(),
-  ],
-});
-
-// initialize the SDK and register with the OpenTelemetry API
-// this enables the API to record telemetry
-sdk
+// Initialize the SDK and register with the OpenTelemetry API to record telemetry
+otelSdk
   .start()
   .then(() => console.log('Tracing initialized'))
   .then(() => {
@@ -47,9 +26,9 @@ sdk
   })
   .catch((error) => console.log('Error initializing tracing', error));
 
-// gracefully shut down the SDK on process exit
+// Gracefully shut down the SDK on process exit
 process.on('SIGTERM', () => {
-  sdk
+  otelSdk
     .shutdown()
     .then(() => console.log('Tracing terminated'))
     .catch((error) => console.log('Error terminating tracing', error))
@@ -98,6 +77,27 @@ const createFastifyInstance = async () => {
     .register(fastifyCookie)
     .register(fastifyFormbody)
     .addSchema(schema)
+    // .route({
+    //   method: 'GET',
+    //   url: '/metrics',
+      //   handler: async function (request, reply) {
+      //     try {
+      //       reply.header('Content-Type', register.contentType);
+      //       reply.send(await register.metrics());
+      //     } catch (ex) {
+      //       log(ex);
+      //       reply.code(500);
+      //     }
+      //   },
+    //   handler: async (request, reply) => {
+    //     try {
+    //       reply.header('Content-Type', promRegistry.contentType);
+    //       reply.send(await promRegistry.metrics());
+    //     } catch (ex) {
+    //       reply.code(500);
+    //     }
+    //   },
+    // })
     .route({
       method: 'GET',
       url: '/resume.txt',
