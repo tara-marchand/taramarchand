@@ -9,7 +9,7 @@
     "url": "https://github.com/tara-marchand/taramarchand.git"
   },
   "engines": {
-    "node": "^18",
+    "node": "^16",
     "npm": "^9"
   },
   "cacheDirectories": [
