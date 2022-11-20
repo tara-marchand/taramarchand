@@ -1,6 +1,7 @@
 import fastifyCookie from '@fastify/cookie';
 import fastifyFormbody from '@fastify/formbody';
 import fastifyNext from '@fastify/nextjs';
+import { PrometheusExporter } from '@opentelemetry/exporter-prometheus';
 import Airtable from 'airtable';
 import { log } from 'console';
 import Fastify from 'fastify';
@@ -9,11 +10,25 @@ import NodeCache from 'node-cache';
 import { Level } from 'pino';
 
 import { getPinoLogger } from './logger';
+import { getOtelSdk } from './otel';
 import { fastifySequelize } from './plugins/fastify-sequelize';
+import { port } from './port';
 import { resumeToText } from './resumeToText';
 import schema from './schemas/index.json';
-import { getOtelSdk } from './otel';
-import { PrometheusExporter } from '@opentelemetry/exporter-prometheus';
+
+const { MeterProvider } = require('@opentelemetry/sdk-metrics');
+
+const { endpoint, port: promPort } = PrometheusExporter.DEFAULT_OPTIONS;
+const promExporter = new PrometheusExporter(
+  { preventServerStart: false },
+  () => {
+    console.log(
+      `Prometheus scrape endpoint: http://localhost:${promPort}${endpoint}`
+    );
+  }
+);
+const meterProvider = new MeterProvider();
+meterProvider.addMetricReader(promExporter);
 
 const otelSdk = getOtelSdk();
 let fastifyInstance;
@@ -39,9 +54,7 @@ process.on('SIGTERM', () => {
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 
-const port = process.env.PORT || 3333;
 const logLevel: Level = isProd ? 'info' : 'debug';
-
 const cache = new NodeCache();
 
 // Set up Airtable
@@ -68,11 +81,6 @@ const createFastifyInstance = async () => {
     trustProxy: true,
   });
 
-  let _port = port;
-  if (typeof _port === 'string') {
-    _port = parseInt(_port, 10);
-  }
-
   fastifyInstance
     .register(fastifySequelize)
     .register(fastifyCookie)
@@ -85,6 +93,19 @@ const createFastifyInstance = async () => {
         try {
           reply.header('Content-Type', 'text/plain');
           reply.send(resumeToText());
+        } catch (ex) {
+          log(ex);
+          reply.code(500);
+        }
+      },
+    })
+    .route({
+      method: 'GET',
+      url: '/metrics',
+      handler: async function (request, reply) {
+        try {
+          promExporter.getMetricsRequestHandler(request.raw, reply.raw);
+          reply.hijack();
         } catch (ex) {
           log(ex);
           reply.code(500);
@@ -109,7 +130,7 @@ const createFastifyInstance = async () => {
     });
 
   return fastifyInstance
-    .listen({ port: _port, host: '0.0.0.0' })
+    .listen({ port, host: '0.0.0.0' })
     .then(() => {
       fastifyInstance.log.info(
         { url: `http://localhost:${port}` },
