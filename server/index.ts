@@ -102,7 +102,7 @@ const createFastifyInstance = async () => {
     .route({
       method: 'GET',
       url: '/metrics',
-      handler: async function (request, reply) {
+      handler: function (request, reply) {
         try {
           promExporter.getMetricsRequestHandler(request.raw, reply.raw);
           reply.hijack();
