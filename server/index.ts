@@ -18,15 +18,7 @@ import schema from './schemas/index.json';
 
 const { MeterProvider } = require('@opentelemetry/sdk-metrics');
 
-const { endpoint, port: promPort } = PrometheusExporter.DEFAULT_OPTIONS;
-const promExporter = new PrometheusExporter(
-  { preventServerStart: false },
-  () => {
-    console.log(
-      `Prometheus scrape endpoint: http://localhost:${promPort}${endpoint}`
-    );
-  }
-);
+const promExporter = new PrometheusExporter({ preventServerStart: true });
 const meterProvider = new MeterProvider();
 meterProvider.addMetricReader(promExporter);
 
