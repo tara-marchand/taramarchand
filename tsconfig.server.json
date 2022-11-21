@@ -22,6 +22,7 @@
     "strictPropertyInitialization": false,
     "target": "es2020",
     "typeRoots": [
+      "node_modules/@fastify/nextjs/types",
       "node_modules/@types",
       "server/types",
       "src/types"
