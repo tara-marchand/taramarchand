@@ -8,38 +8,38 @@ import fastifyCookie from '@fastify/cookie';
 import fastifyNext from '@fastify/nextjs';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
 import { PrometheusExporter } from '@opentelemetry/exporter-prometheus';
-import { registerInstrumentations } from '@opentelemetry/instrumentation';
-import { MeterProvider } from '@opentelemetry/sdk-metrics';
+import { Resource } from '@opentelemetry/resources';
+import * as opentelemetry from '@opentelemetry/sdk-node';
+import { InMemorySpanExporter } from '@opentelemetry/sdk-trace-base';
+import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-node';
+import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
 
 import { getPinoLogger } from './logger';
 import { fastifySequelize } from './plugins/fastify-sequelize';
 import { port } from './port';
 import { resumeToText } from './resumeToText';
 import schema from './schemas/index.json';
-import { CollectorTraceExporter } from '@opentelemetry/exporter-collector';
-import { NodeTracerProvider, SimpleSpanProcessor } from '@opentelemetry/sdk-trace-node';
-import { Resource } from '@opentelemetry/resources';
-import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 
-const traceExporter = new CollectorTraceExporter();
-const tracerProvider = new NodeTracerProvider({
-  resource: new Resource({
-    [SemanticResourceAttributes.SERVICE_NAME]: 'basic-service',
-  }),
-});
-tracerProvider.addSpanProcessor(new SimpleSpanProcessor(traceExporter));
-tracerProvider.register();
-
 const promExporter = new PrometheusExporter({ preventServerStart: true });
-const meterProvider = new MeterProvider();
-meterProvider.addMetricReader(promExporter);
+const traceExporter = new InMemorySpanExporter();
 
-registerInstrumentations({
+const sdk = new opentelemetry.NodeSDK({
   instrumentations: [getNodeAutoInstrumentations()],
+  metricReader: promExporter,
+  resource: new Resource({
+    [SemanticResourceAttributes.SERVICE_NAME]: 'taramarchand.com',
+  }),
+  spanProcessor: new SimpleSpanProcessor(traceExporter),
+  traceExporter,
 });
+
+sdk
+  .start()
+  .then(() => console.log('Tracing initialized'))
+  .catch((error) => console.log('Error initializing tracing', error));
 
 const logLevel: Level = isProd ? 'info' : 'debug';
 const cache = new NodeCache();
@@ -115,13 +115,17 @@ getPinoLogger(logLevel)
         (error) => error && console.error(`Error starting Fastify: ${error}`)
       );
 
-    console.info(
-      { url: `http://localhost:${port}` },
-      'Server is ready'
-    );
+    fastifyInstance.log.info(`Fastify is ready on port ${port}`);
 
     return fastifyInstance;
   })
   .catch((error) => error && console.error(`Error starting Fastify: ${error}`));
 
+process.on('SIGTERM', () => {
+  sdk
+    .shutdown()
+    .then(() => console.log('Tracing terminated'))
+    .catch((error) => console.log('Error terminating tracing', error))
+    .finally(() => process.exit(0));
+});
 export { cache, fastifyInstance };
