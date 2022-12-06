@@ -11,7 +11,7 @@ const pinoOptions = {
   },
 };
 
-export const PinoLogger = () => {
+export const Logger = () => {
   pino(pinoOptions);
   
   return null;
