@@ -1,6 +1,6 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document';
-import { Logger } from '../components/Logger';
 
+import { Logger } from '../components/Logger';
 import { Otel } from '../components/Otel';
 
 export default class MyDocument extends Document {
