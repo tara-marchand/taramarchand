@@ -1,17 +1,4 @@
-import { registerInstrumentations } from '@opentelemetry/instrumentation';
-import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
-
-registerInstrumentations({
-  instrumentations: getNodeAutoInstrumentations()
-});
-
-import { diag, DiagConsoleLogger, DiagLogLevel } from '@opentelemetry/api';
-import { PrometheusExporter } from '@opentelemetry/exporter-prometheus';
-import { Resource } from '@opentelemetry/resources';
-import * as opentelemetry from '@opentelemetry/sdk-node';
-import { InMemorySpanExporter } from '@opentelemetry/sdk-trace-base';
-import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-node';
-import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
+import { promExporter, sdk } from './otel';
 
 import Airtable from 'airtable';
 import Fastify, { FastifyInstance } from 'fastify';
@@ -23,7 +10,6 @@ import fastifyCookie from '@fastify/cookie';
 import fastifyNext from '@fastify/nextjs';
 
 import { getPinoLogger } from './logger';
-import { fastifySequelize } from './plugins/fastify-sequelize';
 import { port } from './port';
 import { resumeToText } from './resumeToText';
 import schema from './schemas/index.json';
@@ -31,31 +17,9 @@ import schema from './schemas/index.json';
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 
-diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.INFO);
-const promExporter = new PrometheusExporter({ preventServerStart: true });
-const traceExporter = new InMemorySpanExporter();
-
-const sdk = new opentelemetry.NodeSDK({
-  // instrumentations: [getNodeAutoInstrumentations()],
-  metricReader: promExporter,
-  resource: new Resource({
-    [SemanticResourceAttributes.SERVICE_NAME]: 'taramarchand.com',
-  }),
-  spanProcessor: new SimpleSpanProcessor(traceExporter),
-  traceExporter,
-});
-
-sdk
-  .start()
-  .then(() => console.log('OpenTelemetry Node SDK initialized'))
-  .catch((error) =>
-    console.log('Error initializing OpenTelemetry Node SDK', error)
-  );
-
 const logLevel: Level = isProd ? 'info' : 'debug';
 const cache = new NodeCache();
 
-// Set up Airtable
 const airtableApiKey = get(process.env, 'AIRTABLE_API_KEY');
 if (airtableApiKey) {
   const airtableConfig: Pick<
@@ -79,7 +43,6 @@ getPinoLogger(logLevel)
       pluginTimeout: 20000,
       trustProxy: true,
     })
-      .register(fastifySequelize)
       .register(fastifyCookie)
       .addSchema(schema)
       .route({
