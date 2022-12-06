@@ -1,3 +1,18 @@
+import { registerInstrumentations } from '@opentelemetry/instrumentation';
+import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
+
+registerInstrumentations({
+  instrumentations: getNodeAutoInstrumentations()
+});
+
+import { diag, DiagConsoleLogger, DiagLogLevel } from '@opentelemetry/api';
+import { PrometheusExporter } from '@opentelemetry/exporter-prometheus';
+import { Resource } from '@opentelemetry/resources';
+import * as opentelemetry from '@opentelemetry/sdk-node';
+import { InMemorySpanExporter } from '@opentelemetry/sdk-trace-base';
+import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-node';
+import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
+
 import Airtable from 'airtable';
 import Fastify, { FastifyInstance } from 'fastify';
 import { get } from 'lodash';
@@ -6,13 +21,6 @@ import { Level } from 'pino';
 
 import fastifyCookie from '@fastify/cookie';
 import fastifyNext from '@fastify/nextjs';
-import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
-import { PrometheusExporter } from '@opentelemetry/exporter-prometheus';
-import { Resource } from '@opentelemetry/resources';
-import * as opentelemetry from '@opentelemetry/sdk-node';
-import { InMemorySpanExporter } from '@opentelemetry/sdk-trace-base';
-import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-node';
-import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
 
 import { getPinoLogger } from './logger';
 import { fastifySequelize } from './plugins/fastify-sequelize';
@@ -23,11 +31,12 @@ import schema from './schemas/index.json';
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 
+diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.INFO);
 const promExporter = new PrometheusExporter({ preventServerStart: true });
 const traceExporter = new InMemorySpanExporter();
 
 const sdk = new opentelemetry.NodeSDK({
-  instrumentations: [getNodeAutoInstrumentations()],
+  // instrumentations: [getNodeAutoInstrumentations()],
   metricReader: promExporter,
   resource: new Resource({
     [SemanticResourceAttributes.SERVICE_NAME]: 'taramarchand.com',
@@ -38,8 +47,10 @@ const sdk = new opentelemetry.NodeSDK({
 
 sdk
   .start()
-  .then(() => console.log('Tracing initialized'))
-  .catch((error) => console.log('Error initializing tracing', error));
+  .then(() => console.log('OpenTelemetry Node SDK initialized'))
+  .catch((error) =>
+    console.log('Error initializing OpenTelemetry Node SDK', error)
+  );
 
 const logLevel: Level = isProd ? 'info' : 'debug';
 const cache = new NodeCache();
@@ -124,8 +135,10 @@ getPinoLogger(logLevel)
 process.on('SIGTERM', () => {
   sdk
     .shutdown()
-    .then(() => console.log('Tracing terminated'))
-    .catch((error) => console.log('Error terminating tracing', error))
+    .then(() => console.log('OpenTelemetry Node SDK terminated'))
+    .catch((error) =>
+      console.log('Error terminating OpenTelemetry Node SDK', error)
+    )
     .finally(() => process.exit(0));
 });
 export { cache, fastifyInstance };
