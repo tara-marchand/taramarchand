@@ -16,9 +16,22 @@ import { fastifySequelize } from './plugins/fastify-sequelize';
 import { port } from './port';
 import { resumeToText } from './resumeToText';
 import schema from './schemas/index.json';
+import { CollectorTraceExporter } from '@opentelemetry/exporter-collector';
+import { NodeTracerProvider, SimpleSpanProcessor } from '@opentelemetry/sdk-trace-node';
+import { Resource } from '@opentelemetry/resources';
+import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
+
+const traceExporter = new CollectorTraceExporter();
+const tracerProvider = new NodeTracerProvider({
+  resource: new Resource({
+    [SemanticResourceAttributes.SERVICE_NAME]: 'basic-service',
+  }),
+});
+tracerProvider.addSpanProcessor(new SimpleSpanProcessor(traceExporter));
+tracerProvider.register();
 
 const promExporter = new PrometheusExporter({ preventServerStart: true });
 const meterProvider = new MeterProvider();
