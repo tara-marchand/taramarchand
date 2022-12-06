@@ -1,18 +1,17 @@
 import { diag, DiagConsoleLogger, DiagLogLevel } from '@opentelemetry/api';
-import '@opentelemetry/instrumentation-grpc';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
 import { PrometheusExporter } from '@opentelemetry/exporter-prometheus';
 import { Resource } from '@opentelemetry/resources';
 import * as opentelemetry from '@opentelemetry/sdk-node';
 import {
   InMemorySpanExporter,
-  SimpleSpanProcessor,
+  SimpleSpanProcessor
 } from '@opentelemetry/sdk-trace-base';
 import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
 
 diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.INFO);
 
-const promExporter = new PrometheusExporter();
+const promExporter = new PrometheusExporter({ preventServerStart: true });
 const traceExporter = new InMemorySpanExporter();
 
 const sdk = new opentelemetry.NodeSDK({
@@ -25,11 +24,14 @@ const sdk = new opentelemetry.NodeSDK({
   traceExporter,
 });
 
-sdk
-  .start()
-  .then(() => console.log('OpenTelemetry Node SDK initialized'))
-  .catch((error) =>
-    console.log('Error initializing OpenTelemetry Node SDK', error)
-  );
+const getOtelSdk = async () => {
+  await sdk
+    .start()
+    .catch((error) =>
+      console.log('Error initializing OpenTelemetry Node SDK', error)
+    );
+  console.log('OpenTelemetry Node SDK initialized');
+  return sdk;
+};
 
-export { promExporter, sdk };
+export { promExporter, getOtelSdk };

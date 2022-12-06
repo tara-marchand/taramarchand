@@ -1,4 +1,4 @@
-import { promExporter, sdk } from './otel';
+import { promExporter, getOtelSdk } from './otel';
 
 import Airtable from 'airtable';
 import Fastify, { FastifyInstance } from 'fastify';
@@ -13,6 +13,9 @@ import { getPinoLogger } from './logger';
 import { port } from './port';
 import { resumeToText } from './resumeToText';
 import schema from './schemas/index.json';
+import { NodeSDK } from '@opentelemetry/sdk-node';
+
+let otelSdk: NodeSDK;
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
@@ -36,7 +39,10 @@ if (airtableApiKey) {
 
 let fastifyInstance: FastifyInstance;
 
-getPinoLogger(logLevel)
+getOtelSdk().then(_otelSdk => {
+  otelSdk = _otelSdk;
+
+  getPinoLogger(logLevel)
   .then(async (pinoLogger) => {
     fastifyInstance = Fastify({
       logger: pinoLogger,
@@ -93,15 +99,17 @@ getPinoLogger(logLevel)
 
     return fastifyInstance;
   })
-  .catch((error) => error && console.error(`Error starting Fastify: ${error}`));
+  .catch((error) => error && console.error(`Error starting Fastify: ${error}`));  
+})
 
 process.on('SIGTERM', () => {
-  sdk
+  otelSdk
     .shutdown()
     .then(() => console.log('OpenTelemetry Node SDK terminated'))
-    .catch((error) =>
+    .catch((error: Error) =>
       console.log('Error terminating OpenTelemetry Node SDK', error)
     )
     .finally(() => process.exit(0));
 });
+
 export { cache, fastifyInstance };
