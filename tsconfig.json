@@ -38,9 +38,10 @@
     "src/components/**/*",
     "src/data/**/*",
     "src/pages/**/*",
-    "src/types/**/*", "src/components/Otel.ts",
+    "src/types/**/*",
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/otel-browser.js"
   ]
 }

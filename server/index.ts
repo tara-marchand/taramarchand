@@ -1,5 +1,3 @@
-import { promExporter, getOtelSdk } from './otel';
-
 import Airtable from 'airtable';
 import Fastify, { FastifyInstance } from 'fastify';
 import { get } from 'lodash';
@@ -39,8 +37,8 @@ if (airtableApiKey) {
 
 let fastifyInstance: FastifyInstance;
 
-getOtelSdk().then(_otelSdk => {
-  otelSdk = _otelSdk;
+// getOtelSdk().then(_otelSdk => {
+  // otelSdk = _otelSdk;
 
   getPinoLogger(logLevel)
   .then(async (pinoLogger) => {
@@ -64,19 +62,19 @@ getOtelSdk().then(_otelSdk => {
           }
         },
       })
-      .route({
-        method: 'GET',
-        url: '/metrics',
-        handler: function (request, reply) {
-          try {
-            promExporter.getMetricsRequestHandler(request.raw, reply.raw);
-            reply.hijack();
-          } catch (ex) {
-            console.error(ex);
-            reply.code(500);
-          }
-        },
-      })
+      // .route({
+      //   method: 'GET',
+      //   url: '/metrics',
+      //   handler: function (request, reply) {
+      //     try {
+      //       promExporter.getMetricsRequestHandler(request.raw, reply.raw);
+      //       reply.hijack();
+      //     } catch (ex) {
+      //       console.error(ex);
+      //       reply.code(500);
+      //     }
+      //   },
+      // })
       .register(fastifyNext, {
         dev: isDev,
       })
@@ -100,7 +98,7 @@ getOtelSdk().then(_otelSdk => {
     return fastifyInstance;
   })
   .catch((error) => error && console.error(`Error starting Fastify: ${error}`));  
-})
+// })
 
 process.on('SIGTERM', () => {
   otelSdk
