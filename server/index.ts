@@ -11,9 +11,6 @@ import { getPinoLogger } from './logger';
 import { port } from './port';
 import { resumeToText } from './resumeToText';
 import schema from './schemas/index.json';
-import { NodeSDK } from '@opentelemetry/sdk-node';
-
-let otelSdk: NodeSDK;
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
@@ -99,15 +96,5 @@ let fastifyInstance: FastifyInstance;
   })
   .catch((error) => error && console.error(`Error starting Fastify: ${error}`));  
 // })
-
-process.on('SIGTERM', () => {
-  otelSdk
-    .shutdown()
-    .then(() => console.log('OpenTelemetry Node SDK terminated'))
-    .catch((error: Error) =>
-      console.log('Error terminating OpenTelemetry Node SDK', error)
-    )
-    .finally(() => process.exit(0));
-});
 
 export { cache, fastifyInstance };
