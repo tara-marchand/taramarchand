@@ -16,5 +16,5 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 1,
     '@typescript-eslint/explicit-module-boundary-types': ['off'],
   },
-  ignorePatterns: ['.eslintrc.js', 'otel-browser.js']
+  ignorePatterns: ['.eslintrc.js']
 };

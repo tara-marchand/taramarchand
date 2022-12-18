@@ -33,7 +33,6 @@
   ],
   "exclude": [
     "node_modules",
-    "server/otel-server.js",
     "src"
   ]
 }

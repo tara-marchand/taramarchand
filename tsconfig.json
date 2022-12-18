@@ -25,7 +25,6 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "suppressImplicitAnyIndexErrors": true,
     "target": "es2017",
     "typeRoots": [
       "node_modules/@types",
@@ -42,6 +41,5 @@
   ],
   "exclude": [
     "node_modules",
-    "src/otel-browser.js"
   ]
 }
