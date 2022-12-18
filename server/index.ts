@@ -34,9 +34,6 @@ if (airtableApiKey) {
 
 let fastifyInstance: FastifyInstance;
 
-// getOtelSdk().then(_otelSdk => {
-  // otelSdk = _otelSdk;
-
   getPinoLogger(logLevel)
   .then(async (pinoLogger) => {
     fastifyInstance = Fastify({
