@@ -5,6 +5,8 @@ import purple from '../public/images/purple.jpg';
 
 export default function Home(): JSX.Element {
   return (
-    <Image src={purple} alt="Purple" />
+    <div className="container">
+      <Image src={purple} alt="" fill />
+    </div>
   );
 }

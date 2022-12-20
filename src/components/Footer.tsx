@@ -3,7 +3,7 @@ import * as React from 'react';
 const Footer: React.FunctionComponent = () => {
   return (
     <footer className="max-w-full bg-gray-400 p-6">
-      <div className="mx-auto flex max-w-screen-md px-6 md:px-0">
+      <div className="mx-auto flex container px-6 md:px-0">
         <a href="#" onClick={openEmail} className="mr-6">
           Email
         </a>

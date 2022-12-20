@@ -34,7 +34,7 @@ export default function Layout({ children }: Props) {
           <div className="grid-rows-8 grid grid-cols-1 font-sans leading-relaxed">
             <Header />
             <main className="row-span-6">
-              <div className="mx-auto max-w-screen-md px-6 pt-6 pb-6 md:px-0">
+              <div className="mx-auto container px-6 pt-6 pb-6 md:px-0">
                 {children}
               </div>
             </main>
