@@ -97,7 +97,7 @@ const createFastifyInstance = async () => {
   return fastifyInstance
     .listen({ port: _port, host: '0.0.0.0' })
     .then(() => {
-      console.info(`Server is ready on port %{port}`);
+      console.info(`Server is ready on port ${port}`);
     })
     .catch((error) => error && console.error(`Error starting Fastify: ${error}`));
 };
