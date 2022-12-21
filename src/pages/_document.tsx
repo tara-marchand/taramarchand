@@ -1,3 +1,4 @@
+require('newrelic');
 import Document, {
   DocumentInitialProps,
   Head,
@@ -6,7 +7,11 @@ import Document, {
   NextScript,
 } from 'next/document';
 
-export default class MyDocument extends Document<DocumentInitialProps> {
+type CustomDocumentInitialProps = DocumentInitialProps & {
+  browserTimingHeader: string;
+};
+
+export default class MyDocument extends Document<CustomDocumentInitialProps> {
   render() {
     return (
       <Html className="m-0 h-full">
