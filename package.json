@@ -19,7 +19,6 @@
     "build:next": "NODE_ENV=production next build",
     "build:server": "npm run clean:server && tsc --project tsconfig.server.json",
     "clean:server": "rimraf .server",
-    "heroku-postbuild": "npm run build:next",
     "start": "npm run start:dev",
     "start:dev": "npm run build:next; NODE_ENV=development npm run build:server; env-cmd -f './.env' node --trace-warnings .server/server/index.js",
     "start:prod": "npm run build:next; NODE_ENV=production npm run build:server; node .server/server/index.js",
