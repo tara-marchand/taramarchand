@@ -5,6 +5,7 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx}',
   ],
   corePlugins: {
+    aspectRatio: false,
     preflight: false,
   },
   important: false,

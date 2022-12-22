@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import React from 'react';
 
-import purple from '../public/images/purple.jpg';
+import leaf from '../public/images/leaf.jpg';
 
 export default function Home(): JSX.Element {
   return (
-    <div className="aspect-w-16 aspect-h-9">
+    <div className="aspect-w-16 aspect-h-6">
       <Image
-        src={purple}
+        src={leaf}
         alt=""
         fill
         placeholder="blur"

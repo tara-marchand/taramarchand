@@ -28,7 +28,7 @@ export function getData(
           reject();
         });
     });
-  } catch (err) {
+  } catch (err: unknown) {
     // Avoid showing an error message if the fetch was aborted
     if (err.name !== 'AbortError') {
       console.warn('Oh no! Fetching failed.');
