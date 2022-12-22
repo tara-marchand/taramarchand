@@ -5,7 +5,7 @@
     // Repeated from base config's "include" setting
     "src/components/**/*",
     "src/data/**/*",
-    "src/pages/**/*",
+    "src/app/**/*",
     "src/types/**/*",
     // eslint-only inclusion
     ".eslintrc.js"

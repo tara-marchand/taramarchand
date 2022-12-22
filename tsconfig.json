@@ -29,17 +29,24 @@
     "typeRoots": [
       "node_modules/@types",
       "src/types",
-      "node_modules/notion-sdk-js/src",
+      "node_modules/notion-sdk-js/src"
+    ],
+    "plugins": [
+      {
+        "name": "next"
+      }
     ]
   },
   "include": [
     "next-env.d.ts",
+    "src/app/**/*",
     "src/components/**/*",
     "src/data/**/*",
-    "src/pages/**/*",
+    "src/app/**/*",
     "src/types/**/*",
-  ],
+    ".next/types/**/*.ts"
+, "src/newrelic.ts"  ],
   "exclude": [
-    "node_modules",
+    "node_modules"
   ]
 }

@@ -24,5 +24,6 @@
       "scheme": "file",
       "pattern": "server/resume.json"
     }
-  ]
+  ],
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

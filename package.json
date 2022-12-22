@@ -2,7 +2,7 @@
   "name": "taramarchand.com",
   "version": "1.0.0",
   "description": "taramarchand.com",
-  "main": "src/pages/_app.tsx",
+  "main": "src/app/layout.tsx",
   "type": "commonjs",
   "repository": {
     "type": "git",

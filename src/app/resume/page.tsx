@@ -1,17 +1,14 @@
 import Link from 'next/link';
 import React from 'react';
 
-type Props = {
-  data: ResumeData;
-};
-
-export async function getStaticProps() {
-  const data = (await import('../data/resume.json')).default;
-  return { props: { data } };
+export async function getResumeData() {
+  const data = (await import('../../data/resume.json')).default;
+  return data;
 }
 
-export default function Resume(props: Props) {
-  const { basics, education, skills, work } = props.data;
+export default async function Resume() {
+  const data = await getResumeData();
+  const { basics, education, skills, work } = data;
 
   return (
     <div>
@@ -68,7 +65,7 @@ export default function Resume(props: Props) {
       </section>
       <section>
         <h2>Experience</h2>
-        {work?.map((workplace: ResumeWork, index: number) => {
+        {work?.map((workplace, index: number) => {
           return (
             <div key={index}>
               <h4>{workplace.position}</h4>
@@ -94,7 +91,7 @@ export default function Resume(props: Props) {
       <section>
         <h2>Education</h2>
         <ul>
-          {education?.map((ed: ResumeEducation, index: number) => (
+          {education?.map((ed, index: number) => (
             <li key={index}>
               {ed.institution} · {ed.studyType}, {ed.area}
             </li>

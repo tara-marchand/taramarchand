@@ -1,6 +1,8 @@
+'use client';
+
 import Link, { LinkProps } from 'next/link';
-import { useRouter } from 'next/router';
-import * as React from 'react';
+import { usePathname } from 'next/navigation';
+import React, { useRef } from 'react';
 
 type Props = LinkProps & {
   className?: string;
@@ -10,15 +12,16 @@ type Props = LinkProps & {
 type LinkRef = HTMLAnchorElement;
 
 function MenuLink(
-  { className = '', href, text }: Props,
-  ref: React.Ref<HTMLDivElement> & React.Ref<LinkRef>
+  props: Props
 ) {
-  const router = useRouter();
+  const { className, href, text } = props;
+  const pathname = usePathname();
+  const linkRef = useRef<HTMLDivElement & LinkRef>(null);
 
   // active
-  if (router.pathname === href) {
+  if (pathname === href) {
     return (
-      <div className={`font-heavy ${className}`} ref={ref}>
+      <div className={`font-heavy ${className}`} ref={linkRef}>
         {text}
       </div>
     );
@@ -26,7 +29,7 @@ function MenuLink(
 
   return (
     <Link legacyBehavior href={href} passHref>
-      <a className={className} href={href.toString()} ref={ref}>
+      <a className={className} href={href.toString()} ref={linkRef}>
         {text}
       </a>
     </Link>
