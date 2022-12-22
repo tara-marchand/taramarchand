@@ -22,8 +22,8 @@
     "heroku-postbuild": "npm run build:next",
     "start": "npm run start:dev",
     "start:dev": "npm run build:next; NODE_ENV=development npm run build:server; env-cmd -f './.env' node --trace-warnings .server/server/index.js",
-    "start:prod": "concurrently \"npm run build:next\" \"NODE_ENV=production npm run build:server\" && node .server/server/index.js",
-    "start:prod:local": "concurrently \"npm run build:next\" \"NODE_ENV=production npm run build:server\" && node .server/server/index.js",
+    "start:prod": "npm run build:next; NODE_ENV=production npm run build:server; node .server/server/index.js",
+    "start:prod:local": "npm run build:next; NODE_ENV=production npm run build:server; node .server/server/index.js",
     "lint": "next lint",
     "postbuild": "next-sitemap"
   },
