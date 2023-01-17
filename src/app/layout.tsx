@@ -3,6 +3,8 @@ import '../styles/globals.css';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Head from './head';
+import Script from 'next/script';
+import { newrelicScript } from '../newrelic';
 
 export default function RootLayout({
   children,
@@ -12,6 +14,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
+        <Script
+          id="nr"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: newrelicScript }}
+        />
         <Head />
       </head>
       <body>

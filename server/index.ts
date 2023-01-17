@@ -5,14 +5,11 @@ import { log } from 'console';
 import Fastify from 'fastify';
 import { get } from 'lodash';
 import NodeCache from 'node-cache';
-import { collectDefaultMetrics, register } from 'prom-client';
 
 import schema from './schemas/index.json';
 import { Level } from 'pino';
 import { getPinoLogger } from './logger';
 import { resumeToText } from './resumeToText';
-
-collectDefaultMetrics();
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
@@ -54,19 +51,6 @@ const createFastifyInstance = async () => {
   fastifyInstance
     .register(fastifyCookie)
     .addSchema(schema)
-    .route({
-      method: 'GET',
-      url: '/metrics',
-      handler: async function (request, reply) {
-        try {
-          reply.header('Content-Type', register.contentType);
-          reply.send(await register.metrics());
-        } catch (ex) {
-          log(ex);
-          reply.code(500);
-        }
-      },
-    })
     .route({
       method: 'GET',
       url: '/resume.txt',
