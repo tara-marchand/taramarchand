@@ -72,7 +72,6 @@
     "pino": "^8.7.0",
     "pino-abstract-transport": "^1.0.0",
     "pino-http": "^8.2.1",
-    "pino-loki": "^2.0.3",
     "pino-pretty": "^9.1.1",
     "point-of-view": "^5.2.0",
     "postcss": "^8.4.14",
