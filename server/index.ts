@@ -1,3 +1,4 @@
+require('newrelic');
 import fastifyCookie from '@fastify/cookie';
 import fastifyNext from '@fastify/nextjs';
 import Airtable from 'airtable';
@@ -12,10 +13,11 @@ import { getPinoLogger } from './logger';
 import { resumeToText } from './resumeToText';
 
 const isDev = process.env.NODE_ENV === 'development';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const isProd = process.env.NODE_ENV === 'production';
 
 const port = process.env.PORT || 3333;
-const logLevel: Level = isProd ? 'info' : 'debug';
+const logLevel: Level = 'info';
 
 const cache = new NodeCache();
 
