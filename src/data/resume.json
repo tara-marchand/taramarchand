@@ -15,9 +15,9 @@
         "url": "https://github.com/tara-marchand"
       },
       {
-        "network": "Twitter",
-        "username": "trmarchand",
-        "url": "https://twitter.com/trmarchand"
+        "network": "Mastodon",
+        "username": "@trmarchand@sfba.social",
+        "url": "https://sfba.social/@trmarchand"
       }
     ]
   },

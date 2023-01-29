@@ -9,9 +9,7 @@ module.exports = {
     preflight: false,
   },
   important: false,
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-  ],
+  plugins: [require('@tailwindcss/aspect-ratio')],
   prefix: '',
   separator: ':',
   theme: {
