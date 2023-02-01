@@ -2,21 +2,23 @@
 
 import Link, { LinkProps } from 'next/link';
 import { usePathname } from 'next/navigation';
-import React, { useRef } from 'react';
+import React, { createRef } from 'react';
 
 type Props = LinkProps & {
   className?: string;
   shouldUnderlineOnHover?: boolean;
+  ref: LinkRef;
   text: string;
 };
-type LinkRef = HTMLAnchorElement;
 
-function MenuLink(
+type LinkRef = HTMLAnchorElement & HTMLDivElement;
+
+export default function MenuLink(
   props: Props
 ) {
   const { className, href, text } = props;
   const pathname = usePathname();
-  const linkRef = useRef<HTMLDivElement & LinkRef>(null);
+  const linkRef = createRef<LinkRef>(); // useRef<HTMLDivElement & LinkRef>(null);
 
   // active
   if (pathname === href) {
@@ -35,8 +37,3 @@ function MenuLink(
     </Link>
   );
 }
-
-export default React.forwardRef<
-  React.Ref<HTMLDivElement> & React.Ref<LinkRef>,
-  Props
->(MenuLink);
