@@ -11,11 +11,11 @@ export default async function Resume() {
   const { basics, education, skills, work } = data;
 
   return (
-    <div>
-      <p>
-        <Link href="./resume.txt">(Text version)</Link>
-      </p>
-      {basics?.profiles && (
+    <>
+      <Link href="./resume.txt" className="block mt-6">
+        (Text version)
+      </Link>
+      {/* {basics?.profiles && (
         <section>
           {basics?.profiles.map((profile, index) => (
             <span key={index}>
@@ -28,7 +28,7 @@ export default async function Resume() {
             </span>
           ))}
         </section>
-      )}
+      )} */}
       <section>
         <h2>Summary</h2>
         {skills?.map((skill: ResumeSkill, index: number) => {
@@ -98,6 +98,6 @@ export default async function Resume() {
           ))}
         </ul>
       </section>
-    </div>
+    </>
   );
 }

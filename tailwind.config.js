@@ -5,14 +5,11 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx}',
   ],
   corePlugins: {
-    aspectRatio: false,
     preflight: false,
   },
-  important: false,
-  plugins: [require('@tailwindcss/aspect-ratio')],
-  prefix: '',
-  separator: ':',
-  theme: {
-    extend: {},
-  },
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('prettier-plugin-tailwindcss'),
+    'tailwindcss/nesting',
+  ],
 };

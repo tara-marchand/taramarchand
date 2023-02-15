@@ -1,19 +1,17 @@
 import React from 'react';
-import { PrismaClient, Trip } from '@prisma/client';
 
-export function getTrips() {
-  return new Promise<Trip[]>(async (resolve, reject) => {
-
-    const prisma = new PrismaClient();
-    const trips = await prisma.trip.findMany();
-    resolve(trips);
-  });
+type Props = {
+  trips: { name: string }[];
 }
 
-export default async function Trips() {
-  const trips = getTrips();
-  
-  console.log(trips);
+export function Trips(props: Props) {
+  const { trips } = props;
 
-  return <div>{trips?.map(trip => <div>{trip.name}</div>)}</div>;
-};
+  return (
+    <div>
+      {trips?.map((trip) => (
+        <div key={trip.name}>{trip.name}</div>
+      ))}
+    </div>
+  );
+}

@@ -1,7 +1,5 @@
-import '../styles/globals.css';
-
-import Footer from '../components/Footer';
-import Header from '../components/Header';
+import { Footer } from '../components/Footer';
+import { Header } from '../components/Header';
 import Head from './head';
 import Script from 'next/script';
 import { newrelicScript } from '../newrelic';
@@ -22,17 +20,13 @@ export default function RootLayout({
         />
         <Head />
       </head>
-      <body>
+      <body className="prose m-0 max-w-none prose-h2:mt-6 prose-h3:mb-0.5 prose-a:text-gray-500 prose-a:no-underline hover:prose-a:text-gray-800 prose-ul:mt-0">
         {/* <ErrorBoundary> */}
-          <div className="grid-rows-8 grid grid-cols-1 font-sans leading-relaxed">
-            <Header />
-            <main className="row-span-6">
-              <div className="container mx-auto px-6 pt-6 pb-6 md:px-0">
-                {children}
-              </div>
-            </main>
-            <Footer />
-          </div>
+        <div className="flex h-screen flex-col font-sans leading-relaxed">
+          <Header />
+          <main className="container mx-auto overflow-y-scroll">{children}</main>
+          <Footer />
+        </div>
         {/* </ErrorBoundary> */}
       </body>
     </html>

@@ -1,20 +1,23 @@
-import * as React from 'react';
+import Link from 'next/link';
+import React from 'react';
 
-import MenuLink from './MenuLink';
-
-const Header: React.FunctionComponent = () => {
+export function Header() {
   return (
-    <header className="max-w-full bg-gray-300 p-6">
-      <div className="mx-auto flex container flex-col flex-wrap items-center px-6 md:flex-row md:px-0">
-        <h1 className="m-0 flex">
-          <MenuLink className="text-3xl" href="/" text="Tara Marchand" />
-        </h1>
-        <nav className="flex flex-wrap items-center justify-center md:mr-auto md:ml-4 md:border-l md:border-gray-900 md:py-1 md:pl-4">
-          <MenuLink className="mr-4" href="/resume" text="Resume" />
-        </nav>
+    <header aria-label="Site header" className="bg-gray-200">
+      <div className="mx-auto flex items-center gap-8 p-6">
+        <Link className="block text-3xl no-underline" href="/">
+          <span>Tara Marchand</span>
+        </Link>
+        <div className="flex flex-1 items-center justify-end">
+          <nav aria-label="Site nav" className="block">
+            <ul className="flex items-center gap-6 list-none m-0 p-0">
+              <li>
+                <Link href="/resume">Resume</Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </header>
   );
-};
-
-export default Header;
+}

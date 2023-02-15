@@ -2,36 +2,22 @@
 
 import * as React from 'react';
 
-const Footer: React.FunctionComponent = () => {
+export function Footer() {
   return (
-    <footer className="max-w-full bg-gray-400 p-6">
-      <div className="mx-auto flex container px-6 md:px-0">
-        <a href="#" onClick={openEmail} className="mr-6">
-          Email
-        </a>
-        <a
-          className="mr-6"
-          href="https://www.linkedin.com/in/trmarch/"
-        >
-          LinkedIn
-        </a>
-        <a
-          className="mr-6"
-          href="https://github.com/tara-marchand"
-        >
-          GitHub
-        </a>
-        <a
-          rel="me"
-          className="mr-6"
-          href="https://sfba.social/@trmarchand"
-        >
-          Mastodon
-        </a>
-      </div>
+    <footer aria-label="Site footer" className="bg-gray-400">
+        <div className="mx-auto p-6">
+          <nav aria-label="Footer nav">
+            <ul className="flex flex-wrap justify-left gap-6 list-none m-0 p-0">
+              <li><a href="#" onClick={openEmail}>Email</a> </li>
+              <li><a href="https://www.linkedin.com/in/trmarch/" target="_blank" rel="noreferrer">LinkedIn</a> </li>
+              <li><a href="https://github.com/tara-marchand" target="_blank" rel="noreferrer">GitHub</a></li> 
+              <li><a href="https://sfba.social/@trmarchand" target="_blank" rel="me">Mastodon</a></li>
+            </ul>
+          </nav>
+        </div>
     </footer>
-  );
-};
+  )
+}
 
 function openEmail(e: React.MouseEvent) {
   e.preventDefault();
@@ -45,5 +31,3 @@ function openEmail(e: React.MouseEvent) {
 
   location.href = 'mailto:' + address;
 }
-
-export default Footer;
