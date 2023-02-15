@@ -16,7 +16,7 @@
     ".next/cache"
   ],
   "scripts": {
-    "build:next": "npm run clean:next && NODE_ENV=production next build",
+    "build:next": "NODE_ENV=production next build",
     "build:server": "npm run clean:server && tsc --project tsconfig.server.json",
     "clean:next": "rimraf .next",
     "clean:server": "rimraf .server",
