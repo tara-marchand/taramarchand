@@ -8,7 +8,6 @@ module.exports = {
     preflight: false,
   },
   plugins: [
-    require('@tailwindcss/typography'),
     require('prettier-plugin-tailwindcss'),
     'tailwindcss/nesting',
   ],
