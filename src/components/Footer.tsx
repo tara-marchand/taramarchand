@@ -11,6 +11,7 @@ export function Footer() {
               <li><a href="#" onClick={openEmail}>Email</a> </li>
               <li><a href="https://www.linkedin.com/in/trmarch/" target="_blank" rel="noreferrer">LinkedIn</a> </li>
               <li><a href="https://github.com/tara-marchand" target="_blank" rel="noreferrer">GitHub</a></li> 
+              {/* eslint-disable-next-line react/jsx-no-target-blank */}
               <li><a href="https://sfba.social/@trmarchand" target="_blank" rel="me">Mastodon</a></li>
             </ul>
           </nav>

@@ -8,7 +8,7 @@ export async function getResumeData() {
 
 export default async function Resume() {
   const data = await getResumeData();
-  const { basics, education, skills, work } = data;
+  const { education, skills, work } = data;
 
   return (
     <>
