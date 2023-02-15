@@ -28,8 +28,7 @@
     "target": "es2017",
     "typeRoots": [
       "node_modules/@types",
-      "src/types",
-      "node_modules/notion-sdk-js/src"
+      "src/types"
     ],
     "plugins": [
       {
@@ -44,8 +43,7 @@
     "src/data/**/*",
     "src/app/**/*",
     "src/types/**/*",
-    ".next/types/**/*.ts"
-, "src/newrelic.ts"  ],
+    ".next/types/**/*.ts", "src/newrelic.ts"  ],
   "exclude": [
     "node_modules"
   ]
