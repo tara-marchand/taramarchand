@@ -5,6 +5,6 @@ import leaf from '../public/images/leaf.jpg';
 
 export default function Home() {  
   return (
-    <img alt="" className="block mx-auto my-0 max-h-full max-w-full" src={leaf.src} />
+    <img alt="" className="block my-0 max-h-full" src={leaf.src} />
   );
 }

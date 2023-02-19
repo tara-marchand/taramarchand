@@ -20,11 +20,11 @@ export default function RootLayout({
         />
         <Head />
       </head>
-      <body className="prose m-0 max-w-none prose-h2:mt-6 prose-h3:mb-0.5 prose-a:text-gray-500 prose-a:no-underline hover:prose-a:text-gray-800 prose-ul:mt-0">
+      <body className="m-0">
         {/* <ErrorBoundary> */}
         <div className="flex h-screen flex-col font-sans leading-relaxed">
           <Header />
-          <main className="container mx-auto overflow-y-scroll">{children}</main>
+          <main className="container max-w-[80%] mx-auto overflow-y-scroll">{children}</main>
           <Footer />
         </div>
         {/* </ErrorBoundary> */}
