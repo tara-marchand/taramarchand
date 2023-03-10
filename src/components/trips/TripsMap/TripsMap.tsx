@@ -1,6 +1,7 @@
 import React from 'react'
+
 import Cytoscape from '../../Cytoscape/Cytoscape'
-import { getCytoscapeElements } from '../TripsList/elements'
+import useCytoscapeElements from '../../Cytoscape/useCytoscapeElements';
 import { Trip } from '../TripsList/types';
 
 type Props = {
@@ -8,7 +9,7 @@ type Props = {
 }
 
 export default function TripsMap(props: Props) {
-  const data = getCytoscapeElements(props.trip);
+  const data = useCytoscapeElements(props.trip);
   
   return (
     <div className="h-[350px]">
