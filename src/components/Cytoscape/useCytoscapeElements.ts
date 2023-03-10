@@ -1,4 +1,3 @@
-import React from 'react';
 import { Trip } from '../trips/TripsList/types';
 
 export default function useCytoscapeElements(
@@ -8,8 +7,8 @@ export default function useCytoscapeElements(
   const edges: cytoscape.EdgeDefinition[] = [];
 
   trip.tripLegs?.map((tripLeg) => {
-    let fromNode = nodes.find((node) => node.data.id === tripLeg.from.name);
-    let toNode = nodes.find((node) => node.data.id === tripLeg.to.name);
+    const fromNode = nodes.find((node) => node.data.id === tripLeg.from.name);
+    const toNode = nodes.find((node) => node.data.id === tripLeg.to.name);
 
     !fromNode &&
       nodes.push({

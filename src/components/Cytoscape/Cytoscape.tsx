@@ -17,7 +17,7 @@ export default function Cytoscape(props: Props) {
       });
       cytoscapeRef.current = cytoscapeInstance;
     }
-  }, [cytoscapeContainerRef.current]);
+  }, [props.data]);
 
   return <div className="h-full" ref={cytoscapeContainerRef} />;
 }
