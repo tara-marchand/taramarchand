@@ -16,7 +16,6 @@ export default function RootLayout({
       <head>
         {isProd() && <Script
           id="nr"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: newrelicScript }}
         />}
         <Head />
