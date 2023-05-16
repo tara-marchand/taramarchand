@@ -12,11 +12,7 @@
     "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
@@ -26,10 +22,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2017",
-    "typeRoots": [
-      "node_modules/@types",
-      "src/types"
-    ],
+    "typeRoots": ["node_modules/@types", "src/types"],
     "plugins": [
       {
         "name": "next"
@@ -43,8 +36,8 @@
     "src/data/**/*",
     "src/app/**/*",
     "src/types/**/*",
-    ".next/types/**/*.ts", "src/newrelic.ts"  ],
-  "exclude": [
-    "node_modules"
-  ]
+    ".next/types/**/*.ts",
+    "src/newrelic.ts"
+  ],
+  "exclude": ["node_modules"]
 }
