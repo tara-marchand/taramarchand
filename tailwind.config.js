@@ -7,7 +7,5 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  plugins: [
-    'tailwindcss/nesting',
-  ],
+  plugins: ['tailwindcss/nesting'],
 };
