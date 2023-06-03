@@ -1,4 +1,4 @@
-import { Trip } from '../trips/TripsList/types';
+import { Trip } from '../../trips/TripsList/types';
 
 export default function useCytoscapeElements(
   trip: Trip

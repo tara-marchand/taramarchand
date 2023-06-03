@@ -2,8 +2,8 @@ import Script from 'next/script';
 
 import '../styles/globals.css';
 import { newrelicScript } from '../newrelic';
-import { Footer } from '../components/Footer';
-import { Header } from '../components/Header';
+import { Footer } from './_components/Footer';
+import { Header } from './_components/Header';
 
 export default function RootLayout({
   children,

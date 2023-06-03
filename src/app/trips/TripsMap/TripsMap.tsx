@@ -1,7 +1,9 @@
-import React from 'react'
+'use client';
 
-import Cytoscape from '../../Cytoscape/Cytoscape'
-import useCytoscapeElements from '../../Cytoscape/useCytoscapeElements';
+import React from 'react'
+import Cytoscape from '../../_components/Cytoscape/Cytoscape';
+import useCytoscapeElements from '../../_components/Cytoscape/useCytoscapeElements';
+
 import { Trip } from '../TripsList/types';
 
 type Props = {

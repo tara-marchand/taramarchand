@@ -1,4 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+'use client';
+
+import React, { useCallback, useEffect, useRef } from 'react';
 import cytoscape from 'cytoscape';
 
 type Props = {
@@ -6,18 +8,16 @@ type Props = {
 };
 
 export default function Cytoscape(props: Props) {
-  const cytoscapeContainerRef = useRef<HTMLDivElement>(null);
-  const cytoscapeRef = useRef<cytoscape.Core>();
+  const cytoscapeContainerRef = useRef(null);
 
   useEffect(() => {
-    if (cytoscapeContainerRef.current) {
-      const cytoscapeInstance = cytoscape({
+    if (cytoscapeContainerRef?.current) {
+      cytoscape({
         container: cytoscapeContainerRef.current,
         elements: props.data,
       });
-      cytoscapeRef.current = cytoscapeInstance;
     }
-  }, [props.data]);
+  }, []);
 
   return <div className="h-full" ref={cytoscapeContainerRef} />;
 }
