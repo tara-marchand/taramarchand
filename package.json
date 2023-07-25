@@ -54,7 +54,6 @@
     "isomorphic-fetch": "^3.0.0",
     "jsdom": "^21.1.0",
     "json-schema-to-typescript": "^13.0.2",
-    "jsonresume-theme-markdown": "^1.0.2",
     "lodash": "^4.17.21",
     "mime-types": "^2.1.35",
     "newrelic": "^10.5.0",
