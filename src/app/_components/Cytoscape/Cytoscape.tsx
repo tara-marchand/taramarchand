@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import cytoscape from 'cytoscape';
 
 type Props = {
@@ -17,7 +17,7 @@ export default function Cytoscape(props: Props) {
         elements: props.data,
       });
     }
-  }, []);
+  }, [props.data]);
 
   return <div className="h-full" ref={cytoscapeContainerRef} />;
 }
