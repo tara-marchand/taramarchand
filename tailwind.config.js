@@ -7,8 +7,5 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  plugins: [
-    'tailwindcss/nesting',
-    require('@tailwindcss/forms'),
-  ],
+  plugins: [require('@tailwindcss/typography')],
 };

@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Formik, Field, Form, FormikHelpers } from 'formik';
+import { FormikHelpers, useFormik } from 'formik';
+import { Button, Form, Input } from 'antd';
 
 interface Values {
   eventOrSituation?: string;
@@ -13,64 +14,97 @@ interface Values {
 }
 
 export default function CbtForm() {
-  const [step, setStep] = useState(0);
-  const initialValues: Values = {};
-
-  function handleSubmit(
-      values: Values,
-      { setSubmitting }: FormikHelpers<Values>
-    ) {
+  const formik = useFormik<Values>({
+    initialValues: {},
+    onSubmit(values: Values, { setSubmitting }: FormikHelpers<Values>) {
       setTimeout(() => {
         alert(JSON.stringify(values, null, 2));
         setSubmitting(false);
       }, 500);
-    }
+    },
+  });
+  const [step, setStep] = useState(0);
 
   return (
     <div>
       <h1>Signup</h1>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-      >
-        <Form className='w-full'>
-          {step === 0 && <div className="h-1/2">
-          <label className="block" htmlFor="eventOrSituation">Event or situation</label>
-          <Field id="eventOrSituation" name="eventOrSituation" />
-          </div>}
-          
-          {step === 1 && <div className="h-1/2">
-          <label className="block" htmlFor="feelingsStart">Feelings</label>
-          <Field id="feelingsStart" name="feelingsStart" />
-          </div>}
-          
-          {step === 2 && <div className="h-1/2">
-          <label className="block" htmlFor="automaticThoughts">Automatic thoughts</label>
-          <Field id="automaticThoughts" name="automaticThoughts" component="textarea" />
-          </div>}
-          
-          {step === 3 && <div className="h-1/2">
-          <label className="block" htmlFor="thinkingErrors">Thinking errors</label>
-          <Field id="thinkingErrors" name="thinkingErrors" component="textarea" />
-          </div>}
-          
-          {step === 4 && <div className="h-1/2">
-          <label className="block" htmlFor="alternativeThoughts">Alternative thoughts</label>
-          <Field id="alternativeThoughts" name="alternativeThoughts" component="textarea" />
-          </div>}
-          
-          {step === 5 && <div className="h-1/2">
-          <label className="block" htmlFor="feelingsEnd">Feelings</label>
-          <Field id="feelingsEnd" name="feelingsEnd" />
-          </div>}
-          
-          {step === 6 && <div className="h-1/2">
-          <button className="block" type="submit">Submit</button>
-          </div>}
-          {step !== 0 && <button className="block" onClick={(e) => { e.preventDefault(); setStep(step - 1)}}>Previous</button>}
-          {step !== 6 && <button className="block" onClick={(e) => { e.preventDefault(); setStep(step + 1)}}>Next</button>}
-        </Form>
-      </Formik>
+      <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={formik.handleSubmit}>
+        <Form.Item label="Event or situation">
+          <Input
+            id="eventOrSituation"
+            name="eventOrSituation"
+            onChange={formik.handleChange}
+            value={formik.values.eventOrSituation}
+          />
+        </Form.Item>
+        <Form.Item label="Feelings">
+          <Input
+            id="feelingsStart"
+            name="feelingsStart"
+            onChange={formik.handleChange}
+            value={formik.values.feelingsStart}
+          />
+        </Form.Item>
+        <Form.Item label="Automatic thoughts">
+          <Input.TextArea
+            id="automaticThoughts"
+            name="automaticThoughts"
+            onChange={formik.handleChange}
+            value={formik.values.automaticThoughts}
+          />
+        </Form.Item>
+        <Form.Item label="Thinking errors">
+          <Input.TextArea
+            id="thinkingErrors"
+            name="thinkingErrors"
+            onChange={formik.handleChange}
+            value={formik.values.thinkingErrors}
+          />
+        </Form.Item>
+        <Form.Item label="Alternative thoughts">
+          <Input.TextArea
+            id="alternativeThoughts"
+            name="alternativeThoughts"
+            onChange={formik.handleChange}
+            value={formik.values.alternativeThoughts}
+          />
+        </Form.Item>
+        <Form.Item label="Feelings">
+          <Input
+            id="feelingsEnd"
+            name="feelingsEnd"
+            onChange={formik.handleChange}
+            value={formik.values.feelingsEnd}
+          />
+        </Form.Item>
+        <Form.Item>
+          {step > 0 && (
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                setStep(step - 1);
+              }}
+            >
+              Previous
+            </Button>
+          )}
+          {step < 5 && (
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                setStep(step + 1);
+              }}
+            >
+              Next
+            </Button>
+          )}
+          {step === 5 && (
+            <Button htmlType="submit" type="primary">
+              Submit
+            </Button>
+          )}
+        </Form.Item>
+      </Form>
     </div>
   );
-};
+}
