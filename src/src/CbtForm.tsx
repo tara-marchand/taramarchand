@@ -27,8 +27,12 @@ export default function CbtForm() {
 
   return (
     <div>
-      <h1>Signup</h1>
-      <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={formik.handleSubmit}>
+      <h1>Thought Record</h1>
+      <Form
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        onFinish={formik.handleSubmit}
+      >
         <Form.Item label="Event or situation">
           <Input
             id="eventOrSituation"
