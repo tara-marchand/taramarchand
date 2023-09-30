@@ -13,7 +13,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="m-0">
-        {/* <ErrorBoundary> */}
         <div className="flex h-screen flex-col font-sans leading-relaxed">
           <Header />
           <main className="container max-w-[80%] mx-auto overflow-y-scroll">
@@ -21,7 +20,6 @@ export default function RootLayout({
           </main>
           <Footer />
         </div>
-        {/* </ErrorBoundary> */}
       </body>
       <Script id="nr">{newrelicScript}</Script>
     </html>
