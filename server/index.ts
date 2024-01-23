@@ -72,7 +72,7 @@ const createFastifyInstance = async () => {
       hostname: 'localhost',
       port: _port,
     })
-    .after(function (error: Error) {
+    .after(function (error: Error | null) {
       if (error) {
         fastifyInstance.log.error(error.message);
         process.exit(1);
