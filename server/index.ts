@@ -7,10 +7,10 @@ import Fastify from 'fastify';
 import { get } from 'lodash';
 import NodeCache from 'node-cache';
 
-import schema from './schemas/index.json';
 import { Level } from 'pino';
 import { getPinoLogger } from './logger';
 import { resumeToText } from './resumeToText';
+import { CbtDataSource } from './data/cbt/cbt-data-source';
 
 const isDev = process.env.NODE_ENV === 'development';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -39,6 +39,8 @@ if (airtableApiKey) {
 const createFastifyInstance = async () => {
   const pinoLogger = await getPinoLogger(logLevel);
 
+  await CbtDataSource.initialize();
+
   const fastifyInstance = Fastify({
     logger: pinoLogger,
     pluginTimeout: 20000,
@@ -52,7 +54,6 @@ const createFastifyInstance = async () => {
 
   fastifyInstance
     .register(fastifyCookie)
-    .addSchema(schema)
     .route({
       method: 'GET',
       url: '/resume.txt',
@@ -71,7 +72,7 @@ const createFastifyInstance = async () => {
       hostname: 'localhost',
       port: _port,
     })
-    .after(function (error: Error) {
+    .after(function (error: Error | null) {
       if (error) {
         fastifyInstance.log.error(error.message);
         process.exit(1);

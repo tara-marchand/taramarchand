@@ -2,8 +2,8 @@ import Script from 'next/script';
 
 import '../styles/globals.css';
 import { newrelicScript } from '../newrelic';
-import { Footer } from './_components/Footer';
-import { Header } from './_components/Header';
+import { Footer } from '../src/Footer';
+import { Header } from '../src/Header';
 
 export default function RootLayout({
   children,
@@ -13,7 +13,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="m-0">
-        {/* <ErrorBoundary> */}
         <div className="flex h-screen flex-col font-sans leading-relaxed">
           <Header />
           <main className="container max-w-[80%] mx-auto overflow-y-scroll">
@@ -21,7 +20,6 @@ export default function RootLayout({
           </main>
           <Footer />
         </div>
-        {/* </ErrorBoundary> */}
       </body>
       <Script id="nr">{newrelicScript}</Script>
     </html>

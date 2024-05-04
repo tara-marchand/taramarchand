@@ -32,7 +32,7 @@
   "include": [
     "next-env.d.ts",
     "src/app/**/*",
-    "src/app/_components/**/*",
+    "src/src/**/*",
     "src/data/**/*",
     "src/app/**/*",
     "src/types/**/*",
