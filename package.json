@@ -61,7 +61,7 @@
     "jsonresume-theme-markdown": "^1.0.2",
     "lodash": "^4.17.21",
     "mime-types": "^2.1.35",
-    "newrelic": "^10.1.0",
+    "newrelic": "^11.16.0",
     "next": "^13.4.2",
     "next-sitemap": "^4.0.9",
     "node-cache": "^5.1.2",
@@ -83,6 +83,7 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.4.2",
+    "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
     "@types/cytoscape": "^3.19.9",
     "@types/express": "^4.17.17",

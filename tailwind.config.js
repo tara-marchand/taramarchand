@@ -9,5 +9,6 @@ module.exports = {
   },
   plugins: [
     'tailwindcss/nesting',
+    require('@tailwindcss/forms'),
   ],
 };
