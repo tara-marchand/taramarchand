@@ -1,9 +1,7 @@
-import Script from 'next/script';
-
-import '../styles/globals.css';
-import { newrelicScript } from '../newrelic';
+import '../faro';
 import { Footer } from '../src/Footer';
 import { Header } from '../src/Header';
+import '../styles/globals.css';
 
 export default function RootLayout({
   children,
@@ -21,7 +19,6 @@ export default function RootLayout({
           <Footer />
         </div>
       </body>
-      <Script id="nr">{newrelicScript}</Script>
     </html>
   );
 }
