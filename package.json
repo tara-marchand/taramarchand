@@ -38,6 +38,7 @@
     "@fastify/static": "^7.0.4",
     "@fastify/url-data": "^5.4.0",
     "@grafana/faro-web-sdk": "^1.8.0",
+    "@grafana/faro-web-tracing": "^1.8.0",
     "airtable": "^0.12.2",
     "antd": "^5.18.3",
     "autoprefixer": "^10.4.19",
