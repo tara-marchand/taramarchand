@@ -2,12 +2,11 @@
 
 import { initializeFaro } from '@grafana/faro-web-sdk';
 
-console.log('hi')
 initializeFaro({
-  url: 'http://153.92.214.154:8027/collect',
+  url: 'https://alloy.tmarchand.com/collect',
   apiKey: 'alsdjfo87wr3ksjhdf',
   app: {
-    name: 'frontend',
+    name: 'taramarchand',
     version: '1.0.0',
   },
 });
