@@ -1,9 +1,11 @@
 'use client';
-
+import { trace, context } from '@opentelemetry/api';
+import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
+import { WebTracerProvider } from '@opentelemetry/sdk-trace-web';
 import { getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
-import { TracingInstrumentation } from '@grafana/faro-web-tracing';
+import { FaroSessionSpanProcessor, FaroTraceExporter, TracingInstrumentation } from '@grafana/faro-web-tracing';
 
-initializeFaro({
+const faro = initializeFaro({
   url: 'https://alloy.tmarchand.com/collect',
   apiKey: 'alsdjfo87wr3ksjhdf',
   app: {
@@ -20,4 +22,11 @@ initializeFaro({
     }),
   ],
 });
+
+const provider = new WebTracerProvider({});
+
+provider.addSpanProcessor(
+  new FaroSessionSpanProcessor(new BatchSpanProcessor(new FaroTraceExporter({ ...faro })), faro.metas),
+);
+faro.api.initOTEL(trace, context);
 
