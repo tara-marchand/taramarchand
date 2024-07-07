@@ -1,15 +1,15 @@
 'use client';
-import { trace, context } from '@opentelemetry/api';
-import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
-import { WebTracerProvider } from '@opentelemetry/sdk-trace-web';
 import { getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
 import { FaroSessionSpanProcessor, FaroTraceExporter, TracingInstrumentation } from '@grafana/faro-web-tracing';
+import { context, trace } from '@opentelemetry/api';
+import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
+import { WebTracerProvider } from '@opentelemetry/sdk-trace-web';
 
 const faro = initializeFaro({
   url: 'https://alloy.tmarchand.com/collect',
   apiKey: 'alsdjfo87wr3ksjhdf',
   app: {
-    name: 'taramarchand',
+    name: 'taramarchand-client',
     version: '1.0.0',
   },
   instrumentations: [

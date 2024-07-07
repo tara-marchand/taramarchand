@@ -37,7 +37,6 @@
     "src/app/**/*",
     "src/types/**/*",
     ".next/types/**/*.ts",
-    "src/newrelic.ts"
   ],
   "exclude": ["node_modules"]
 }
