@@ -1,4 +1,3 @@
-import './otel';
 import fastifyCookie from '@fastify/cookie';
 import fastifyNext from '@fastify/nextjs';
 import Airtable from 'airtable';
