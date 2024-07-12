@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 'use client';
 
 import React, { useState } from 'react';
@@ -67,4 +68,24 @@ export default function Cbt() {
       )}
     </div>
   );
+=======
+import React from 'react';
+
+import CbtForm from '../../src/CbtForm';
+
+async function getData() {
+  // const res = await fetch('https://payload.tmarchand.com/api/user');
+  // if (!res.ok) {
+  //   throw new Error('Failed to fetch data');
+  // }
+  // return res.json();
+  return {};
+}
+
+export default async function Cbt() {
+  const data = await getData();
+  console.log(data);
+
+  return <CbtForm />;
+>>>>>>> 85d470c422e324a79722c332a7608ceaae8945a4
 }
