@@ -5,6 +5,7 @@ const nextConfig = {
   experimental: {
     esmExternals: true,
   },
+  output: 'standalone',
   reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: true,
