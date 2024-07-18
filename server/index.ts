@@ -5,11 +5,14 @@ import { log } from 'console';
 import Fastify from 'fastify';
 import { get } from 'lodash';
 import NodeCache from 'node-cache';
+import client from 'prom-client';
 
 import { Level } from 'pino';
+import { CbtDataSource } from './data/cbt/cbt-data-source';
 import { getPinoLogger } from './logger';
 import { resumeToText } from './resumeToText';
-import { CbtDataSource } from './data/cbt/cbt-data-source';
+
+client.collectDefaultMetrics();
 
 const isDev = process.env.NODE_ENV === 'development';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -54,6 +57,13 @@ const createFastifyInstance = async () => {
   fastifyInstance
     .register(fastifyCookie)
     .route({
+      url: '/metrics',
+      method: 'GET',
+      handler: async function () {
+        return await client.register.metrics()
+      }
+    })
+    .route({
       method: 'GET',
       url: '/resume.txt',
       handler: async function (request, reply) {
@@ -85,7 +95,9 @@ const createFastifyInstance = async () => {
     .then(() => {
       console.info(`Server is ready on port ${port}`);
     })
-    .catch((error) => error && console.error(`Error starting Fastify: ${error}`));
+    .catch(
+      (error) => error && console.error(`Error starting Fastify: ${error}`),
+    );
 };
 
 const fastifyInstance = createFastifyInstance();
