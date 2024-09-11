@@ -19,8 +19,11 @@ export default function RootLayout({
           </main>
           <Footer />
         </div>
+        <Script
+          async
+          src="https://medama.tmarchand.com/script.js"
+        />
       </body>
-      <Script src="https://medama.tmarchand.com/script.js" strategy='beforeInteractive' />
     </html>
   );
 }

@@ -6,6 +6,7 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:@typescript-eslint/recommended',
     'plugin:@next/next/recommended',
+    'next/core-web-vitals',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -16,5 +17,5 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 1,
     '@typescript-eslint/explicit-module-boundary-types': ['off'],
   },
-  ignorePatterns: ['.eslintrc.js', 'faro.ts']
+  ignorePatterns: ['.eslintrc.js', 'faro.ts'],
 };
