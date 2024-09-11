@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import '../faro';
 import { Footer } from '../src/Footer';
 import { Header } from '../src/Header';
@@ -19,6 +20,7 @@ export default function RootLayout({
           <Footer />
         </div>
       </body>
+      <Script src="https://medama.tmarchand.com/script.js" strategy='beforeInteractive' />
     </html>
   );
 }
